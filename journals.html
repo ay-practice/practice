@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Journals">
+<meta name="theme-color" content="#16263F">
+<title>Journals</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADc0lEQVR4nO3dPW4UMRzGYQfRUNHRpIqE6GgjUdFzBPqcKj1H4ApIaWmRUuUAVLQUg8RKyTv7NeNZ289TpYi0H/PT386stbl69+FzgZe82voJcLnEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOoteVH+/X/dvKj9iZ93e/qz3WVbV/ACiLBdVJxLJCVCkOY2NZdd5Pk4NIHESV4qi5xx6BDSkbq/en7MTO9Ex93uegOZYVInEQiYNIHETiIBIHkTiIxEEkDiJxENU+Q/rzx/fKj7ihj5++bP0UzlLvs5WhstjVbiKWFaJKcQw7NkrLr93kIBIHUaU42t2Una/d125yENU+Jtju7uwE7c6MiTOkRJYVInEQiYNIHETiIBIHkTiIxEEkDiJxEDlD2pian9c4Q9qkOolYVoicIW1SnffT5CASB5EzpE2yIWVjzpA2ps/7HDTHskIkDiJxEImDSBxE4iASB5E4iMRBJA4iZ0hX1Ppn0c6Qrq7dRCwrRM6Qrq7d125yEImDyBnS1bX72k0OImdIV9TuzJg4Q0pkWSESB5E4iMRBJA4icRCJg0gcROIgEgeRM6SN6fP7OS4hiz9f70opb77db/1EzuVrnxY2lbH7A/NGOUP6PIimE/E9pCtquoxqhogjpSCRef2fIe2yABvSBewto8t0llLvPscU++Y709b1eZ+jvoeb60N+7fbxae1n0qhul5UDyzjqN0fTbRycr8840jBIK4jh8aIO4zi2DJLe4thbhkQOt+Kfsm3N6oeb60O6ucwXtVLxtc9zbGKR9+4ys1hVb8vKc8/LOGFbOmAZpfs47DDO0XkcyVHRjDk2Sq9xTNf+hLExbAcv6jOOstyCMnIuPX/wttfemyLzZXS/oel2cqyt+zLK4HHMX+CZsTFCGWWQm2DHGnmfsWvoyXGaQcZGEcc4V/oEo8dxrKFiEscR13uoMoo4mCGOQ402Noo4Jnsv/IBlFHEwQxz/zMyGMcdGEQczxPHf7ePT7iH1kw+FdGPoj+yZZ3IQiYNIHETiIBIHkTiIxEEkDiJxEImD6C8Rz8MH03bvBwAAAABJRU5ErkJggg==">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAADc0lEQVR4nO3dPW4UMRzGYQfRUNHRpIqE6GgjUdFzBPqcKj1H4ApIaWmRUuUAVLQUg8RKyTv7NeNZ289TpYi0H/PT386stbl69+FzgZe82voJcLnEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOoteVH+/X/dvKj9iZ93e/qz3WVbV/ACiLBdVJxLJCVCkOY2NZdd5Pk4NIHESV4qi5xx6BDSkbq/en7MTO9Ex93uegOZYVInEQiYNIHETiIBIHkTiIxEEkDiJxENU+Q/rzx/fKj7ihj5++bP0UzlLvs5WhstjVbiKWFaJKcQw7NkrLr93kIBIHUaU42t2Una/d125yENU+Jtju7uwE7c6MiTOkRJYVInEQiYNIHETiIBIHkTiIxEEkDiJxEDlD2pian9c4Q9qkOolYVoicIW1SnffT5CASB5EzpE2yIWVjzpA2ps/7HDTHskIkDiJxEImDSBxE4iASB5E4iMRBJA4iZ0hX1Ppn0c6Qrq7dRCwrRM6Qrq7d125yEImDyBnS1bX72k0OImdIV9TuzJg4Q0pkWSESB5E4iMRBJA4icRCJg0gcROIgEgeRM6SN6fP7OS4hiz9f70opb77db/1EzuVrnxY2lbH7A/NGOUP6PIimE/E9pCtquoxqhogjpSCRef2fIe2yABvSBewto8t0llLvPscU++Y709b1eZ+jvoeb60N+7fbxae1n0qhul5UDyzjqN0fTbRycr8840jBIK4jh8aIO4zi2DJLe4thbhkQOt+Kfsm3N6oeb60O6ucwXtVLxtc9zbGKR9+4ys1hVb8vKc8/LOGFbOmAZpfs47DDO0XkcyVHRjDk2Sq9xTNf+hLExbAcv6jOOstyCMnIuPX/wttfemyLzZXS/oel2cqyt+zLK4HHMX+CZsTFCGWWQm2DHGnmfsWvoyXGaQcZGEcc4V/oEo8dxrKFiEscR13uoMoo4mCGOQ402Noo4Jnsv/IBlFHEwQxz/zMyGMcdGEQczxPHf7ePT7iH1kw+FdGPoj+yZZ3IQiYNIHETiIBIHkTiIxEEkDiJxEImD6C8Rz8MH03bvBwAAAABJRU5ErkJggg==">
+<style>
+:root{--navy:#16263F;--ink:#1E2433;--muted:#5F6678;--line:#E3E6EE;--paper:#FFFFFF;--bg:#F3F5F9;--gold:#F2C14E;--red:#C23B4E}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.45;color:var(--ink);background:var(--bg);min-height:100vh}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #7FA7E0;outline-offset:2px}
+header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:10;padding-top:env(safe-area-inset-top)}
+.hin{max-width:760px;margin:0 auto;padding:12px 16px 0}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+h1{font-family:"Iowan Old Style","Charter",Georgia,serif;font-size:22px;font-weight:600;letter-spacing:.01em}
+.newc{font-size:14px;color:var(--gold);white-space:nowrap}
+.tabs{display:flex;gap:2px;margin-top:10px}
+.tabs button{flex:1;border:0;background:none;color:#AEB8CC;padding:10px 4px 11px;font-size:16px;border-bottom:3px solid transparent}
+.tabs button.on{color:#fff;font-weight:600;border-bottom-color:var(--gold)}
+main{max-width:760px;margin:0 auto;padding:14px 16px calc(40px + env(safe-area-inset-bottom))}
+.search{width:100%;font-size:16px;padding:11px 12px;border:1px solid #D3D8E4;border-radius:10px;background:#fff}
+.row{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;font-size:15px;padding:7px 12px;border-radius:18px;border:1px solid #CDD3E1;background:#fff;color:var(--ink);white-space:nowrap}
+.chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.chip i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.meta{font-size:14px;color:var(--muted);margin:12px 2px 8px;display:flex;justify-content:space-between;gap:8px}
+.art{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--jc);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.art .jn{font-size:13px;font-weight:600;color:var(--jc);display:flex;justify-content:space-between;gap:8px}
+.art .jn .dt{color:var(--muted);font-weight:400}
+.new{display:inline-block;font-size:12px;font-weight:600;color:var(--navy);background:var(--gold);border-radius:8px;padding:0 6px;margin-left:6px}
+.art h2{font-family:"Iowan Old Style","Charter",Georgia,serif;font-size:18px;line-height:1.3;font-weight:600;margin:4px 0 4px}
+.au{font-size:14px;color:var(--muted)}
+.pt{font-size:13px;color:var(--muted);margin-top:2px}
+.acts{display:flex;gap:16px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.acts a,.acts button{font-size:15px;color:#2D4E8A;text-decoration:none;border:0;background:none;padding:4px 0;font-weight:600}
+.star{margin-left:auto;font-size:22px!important;line-height:1;color:#B8BECC!important;font-weight:400!important}
+.star.on{color:var(--gold)!important}
+.abs{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-family:"Iowan Old Style","Charter",Georgia,serif;font-size:16px;line-height:1.55}
+.abs p+p{margin-top:8px}
+.abs b{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif;font-size:14px}
+.more{display:block;width:100%;margin-top:6px;padding:12px;border-radius:10px;border:1px solid #CDD3E1;background:#fff;font-size:16px;font-weight:600;color:var(--navy)}
+.msg{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;color:var(--muted)}
+.msg.err{border-color:#F0C9CF;background:#FDF2F4;color:#8E2335}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 14px;margin-bottom:16px}
+.set{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0}
+.set+.set{border-top:1px solid var(--line)}
+.set select{font-size:16px;padding:6px 8px;border:1px solid #D3D8E4;border-radius:8px;background:#fff}
+.set input[type=checkbox]{width:22px;height:22px;accent-color:var(--navy)}
+h3{font-size:17px;margin:18px 2px 8px}
+.help{font-size:14px;color:var(--muted);margin:0 2px 10px}
+.link{border:0;background:none;color:var(--red);font-size:15px;text-decoration:underline;padding:6px 0}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid #CDD3E1;border-top-color:var(--navy);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-3px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.spin{animation:none}}
+.tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.tag{font-size:12px;padding:1px 7px;border-radius:8px;background:#EEF1F7;color:#3D4A66}
+.arch{margin-left:auto}
+.arch.on{color:#3E7D3A!important}
+.sub{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 12px}
+.gl{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.gl a.gi{display:block;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.gl a.gi+a.gi{border-top:1px solid var(--line)}
+.gl .code{font-size:13px;color:var(--muted)}
+.doc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:4px 14px 14px}
+.doc h2,.doc h3{font-family:"Iowan Old Style","Charter",Georgia,serif;margin:18px 0 6px;font-size:19px;line-height:1.3}
+.doc h3{font-size:17px}
+.doc p,.doc li{font-size:15px;margin:6px 0}
+.doc ul,.doc ol{padding-left:20px}
+.doc .tw{overflow-x:auto;margin:8px 0}
+.doc table{border-collapse:collapse;font-size:14px;min-width:520px}
+.doc th,.doc td{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:left}
+.doc th{background:#F3F5F9}
+.doc a{color:#2D4E8A}
+.sec[hidden]{display:none}
+.kp{padding:12px 14px}
+.kp+.kp{border-top:1px solid var(--line)}
+.kp h4{font-size:16px;margin-bottom:4px}
+.kp ul{padding-left:18px;font-size:15px}
+.kp li{margin:3px 0}
+.kp .lk{margin-top:6px;display:flex;gap:14px;flex-wrap:wrap}
+.kp .lk a{font-size:14px;color:#2D4E8A;font-weight:600;text-decoration:none}
+.note{font-size:13px;color:var(--muted);margin:8px 2px 14px}
+</style>
+</head>
+<body>
+<header><div class="hin">
+ <div class="top"><h1>Cardiology journals</h1><span class="newc" id="newc"></span></div>
+ <nav class="tabs" aria-label="Sections"><button data-tab="latest">Articles</button><button data-tab="guide">Guidelines</button><button data-tab="saved">Archive</button><button data-tab="settings">Settings</button></nav>
+</div></header>
+<main id="main"></main>
+<script>
+"use strict";
+const KEY="journal-reader-v1";
+const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
+const J=[
+ {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#B3263C"},
+ {id:"lancet",name:"Lancet",ta:"Lancet",gen:1,c:"#1F5FA8"},
+ {id:"jama",name:"JAMA",ta:"JAMA",gen:1,c:"#7A4FA0"},
+ {id:"ehj",name:"Eur Heart J",ta:"Eur Heart J",c:"#C2571E"},
+ {id:"jacc",name:"JACC",ta:"J Am Coll Cardiol",c:"#237A74"},
+ {id:"circ",name:"Circulation",ta:"Circulation",c:"#9C2A6B"},
+ {id:"heart",name:"Heart",ta:"Heart",c:"#3E7D3A"},
+ {id:"ehjci",name:"EHJ Imaging",ta:"Eur Heart J Cardiovasc Imaging",c:"#B87410"},
+ {id:"jaccimg",name:"JACC Imaging",ta:"JACC Cardiovasc Imaging",c:"#2F6E9E"},
+ {id:"jcmr",name:"JCMR",ta:"J Cardiovasc Magn Reson",c:"#5550B0"},
+ {id:"europace",name:"Europace",ta:"Europace",c:"#A0522D"},
+ {id:"hrhythm",name:"Heart Rhythm",ta:"Heart Rhythm",c:"#8A3A5C"}
+];
+const JBY=Object.fromEntries(J.map(j=>[j.ta.toLowerCase(),j]));
+const CARDIO="(cardi*[tiab] OR heart[tiab] OR coronary[tiab] OR atrial[tiab] OR myocard*[tiab] OR valv*[tiab] OR aortic[tiab] OR arrhythm*[tiab] OR hypertens*[tiab] OR stroke[tiab] OR cardiovascular[tiab] OR lipid*[tiab])";
+const tiab=a=>"("+a.map(w=>/\s/.test(w)?`"${w}"[tiab]`:`${w}[tiab]`).join(" OR ")+")";
+// sections: query words (PubMed) and title pattern (labels)
+const CATS=[
+ {id:"ct",name:"Cardiac CT",q:tiab(["computed tomography angiography","CT angiography","coronary CT","cardiac CT","CTCA","CCTA","calcium score","coronary artery calcium","FFRCT","CT-FFR","photon-counting"]),re:/computed tomograph|ct angiograph|\bctca\b|\bccta\b|coronary ct\b|cardiac ct\b|calcium scor|coronary artery calcium|ffr-?ct|ct-?ffr|photon-counting/i},
+ {id:"mri",name:"Cardiac MRI",q:tiab(["cardiac magnetic resonance","cardiovascular magnetic resonance","magnetic resonance imaging","CMR","cardiac MRI","late gadolinium","T1 mapping","T2 mapping","extracellular volume"]),re:/magnetic resonance|\bcmr\b|cardiac mri|\bmri\b|late gadolinium|\blge\b|t1 mapping|t2 mapping|extracellular volume/i},
+ {id:"echo",name:"Echo",q:tiab(["echocardiography","echocardiographic","echocardiogram","speckle tracking","longitudinal strain","transthoracic","transesophageal","transoesophageal","stress echocardiography"]),re:/echocardiogra|\becho\b|speckle|longitudinal strain|transthoracic|trans-?o?esophageal/i},
+ {id:"ep",name:"EP",q:tiab(["electrophysiology","electrophysiological","catheter ablation","arrhythmia","arrhythmias","ventricular tachycardia","supraventricular tachycardia","sudden cardiac death","sudden cardiac arrest","syncope","ventricular fibrillation","premature ventricular","Wolff-Parkinson-White","bradycardia"]),re:/electrophysiolog|ablation|arrhythmi|ventricular tachycardia|supraventricular|sudden cardiac|syncope|ventricular fibrillation|premature ventricular|wolff|bradycardia|\bqt\b|conduction/i},
+ {id:"hf",name:"Heart Failure",q:tiab(["heart failure","HFrEF","HFpEF","HFmrEF","ejection fraction","cardiogenic shock","ventricular dysfunction"]),re:/heart failure|\bhfref\b|\bhfpef\b|\bhfmref\b|ejection fraction|cardiogenic shock|ventricular dysfunction/i},
+ {id:"af",name:"AF",q:tiab(["atrial fibrillation","atrial flutter"]),re:/atrial fibrillation|atrial flutter|\baf\b/i},
+ {id:"pharm",name:"Cardiac Pharmacology",q:tiab(["anticoagulant","anticoagulation","antiplatelet","statin","statins","SGLT2","sodium-glucose cotransporter 2","sacubitril","PCSK9","inclisiran","semaglutide","tirzepatide","GLP-1","colchicine","apixaban","rivaroxaban","edoxaban","dabigatran","ticagrelor","clopidogrel","aspirin","mavacamten","aficamten","tafamidis","finerenone","bempedoic acid","lipoprotein(a)","ezetimibe","beta-blocker","beta-blockers","placebo"]),re:/anticoagula|antiplatelet|statin|sglt-?2|gliflozin|sacubitril|neprilysin|beta-?blocker|pcsk9|inclisiran|evolocumab|alirocumab|bempedoic|semaglutide|tirzepatide|glp-1|colchicine|apixaban|rivaroxaban|edoxaban|dabigatran|warfarin|ticagrelor|clopidogrel|prasugrel|aspirin|mavacamten|aficamten|tafamidis|finerenone|spironolactone|mineralocorticoid|lipoprotein\(a\)|olpasiran|pelacarsen|ezetimibe|icosapent|vericiguat|digoxin|amiodarone|placebo|drug|pharmacolog/i},
+ {id:"icc",name:"Inherited Cardiac Conditions",q:tiab(["hypertrophic cardiomyopathy","dilated cardiomyopathy","arrhythmogenic","Brugada","long QT syndrome","inherited","genetic","familial","amyloidosis","amyloid","Fabry","channelopathy","Marfan","noncompaction","non-compaction","genotype"]),re:/hypertrophic cardiomyopathy|\bhcm\b|arrhythmogenic|\barvc\b|brugada|long qt|inherited|genetic|familial|amyloid|fabry|channelopath|marfan|non-?compaction|dilated cardiomyopathy|genotype|variant/i},
+ {id:"dev",name:"Cardiac Devices",q:tiab(["pacemaker","pacemakers","cardiac pacing","conduction system pacing","defibrillator","defibrillators","implantable cardioverter","cardiac resynchronization","leadless","loop recorder","left ventricular assist","ventricular assist device","left atrial appendage occlusion","left atrial appendage closure"]),re:/pacemaker|pacing|defibrillat|\bicd\b|\bcrt\b|resynchroni|leadless|loop recorder|\blvad\b|ventricular assist|left atrial appendage|watchman|implantable/i},
+ {id:"cad",name:"Coronary Artery Disease",q:tiab(["coronary artery disease","coronary heart disease","myocardial infarction","acute coronary syndrome","angina","percutaneous coronary intervention","coronary artery bypass","CABG","stent","revascularization","revascularisation","MINOCA","troponin","atherosclerosis","chronic coronary syndrome"]),re:/coronary artery disease|coronary heart disease|myocardial infarction|\bstemi\b|nstemi|acute coronary|angina|percutaneous coronary|\bpci\b|bypass graft|\bcabg\b|stent|revasculari|minoca|troponin|atherosclero|coronary syndrome/i}
+];
+const OTHERS={id:"oth",name:"Others"};
+const CBY=Object.fromEntries(CATS.map(c=>[c.id,c]));
+const EXCL=" NOT (letter[pt] OR comment[pt] OR published erratum[pt] OR retraction of publication[pt] OR news[pt])";
+const PAGE=25;
+const NICE=[
+ ["NG185","Acute coronary syndromes","ng185"],["CG95","Recent-onset chest pain of suspected cardiac origin","cg95"],["CG126","Stable angina","cg126"],
+ ["NG238","Cardiovascular disease: risk assessment and reduction, including lipid modification","ng238"],["CG71","Familial hypercholesterolaemia","cg71"],
+ ["NG136","Hypertension in adults","ng136"],["NG106","Chronic heart failure in adults","ng106"],["CG187","Acute heart failure","cg187"],
+ ["NG196","Atrial fibrillation","ng196"],["NG208","Heart valve disease presenting in adults","ng208"],["CG109","Transient loss of consciousness ('blackouts') in over 16s","cg109"],
+ ["NG158","Venous thromboembolic diseases","ng158"],["CG147","Peripheral arterial disease","cg147"],["MTG32","HeartFlow FFRCT for estimating fractional flow reserve from coronary CT angiography","mtg32"]
+];
+const CAAB="https://www.caa.co.uk/media/";
+const CAA=[
+ {t:"Examination and cardiovascular risk",p:["Class 1 resting ECG at the initial exam, then every 5 years to age 30, every 2 years to 40, yearly to 50, and at every revalidation or renewal after that. Class 2: initial exam, first exam after 40 and after 50, then every 2 years.","Cardiovascular risk assessment from age 40, or sooner with a clinical indication or new risk factor, following the CAA flow chart (usually QRISK).","Class 1 needs an extended cardiovascular assessment at the first renewal after 65, then every 4 years. Further tests if QRISK is 10% or more or clinical risk is high. ATCOs (Class 3) need an exercise ECG or equivalent at 65 whatever the QRISK.","Exercise ECGs should be symptom-limited to at least Bruce stage IV."],l:[["Risk assessment flow chart","xnwbcnpu/20260508-v10-cardiovascular-risk-assessment.pdf"],["Bruce protocol","bijjsuhr/20260722-v42-exercise-ecg-protocol.pdf"],["ECG abnormalities table","4d5k3tkj/20260508-v40-investigation-of-ecg-abnormalities-table.pdf"]]},
+ {t:"Hypertension",p:["Unfit if blood pressure consistently exceeds 160/95 mmHg, treated or not, or with symptomatic hypotension.","Unfit after starting antihypertensives until there are no significant side effects.","For Class 1, treatment needs agreement from the CAA. Usually acceptable: non-loop diuretics, ACE inhibitors, ARBs, calcium channel blockers and some (mainly hydrophilic) beta-blockers."],l:[["Hypertension flow chart","4leldjqa/20260511-v40-hypertension-flow-chart.pdf"]]},
+ {t:"Coronary artery disease",p:["Angina (even if controlled by medication), myocardial ischaemia and symptomatic CAD are disqualifying. Initial Class 1 applicants with previous MI, ischaemia or revascularisation are unfit.","After an event or revascularisation, the angiogram should show no stenosis over 50% in any major untreated vessel, graft or stent site (except a vessel supplying an infarct). An untreated stenosis over 30% in the left main or proximal LAD is disqualifying.","From 6 months: exercise ECG without ischaemia or arrhythmia, echo with LVEF of at least 50% and no important wall motion abnormality, and a functional test (perfusion or stress echo) after PCI. A 24-hour ECG may be needed.","Satisfactory results allow Class 1 with an OML, with annual cardiology review, exercise ECG and risk assessment. After CABG, a perfusion test is needed within 5 years. Class 2 follows a similar route."],l:[["Suspected CAD flow chart","zutbkcmm/20260508-v20-suspected-cad-flow-chart.pdf"],["Post-event flow chart","edfhvdog/20260508-v50-post-event-revascularisation-flow-chart.pdf"],["CTCA stenosis flow chart","vnqfllzs/20260508-v10-ctca-stenosis-flow-chart.pdf"],["CTCA report requirements","j5yepqwp/20260508-v10-ctca-report-requirements.pdf"],["Invasive angiogram flow chart","1puhq3av/20260508-v10-ica-stenosis-flow-chart.pdf"]]},
+ {t:"Valve disease and valve surgery",p:["A new murmur needs cardiology review, with echo if significant. Class 1 applicants with significant functional or symptomatic valve disease are unfit.","Bicuspid aortic valve with no other abnormality: may be fit.","Aortic stenosis: fit if LV function is normal and mean gradient is under 20 mmHg. Class 1 with an OML if the indexed valve area is above 0.6 cm²/m² and the mean gradient is 20 to 50 mmHg. Unfit with previous embolism or significant aortic dilatation.","Aortic regurgitation: trivial is fit, more needs an OML (Class 1); the ascending aorta must be normal. Mitral regurgitation: minor is fit; moderate may be fit with an OML if LV size and function are satisfactory. Rheumatic mitral stenosis is normally unfit.","Mitral repair: Class 1 with an OML possible 6 months after surgery with satisfactory echo, then yearly echo. Valve replacement: Class 1 with an OML from 6 months if asymptomatic, off cardioactive drugs, with satisfactory exercise ECG and echo."],l:[["Aortic stenosis flow chart","eo5h2kfc/aortic-valve-stenosis-fc-v2-0.pdf"],["Aortic valve replacement flow chart","3qskukxv/aortic-valve-replacement-fc.pdf"],["Mitral valve disease flow chart","waofg3e3/mitral-valve-disease-fc.pdf"],["Aortic root dilatation flow chart","ly4njn1b/aortic-root-dilatation-f-c.pdf"]]},
+ {t:"Cardiomyopathy, pericarditis, congenital disease and transplant",p:["Symptomatic hypertrophic cardiomyopathy is disqualifying for Class 1.","Disease of the pericardium, myocardium or endocardium: Class 1 unfit until fully resolved, with satisfactory echo, exercise ECG and 24-hour ECG. An OML may be needed.","Acute pericarditis: Class 1 with an OML can be considered 3 months after recovery, with 6-monthly reviews. Unrestricted Class 1 is possible after 2 years.","Congenital heart disease: Class 1 unfit unless corrected or minor, and without cardioactive medication.","Heart or heart-lung transplant: Class 1 unfit. Class 2 possible from 12 months with limitations if there was no rejection in the first year, no significant arrhythmia and LVEF of at least 50%."],l:[["Hypertrophic cardiomyopathy flow chart","2wmn2zpy/cardiomyopathy-fc.pdf"],["Transplant guidance","yxah31wg/heart-lung-transplant-guidance-material.pdf"]]},
+ {t:"Syncope",p:["A single explained vasovagal episode compatible with flight safety may be acceptable.","Recurrent vasovagal syncope is unfit. Reconsider after 6 months without recurrence with satisfactory exercise ECG, echo and 24-hour ECG (a tilt test and neurology review may be needed). Class 1 carries an OML until 5 years without recurrence.","Loss of consciousness without significant warning is disqualifying for Class 1."],l:[["Syncope flow chart","ailcieo0/20240102-v4-1-syncope-flowchart.pdf"]]},
+ {t:"Rhythm and conduction disturbances",p:["Disqualifying: symptomatic sinoatrial disease, complete heart block, symptomatic QT prolongation, an ICD or an anti-tachycardia pacing device.","Standard evaluation: exercise ECG to Bruce stage 4 (usually off cardioactive drugs), 24-hour ECG, and echo with LVEF of at least 50%.","AF or flutter: initial Class 1 only after a single episode unlikely to recur. At revalidation, fit if evaluation is satisfactory and stroke risk is low. On anticoagulation, OML after a stable period (at least 5 INRs in 6 months with 4 in range, or 3 months on a DOAC).","LBBB: Class 1 with an OML for 3 years, then unrestricted if satisfactory; coronary assessment over age 40. Bifascicular block: OML, removable after an EP study or 3 years. Mobitz II: fit if no distal conduction disease.","Pre-excitation: initial Class 1 needs an EP study with no inducible re-entry and no multiple pathways. Asymptomatic QT prolongation: OML. Brugada: type 1 with symptoms or arrhythmia is unfit; asymptomatic types may be fit with limitations.","Ablation: Class 1 with an OML for at least a year, unless an EP study at least 2 months afterwards is satisfactory. Pacemaker: considered from 3 months if not pacing dependent, with bipolar leads in bipolar mode and yearly checks.","Investigate sinus bradycardia under 40 bpm, sinus tachycardia consistently over 110 bpm, and PR intervals under 100 ms or over 240 ms."],l:[["AF flow chart","3tsdi3mr/atrial-fibrillation-v2-4-latest.pdf"],["LBBB flow chart","hhgojyma/left-bundle-branch-block-lbbb-flow-chart-v2-3.pdf"],["RBBB flow chart","rfrdiqic/rbbb-v1-2.pdf"],["WPW flow chart","rsinvgvk/wpw-fc.pdf"],["Brugada flow chart","tkknujol/190101-v2-0-brugada-flow-chart.pdf"],["Ventricular ectopy flow chart","b53jf335/ventricular-ectopy-fc.pdf"],["Ablation (except WPW/AVNRT)","it1lkabf/ablation-for-tachycardias-except-wpw-and-avnrt-fc.pdf"],["Ablation for WPW and AVNRT","lrrjqr5r/ablation-for-wpw-and-avnrt-fc.pdf"],["Pacemaker flow chart","b55fp4td/pacemaker-fc.pdf"]],x:[["Arrhythmia medication","https://www.caa.co.uk/aeromedical/medical-standards/pilots/medical-conditions/cardiology/arrhythmia-medication/"]]},
+ {t:"Thromboembolism, anticoagulation and aorta",p:["Arterial or venous thrombosis and PE: unfit, then an OML can be considered after stable anticoagulation (the INR rule, or 3 months on a DOAC). PE also needs cardiology review.","Infrarenal aortic aneurysm under 5 cm: Class 1 with an OML after cardiology review, with imaging surveillance. Thoracic or suprarenal aneurysm before surgery is disqualifying for Class 1; after surgery, an OML is possible."],l:[["Aortic aneurysm guidance","2vkjd2xg/guidance-material-for-thoracic-and-abdominal-aortic-aneurysms.pdf"]],x:[["Anticoagulation guidance","https://www.caa.co.uk/aeromedical/medical-standards/pilots/medical-conditions/haematology/thromboembolic-disorders-and-use-of-anticoagulation/"]]}
+];
+const CAA_PAGE="https://www.caa.co.uk/aeromedical/medical-standards/pilots/medical-conditions/cardiology/cardiovascular-system-general/";
+const DVLA_PAGE="https://www.gov.uk/guidance/cardiovascular-disorders-assessing-fitness-to-drive";
+const DVLA_API="https://www.gov.uk/api/content/guidance/cardiovascular-disorders-assessing-fitness-to-drive";
+
+const DEF={days:60,research:true,off:{},saved:{},seen:[],last:null,dvla:null};
+let st;try{st=Object.assign({},DEF,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){st={...DEF}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+const seen=new Set(st.seen);
+
+const S={tab:"latest",cat:"all",j:"all",q:"",items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,
+ g:"esc",gsub:"esc",gl:{},gerr:{},gload:{},dq:"",dvlaErr:false,dvlaLoading:false};
+const $m=document.getElementById("main");
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const clean=s=>String(s||"").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'");
+const catsOf=title=>{const c=CATS.filter(x=>x.re.test(title)).map(x=>x.id);return c.length?c:["oth"]};
+
+function journalsTerm(){
+ const js=S.j==="all"?J.filter(j=>!st.off[j.id]):J.filter(j=>j.id===S.j);
+ if(!js.length)return "";
+ return "("+js.map(j=>`("${j.ta}"[ta]${j.gen?" AND "+CARDIO:""})`).join(" OR ")+")";
+}
+function term(){
+ let t=journalsTerm();if(!t)return "";
+ if(S.cat==="oth")t+=" NOT ("+CATS.map(c=>c.q).join(" OR ")+")";
+ else if(CBY[S.cat])t+=" AND "+CBY[S.cat].q;
+ const words=S.q.replace(/[()"\[\]]/g," ").split(/\s+/).filter(w=>w.length>1);
+ if(words.length)t+=" AND ("+words.map(w=>w+"[tiab]").join(" AND ")+")";
+ if(st.research)t+=EXCL;
+ return t;
+}
+async function getJSON(url,tries=3){
+ for(let i=0;i<tries;i++){
+  try{const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),15000);
+   const r=await fetch(url,{signal:ctl.signal});clearTimeout(tm);
+   if(r.status===429){await new Promise(z=>setTimeout(z,900*(i+1)));continue}
+   if(!r.ok)throw new Error("HTTP "+r.status);
+   return await r.json();
+  }catch(e){if(i===tries-1)throw e;await new Promise(z=>setTimeout(z,700))}
+ }
+ throw new Error("busy");
+}
+function toItem(d){
+ const doi=(d.articleids||[]).find(a=>a.idtype==="doi");
+ const au=(d.authors||[]).filter(a=>a.authtype==="Author").map(a=>a.name);
+ const coll=(d.authors||[]).find(a=>a.authtype==="CollectiveName");
+ const types=(d.pubtype||[]).filter(t=>!/^Journal Article$/i.test(t));
+ const title=clean(d.title);
+ return{pmid:d.uid,title,src:d.source,authors:au.length>3?au.slice(0,3).join(", ")+", et al.":au.length?au.join(", "):coll?coll.name:"",date:d.epubdate||d.pubdate||"",doi:doi?doi.value:"",types:types.slice(0,2).join(", "),cats:catsOf(title)};
+}
+async function search(t,start,n,extra){
+ const sr=await getJSON(`${E}esearch.fcgi?db=pubmed&retmode=json&tool=cardioreader&sort=pub_date&retmax=${n}&retstart=${start}${extra}&term=${encodeURIComponent(t)}`);
+ const ids=(sr.esearchresult&&sr.esearchresult.idlist)||[];
+ const count=+((sr.esearchresult&&sr.esearchresult.count)||0);
+ if(!ids.length)return{count,items:[]};
+ const sm=await getJSON(`${E}esummary.fcgi?db=pubmed&retmode=json&tool=cardioreader&id=${ids.join(",")}`);
+ return{count,items:(sm.result&&sm.result.uids||[]).map(u=>toItem(sm.result[u]))};
+}
+async function load(more){
+ const t=term();
+ if(!t){S.items=[];S.count=0;S.err="Every journal is switched off. Turn some on in Settings.";render();return}
+ const id=++S.reqId;
+ S.loading=true;S.err="";if(!more){S.items=[];S.count=0}render();
+ try{
+  const r=await search(t,more?S.items.length:0,PAGE,`&datetype=edat&reldate=${st.days}`);
+  if(id!==S.reqId)return;
+  for(const it of r.items){if(st.last&&!seen.has(it.pmid))S.newIds.add(it.pmid);seen.add(it.pmid)}
+  st.seen=[...seen].slice(-4000);st.last=Date.now();save();
+  S.count=r.count;S.items=more?S.items.concat(r.items):r.items;
+ }catch(e){
+  if(id!==S.reqId)return;
+  S.err=navigator.onLine===false?"You're offline. Connect to the internet and tap Try again.":"PubMed didn't respond. Tap Try again in a moment.";
+ }
+ S.loading=false;render();
+}
+const GQ={
+ esc:`"Eur Heart J"[ta] AND ("ESC Guidelines"[ti] OR "ESC Guideline"[ti]) NOT (comment[pt] OR letter[pt] OR published erratum[pt] OR correction[ti] OR corrigendum[ti] OR erratum[ti] OR "questions and answers"[ti])`,
+ acc:`("J Am Coll Cardiol"[ta] OR "Circulation"[ta]) AND (guideline[ti] OR "expert consensus decision pathway"[ti]) AND ("Joint Committee on Clinical Practice Guidelines"[ti] OR "American College of Cardiology"[ti] OR "ACC"[ti]) NOT (comment[pt] OR letter[pt] OR published erratum[pt] OR correction[ti] OR erratum[ti] OR "key points"[ti] OR "at a glance"[ti])`
+};
+async function loadGuide(k){
+ if(S.gload[k])return;S.gload[k]=true;S.gerr[k]="";render();
+ try{
+  const r=await search(GQ[k],0,60,"&datetype=pdat&mindate=2016&maxdate=3000");
+  const seenT=new Set();S.gl[k]=r.items.filter(it=>{const key=it.title.toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,80);if(seenT.has(key))return false;seenT.add(key);return true});
+ }catch(e){S.gerr[k]="Couldn't reach PubMed. Check your connection and try again."}
+ S.gload[k]=false;render();
+}
+async function loadAbs(pmid){
+ if(S.abs[pmid]&&S.abs[pmid]!=="error"){S.open[pmid]=!S.open[pmid];render();return}
+ S.open[pmid]=true;S.abs[pmid]="loading";render();
+ try{
+  const r=await fetch(`${E}efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&tool=cardioreader&id=${pmid}`);
+  const x=new DOMParser().parseFromString(await r.text(),"text/xml");
+  const parts=[...x.getElementsByTagName("AbstractText")].map(n=>({l:n.getAttribute("Label")||"",t:n.textContent.trim()})).filter(p=>p.t);
+  S.abs[pmid]=parts.length?parts:"none";
+ }catch(e){S.abs[pmid]="error"}
+ render();
+}
+async function loadDVLA(force){
+ if(S.dvlaLoading)return;
+ if(st.dvla&&!force&&Date.now()-st.dvla.at<7*864e5){render();return}
+ S.dvlaLoading=true;S.dvlaErr=false;render();
+ try{
+  const r=await fetch(DVLA_API);if(!r.ok)throw new Error();
+  const j=await r.json();const body=j.details&&(j.details.body||(j.details.parts||[]).map(p=>`<h2>${p.title}</h2>${p.body}`).join(""));
+  if(!body)throw new Error();
+  st.dvla={html:body,updated:j.public_updated_at||j.updated_at||"",at:Date.now()};save();
+ }catch(e){S.dvlaErr=true}
+ S.dvlaLoading=false;render();
+}
+function cleanDoc(html){
+ const d=new DOMParser().parseFromString(`<div>${html}</div>`,"text/html");
+ d.querySelectorAll("script,style,iframe,object,embed,form,input,button,img").forEach(n=>n.remove());
+ d.querySelectorAll("*").forEach(n=>{for(const a of [...n.attributes]){if(/^on/i.test(a.name)||a.name==="style")n.removeAttribute(a.name)}});
+ d.querySelectorAll("a").forEach(a=>{const h=a.getAttribute("href")||"";if(/^javascript:/i.test(h)){a.removeAttribute("href");return}if(h.startsWith("/"))a.setAttribute("href","https://www.gov.uk"+h);else if(h.startsWith("#"))a.setAttribute("href",DVLA_PAGE+h);a.setAttribute("target","_blank");a.setAttribute("rel","noopener")});
+ d.querySelectorAll("table").forEach(t=>{const w=d.createElement("div");w.className="tw";t.parentNode.insertBefore(w,t);w.appendChild(t)});
+ const root=d.body.firstChild,secs=[];let cur=null;
+ for(const n of [...root.childNodes]){
+  if(n.nodeType===1&&/^H[23]$/.test(n.tagName)){cur={h:n.textContent.trim(),lvl:n.tagName,nodes:[n]};secs.push(cur)}
+  else{if(!cur){cur={h:"",lvl:"",nodes:[]};secs.push(cur)}cur.nodes.push(n)}
+ }
+ return secs.map(s=>({h:s.h,lvl:s.lvl,html:s.nodes.map(n=>n.outerHTML||esc(n.textContent)).join(""),text:s.nodes.map(n=>n.textContent).join(" ").toLowerCase()}));
+}
+let dvlaSecs=null,dvlaSrc=null;
+const jOf=it=>JBY[String(it.src||"").toLowerCase()]||{name:it.src||"Journal",c:"#5F6678"};
+function card(it){
+ const j=jOf(it),sv=!!st.saved[it.pmid],ab=S.abs[it.pmid];
+ const cats=(it.cats||catsOf(it.title)).map(c=>`<span class="tag">${esc((CBY[c]||OTHERS).name)}</span>`).join("");
+ return `<article class="art" style="--jc:${j.c}">
+  <div class="jn"><span>${esc(j.name)}${S.newIds.has(it.pmid)?`<span class="new">New</span>`:""}</span><span class="dt">${esc(it.date)}</span></div>
+  <h2>${esc(it.title)}</h2>
+  <div class="au">${esc(it.authors)}</div>
+  ${it.types?`<div class="pt">${esc(it.types)}</div>`:""}
+  <div class="tags">${cats}</div>
+  <div class="acts">
+   <button data-act="abs" data-id="${it.pmid}">${S.open[it.pmid]?"Hide abstract":"Abstract"}</button>
+   ${it.doi?`<a href="https://doi.org/${encodeURI(it.doi)}" target="_blank" rel="noopener">Full text</a>`:""}
+   <a href="https://pubmed.ncbi.nlm.nih.gov/${it.pmid}/" target="_blank" rel="noopener">PubMed</a>
+   <button class="arch ${sv?"on":""}" data-act="star" data-id="${it.pmid}" aria-pressed="${sv}">${sv?"Archived ✓":"Archive"}</button>
+  </div>
+  ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")}</div>`:""}
+ </article>`;
+}
+function vLatest(){
+ const catChips=[["all","All"]].concat(CATS.map(c=>[c.id,c.name]),[["oth","Others"]]).map(([id,l])=>`<button class="chip ${S.cat===id?"on":""}" data-act="c" data-v="${id}">${l}</button>`).join("");
+ const jChips=[`<button class="chip ${S.j==="all"?"on":""}" data-act="j" data-v="all">All journals</button>`].concat(J.filter(j=>!st.off[j.id]).map(j=>`<button class="chip ${S.j===j.id?"on":""}" data-act="j" data-v="${j.id}"><i style="background:${j.c}"></i>${j.name}</button>`)).join("");
+ return `<input class="search" id="q" type="search" enterkeyhint="search" placeholder="Search titles and abstracts" value="${esc(S.q)}" autocomplete="off">
+  <div class="row" aria-label="Section">${catChips}</div>
+  <div class="row" aria-label="Journal">${jChips}</div>
+  <div class="meta"><span>${S.loading&&!S.items.length?`<span class="spin"></span>Loading from PubMed`:S.count?`${S.count.toLocaleString("en-GB")} articles, last ${st.days} days`:""}</span>${S.items.length?`<button class="link" style="color:#2D4E8A;padding:0" data-act="refresh">Refresh</button>`:""}</div>
+  ${S.err?`<div class="msg err">${esc(S.err)} <button class="link" data-act="refresh">Try again</button></div>`:""}
+  ${!S.loading&&!S.err&&!S.items.length?`<div class="msg">No articles in this section. Try another section, a longer period in Settings, or fewer search words.</div>`:""}
+  ${S.items.map(card).join("")}
+  ${S.items.length&&S.items.length<S.count?`<button class="more" data-act="more">${S.loading?`<span class="spin"></span>Loading`:"Show more"}</button>`:""}`;
+}
+function vGuide(){
+ const top=[["esc","ESC, ACC and NICE"],["dvla","DVLA"],["caa","CAA"]].map(([id,l])=>`<button class="chip ${S.g===id?"on":""}" data-act="g" data-v="${id}">${l}</button>`).join("");
+ let body="";
+ if(S.g==="esc"){
+  const sub=[["esc","ESC"],["acc","ACC/AHA"],["nice","NICE"]].map(([id,l])=>`<button class="chip ${S.gsub===id?"on":""}" data-act="gs" data-v="${id}">${l}</button>`).join("");
+  if(S.gsub==="nice"){
+   body=`<div class="sub">${sub}</div><div class="gl">${NICE.map(([c,t,u])=>`<a class="gi" href="https://www.nice.org.uk/guidance/${u}" target="_blank" rel="noopener"><div class="code">${c}</div>${esc(t)}</a>`).join("")}</div>
+    <p class="note">Opens the guideline on the NICE website. <a href="https://www.nice.org.uk/guidance/conditions-and-diseases/cardiovascular-conditions" target="_blank" rel="noopener">See all NICE cardiovascular guidance</a> for new or updated topics.</p>`;
+  }else{
+   const k=S.gsub,list=S.gl[k];
+   if(!list&&!S.gload[k]&&!S.gerr[k])setTimeout(()=>loadGuide(k));
+   body=`<div class="sub">${sub}</div>
+    <p class="note">${k==="esc"?"ESC Guidelines published in the European Heart Journal since 2016, newest first.":"ACC/AHA guidelines and ACC expert consensus pathways from JACC and Circulation since 2016, newest first."} <a href="${k==="esc"?"https://www.escardio.org/Guidelines/Clinical-Practice-Guidelines":"https://www.acc.org/guidelines"}" target="_blank" rel="noopener">${k==="esc"?"ESC guidelines website":"ACC guidelines website"}</a></p>
+    ${S.gerr[k]?`<div class="msg err">${esc(S.gerr[k])} <button class="link" data-act="gretry">Try again</button></div>`:""}
+    ${S.gload[k]?`<div class="msg"><span class="spin"></span>Loading from PubMed</div>`:""}
+    ${list?list.length?list.map(card).join(""):`<div class="msg">No guidelines found.</div>`:""}`;
+  }
+ }else if(S.g==="dvla"){
+  if((!st.dvla||Date.now()-st.dvla.at>7*864e5)&&!S.dvlaLoading&&!S.dvlaErr)setTimeout(()=>loadDVLA());
+  if(st.dvla&&dvlaSrc!==st.dvla.html){dvlaSecs=cleanDoc(st.dvla.html);dvlaSrc=st.dvla.html}
+  const q=S.dq.trim().toLowerCase();
+  const heads=dvlaSecs?dvlaSecs.filter(s=>s.h):[];
+  body=`<p class="note">Chapter 2, Cardiovascular disorders, from DVLA's Assessing fitness to drive, loaded from GOV.UK${st.dvla&&st.dvla.updated?`. Last updated by DVLA ${new Date(st.dvla.updated).toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}`:""}. <a href="${DVLA_PAGE}" target="_blank" rel="noopener">Open on GOV.UK</a></p>
+   ${S.dvlaLoading?`<div class="msg"><span class="spin"></span>Loading from GOV.UK</div>`:""}
+   ${S.dvlaErr?`<div class="msg err">${st.dvla?"Couldn't refresh, so this is the copy saved on your phone.":"Couldn't load the guidance here."} <a href="${DVLA_PAGE}" target="_blank" rel="noopener">Open it on GOV.UK</a> or <button class="link" data-act="dvla">try again</button>.</div>`:""}
+   ${dvlaSecs?`<input class="search" id="dq" type="search" placeholder="Find a condition, such as ICD or angina" value="${esc(S.dq)}" autocomplete="off">
+    ${!q&&heads.length?`<div class="row" style="flex-wrap:wrap;overflow:visible">${heads.filter(s=>s.lvl==="H2").map((s,i)=>`<button class="chip" data-act="jump" data-v="${dvlaSecs.indexOf(s)}">${esc(s.h)}</button>`).join("")}</div>`:""}
+    <div class="doc" style="margin-top:10px">${dvlaSecs.map((s,i)=>`<section class="sec" id="dv${i}" ${q&&!s.text.includes(q)&&!s.h.toLowerCase().includes(q)?"hidden":""}>${s.html}</section>`).join("")}</div>
+    <button class="link" style="color:#2D4E8A;margin-top:8px" data-act="dvla">Check GOV.UK for updates</button>`:""}`;
+ }else{
+  body=`<p class="note">Key points for pilot medicals (Class 1 and Class 2), summarised from UK CAA guidance for aeromedical examiners. Always check the full text and flow charts before advising. <a href="${CAA_PAGE}" target="_blank" rel="noopener">Open CAA cardiology guidance</a></p>
+   <div class="gl">${CAA.map(s=>`<div class="kp"><h4>${esc(s.t)}</h4><ul>${s.p.map(p=>`<li>${esc(p)}</li>`).join("")}</ul>
+    <div class="lk">${s.l.map(([t,u])=>`<a href="${CAAB}${u}" target="_blank" rel="noopener">${esc(t)}</a>`).join("")}${(s.x||[]).map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${esc(t)}</a>`).join("")}</div></div>`).join("")}</div>
+   <p class="note">OML: operational multi-pilot limitation. ORL/OSL: operational restriction or safety pilot limitation.</p>`;
+ }
+ return `<div class="row">${top}</div>${body}`;
+}
+function vSaved(){
+ const items=Object.values(st.saved).sort((a,b)=>(b.at||0)-(a.at||0));
+ return items.length?`<p class="help">${items.length} archived ${items.length===1?"article":"articles"} to read later, newest first. Tap Archived to remove one.</p>${items.map(card).join("")}`:`<div class="msg">Nothing archived yet. Tap Archive on any article or guideline to keep it here to read later.</div>`;
+}
+function vSettings(){
+ return `<h3>What to show</h3><div class="card">
+  <label class="set"><span>Period</span><select id="days">${[14,30,60,90,180].map(d=>`<option value="${d}" ${st.days===d?"selected":""}>Last ${d} days</option>`).join("")}</select></label>
+  <label class="set"><span>Research and reviews only<br><small class="au">Hides letters, comments and corrections</small></span><input type="checkbox" id="research" ${st.research?"checked":""}></label>
+ </div>
+ <h3>Journals</h3><p class="help">NEJM, Lancet and JAMA show cardiovascular articles only.</p>
+ <div class="card">${J.map(j=>`<label class="set"><span><span class="chip" style="border:0;padding:0;background:none"><i style="background:${j.c}"></i></span>${j.name}</span><input type="checkbox" data-jt="${j.id}" ${st.off[j.id]?"":"checked"}></label>`).join("")}</div>
+ <h3>About</h3><p class="help">Articles and guidelines come from PubMed, and DVLA guidance from GOV.UK, each time you open them. Sections are matched on title and abstract words, so some articles appear in more than one. Archived articles and settings stay on this phone.</p>
+ ${Object.keys(st.saved).length?`<button class="link" data-act="clearsaved">Remove all archived articles</button>`:""}`;
+}
+function render(){
+ document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
+ const n=S.newIds.size;document.getElementById("newc").textContent=n?`${n} new`:"";
+ const fid=document.activeElement&&["q","dq"].includes(document.activeElement.id)?document.activeElement.id:"";
+ $m.innerHTML=S.tab==="latest"?vLatest():S.tab==="guide"?vGuide():S.tab==="saved"?vSaved():vSettings();
+ if(fid){const q=document.getElementById(fid);if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
+}
+function findItem(id){return S.items.find(x=>x.pmid===id)||Object.values(S.gl).flat().find(x=>x&&x.pmid===id)}
+let qTimer,dTimer;
+document.addEventListener("click",e=>{
+ const tb=e.target.closest("[data-tab]");if(tb){S.tab=tb.dataset.tab;render();window.scrollTo(0,0);return}
+ const b=e.target.closest("[data-act]");if(!b)return;
+ const a=b.dataset.act;
+ if(a==="c"){S.cat=b.dataset.v;load()}
+ else if(a==="j"){S.j=b.dataset.v;load()}
+ else if(a==="refresh")load();
+ else if(a==="more"){if(!S.loading)load(true)}
+ else if(a==="abs")loadAbs(b.dataset.id);
+ else if(a==="star"){const id=b.dataset.id;if(st.saved[id])delete st.saved[id];else{const it=findItem(id);if(it)st.saved[id]={...it,at:Date.now()}}save();render()}
+ else if(a==="g"){S.g=b.dataset.v;render()}
+ else if(a==="gs"){S.gsub=b.dataset.v;render()}
+ else if(a==="gretry"){S.gerr[S.gsub]="";loadGuide(S.gsub)}
+ else if(a==="dvla")loadDVLA(true);
+ else if(a==="jump"){const el=document.getElementById("dv"+b.dataset.v);if(el)el.scrollIntoView({behavior:"smooth",block:"start"})}
+ else if(a==="clearsaved"){if(confirm("Remove all archived articles?")){st.saved={};save();render()}}
+});
+document.addEventListener("input",e=>{
+ if(e.target.id==="q"){S.q=e.target.value;clearTimeout(qTimer);qTimer=setTimeout(()=>load(),700)}
+ else if(e.target.id==="dq"){S.dq=e.target.value;clearTimeout(dTimer);dTimer=setTimeout(render,250)}
+});
+document.addEventListener("change",e=>{
+ const el=e.target;
+ if(el.id==="days"){st.days=+el.value;save();load()}
+ else if(el.id==="research"){st.research=el.checked;save();load()}
+ else if(el.dataset.jt){if(el.checked)delete st.off[el.dataset.jt];else st.off[el.dataset.jt]=true;if(st.off[S.j])S.j="all";save();load()}
+});
+document.addEventListener("keydown",e=>{if(e.target.id==="q"&&e.key==="Enter"){clearTimeout(qTimer);e.target.blur();load()}});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&st.last&&Date.now()-st.last>3*3600e3&&S.tab==="latest")load()});
+render();load();
+
+</script>
+</body>
+</html>
