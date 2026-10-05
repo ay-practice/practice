@@ -144,11 +144,29 @@ summary .amt{flex-shrink:0;font-size:19px;font-weight:600;color:var(--c)}
 .filebtn{display:inline-block}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:11px 16px;border-radius:10px;font-size:15px;z-index:30;max-width:90vw;display:none}
 p.help{font-size:14px;color:var(--muted);margin-bottom:8px}
+.pt{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 14px;border-left:6px solid var(--m)}
+.pt+.pt{border-top:1px solid var(--line)}
+.pt .nm{font-weight:600}
+.pt .sm{font-size:14px;color:var(--muted)}
+.pt .am{text-align:right;font-weight:600}
+.pt .acts{grid-column:1/-1;display:flex;gap:16px;align-items:center;font-size:14px;color:var(--muted)}
+.badge{display:inline-block;font-size:13px;padding:2px 8px;border-radius:10px;font-weight:600;margin-top:2px}
+.badge.unpaid{background:#FBE3E5;color:var(--owed)}
+.badge.part{background:#FCEBD6;color:#9A6118}
+.badge.paid{background:#DFF2E7;color:var(--good)}
+.badge.late{background:var(--owed);color:#fff}
+.drow{border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:8px;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.drow label{font-size:13px;color:var(--muted)}
+.drow .full{grid-column:1/-1}
+.drow input,.drow select,.rl select{width:100%;font-size:16px;padding:7px;border:1px solid #D6DAE8;border-radius:8px;background:#fff;color:var(--ink)}
+.rl{padding:10px 12px}
+.rl+.rl{border-top:1px solid var(--line)}
+.rl .src{font-size:14px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
 </head>
 <body>
 <header><div class="hin"><h1><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M0 10h9l2-3 2 3h3l3-9 3 14 2-5h10" fill="none" stroke="#C9566A" stroke-width="2" stroke-linejoin="round"/></svg>Private practice activity</h1>
-<nav aria-label="Sections"><button data-tab="overview">Overview</button><button data-tab="log">Log week</button><button data-tab="payments">Payments</button><button data-tab="tariffs">Tariffs</button></nav></div></header>
+<nav aria-label="Sections"><button data-tab="overview">Overview</button><button data-tab="log">Log week</button><button data-tab="patients">Patients</button><button data-tab="payments">Payments</button><button data-tab="tariffs">Tariffs</button></nav></div></header>
 <main id="main"></main>
 <div id="toast" role="status"></div>
 <script>
@@ -189,8 +207,8 @@ const DEFAULT={
   procs:{toe:{self:300,insured:280},dccv:{self:150,insured:150}},
   scans:{self:200,insured:150}
  },
- settings:{keywords:{spire:"spire",nuffield:"nuffield",kp:"kings park, kingspark, circle",medserv:"medserv"},opening:{spire:0,nuffield:0,kp:0,medserv:0}},
- weeks:{},txns:[]
+ settings:{overdueDays:45,keywords:{spire:"spire",nuffield:"nuffield",kp:"kings park, kingspark, circle",medserv:"medserv"},opening:{spire:0,nuffield:0,kp:0,medserv:0}},
+ weeks:{},txns:[],patients:[],remits:[]
 };
 
 // helpers
@@ -300,8 +318,22 @@ const PHR=[
  [/\bfollow[\s-]?ups?\b|\bf\/u\b|\bfus?\b|\breviews?\b/g,()=>"kind:fu"],
  [/\bnew(?:\s+patients?)?\b|\bnews\b|\bnps?\b/g,()=>"kind:new"]
 ];
+const NORM=[
+ [/\be\s*c\s*g(?:\s*s)?\b|\beasy\s*gs?\b|\bec\s+gs?\b|\bee\s+c\s+g\b|\bei\s+c\s+g\b|\be\s*k\s*g(?:\s*s)?\b/g," ecg "],
+ [/\becos?\b|\becoes\b|\beccos?\b|\beckos?\b|\bekos?\b|\bechos?es\b/g," echo "],
+ [/\bboo\s*pa\b|\bboop(?:a|er|ah)\b|\bbup(?:er|ah)\b|\bbewpa\b|\bbooper\b|\bbuppa\b/g," bupa "],
+ [/\baxe\s*a\b|\bax\s+a\b|\baksa\b|\baxer\b|\baxa's\b|\ba\s+x\s+a\b/g," axa "],
+ [/\ba\s+viva\b/g," aviva "],
+ [/\bhelix\b|\bheel\s*ix\b|\bhealics\b|\bhealex\b|\bhealicks\b/g," healix "],
+ [/\bhalters?\b/g," holter "],
+ [/\bt\s+o\s+e\b/g," toe "],
+ [/\bzeo\b|\bzeeo\b|\bzio's\b|\bzeo\s+patch\b/g," zio "],
+ [/\bc\s+t\b/g," ct "],[/\bm\s+r\s+i\b/g," mri "],[/\bc\s+m\s+r\b/g," cmr "],[/\bd\s+c\s+c\s+v\b/g," dccv "],
+ [/\bf\s+u\b/g," fu "],[/\bfollow\s+ups\b/g," follow-up "]
+];
+const normText=s=>{for(const[re,r]of NORM)s=s.replace(re,r);return s};
 function tokenize(text){
- let s=" "+text.toLowerCase().replace(/[’']/g,"").replace(/[,;:.!?&+()]/g," ")+" ";
+ let s=normText(" "+text.toLowerCase().replace(/[’']/g,"").replace(/[,;:.!?&+()]/g," ")+" ");
  const T=[];
  for(const[re,fn]of PHR)s=s.replace(re,(...a)=>{T.push(fn(...a));return ` §${T.length-1}§ `});
  const toks=[];
@@ -364,29 +396,14 @@ function guessSession(){
  return"kp";
 }
 
-// voice input
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-let rec=null;
-function setMicUI(on){const b=document.getElementById("micbtn");if(!b)return;b.classList.toggle("on",on);b.setAttribute("aria-label",on?"Stop listening":"Speak");b.querySelector("span").textContent=on?"Listening":"Speak"}
-function startMic(){
- if(rec){rec.stop();return}
- if(!SR){toast("Voice isn't available in this browser. Tap in the box and use the microphone on your keyboard.");return}
- const base=S.qtext.trim()?S.qtext.trim()+", ":"";
- rec=new SR();rec.lang="en-GB";rec.interimResults=true;rec.continuous=false;
- rec.onresult=e=>{let t="";for(const r of e.results)t+=r[0].transcript;S.qtext=base+t;const q=document.getElementById("qtext");if(q)q.value=S.qtext;const p=document.getElementById("qprev");if(p)p.innerHTML=qPreviewHTML()};
- rec.onerror=e=>{toast(e.error==="not-allowed"||e.error==="service-not-allowed"?"Microphone access is off. Allow it when asked, or check Settings, then try again.":"Didn't catch that. Tap Speak and try again.")};
- rec.onend=()=>{rec=null;setMicUI(false)};
- try{rec.start();setMicUI(true)}catch(err){rec=null;setMicUI(false);toast("Couldn't start voice input. Use the microphone on your keyboard instead.")}
-}
-
 // state
-const S={tab:"overview",start:iso(mondayOf(today())),month:monthKey(today()),filter:"todo",open:"",confirm:"",qsess:guessSession(),qtext:""};
+const S={tab:"overview",start:iso(mondayOf(today())),month:monthKey(today()),filter:"todo",open:"",confirm:"",qsess:guessSession(),qtext:"",psess:guessSession()==="reporting"?"spire":guessSession(),pdate:iso(today()),ptext:"",pdraft:null,rsrc:"spire",rdate:iso(today()),rtext:"",rdraft:null,pf:"unpaid",pq:""};
 const $main=document.getElementById("main");
 let toastTimer;
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.display="none",3400)}
 function render(){
  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
- $main.innerHTML=S.tab==="overview"?vOverview():S.tab==="log"?vLog():S.tab==="payments"?vPayments():vTariffs();
+ $main.innerHTML=S.tab==="overview"?vOverview():S.tab==="log"?vLog():S.tab==="patients"?vPatients():S.tab==="payments"?vPayments():vTariffs();
 }
 
 // ---------- overview ----------
@@ -418,6 +435,7 @@ function vOverview(){
  const chart=[5,4,3,2,1,0].map(i=>{const m=prevMonth(S.month,i);return{m:monthLabel(m,1),e:PAYERS.reduce((a,p)=>a+earned(p.id,m),0),r:PAYERS.reduce((a,p)=>a+got(p.id,m),0)}});
  const max=Math.max(1,...chart.flatMap(c=>[c.e,c.r]));
  const pos=stats.filter(s=>s.out>0.5);
+ const lateP=data.patients.filter(p=>pStat(p).late).length;
  return `
  <section class="hero">
   <div class="lbl">Outstanding at ${longDate(t)}</div>
@@ -430,6 +448,7 @@ function vOverview(){
  </section>
  <div class="pad">
   ${unmatched?`<button class="alert" data-tab="payments">${unmatched} bank ${unmatched===1?"payment needs":"payments need"} matching to a payer. Open Payments to match them.</button>`:""}
+  ${lateP?`<button class="alert" data-tab="patients">${lateP} ${lateP===1?"patient has":"patients have"} not been paid for over ${n(data.settings.overdueDays)} days. Open Patients to see who.</button>`:""}
   <div class="grid2">${stats.map(s=>{const pct=s.expected>0?Math.min(100,100*s.received/s.expected):0;return `
    <div class="card pcard" style="${pv(s.id)}">
     <div class="ph"><b>${s.name}</b><span class="owed ${s.out>0.5?"":"ok"}">${fmt(s.out)}</span></div>
@@ -493,11 +512,10 @@ function vLog(){
 
   <div class="card quick" id="quick" style="margin-top:16px">
    <div class="qt">Quick add</div>
-   <p class="help" style="margin-top:4px">Tap Speak and say what you did, or type it. Check the list below, then add it.</p>
+   <p class="help" style="margin-top:4px">Type what you did, or tap the microphone on your keyboard to dictate. Check the list below, then add it.</p>
    <label class="muted" style="font-size:14px">Clinic
     <select class="t" data-act="qsess">${SESS.map(s=>`<option value="${s.id}" ${S.qsess===s.id?"selected":""}>${s.title} (${dayLabel(addDays(mon,s.off))})</option>`).join("")}</select></label>
-   <div class="qline"><textarea class="t" id="qtext" rows="3" placeholder="echos 4, ECGs 2, self-pay new 1, AXA follow-up">${esc(S.qtext)}</textarea>
-   <button class="mic ${rec?"on":""}" id="micbtn" data-act="mic" aria-label="${rec?"Stop listening":"Speak"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>${rec?"Listening":"Speak"}</span></button></div>
+   <div class="qline"><textarea class="t" id="qtext" rows="3" placeholder="echos 4, ECGs 2, self-pay new 1, AXA follow-up">${esc(S.qtext)}</textarea></div>
    <div id="qprev">${qPreviewHTML()}</div>
    <div style="display:flex;gap:8px;margin-top:10px"><button class="btn" data-act="qadd">Add to this clinic</button><button class="btn alt" data-act="qclear">Clear</button></div>
   </div>
@@ -530,6 +548,249 @@ function quickAdd(){
  S.qtext="";S.open=s.scans?"reporting":S.qsess;
  render();
  toast(`Added ${ok.length} ${ok.length===1?"entry":"entries"} to ${s.title}${bad.length?". Some items were left out":""}`);
+}
+
+// ---------- patients (all processed on this phone) ----------
+const HNO_RE=/\b[A-Za-z]{0,3}\d{5,10}[A-Za-z]?\b/;
+const NAME_STOP=new Set("mr mrs ms miss mx dr prof sir dob tel tele phone mob mobile hosp hospital no num number mrn id ref nhs chi new follow up fu review self pay private insured insurance and plus with x the of for to at pt patient seen paid fee fees total amount invoice consultation consult appt appointment clinic date time am pm tests test name names surname forename first last dob insurer payer investigations investigation hospno tel no".split(" "));
+const nrm=v=>String(v||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
+const titleCase=w=>w.replace(/(^|[\s'-])([a-z])/g,(m,a,b)=>a+b.toUpperCase());
+const money=v=>"£"+(Math.round(v*100)%100?v.toFixed(2):Math.round(v).toLocaleString("en-GB"));
+const hsh=t=>{let h=0;for(const c of t)h=(h*31+c.charCodeAt(0))|0;return String(h)};
+function stripPersonal(s){
+ s=s.replace(/\b\d{1,2}\s*[\/.\-]\s*\d{1,2}\s*[\/.\-]\s*\d{2,4}\b/g," ");
+ s=s.replace(/\b\d{1,2}(?:st|nd|rd|th)?\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?,?\s+\d{2,4}\b/gi," ");
+ s=s.replace(/(?:\+44\s?(?:\(0\)\s?)?|\b0)(?:\d[\s-]?){9,10}\d?/g,m=>{const d=m.replace(/\D/g,"");return d.length>=10&&d.length<=13?" ":m});
+ s=s.replace(/\b\d{1,2}:\d{2}(?:\s*[ap]m)?\b|\b\d{1,2}\.\d{2}\s*[ap]m\b/gi," ");
+ return s;
+}
+function findAmounts(s){
+ const am=[];
+ s=s.replace(/£\s?(\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?|\d+(?:\.\d{1,2})?)/g,(m,v)=>{am.push(parseFloat(v.replace(/,/g,"")));return " "});
+ s=s.replace(/\b\d{1,4}\.\d{2}\b/g,m=>{const v=parseFloat(m);if(v>=20){am.push(v);return " "}return " "});
+ return{am,s};
+}
+function readTokens(raw){
+ let s=normText(" "+raw.toLowerCase().replace(/[’']/g,"").replace(/[,;:.!?&+()|_*#"\[\]{}]/g," ")+" ");
+ const T=[];
+ for(const[re,fn]of PHR)s=s.replace(re,(...a)=>{T.push(fn(...a));return ` §${T.length-1}§ `});
+ const words=s.split(/\s+/).filter(Boolean),items={},name=[],used=new Set();let payer="",kind="";const nums=[];
+ words.forEach((w,i)=>{
+  const m=w.match(/^§(\d+)§$/);
+  if(m){const[t,v]=T[+m[1]].split(":");
+   if(t==="item"){const pv=words[i-1];let q=1;if(pv&&/^\d$/.test(pv)&&+pv>0){q=+pv;used.add(i-1)}items[v]=(items[v]||0)+q}
+   else if(t==="payer"){if(v!=="ins")payer=v}
+   else if(t==="kind")kind=v;
+   return}
+  if(/^\d+$/.test(w)){nums.push({v:+w,i});return}
+  if(/^[a-z][a-z\-]*$/.test(w)&&w.length>1&&!NAME_STOP.has(w))name.push(w);
+ });
+ const cand=nums.filter(x=>!used.has(x.i)&&x.v>=20&&x.v<=9999);
+ return{items,payer,kind,name:titleCase(name.slice(0,4).join(" ")),amount:cand.length?cand[cand.length-1].v:null};
+}
+function readClinic(text){
+ const rows=[];
+ const mergeInto=(a,r)=>{if(r.name&&!a.name)a.name=r.name;if(r.hno&&!a.hno)a.hno=r.hno;if(r.payer&&!a.payer)a.payer=r.payer;if(r.kind&&!a.kind)a.kind=r.kind;for(const[k,q]of Object.entries(r.items))a.items[k]=(a.items[k]||0)+q;if(r.amount!=null&&a.amount==null)a.amount=r.amount};
+ for(const raw of text.split(/\r?\n/)){
+  if(!raw.trim())continue;
+  let s=stripPersonal(raw);
+  const a=findAmounts(s);s=a.s;
+  let hno="";const m=s.match(HNO_RE);if(m){hno=m[0].toUpperCase();s=s.replace(m[0]," ")}
+  const t=readTokens(s);
+  const r={name:t.name,hno,payer:t.payer,kind:t.kind,items:t.items,amount:a.am.length?a.am[a.am.length-1]:t.amount};
+  const info=Object.keys(r.items).length||r.payer||r.kind||r.amount!=null;
+  const last=rows[rows.length-1];
+  if(!r.name&&!r.hno){if(last&&info)mergeInto(last,r);continue}
+  if(!r.name&&last&&!last.hno){mergeInto(last,r);continue}
+  if(r.name&&!r.hno&&!info&&last&&!last.name){last.name=r.name;continue}
+  rows.push(r);
+ }
+ return rows.map(r=>({name:r.name,hno:r.hno,payer:r.payer,kind:r.kind,tests:Object.entries(r.items).map(([k,q])=>(q>1?q+" ":"")+ITEMNAME[k]).join(", "),amount:r.amount!=null?String(r.amount):""}));
+}
+function estAmount(hosp,payer,kind,items){
+ const T=data.tariffs;let a=0;
+ if(kind&&payer&&T.consult[payer])a+=n(T.consult[payer][kind]);
+ for(const[k,q]of Object.entries(items)){
+  if(k==="toe"||k==="dccv")a+=q*n(payer&&payer!=="self"?T.procs[k].insured:T.procs[k].self);
+  else if(k==="ct"||k==="mri")a+=q*n(payer==="self"?T.scans.self:T.scans.insured);
+  else if(T.inv[hosp]&&T.inv[hosp][k]!=null)a+=q*n(T.inv[hosp][k]);
+ }
+ return a;
+}
+function pStat(p){
+ const rec=(p.pays||[]).reduce((a,x)=>a+n(x.amount),0),due=n(p.amount);
+ const st=p.manual==="paid"||(due>0?rec>=due-1:rec>0)?"paid":rec>0?"part":"unpaid";
+ const age=daysBetween(parseISO(p.date),today());
+ return{rec,due,out:st==="paid"?0:Math.max(0,due-rec),st,age,late:st!=="paid"&&age>n(data.settings.overdueDays||45)};
+}
+function pSources(p){
+ if(p.hosp==="kp")return["kp"];
+ if(p.hosp==="spire")return p.payer==="bupa"||!p.payer?["spire","medserv"]:["spire"];
+ return p.payer==="self"?["nuffield"]:["nuffield","medserv"];
+}
+function readClinicAct(){
+ if(!S.ptext.trim()){toast("Paste the text from your clinic sheet first.");return}
+ const rows=readClinic(S.ptext);
+ S.pdraft=rows.length?rows:[{name:"",hno:"",payer:"",kind:"",tests:"",amount:""}];
+ S.ptext="";render();
+ toast(rows.length?`Found ${rows.length} ${rows.length===1?"patient":"patients"}. Check them, then save.`:"No patients recognised. Add them by hand below.");
+}
+function savePatients(){
+ const ses=SMAP[S.psess],hosp=ses.hosp;let saved=0,dup=0,skip=0;
+ for(const r of S.pdraft){
+  const name=r.name.trim(),hno=r.hno.trim().toUpperCase();
+  if(!name&&!hno){skip++;continue}
+  if(data.patients.some(p=>p.date===S.pdate&&p.sess===S.psess&&(hno?nrm(p.hno)===nrm(hno):p.name.toLowerCase()===name.toLowerCase()))){dup++;continue}
+  const items=readTokens(r.tests||"").items;
+  let amount=parseAmt(r.amount),est=false;
+  if(!(amount>0)){amount=estAmount(hosp,r.payer,r.kind,items);est=amount>0}
+  data.patients.push({id:"p"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),date:S.pdate,sess:S.psess,hosp,name,hno,payer:r.payer,kind:r.kind,items,amount:amount||0,est,pays:[],manual:""});
+  saved++;
+ }
+ persist();S.pdraft=null;S.pf="unpaid";render();
+ toast(`Saved ${saved} ${saved===1?"patient":"patients"}${dup?`, ${dup} already saved`:""}${skip?`, ${skip} empty rows skipped`:""}.`);
+}
+function readRemit(text){
+ const out=[];let pend=null;
+ for(const raw of text.split(/\r?\n/)){
+  if(!raw.trim())continue;
+  if(/\b(?:sub\s*-?\s*)?total\b|\bbalance\b|\bvat\b|\bbrought forward\b/i.test(raw)){pend=null;continue}
+  let s=stripPersonal(raw);
+  const a=findAmounts(s);s=a.s;
+  const m=s.match(HNO_RE);const hno=m?m[0].toUpperCase():"";if(m)s=s.replace(m[0]," ");
+  let amount=a.am.length?a.am[a.am.length-1]:null;
+  if(amount==null){const ns=(s.match(/\b\d{2,4}\b/g)||[]).map(Number).filter(v=>v>=20&&v<=9999);if(ns.length)amount=ns[ns.length-1]}
+  const words=(s.toLowerCase().replace(/[’']/g,"").match(/[a-z][a-z\-]*/g)||[]);
+  if(amount==null){if(hno||words.length)pend={hno,words};continue}
+  const L={hno,words,amount,snip:raw.trim().replace(/\s+/g," ").slice(0,70)};
+  if(pend&&!hno&&!words.some(w=>w.length>2)){L.hno=pend.hno;L.words=pend.words}
+  else if(pend&&!L.hno&&pend.hno)L.hno=pend.hno;
+  pend=null;out.push(L);
+ }
+ return out;
+}
+function mScore(p,L,left){
+ let sc=0;
+ if(L.hno&&p.hno&&nrm(L.hno)===nrm(p.hno))sc+=100;
+ const nw=String(p.name||"").toLowerCase().split(/[\s]+/).filter(w=>w.length>1);
+ if(nw.length){
+  const sur=nw[nw.length-1],first=nw[0];
+  if(L.words.includes(sur))sc+=50;
+  if(nw.length>1){if(L.words.includes(first))sc+=20;else if(L.words.some(w=>w.length<=2&&w[0]===first[0]))sc+=10}
+ }
+ if(Math.abs(L.amount-left)<1)sc+=15;
+ return sc;
+}
+function remitCands(){return data.patients.filter(p=>pSources(p).includes(S.rsrc)&&pStat(p).st!=="paid")}
+function readRemitAct(){
+ if(!S.rtext.trim()&&!S.rdraft){toast("Paste the text from the payment receipt first.");return}
+ const lines=S.rtext.trim()?readRemit(S.rtext):S.rdraft;
+ if(!lines.length){toast("No amounts found. Check you copied the lines with the payments on them.");return}
+ if(S.rtext.trim()&&data.remits.includes(hsh(S.rtext.trim())))toast("This receipt looks like one you've already recorded. Check before saving.");
+ S.rhash=S.rtext.trim()?hsh(S.rtext.trim()):S.rhash;
+ const cands=remitCands(),left=Object.fromEntries(cands.map(p=>[p.id,pStat(p).out]));
+ for(const L of lines){
+  let best=null,bs=0;
+  for(const p of cands){const sc=mScore(p,L,left[p.id]);if(sc>bs||(sc===bs&&best&&p.date<best.date)){bs=sc;best=p}}
+  L.match=best&&bs>=50?best.id:"";
+  if(L.match)left[L.match]=Math.max(0,left[L.match]-L.amount);
+ }
+ S.rdraft=lines;S.rtext="";render();
+}
+function saveRemit(){
+ let k=0;
+ for(const L of S.rdraft){if(!L.match)continue;const p=data.patients.find(x=>x.id===L.match);if(!p)continue;p.pays=p.pays||[];p.pays.push({date:S.rdate,src:S.rsrc,amount:L.amount});k++}
+ if(!k){toast("Choose a patient for at least one line first.");return}
+ if(S.rhash&&!data.remits.includes(S.rhash))data.remits.push(S.rhash);
+ persist();S.rdraft=null;render();
+ toast(`Recorded ${k} ${k===1?"payment":"payments"} from ${PNAME[S.rsrc]}.`);
+}
+function pLabel(p){const st=pStat(p);return `${p.name||"No name"}${p.hno?" "+p.hno:""}, ${parseISO(p.date).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}, ${money(st.out||st.due)} due`}
+function draftHTML(){
+ const insOpts=v=>`<option value="">Not stated</option>${INS.map(i=>`<option value="${i.id}" ${v===i.id?"selected":""}>${i.name}</option>`).join("")}`;
+ const kindOpts=v=>`<option value="">Not stated</option><option value="new" ${v==="new"?"selected":""}>New</option><option value="fu" ${v==="fu"?"selected":""}>Follow-up</option>`;
+ return `<div style="margin-top:16px"><b>${S.pdraft.length} ${S.pdraft.length===1?"patient":"patients"} to check</b>
+  ${S.pdraft.map((r,i)=>`<div class="drow">
+   <label class="full">Name<input data-pd="${i}.name" value="${esc(r.name)}" autocomplete="off"></label>
+   <label>Hospital no.<input data-pd="${i}.hno" value="${esc(r.hno)}" autocomplete="off"></label>
+   <label>Amount (£)<input data-pd="${i}.amount" value="${esc(r.amount)}" inputmode="decimal" placeholder="From tariffs"></label>
+   <label>Payer<select data-pd="${i}.payer">${insOpts(r.payer)}</select></label>
+   <label>Visit<select data-pd="${i}.kind">${kindOpts(r.kind)}</select></label>
+   <label class="full">Tests<input data-pd="${i}.tests" value="${esc(r.tests)}" placeholder="echo, ECG" autocomplete="off"></label>
+   <button class="link red" data-act="pdrop" data-i="${i}" style="justify-self:start">Remove</button>
+  </div>`).join("")}
+  <p class="help" style="margin-top:8px">A blank amount is worked out from your tariffs using the payer, visit and tests.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="psave">Save ${S.pdraft.length} ${S.pdraft.length===1?"patient":"patients"}</button><button class="btn alt" data-act="padd">Add a row</button><button class="link" data-act="pclear">Cancel</button></div>
+ </div>`;
+}
+function rdraftHTML(){
+ const cands=remitCands(),k=S.rdraft.filter(L=>L.match).length;
+ return `<div style="margin-top:16px"><b>${k} of ${S.rdraft.length} lines matched to a patient</b>
+  <p class="help" style="margin-top:4px">Check each match. Change it, or choose "Skip" for lines that aren't for a patient.</p>
+  <div class="card" style="padding:0">${S.rdraft.map((L,i)=>{
+   const left=0,opts=cands.map(p=>({p,sc:mScore(p,L,pStat(p).out)})).sort((a,b)=>b.sc-a.sc||a.p.date.localeCompare(b.p.date)).slice(0,15);
+   if(L.match&&!opts.some(o=>o.p.id===L.match)){const p=data.patients.find(x=>x.id===L.match);if(p)opts.unshift({p})}
+   return `<div class="rl"><div class="row"><span class="src">${esc(L.snip)}</span><b>${money(L.amount)}</b></div>
+    <select data-rd="${i}" aria-label="Patient for this line" style="margin-top:6px"><option value="">Skip this line</option>${opts.map(o=>`<option value="${o.p.id}" ${L.match===o.p.id?"selected":""}>${esc(pLabel(o.p))}</option>`).join("")}</select></div>`}).join("")}</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="btn" data-act="rsave">Record ${k} ${k===1?"payment":"payments"}</button><button class="link" data-act="rcancel">Cancel</button></div>
+  <p class="help" style="margin-top:8px">This marks patients as paid. It doesn't change the Payments tab, which tracks your bank statement.</p>
+ </div>`;
+}
+function vPatients(){
+ const ps=data.patients.map(p=>({p,s:pStat(p)}));
+ const unpaid=ps.filter(x=>x.s.st!=="paid"),late=unpaid.filter(x=>x.s.late),od=n(data.settings.overdueDays||45);
+ const owed=unpaid.reduce((a,x)=>a+x.s.out,0);
+ const q=S.pq.trim().toLowerCase();
+ const list=(S.pf==="unpaid"?unpaid:S.pf==="late"?late:S.pf==="paid"?ps.filter(x=>x.s.st==="paid"):ps)
+  .filter(x=>!q||`${x.p.name} ${x.p.hno}`.toLowerCase().includes(q))
+  .sort((a,b)=>b.p.date.localeCompare(a.p.date)||a.p.name.localeCompare(b.p.name));
+ const clinicOpts=CLINICS.map(s=>`<option value="${s.id}" ${S.psess===s.id?"selected":""}>${s.title} (${["Mon","Tue","Wed","Thu","Fri"][s.off]} ${s.when})</option>`).join("");
+ const badge=x=>x.s.late?`<span class="badge late">Unpaid ${x.s.age} days</span>`:`<span class="badge ${x.s.st}">${x.s.st==="paid"?"Paid":x.s.st==="part"?"Part paid":"Unpaid"}</span>`;
+ const row=x=>{const p=x.p,tests=Object.entries(p.items||{}).map(([k,c])=>(c>1?c+" ":"")+ITEMNAME[k]).join(", ");
+  const bits=[[p.payer?INAME[p.payer]:"",p.kind==="new"?"new":p.kind==="fu"?"follow-up":""].filter(Boolean).join(" "),tests].filter(Boolean).join(", ");
+  return `<div class="pt" style="${pv(p.hosp)}">
+   <div><div class="nm">${esc(p.name||"No name")}${p.hno?` <span class="sm">${esc(p.hno)}</span>`:""}</div>
+    <div class="sm">${esc(SMAP[p.sess]?SMAP[p.sess].title:HOSP[p.hosp].name)}, ${dayLabel(parseISO(p.date))}</div>
+    ${bits?`<div class="sm">${esc(bits)}</div>`:""}</div>
+   <div class="am">${p.amount?money(p.amount):"No amount"}${p.est?`<div class="sm" style="font-weight:400">from tariffs</div>`:""}<div>${badge(x)}</div></div>
+   <div class="acts">${x.s.rec>0?`<span>Received ${money(x.s.rec)}</span>`:""}
+    <button class="link" data-act="pmark" data-id="${p.id}">${x.s.st==="paid"?"Mark unpaid":"Mark paid"}</button>
+    ${S.confirm==="p:"+p.id?`<button class="link red" data-act="pdel" data-id="${p.id}">Confirm delete</button>`:`<button class="link red" data-act="pask" data-id="${p.id}">Delete</button>`}</div>
+  </div>`};
+ return `<div class="pad">
+  <div class="card quick">
+   <div class="muted" style="font-size:15px">Owed for patients not yet paid</div>
+   <div class="big" style="font-size:38px">${money(owed)}</div>
+   <div style="font-size:15px">${unpaid.length} ${unpaid.length===1?"patient":"patients"} unpaid or part paid${late.length?`, <span class="warn">${late.length} for over ${od} days</span>`:""}</div>
+  </div>
+
+  <h2>Add a clinic list</h2>
+  <div class="card">
+   <p class="help">Photograph your clinic sheet, then press and hold on the text in the photo, tap Select All and Copy, and paste it here. Dates of birth and phone numbers are removed as it's read. Nothing leaves this phone.</p>
+   <div class="form"><label>Clinic<select class="t" id="psess">${clinicOpts}</select></label><label>Clinic date<input class="t" type="date" id="pdate" value="${S.pdate}"></label></div>
+   ${S.pdraft?draftHTML():`<textarea class="t" id="ptext" rows="5" style="margin-top:10px" placeholder="Jane Smith  K123456  Bupa new  echo ECG  £395">${esc(S.ptext)}</textarea>
+   <div style="display:flex;gap:8px;margin-top:10px"><button class="btn" data-act="pread">Read list</button><button class="btn alt" data-act="padd">Add by hand</button></div>`}
+  </div>
+
+  <h2>Match a payment receipt</h2>
+  <div class="card">
+   <p class="help">Open the hospital's remittance (PDF, email or a photo), select all the text, copy it and paste it here. Each line is matched to a patient by hospital number, then by name and amount.</p>
+   <div class="form"><label>Paid by<select class="t" id="rsrc">${PAYERS.map(p=>`<option value="${p.id}" ${S.rsrc===p.id?"selected":""}>${p.name}</option>`).join("")}</select></label><label>Date paid<input class="t" type="date" id="rdate" value="${S.rdate}"></label></div>
+   ${S.rdraft?rdraftHTML():`<textarea class="t" id="rtext" rows="5" style="margin-top:10px" placeholder="K123456  SMITH J  Echocardiogram  214.00">${esc(S.rtext)}</textarea>
+   <div style="display:flex;gap:8px;margin-top:10px"><button class="btn" data-act="rread">Match payments</button><button class="btn alt" data-act="rclear">Clear</button></div>`}
+  </div>
+
+  <div class="chips">${[["unpaid",`Unpaid (${unpaid.length})`],["late",`Over ${od} days (${late.length})`],["paid","Paid"],["all","All"]].map(([id,l])=>`<button class="chip ${S.pf===id?"on":""}" data-act="pf" data-f="${id}">${l}</button>`).join("")}</div>
+  ${data.patients.length?`<input class="t" id="pq" type="search" placeholder="Search by name or hospital number" value="${esc(S.pq)}" autocomplete="off" style="margin-bottom:10px">`:""}
+  <div class="card" style="padding:0">${list.length?list.map(row).join(""):`<div style="padding:16px" class="muted">${!data.patients.length?"No patients yet. Paste your first clinic list above.":q?"No patients match that search.":S.pf==="unpaid"?"Every saved patient has been paid.":"No patients here."}</div>`}</div>
+
+  <h2>Settings</h2>
+  <div class="card">
+   <label class="trow"><span>Flag as unpaid too long after this many days</span><input class="n" style="width:86px" type="number" inputmode="numeric" min="1" id="odays" value="${od}"></label>
+   <p class="help" style="margin-top:8px">Patient names stay on this phone and are included in backups. Keep backup files in Files or iCloud Drive rather than email.</p>
+   ${data.patients.length?(S.confirm==="pall"?`<p style="font-size:15px">Delete every patient record? <button class="btn red small" data-act="pdelall">Delete patients</button> <button class="link" data-act="cancel">Keep</button></p>`:`<button class="link red" data-act="paskall">Delete all patient records</button>`):""}
+  </div>
+ </div>`;
 }
 
 // ---------- payments ----------
@@ -635,9 +896,9 @@ function vTariffs(){
   <div class="card"><p class="help">If a statement includes payments for work done before your first logged week, enter what each payer owed you at that point so the balances stay accurate.</p>
    ${PAYERS.map(p=>trow(p.name,`settings.opening.${p.id}`)).join("")}</div>
   <h2>Backup</h2>
-  <div class="card"><p class="help">Your data lives only on this phone. Save a backup every few weeks, for example to Files or by emailing it to yourself.</p>
+  <div class="card"><p class="help">Your data lives only on this phone. Save a backup every few weeks. Backups include patient names, so save them to Files or iCloud Drive rather than emailing them.</p>
    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn alt" data-act="backup">Save backup</button><label class="btn alt filebtn">Restore backup<input type="file" accept=".json,application/json" id="restore"></label></div>
-   <div style="margin-top:12px">${S.confirm==="reset"?`<p style="font-size:15px">Delete all weeks, payments and settings? <button class="btn red small" data-act="reset">Delete everything</button> <button class="link" data-act="cancel">Keep</button></p>`:`<button class="link red" data-act="askreset">Delete all data</button>`}</div>
+   <div style="margin-top:12px">${S.confirm==="reset"?`<p style="font-size:15px">Delete all weeks, payments, patients and settings? <button class="btn red small" data-act="reset">Delete everything</button> <button class="link" data-act="cancel">Keep</button></p>`:`<button class="link red" data-act="askreset">Delete all data</button>`}</div>
   </div>
  </div>`;
 }
@@ -659,8 +920,7 @@ document.addEventListener("click",e=>{
  else if(a==="thisweek")S.start=iso(mondayOf(today()));
  else if(a==="goweek"){S.start=b.dataset.week;window.scrollTo(0,0)}
  else if(a==="quickgo"){S.tab="log";S.start=iso(mondayOf(today()));S.qsess=guessSession();render();window.scrollTo(0,0);const q=document.getElementById("qtext");if(q)q.focus();return}
- else if(a==="qadd"){if(rec)rec.stop();quickAdd();return}
- else if(a==="mic"){startMic();return}
+ else if(a==="qadd"){quickAdd();return}
  else if(a==="qclear")S.qtext="";
  else if(a==="askclear")S.confirm="week";
  else if(a==="askreset")S.confirm="reset";
@@ -677,11 +937,31 @@ document.addEventListener("click",e=>{
   persist();toast("Payment added");
  }
  else if(a==="backup"){backup();return}
+ else if(a==="pread"){readClinicAct();return}
+ else if(a==="pclear"){S.ptext="";S.pdraft=null}
+ else if(a==="pdrop")S.pdraft.splice(+b.dataset.i,1);
+ else if(a==="padd")(S.pdraft=S.pdraft||[]).push({name:"",hno:"",payer:"",kind:"",tests:"",amount:""});
+ else if(a==="psave"){savePatients();return}
+ else if(a==="rread"){readRemitAct();return}
+ else if(a==="rclear"){S.rtext="";S.rdraft=null}
+ else if(a==="rcancel")S.rdraft=null;
+ else if(a==="rsave"){saveRemit();return}
+ else if(a==="pf")S.pf=b.dataset.f;
+ else if(a==="pmark"){const p=data.patients.find(x=>x.id===b.dataset.id);if(p){if(pStat(p).st==="paid"){p.manual="";p.pays=[];toast("Marked unpaid")}else{p.manual="paid";toast("Marked paid")}persist()}}
+ else if(a==="pask")S.confirm="p:"+b.dataset.id;
+ else if(a==="pdel"){data.patients=data.patients.filter(x=>x.id!==b.dataset.id);persist();S.confirm="";toast("Patient deleted")}
+ else if(a==="paskall")S.confirm="pall";
+ else if(a==="pdelall"){data.patients=[];data.remits=[];persist();S.confirm="";toast("All patient records deleted")}
  else return;
  render();
 });
 document.addEventListener("input",e=>{
  const el=e.target;
+ if(el.id==="ptext"){S.ptext=el.value;return}
+ if(el.id==="rtext"){S.rtext=el.value;return}
+ if(el.dataset.pd){const[i,f]=el.dataset.pd.split(".");if(S.pdraft&&S.pdraft[+i])S.pdraft[+i][f]=el.value;return}
+ if(el.id==="pq"){S.pq=el.value;render();const q=document.getElementById("pq");if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}return}
+ if(el.id==="odays"){data.settings.overdueDays=Math.max(1,parseInt(el.value,10)||45);persist();return}
  if(el.id==="qtext"){S.qtext=el.value;document.getElementById("qprev").innerHTML=qPreviewHTML();return}
  if(el.dataset.path){onLogInput(el);return}
  if(el.dataset.tpath){setPath(data,el.dataset.tpath.split("."),el.dataset.num?Math.max(0,parseFloat(el.value)||0):el.value);persist()}
@@ -689,6 +969,12 @@ document.addEventListener("input",e=>{
 document.addEventListener("change",async e=>{
  const el=e.target;
  if(el.dataset.act==="month"){S.month=el.value;render();return}
+ if(el.id==="psess"){S.psess=el.value;return}
+ if(el.id==="pdate"){S.pdate=el.value||iso(today());return}
+ if(el.id==="rsrc"){S.rsrc=el.value;if(S.rdraft)readRemitAct();return}
+ if(el.id==="rdate"){S.rdate=el.value||iso(today());return}
+ if(el.dataset.rd!==undefined){S.rdraft[+el.dataset.rd].match=el.value;render();return}
+ if(el.id==="odays"){render();return}
  if(el.dataset.act==="qsess"){S.qsess=el.value;document.getElementById("qprev").innerHTML=qPreviewHTML();return}
  if(el.dataset.txn!==undefined){const t=data.txns.find(x=>x.id===el.dataset.txn);if(t){t.payer=el.value;persist();render()}return}
  if(el.id==="csv"&&el.files[0]){const f=el.files[0];el.value="";try{await importCSV(f)}catch(err){toast("Couldn't read that file. Check it's a CSV export from your bank.")}return}
