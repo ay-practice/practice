@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Practice">
+<meta name="theme-color" content="#123B33">
+<title>Practice</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+<style>
+:root{--ink:#262A3F;--muted:#636A80;--line:#E4E7F0;--soft:#F8F9FC;--owed:#B4434A;--good:#2F7A55;--btn:#3B4270}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.45;color:var(--ink);min-height:100vh;background:linear-gradient(180deg,#F4F5FB 0%,#FBF8FA 60%,#F7FAF8 100%) fixed}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #7FA7E0;outline-offset:2px}
+header{background:linear-gradient(120deg,#E3E8F8 0%,#F2E6F0 55%,#E6F3EC 100%);position:sticky;top:0;z-index:20;padding-top:env(safe-area-inset-top);border-bottom:1px solid #DDE1EE}
+.hin{max-width:960px;margin:0 auto;padding:12px 16px 0}
+.hin h1{font-size:18px;font-weight:600;display:flex;align-items:center;gap:8px}
+.hin h1 svg{width:34px;height:16px}
+nav{display:flex;gap:4px;margin-top:10px;overflow-x:auto;padding-bottom:8px}
+nav button{border:0;background:rgba(255,255,255,.45);color:var(--muted);padding:9px 15px;border-radius:20px;font-size:16px;white-space:nowrap}
+nav button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(60,70,110,.12)}
+main{max-width:960px;margin:0 auto;padding-bottom:calc(120px + env(safe-area-inset-bottom))}
+.pad{padding:16px}
+.hero{margin:16px 16px 0;padding:20px 18px 18px;border-radius:18px;background:linear-gradient(135deg,#E1EAFB 0%,#EFE5F6 50%,#FBE6EE 100%);border:1px solid #E2E3F2}
+.hero .lbl{font-size:16px;color:var(--muted)}
+.big{font-size:46px;font-weight:600;line-height:1.1;letter-spacing:-.02em}
+.wbars{display:flex;align-items:flex-end;gap:8px;height:110px;margin-top:16px}
+.wbars .col{flex:1;display:flex;flex-direction:column;align-items:center;height:100%}
+.wbars .b{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.wbars .b i{display:block;width:70%;max-width:34px;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#B9C8F0,#D9C6EA);min-height:3px}
+.wbars .col.now .b i{background:linear-gradient(180deg,#8FA6E6,#C3A8E0)}
+.wbars small{white-space:nowrap;font-size:12px;color:var(--muted);margin-top:4px;text-align:center;line-height:1.25}
+.wbars small b{display:block;color:var(--ink);font-size:13px}
+.split{display:flex;height:12px;border-radius:6px;overflow:hidden;margin-top:14px;background:rgba(255,255,255,.6)}
+.split i{display:block;height:100%}
+.keys{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:14px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.grid2{display:grid;grid-template-columns:1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:720px){.grid2{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:1fr 1fr 1fr}}
+.pcard{background:linear-gradient(135deg,var(--bg) 0%,#fff 75%);border-color:var(--bg)}
+.ph{display:flex;justify-content:space-between;align-items:baseline}
+.ph b{font-size:20px;color:var(--c)}
+.owed{font-size:20px;font-weight:600;color:var(--owed)}
+.ok{color:var(--good)}
+.sch{font-size:14px;color:var(--muted);margin:4px 0 10px}
+.prog{height:8px;background:rgba(255,255,255,.8);border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--m),var(--c))}
+.foot{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-top:6px}
+.note{font-size:14px;margin-top:8px}
+.warn{color:var(--owed);font-weight:600}
+.muted{color:var(--muted)}
+h2{font-size:20px;font-weight:600;margin:28px 0 10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.btn{font-weight:600;font-size:16px;padding:12px 16px;border-radius:10px;border:0;background:linear-gradient(135deg,#5B66A8,#3B4270);color:#fff}
+.btn.alt{background:#fff;color:var(--btn);border:1.5px solid #C9CEE6}
+.btn.red{background:linear-gradient(135deg,#D06A70,#B4434A)}
+.btn.small{padding:6px 10px;font-size:14px}
+.link{border:0;background:none;color:var(--btn);text-decoration:underline;font-size:15px;padding:4px 0}
+.link.red{color:var(--owed)}
+.alert{display:block;width:100%;text-align:left;background:linear-gradient(135deg,#FCEBD6,#fff 80%);border:1px solid #F3DDBF;border-radius:12px;padding:14px;font-size:16px;margin-bottom:14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:720px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stats div{border-radius:12px;padding:12px;font-size:14px;color:var(--muted);border:1px solid var(--line)}
+.stats div:nth-child(1){background:linear-gradient(135deg,#E1EDF8,#fff)}
+.stats div:nth-child(2){background:linear-gradient(135deg,#F8E3EB,#fff)}
+.stats div:nth-child(3){background:linear-gradient(135deg,#DFF2E7,#fff)}
+.stats div:nth-child(4){background:linear-gradient(135deg,#ECE8F8,#fff)}
+.stats b{display:block;font-size:28px;font-weight:600;color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:16px}
+th{font-size:14px;color:var(--muted);font-weight:500;padding:8px 4px;text-align:center}
+th:first-child,td:first-child{text-align:left}
+td{padding:4px 2px}
+.tbl{padding:0;overflow:hidden}
+.tbl th,.tbl td{padding:11px 12px;text-align:right}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl tr+tr td{border-top:1px solid var(--line)}
+.tbl tr.tot td{border-top:2px solid var(--ink);font-weight:600}
+.tbl thead tr{background:linear-gradient(90deg,#EEF1FA,#F8EEF4)}
+input.n{width:64px;text-align:center;font-size:17px;padding:8px 4px;border:1px solid #D6DAE8;border-radius:8px;background:#fff}
+input.t,select.t,textarea.t{width:100%;font-size:16px;padding:10px;border:1px solid #D6DAE8;border-radius:10px;background:#fff}
+td.c{text-align:center}
+.chart{display:flex;align-items:flex-end;gap:8px;height:170px;padding:10px 4px 0}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;height:100%}
+.bars{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:3px}
+.bars i{display:block;width:40%;max-width:22px;border-radius:5px 5px 2px 2px;min-height:2px}
+.e{background:linear-gradient(180deg,#B9C8F0,#DCE3F6)}.r{background:linear-gradient(180deg,#8FD0AE,#CDEBDB)}
+.chart .col span{font-size:13px;color:var(--muted);margin-top:6px}
+.leg{display:flex;gap:16px;font-size:14px;color:var(--muted);margin-top:8px}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.weeknav{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.weeknav .btn{font-size:24px;padding:2px 16px}
+.weeknav small{display:block;font-size:14px;color:var(--muted);text-align:center}
+.weeknav strong{font-size:20px}
+.quick{background:linear-gradient(135deg,#ECE8F8 0%,#F9E9F0 60%,#fff 100%);border-color:#E3DDF3}
+.quick .qt{font-size:19px;font-weight:600}
+.qline{display:flex;gap:8px;align-items:stretch;margin-top:10px}
+.qline textarea{flex:1}
+.mic{flex:0 0 auto;width:84px;border:0;border-radius:12px;background:linear-gradient(135deg,#8FA6E6,#B79BDF);color:#fff;font-size:13px;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 4px}
+.mic svg{width:26px;height:26px}
+.mic.on{background:linear-gradient(135deg,#E07A86,#C9566A);animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.75}}
+@media(prefers-reduced-motion:reduce){.mic.on{animation:none}}
+.qprev{margin-top:10px;font-size:15px}
+.qprev li{list-style:none;padding:3px 0}
+.qprev li.ok::before{content:"✓ ";color:var(--good);font-weight:700}
+.qprev li.bad::before{content:"! ";color:var(--owed);font-weight:700}
+details.sess{background:linear-gradient(135deg,var(--bg) 0%,#fff 70%);border:1px solid var(--bg);border-radius:14px;margin-bottom:10px;overflow:hidden}
+details.sess summary{list-style:none;display:flex;gap:10px;justify-content:space-between;align-items:center;padding:14px 16px;cursor:pointer}
+details.sess summary::-webkit-details-marker{display:none}
+summary b{display:block;font-size:18px;color:var(--c)}
+summary small{font-size:14px;color:var(--muted)}
+summary .amt{flex-shrink:0;font-size:19px;font-weight:600;color:var(--c)}
+.sbody{padding:4px 16px 16px;border-top:1px solid var(--bg);background:rgba(255,255,255,.7)}
+.sub{font-size:14px;color:var(--muted);font-weight:500;margin:12px 0 4px}
+.irow{display:flex;justify-content:space-between;align-items:center;padding:4px 0;gap:8px}
+.tag{font-size:13px;color:var(--muted)}
+.bar{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(90deg,#F1F3FB,#FAF0F5);border-top:1px solid var(--line);z-index:15;padding-bottom:env(safe-area-inset-bottom)}
+.bar .in{max-width:960px;margin:0 auto;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.bar .tot{font-size:26px;font-weight:600}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:26px 0 10px}
+.chip{font-size:15px;padding:8px 13px;border-radius:18px;border:1px solid #C9CEE6;background:#fff;color:var(--btn)}
+.chip.on{background:linear-gradient(135deg,#5B66A8,#3B4270);border-color:transparent;color:#fff}
+.tx{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:12px 14px}
+.tx+.tx{border-top:1px solid var(--line)}
+.tx .d{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tx .a{font-weight:600;text-align:right}
+.tx select{font-size:15px;padding:6px;border:1px solid #D6DAE8;border-radius:8px;background:#fff}
+.x{border:0;background:none;color:var(--muted);font-size:24px;padding:0 6px}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form label{font-size:14px;color:var(--muted)}
+.trow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:5px 0}
+.trow em{display:block;font-style:normal;font-size:13px;color:#9A6118}
+.trow input{width:86px}
+.filebtn input{display:none}
+.filebtn{display:inline-block}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));background:var(--ink);color:#fff;padding:11px 16px;border-radius:10px;font-size:15px;z-index:30;max-width:90vw;display:none}
+p.help{font-size:14px;color:var(--muted);margin-bottom:8px}
+</style>
+</head>
+<body>
+<header><div class="hin"><h1><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M0 10h9l2-3 2 3h3l3-9 3 14 2-5h10" fill="none" stroke="#C9566A" stroke-width="2" stroke-linejoin="round"/></svg>Private practice activity</h1>
+<nav aria-label="Sections"><button data-tab="overview">Overview</button><button data-tab="log">Log week</button><button data-tab="payments">Payments</button><button data-tab="tariffs">Tariffs</button></nav></div></header>
+<main id="main"></main>
+<div id="toast" role="status"></div>
+<script>
+"use strict";
+const KEY="practice-dashboard-v1";
+const PAL={kp:{c:"#8A3A5C",m:"#E3A3BC",bg:"#F8E3EB"},spire:{c:"#2E6A9A",m:"#8DB6DD",bg:"#E1EDF8"},nuffield:{c:"#2F7A55",m:"#94CFAE",bg:"#DFF2E7"},medserv:{c:"#9A6118",m:"#F0C38A",bg:"#FCEBD6"},reporting:{c:"#5E4FA0",m:"#B5A9E3",bg:"#ECE8F8"}};
+const pv=k=>`--c:${PAL[k].c};--m:${PAL[k].m};--bg:${PAL[k].bg}`;
+const PAYERS=[{id:"spire",name:"Spire"},{id:"medserv",name:"Medserv"},{id:"kp",name:"Kings Park"},{id:"nuffield",name:"Nuffield"}].map(p=>({...p,color:PAL[p.id].m}));
+const PNAME=Object.fromEntries(PAYERS.map(p=>[p.id,p.name]));
+const INS=[{id:"self",name:"Self-pay"},{id:"aviva",name:"Aviva"},{id:"axa",name:"AXA"},{id:"bupa",name:"Bupa"},{id:"vitality",name:"Vitality"},{id:"healix",name:"Healix"}];
+const INAME=Object.fromEntries(INS.map(i=>[i.id,i.name]));
+const HOSP={
+ kp:{name:"Kings Park",inv:[["ecg","ECG"],["echo","Echocardiogram"],["zio","ZIO patch"]]},
+ spire:{name:"Spire",inv:[["echo","Echocardiogram"],["synexus","Synexus echo"],["ecg","ECG"],["h24","24h ECG monitor"],["h48","48h ECG monitor"],["h72","72h ECG monitor"],["bp24","24h BP monitor"],["ett","Exercise treadmill test"]]},
+ nuffield:{name:"Nuffield",inv:[["ecg","ECG"],["echo","Echocardiogram"],["zio","ZIO patch"]]}
+};
+const ITEMNAME={ecg:"ECG",echo:"echo",zio:"ZIO patch",synexus:"Synexus echo",h24:"24h ECG monitor",h48:"48h ECG monitor",h72:"72h ECG monitor",bp24:"24h BP monitor",ett:"treadmill test",toe:"TOE",dccv:"DC cardioversion",ct:"CT",mri:"MRI"};
+const SESS=[
+ {id:"kp",hosp:"kp",off:0,title:"Kings Park",when:"evening",pal:"kp"},
+ {id:"spire",hosp:"spire",off:3,title:"Spire Shawfair Park",when:"morning",pal:"spire",procs:true},
+ {id:"reporting",hosp:"spire",off:3,title:"CT and MRI reporting",when:"afternoon",pal:"reporting",scans:true},
+ {id:"nuffield",hosp:"nuffield",off:3,title:"Nuffield",when:"evening",pal:"nuffield"},
+ {id:"spireFri",hosp:"spire",off:4,title:"Spire follow-up clinic",when:"evening",pal:"spire"},
+ {id:"nuffieldFri",hosp:"nuffield",off:4,title:"Nuffield follow-up clinic",when:"evening",pal:"nuffield"}
+];
+const SMAP=Object.fromEntries(SESS.map(s=>[s.id,s]));
+const CLINICS=SESS.filter(s=>!s.scans);
+const SCHED={
+ spire:"Consultations weekly, about 2 weeks after clinic. Investigations, procedures and scan reports monthly, a month in arrears.",
+ nuffield:"Self-pay consultations and investigations monthly, a month in arrears.",
+ kp:"All consultations and investigations. Pays at irregular intervals.",
+ medserv:"Bupa consultations, TOE and cardioversion at Spire, and insured consultations at Nuffield. Pays at irregular intervals."
+};
+const DEFAULT={
+ tariffs:{
+  consult:{self:{new:225,fu:150},aviva:{new:204,fu:144},axa:{new:195,fu:132},bupa:{new:190,fu:115},vitality:{new:160,fu:100},healix:{new:200,fu:150}},
+  inv:{spire:{echo:200,synexus:550,ecg:30,h24:50,h48:70,h72:90,bp24:50,ett:150},nuffield:{ecg:45,echo:214,zio:75},kp:{ecg:70,echo:223,zio:180}},
+  procs:{toe:{self:300,insured:280},dccv:{self:150,insured:150}},
+  scans:{self:200,insured:150}
+ },
+ settings:{keywords:{spire:"spire",nuffield:"nuffield",kp:"kings park, kingspark, circle",medserv:"medserv"},opening:{spire:0,nuffield:0,kp:0,medserv:0}},
+ weeks:{},txns:[]
+};
+
+// helpers
+const n=v=>Number(v)||0;
+const clone=o=>JSON.parse(JSON.stringify(o));
+const fmt=v=>(v< -0.5?"−":"")+"£"+Math.abs(Math.round(v)).toLocaleString("en-GB");
+const pad=x=>String(x).padStart(2,"0");
+const iso=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parseISO=s=>{const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const addDays=(d,k)=>{const x=new Date(d);x.setDate(x.getDate()+k);return x};
+const today=()=>{const t=new Date();return new Date(t.getFullYear(),t.getMonth(),t.getDate())};
+const mondayOf=d=>addDays(d,-((d.getDay()+6)%7));
+const monthKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}`;
+const monthLabel=(k,s)=>{const[y,m]=k.split("-").map(Number);return new Date(y,m-1,1).toLocaleDateString("en-GB",s?{month:"short"}:{month:"long",year:"numeric"})};
+const prevMonth=(k,i)=>{const[y,m]=k.split("-").map(Number);return monthKey(new Date(y,m-1-i,1))};
+const dayLabel=d=>d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"});
+const longDate=d=>d.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+const endNextMonth=d=>new Date(d.getFullYear(),d.getMonth()+2,0);
+const daysBetween=(a,b)=>Math.round((b-a)/864e5);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function deepMerge(def,val){
+ if(typeof def!=="object"||def===null||Array.isArray(def))return val===undefined?def:val;
+ const out={...def};
+ if(val&&typeof val==="object")for(const k of Object.keys(val))out[k]=k in def?deepMerge(def[k],val[k]):val[k];
+ return out;
+}
+const getPath=(o,p)=>p.reduce((a,k)=>a==null?a:a[k],o);
+function setPath(o,p,v){let x=o;for(const k of p.slice(0,-1)){if(typeof x[k]!=="object"||x[k]===null)x[k]={};x=x[k]}x[p[p.length-1]]=v}
+const emptyConsult=()=>Object.fromEntries(INS.map(i=>[i.id,{new:0,fu:0}]));
+function emptyWeek(start){
+ const w={start};
+ for(const s of CLINICS)w[s.id]={consult:emptyConsult(),inv:{}};
+ w.spire.procs={toe:{self:0,bupa:0,ins:0},dccv:{self:0,bupa:0,ins:0}};
+ w.reporting={ct:{ins:0,self:0},mri:{ins:0,self:0}};
+ return w;
+}
+
+// storage
+let data;
+try{const s=localStorage.getItem(KEY);data=s?deepMerge(clone(DEFAULT),JSON.parse(s)):clone(DEFAULT)}catch(e){data=clone(DEFAULT)}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(data));return true}catch(e){toast("Couldn't save on this phone. Free up some storage and try again.");return false}}
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+
+// income routing
+function computeLines(w){
+ const T=data.tariffs,L=[],mon=parseISO(w.start);
+ const push=(site,off,payer,stream,amt)=>{if(amt>0)L.push({date:addDays(mon,off),site,payer,stream,amount:amt})};
+ for(const s of CLINICS){
+  const site=w[s.id];if(!site)continue;const h=s.hosp;
+  for(const i of INS){
+   const c=(site.consult||{})[i.id]||{},t=T.consult[i.id];
+   const amt=n(c.new)*n(t.new)+n(c.fu)*n(t.fu);
+   if(h==="kp")push(s.id,s.off,"kp","kp",amt);
+   else if(h==="spire")push(s.id,s.off,i.id==="bupa"?"medserv":"spire",i.id==="bupa"?"medserv":"spireWeekly",amt);
+   else push(s.id,s.off,i.id==="self"?"nuffield":"medserv",i.id==="self"?"nuffieldMonthly":"medserv",amt);
+  }
+  const stream=h==="kp"?"kp":h==="spire"?"spireMonthly":"nuffieldMonthly";
+  for(const[k]of HOSP[h].inv)push(s.id,s.off,h,stream,n((site.inv||{})[k])*n(T.inv[h][k]));
+  if(s.procs)for(const k of ["toe","dccv"]){
+   const p=(site.procs||{})[k]||{},t=T.procs[k];
+   push(s.id,s.off,"spire","spireMonthly",n(p.self)*n(t.self)+n(p.ins)*n(t.insured));
+   push(s.id,s.off,"medserv","medserv",n(p.bupa)*n(t.insured));
+  }
+ }
+ const r=w.reporting||{};
+ push("reporting",3,"spire","spireMonthly",["ct","mri"].reduce((a,k)=>a+n((r[k]||{}).self)*n(T.scans.self)+n((r[k]||{}).ins)*n(T.scans.insured),0));
+ return L;
+}
+const dueOf=l=>l.stream==="spireWeekly"?addDays(l.date,14):(l.stream==="spireMonthly"||l.stream==="nuffieldMonthly")?endNextMonth(l.date):null;
+function activity(w){
+ const mon=parseISO(w.start),out={};
+ for(const s of CLINICS){
+  const site=w[s.id]||{};let nw=0,fu=0,inv=0;
+  for(const i of INS){const c=(site.consult||{})[i.id]||{};nw+=n(c.new);fu+=n(c.fu)}
+  for(const[k]of HOSP[s.hosp].inv)inv+=n((site.inv||{})[k]);
+  if(s.procs)for(const k of ["toe","dccv"]){const p=(site.procs||{})[k]||{};inv+=n(p.self)+n(p.bupa)+n(p.ins)}
+  out[s.id]={date:addDays(mon,s.off),newc:nw,fu,inv,scans:0};
+ }
+ const r=w.reporting||{};
+ out.reporting={date:addDays(mon,3),newc:0,fu:0,inv:0,scans:["ct","mri"].reduce((a,k)=>a+n((r[k]||{}).self)+n((r[k]||{}).ins),0)};
+ return out;
+}
+const getWeek=s=>deepMerge(emptyWeek(s),data.weeks[s]||{});
+const weekTotal=s=>computeLines(getWeek(s)).reduce((a,l)=>a+l.amount,0);
+const allLines=()=>Object.values(data.weeks).flatMap(w=>computeLines(deepMerge(emptyWeek(w.start),w)));
+
+// ---------- quick entry parser ----------
+const NUMW={a:1,an:1,one:1,single:1,two:2,couple:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20};
+const HRS={"24":"24","twentyfour":"24","48":"48","fortyeight":"48","72":"72","seventytwo":"72"};
+const PHR=[
+ [/\b(?:24|twenty[\s-]?four)[\s-]*(?:h|hr|hrs|hour|hours)?[\s-]*(?:ambulatory\s+)?(?:bp|blood\s+pressure)(?:\s+monitors?)?\b|\babpms?\b|\b(?:ambulatory\s+)?(?:bp|blood\s+pressure)\s+monitors?\b/g,()=>"item:bp24"],
+ [/\b(24|48|72|twenty[\s-]?four|forty[\s-]?eight|seventy[\s-]?two)[\s-]*(?:h|hr|hrs|hour|hours)\b(?:[\s-]*(?:ecg|ekg|holter|cardiac|heart|tape|monitor|recording)s?)*/g,(m,d)=>"item:h"+(HRS[d.replace(/[\s-]/g,"")]||"24")],
+ [/\bholters?\b/g,()=>"item:h24"],
+ [/\btrans[\s-]?o?esophageal(?:\s+echo(?:cardiograms?|s|es)?)?\b|\btoes?\b|\btees?\b/g,()=>"item:toe"],
+ [/\bsynexus(?:\s+echo(?:cardiograms?|s|es)?)?\b/g,()=>"item:synexus"],
+ [/\becho(?:cardiograms?|cardiography|s|es)?\b/g,()=>"item:echo"],
+ [/\b(?:12[\s-]?lead\s+)?(?:ecg|ekg)s?\b/g,()=>"item:ecg"],
+ [/\bzio(?:s|\s+patch(?:es)?)?\b/g,()=>"item:zio"],
+ [/\bexercise\s+(?:treadmill\s+)?(?:tolerance\s+)?tests?\b|\btreadmills?(?:\s+tests?)?\b|\betts?\b|\bstress\s+tests?\b/g,()=>"item:ett"],
+ [/\b(?:dc\s+)?cardioversions?\b|\bdccvs?\b/g,()=>"item:dccv"],
+ [/\bctcas?\b|\bct\s+coronar(?:y|ies)(?:\s+angiograms?)?\b|\bct\s+scans?\b|\bcts?\b/g,()=>"item:ct"],
+ [/\bcmrs?\b|\bcardiac\s+mris?\b|\bmri\s+scans?\b|\bmris?\b/g,()=>"item:mri"],
+ [/\bself[\s-]?(?:pay(?:ing|s|ers?)?|funded)\b|\bprivate\b/g,()=>"payer:self"],
+ [/\baxa(?:\s+ppp)?\b|\bppp\b/g,()=>"payer:axa"],
+ [/\bbupa\b/g,()=>"payer:bupa"],[/\baviva\b/g,()=>"payer:aviva"],[/\bvitality\b/g,()=>"payer:vitality"],[/\bhealix\b/g,()=>"payer:healix"],
+ [/\binsur(?:ed|ance)\b/g,()=>"payer:ins"],
+ [/\bfollow[\s-]?ups?\b|\bf\/u\b|\bfus?\b|\breviews?\b/g,()=>"kind:fu"],
+ [/\bnew(?:\s+patients?)?\b|\bnews\b|\bnps?\b/g,()=>"kind:new"]
+];
+function tokenize(text){
+ let s=" "+text.toLowerCase().replace(/[’']/g,"").replace(/[,;:.!?&+()]/g," ")+" ";
+ const T=[];
+ for(const[re,fn]of PHR)s=s.replace(re,(...a)=>{T.push(fn(...a));return ` §${T.length-1}§ `});
+ const toks=[];
+ for(const w of s.split(/\s+/)){
+  if(!w)continue;
+  let m=w.match(/^§(\d+)§$/);
+  if(m){const[t,v]=T[+m[1]].split(":");toks.push({t,v});continue}
+  m=w.match(/^x?(\d{1,3})x?$/);
+  if(m){toks.push({t:"num",v:+m[1]});continue}
+  if(NUMW[w]!==undefined)toks.push({t:"num",v:NUMW[w]});
+ }
+ return toks;
+}
+function clauses(toks){
+ const out=[];let c={};
+ const flush=()=>{if(c.item||c.payer||c.kind||c.num!=null)out.push(c);c={}};
+ const special=it=>["toe","dccv","ct","mri"].includes(it);
+ toks.forEach((t,i)=>{
+  const nx=toks[i+1];
+  if(t.t==="num"){
+   if(c.num!=null)flush();
+   else if(!c.item&&(c.payer||c.kind)&&nx&&nx.t==="item")flush();
+   c.num=t.v;
+  }else if(t.t==="item"){if(c.item||c.kind)flush();c.item=t.v}
+  else if(t.t==="payer"){if(c.payer||(c.item&&!special(c.item)))flush();c.payer=t.v}
+  else if(t.t==="kind"){if(c.kind||c.item)flush();c.kind=t.v}
+ });
+ flush();
+ return out;
+}
+function interpret(text,sid){
+ const sess=SMAP[sid],ok=[],bad=[];
+ for(const c of clauses(tokenize(text))){
+  const k=c.num==null?1:c.num;
+  if(k<=0)continue;
+  if(c.item==="ct"||c.item==="mri"){
+   const col=c.payer==="self"?"self":"ins";
+   ok.push({path:["reporting",c.item,col],n:k,label:`${k} ${ITEMNAME[c.item]} reported, ${col==="self"?"self-pay":"insured"}${c.payer?"":" (assumed insured)"}`});
+  }else if(c.item==="toe"||c.item==="dccv"){
+   const col=!c.payer||c.payer==="self"?"self":c.payer==="bupa"?"bupa":"ins";
+   ok.push({path:["spire","procs",c.item,col],n:k,label:`${k} ${ITEMNAME[c.item]} at Spire, ${col==="self"?"self-pay":col==="bupa"?"Bupa":"insured"}${c.payer?"":" (assumed self-pay)"}`});
+  }else if(c.item){
+   const target=sess.scans?"spire":sid,h=SMAP[target].hosp;
+   if(!HOSP[h].inv.some(([x])=>x===c.item)){bad.push(`${ITEMNAME[c.item]} isn't set up at ${HOSP[h].name}, so it was left out`);continue}
+   ok.push({path:[target,"inv",c.item],n:k,label:`${k} ${ITEMNAME[c.item]}${k>1&&!/patch|test|monitor/.test(ITEMNAME[c.item])?"s":""}`});
+  }else if(c.payer||c.kind){
+   if(sess.scans){bad.push("Consultations need a clinic. Choose the clinic above first");continue}
+   if(!c.payer||c.payer==="ins"){bad.push(`"${k} ${c.kind==="fu"?"follow-up":"new"}" left out: say which payer, such as Bupa or self-pay`);continue}
+   const kind=c.kind||(sid.endsWith("Fri")?"fu":"new");
+   ok.push({path:[sid,"consult",c.payer,kind],n:k,label:`${k} ${INAME[c.payer]} ${kind==="new"?"new":"follow-up"}${c.kind?"":" (assumed "+(kind==="new"?"new":"follow-up")+")"}`});
+  }else bad.push(`The number ${k} was left out because it wasn't clear what it was for`);
+ }
+ return{ok,bad};
+}
+function guessSession(){
+ const d=new Date(),day=d.getDay(),h=d.getHours();
+ if(day===1)return"kp";
+ if(day===4)return h<12?"spire":h<17?"reporting":"nuffield";
+ if(day===5)return"spireFri";
+ return"kp";
+}
+
+// voice input
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let rec=null;
+function setMicUI(on){const b=document.getElementById("micbtn");if(!b)return;b.classList.toggle("on",on);b.setAttribute("aria-label",on?"Stop listening":"Speak");b.querySelector("span").textContent=on?"Listening":"Speak"}
+function startMic(){
+ if(rec){rec.stop();return}
+ if(!SR){toast("Voice isn't available in this browser. Tap in the box and use the microphone on your keyboard.");return}
+ const base=S.qtext.trim()?S.qtext.trim()+", ":"";
+ rec=new SR();rec.lang="en-GB";rec.interimResults=true;rec.continuous=false;
+ rec.onresult=e=>{let t="";for(const r of e.results)t+=r[0].transcript;S.qtext=base+t;const q=document.getElementById("qtext");if(q)q.value=S.qtext;const p=document.getElementById("qprev");if(p)p.innerHTML=qPreviewHTML()};
+ rec.onerror=e=>{toast(e.error==="not-allowed"||e.error==="service-not-allowed"?"Microphone access is off. Allow it when asked, or check Settings, then try again.":"Didn't catch that. Tap Speak and try again.")};
+ rec.onend=()=>{rec=null;setMicUI(false)};
+ try{rec.start();setMicUI(true)}catch(err){rec=null;setMicUI(false);toast("Couldn't start voice input. Use the microphone on your keyboard instead.")}
+}
+
+// state
+const S={tab:"overview",start:iso(mondayOf(today())),month:monthKey(today()),filter:"todo",open:"",confirm:"",qsess:guessSession(),qtext:""};
+const $main=document.getElementById("main");
+let toastTimer;
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.display="none",3400)}
+function render(){
+ document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
+ $main.innerHTML=S.tab==="overview"?vOverview():S.tab==="log"?vLog():S.tab==="payments"?vPayments():vTariffs();
+}
+
+// ---------- overview ----------
+function vOverview(){
+ const t=today(),lines=allLines();
+ const paid=data.txns.filter(x=>PNAME[x.payer]);
+ const unmatched=data.txns.filter(x=>!x.payer).length;
+ const stats=PAYERS.map(p=>{
+  const L=lines.filter(l=>l.payer===p.id),op=n(data.settings.opening[p.id]);
+  const expected=op+L.reduce((a,l)=>a+l.amount,0);
+  const P=paid.filter(x=>x.payer===p.id),received=P.reduce((a,x)=>a+x.amount,0);
+  const sched=p.id==="spire"||p.id==="nuffield";
+  const dueNow=op+L.filter(l=>{const d=dueOf(l);return!d||d<=t}).reduce((a,l)=>a+l.amount,0);
+  const fut=st=>L.filter(l=>l.stream===st).map(dueOf).filter(d=>d&&d>t).sort((a,b)=>a-b)[0];
+  return{...p,expected,received,out:expected-received,overdue:sched?Math.max(0,dueNow-received):0,
+   last:P.length?P.map(x=>x.date).sort().slice(-1)[0]:null,nextW:fut("spireWeekly"),nextM:fut(p.id==="spire"?"spireMonthly":"nuffieldMonthly")};
+ });
+ const totOut=stats.reduce((a,s)=>a+Math.max(0,s.out),0),totExp=stats.reduce((a,s)=>a+s.expected,0);
+ const hasData=Object.keys(data.weeks).length>0;
+ const weeks=[5,4,3,2,1,0].map(i=>iso(addDays(mondayOf(t),-7*i)));
+ const wvals=weeks.map(weekTotal);
+ const mset=new Set([monthKey(t)]);lines.forEach(l=>mset.add(monthKey(l.date)));data.txns.forEach(x=>mset.add(x.date.slice(0,7)));
+ const months=[...mset].sort().reverse();
+ if(!months.includes(S.month))S.month=months[0];
+ const acts=Object.values(data.weeks).flatMap(w=>Object.values(activity(deepMerge(emptyWeek(w.start),w)))).filter(a=>monthKey(a.date)===S.month);
+ const sum=k=>acts.reduce((a,x)=>a+x[k],0);
+ const earned=(p,m)=>lines.filter(l=>l.payer===p&&monthKey(l.date)===m).reduce((a,l)=>a+l.amount,0);
+ const got=(p,m)=>paid.filter(x=>x.payer===p&&x.date.slice(0,7)===m).reduce((a,x)=>a+x.amount,0);
+ const chart=[5,4,3,2,1,0].map(i=>{const m=prevMonth(S.month,i);return{m:monthLabel(m,1),e:PAYERS.reduce((a,p)=>a+earned(p.id,m),0),r:PAYERS.reduce((a,p)=>a+got(p.id,m),0)}});
+ const max=Math.max(1,...chart.flatMap(c=>[c.e,c.r]));
+ const pos=stats.filter(s=>s.out>0.5);
+ return `
+ <section class="hero">
+  <div class="lbl">Outstanding at ${longDate(t)}</div>
+  <div class="big">${fmt(totOut)}</div>
+  <div class="lbl">${hasData?`still to come from ${fmt(totExp)} of logged work`:"Log your first clinic to start tracking what you're owed."}</div>
+  ${pos.length?`<div class="split">${pos.map(s=>`<i style="width:${100*s.out/totOut}%;background:${s.color}"></i>`).join("")}</div>
+  <div class="keys">${pos.map(s=>`<span><span class="dot" style="background:${s.color}"></span>${s.name} ${fmt(s.out)}</span>`).join("")}</div>`:""}
+  <div class="wbars" role="img" aria-label="Earnings for the last six weeks">${weeks.map((w,i)=>`<div class="col ${i===5?"now":""}"><div class="b"><i style="height:${100*wvals[i]/Math.max(1,...wvals)}%"></i></div><small><b>${fmt(wvals[i])}</b>${i===5?"This wk":parseISO(w).getDate()+"/"+(parseISO(w).getMonth()+1)}</small></div>`).join("")}</div>
+  <div style="margin-top:14px"><button class="btn" data-act="quickgo">Quick add a clinic</button></div>
+ </section>
+ <div class="pad">
+  ${unmatched?`<button class="alert" data-tab="payments">${unmatched} bank ${unmatched===1?"payment needs":"payments need"} matching to a payer. Open Payments to match them.</button>`:""}
+  <div class="grid2">${stats.map(s=>{const pct=s.expected>0?Math.min(100,100*s.received/s.expected):0;return `
+   <div class="card pcard" style="${pv(s.id)}">
+    <div class="ph"><b>${s.name}</b><span class="owed ${s.out>0.5?"":"ok"}">${fmt(s.out)}</span></div>
+    <div class="sch">${SCHED[s.id]}</div>
+    <div class="prog"><i style="width:${pct}%"></i></div>
+    <div class="foot"><span>${fmt(s.received)} received of ${fmt(s.expected)}</span><span>${Math.round(pct)}%</span></div>
+    <div class="note">
+     ${s.overdue>0.5?`<div class="warn">${fmt(s.overdue)} past its usual payment date</div>`:""}
+     ${s.nextW?`<div>Next consultation payment due around ${dayLabel(s.nextW)}</div>`:""}
+     ${s.nextM?`<div>Next monthly payment due by ${dayLabel(s.nextM)}</div>`:""}
+     <div class="muted">${s.last?(d=>d===0?"Last payment today":d===1?"Last payment yesterday":`Last payment ${d} days ago`)(daysBetween(parseISO(s.last),t)):"No payments recorded yet"}</div>
+    </div>
+   </div>`}).join("")}</div>
+  <div class="row" style="margin:30px 0 10px"><h2 style="margin:0">Month view</h2>
+   <select class="t" style="width:auto" data-act="month" aria-label="Choose month">${months.map(m=>`<option value="${m}" ${m===S.month?"selected":""}>${monthLabel(m)}</option>`).join("")}</select></div>
+  <div class="stats">
+   <div><b>${sum("newc")+sum("fu")}</b>Patients seen</div><div><b>${sum("newc")}</b>New consultations</div>
+   <div><b>${sum("inv")}</b>Investigations and procedures</div><div><b>${sum("scans")}</b>Scans reported</div>
+  </div>
+  <div class="card tbl" style="margin-top:12px"><table>
+   <thead><tr><th>Payer</th><th>Earned in ${monthLabel(S.month,1)}</th><th>Paid in ${monthLabel(S.month,1)}</th></tr></thead>
+   <tbody>${PAYERS.map(p=>`<tr><td><span class="dot" style="background:${p.color}"></span>${p.name}</td><td>${fmt(earned(p.id,S.month))}</td><td>${fmt(got(p.id,S.month))}</td></tr>`).join("")}
+   <tr class="tot"><td>Total</td><td>${fmt(PAYERS.reduce((a,p)=>a+earned(p.id,S.month),0))}</td><td>${fmt(PAYERS.reduce((a,p)=>a+got(p.id,S.month),0))}</td></tr></tbody>
+  </table></div>
+  <p class="help" style="margin-top:8px">Earned is work done that month. Paid is money that arrived that month, usually for earlier work because of payment lags.</p>
+  <h2>Last six months</h2>
+  <div class="card">
+   <div class="chart">${chart.map(c=>`<div class="col" title="${c.m}: earned ${fmt(c.e)}, received ${fmt(c.r)}"><div class="bars"><i class="e" style="height:${100*c.e/max}%"></i><i class="r" style="height:${100*c.r/max}%"></i></div><span>${c.m}</span></div>`).join("")}</div>
+   <div class="leg"><span><i class="e"></i>Earned</span><span><i class="r"></i>Received</span></div>
+  </div>
+ </div>`;
+}
+
+// ---------- log week ----------
+function siteSummary(id,a){return id==="reporting"?`${a.scans} scans`:`${a.newc+a.fu} patients, ${a.inv} tests`}
+function sessDate(s,mon){const d=addDays(mon,s.off);return `${dayLabel(d)}, ${s.when}`}
+function qPreviewHTML(){
+ if(!S.qtext.trim())return `<p class="help" style="margin:8px 0 0">Example: echos 4, ECGs 2, self-pay new 1, AXA follow-up 2</p>`;
+ const{ok,bad}=interpret(S.qtext,S.qsess);
+ return `<ul class="qprev">${ok.map(o=>`<li class="ok">${esc(o.label)}</li>`).join("")}${bad.map(b=>`<li class="bad">${esc(b)}</li>`).join("")}${!ok.length&&!bad.length?`<li class="bad">Nothing recognised yet. Try naming the test or payer, such as "2 echos" or "Bupa follow-up 1".</li>`:""}</ul>`;
+}
+function vLog(){
+ const w=getWeek(S.start),mon=parseISO(S.start),T=data.tariffs;
+ const lines=computeLines(w),act=activity(w);
+ const tot=s=>lines.filter(l=>l.site===s).reduce((a,l)=>a+l.amount,0);
+ const num=(path,label,v,wd)=>`<input class="n" ${wd?`style="width:${wd}px"`:""} type="number" inputmode="numeric" min="0" placeholder="0" aria-label="${esc(label)}" data-path="${path}" value="${n(v)||""}">`;
+ const consult=s=>`<table><thead><tr><th>Consultations</th><th>New</th><th>Follow-up</th></tr></thead><tbody>${INS.map(i=>{
+   const via=(s.hosp==="spire"&&i.id==="bupa")||(s.hosp==="nuffield"&&i.id!=="self")?` <span class="tag">(Medserv)</span>`:"";
+   return `<tr><td>${i.name}${via}</td><td class="c">${num(`${s.id}.consult.${i.id}.new`,`${i.name} new`,w[s.id].consult[i.id].new)}</td><td class="c">${num(`${s.id}.consult.${i.id}.fu`,`${i.name} follow-up`,w[s.id].consult[i.id].fu)}</td></tr>`}).join("")}</tbody></table>`;
+ const inv=s=>`<div class="sub">Investigations</div>${HOSP[s.hosp].inv.map(([k,l])=>`<div class="irow"><span>${l} <span class="tag">${fmt(T.inv[s.hosp][k])}</span></span>${num(`${s.id}.inv.${k}`,l,w[s.id].inv[k])}</div>`).join("")}`;
+ const procs=`<table style="margin-top:8px"><thead><tr><th>Procedures</th><th>Self-pay</th><th>Bupa</th><th>Other insured</th></tr></thead><tbody>${[["toe","TOE"],["dccv","DC cardioversion"]].map(([k,l])=>`<tr><td>${l}</td>${["self","bupa","ins"].map(c=>`<td class="c">${num(`spire.procs.${k}.${c}`,`${l} ${c}`,w.spire.procs[k][c],54)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+ const rep=`<table><thead><tr><th>Scans reported</th><th>Insured</th><th>Self-pay</th></tr></thead><tbody>${[["ct","CT"],["mri","MRI"]].map(([k,l])=>`<tr><td>${l}</td><td class="c">${num(`reporting.${k}.ins`,`${l} insured`,w.reporting[k].ins)}</td><td class="c">${num(`reporting.${k}.self`,`${l} self-pay`,w.reporting[k].self)}</td></tr>`).join("")}</tbody></table>`;
+ const card=s=>`<details class="sess" style="${pv(s.pal)}" data-sess="${s.id}" ${S.open===s.id?"open":""}><summary><span><b>${s.title}</b><small>${sessDate(s,mon)} · <span data-sum="${s.id}">${siteSummary(s.id,act[s.id])}</span></small></span><span class="amt" data-total="${s.id}">${fmt(tot(s.id))}</span></summary><div class="sbody">${s.scans?rep:consult(s)+inv(s)+(s.procs?procs:"")}</div></details>`;
+ const logged=Object.keys(data.weeks).sort().reverse().slice(0,8);
+ const thisWeek=iso(mondayOf(today()));
+ return `<div class="pad">
+  <div class="weeknav"><button class="btn alt" data-act="prev" aria-label="Previous week">‹</button>
+   <div><small>Week of</small><strong>${longDate(mon)}</strong></div>
+   <button class="btn alt" data-act="next" aria-label="Next week">›</button></div>
+  ${S.start!==thisWeek?`<div style="text-align:center;margin-top:6px"><button class="link" data-act="thisweek">Go to this week</button></div>`:""}
+
+  <div class="card quick" id="quick" style="margin-top:16px">
+   <div class="qt">Quick add</div>
+   <p class="help" style="margin-top:4px">Tap Speak and say what you did, or type it. Check the list below, then add it.</p>
+   <label class="muted" style="font-size:14px">Clinic
+    <select class="t" data-act="qsess">${SESS.map(s=>`<option value="${s.id}" ${S.qsess===s.id?"selected":""}>${s.title} (${dayLabel(addDays(mon,s.off))})</option>`).join("")}</select></label>
+   <div class="qline"><textarea class="t" id="qtext" rows="3" placeholder="echos 4, ECGs 2, self-pay new 1, AXA follow-up">${esc(S.qtext)}</textarea>
+   <button class="mic ${rec?"on":""}" id="micbtn" data-act="mic" aria-label="${rec?"Stop listening":"Speak"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>${rec?"Listening":"Speak"}</span></button></div>
+   <div id="qprev">${qPreviewHTML()}</div>
+   <div style="display:flex;gap:8px;margin-top:10px"><button class="btn" data-act="qadd">Add to this clinic</button><button class="btn alt" data-act="qclear">Clear</button></div>
+  </div>
+
+  <h2>Sessions this week</h2>
+  ${SESS.map(card).join("")}
+  ${data.weeks[S.start]?(S.confirm==="week"?`<p style="font-size:15px">Clear everything logged for this week? <button class="btn red small" data-act="clearweek">Clear week</button> <button class="link" data-act="cancel">Keep</button></p>`:`<button class="link red" data-act="askclear">Clear this week</button>`):""}
+  ${logged.length?`<h2>Recently logged weeks</h2><div class="card" style="padding:0">${logged.map((s,i)=>`<button class="tx" style="width:100%;border:0;${i?"border-top:1px solid var(--line);":""}background:${s===S.start?"var(--soft)":"#fff"};text-align:left" data-act="goweek" data-week="${s}"><span>Week of ${parseISO(s).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})}</span><span class="a">${fmt(weekTotal(s))}</span></button>`).join("")}</div>`:""}
+ </div>
+ <div class="bar"><div class="in"><div><div class="muted" style="font-size:14px">Week total</div><div class="tot" id="weektotal">${fmt(lines.reduce((a,l)=>a+l.amount,0))}</div></div><div class="muted" style="font-size:14px">Saves as you type</div></div></div>`;
+}
+function onLogInput(el){
+ const w=getWeek(S.start);
+ setPath(w,el.dataset.path.split("."),Math.max(0,parseInt(el.value,10)||0));
+ data.weeks[S.start]=w;persist();
+ const lines=computeLines(w),act=activity(w);
+ for(const s of SESS){
+  const t=document.querySelector(`[data-total="${s.id}"]`);if(t)t.textContent=fmt(lines.filter(l=>l.site===s.id).reduce((a,l)=>a+l.amount,0));
+  const m=document.querySelector(`[data-sum="${s.id}"]`);if(m)m.textContent=siteSummary(s.id,act[s.id]);
+ }
+ document.getElementById("weektotal").textContent=fmt(lines.reduce((a,l)=>a+l.amount,0));
+}
+function quickAdd(){
+ const{ok,bad}=interpret(S.qtext,S.qsess);
+ if(!ok.length){toast(bad.length?"Nothing could be added. Check the notes under the box.":"Type what you did in clinic first.");return}
+ const w=getWeek(S.start);
+ for(const o of ok)setPath(w,o.path,n(getPath(w,o.path))+o.n);
+ data.weeks[S.start]=w;persist();
+ const s=SMAP[S.qsess];
+ S.qtext="";S.open=s.scans?"reporting":S.qsess;
+ render();
+ toast(`Added ${ok.length} ${ok.length===1?"entry":"entries"} to ${s.title}${bad.length?". Some items were left out":""}`);
+}
+
+// ---------- payments ----------
+const parseAmt=v=>{if(v==null||String(v).trim()==="")return NaN;const s=String(v).replace(/[£,\s]/g,"");const neg=/^\(.*\)$/.test(s)||/^-/.test(s);const x=parseFloat(s.replace(/[()+-]/g,""));return neg?-x:x};
+function parseDateFlex(s){
+ if(!s)return null;s=String(s).trim();let m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+ if(m)return iso(new Date(+m[1],+m[2]-1,+m[3]));
+ m=s.match(/^(\d{1,2})[/.-](\d{1,2})[/.-](\d{2,4})/);
+ if(m){let y=+m[3];if(y<100)y+=2000;return iso(new Date(y,+m[2]-1,+m[1]))}
+ m=s.match(/^(\d{1,2})[\s-]+([A-Za-z]{3})[A-Za-z]*[\s-]+(\d{2,4})/);
+ if(m){const mi="janfebmaraprmayjunjulaugsepoctnovdec".indexOf(m[2].toLowerCase());let y=+m[3];if(y<100)y+=2000;if(mi>=0&&mi%3===0)return iso(new Date(y,mi/3,+m[1]))}
+ return null;
+}
+function parseCSV(text){
+ const rows=[];let row=[],f="",q=false;
+ for(let i=0;i<text.length;i++){const c=text[i];
+  if(q){if(c==='"'){if(text[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+  else if(c==='"')q=true;else if(c===","){row.push(f);f=""}else if(c==="\n"){row.push(f);rows.push(row);row=[];f=""}else if(c!=="\r")f+=c;
+ }
+ if(f||row.length){row.push(f);rows.push(row)}
+ return rows.filter(r=>r.some(x=>x.trim()));
+}
+function matchPayer(desc){
+ const d=desc.toLowerCase();
+ for(const p of PAYERS){const ws=(data.settings.keywords[p.id]||"").split(",").map(w=>w.trim().toLowerCase()).filter(Boolean);if(ws.some(w=>d.includes(w)))return p.id}
+ return "";
+}
+function ingest(items){
+ const ids=new Set(data.txns.map(x=>x.id));let added=0,matched=0,dup=0;
+ for(const it of items){
+  if(!it.date||!(it.amount>0))continue;
+  const description=String(it.description||"").trim().slice(0,80);
+  const id=`${it.date}|${it.amount.toFixed(2)}|${description.toLowerCase()}`;
+  if(ids.has(id)){dup++;continue}ids.add(id);
+  const payer=matchPayer(description);if(payer)matched++;
+  data.txns.push({id,date:it.date,description,amount:Math.round(it.amount*100)/100,payer});added++;
+ }
+ persist();render();
+ toast(added?`Added ${added} payments: ${matched} matched, ${added-matched} to check${dup?`, ${dup} already imported`:""}.`:dup?"These payments were already imported.":"No incoming payments found in that file.");
+}
+async function importCSV(file){
+ const rows=parseCSV(await file.text());
+ const hi=rows.findIndex((r,i)=>i<25&&r.some(c=>/date/i.test(c)));
+ if(hi<0){toast("Couldn't find a date column. Export the statement as CSV from your bank and try again.");return}
+ const head=rows[hi].map(h=>h.toLowerCase().trim());
+ const col=(exact,partial,skip=[])=>{let i=head.findIndex((h,j)=>!skip.includes(j)&&exact.includes(h));if(i<0)i=head.findIndex((h,j)=>!skip.includes(j)&&partial.some(p=>h.includes(p)));return i};
+ const di=col(["date","transaction date","posting date","posted date"],["date"]);
+ const ci=col(["paid in","money in","credit","credits","credit amount","paid in (£)","money in (£)"],["paid in","money in","credit"]);
+ const ai=col(["amount","value","amount (£)"],["amount"],[ci]);
+ const de=col(["description","details","narrative","memo","payee","name","reference","transaction description","counter party"],["descr","detail","narrative","payee","memo","reference","name","counter"],[di,ci,ai]);
+ if(ci<0&&ai<0){toast("Couldn't find an amount or paid-in column in that CSV.");return}
+ ingest(rows.slice(hi+1).map(r=>({date:parseDateFlex(r[di]),amount:parseAmt(ci>=0?r[ci]:r[ai]),description:de>=0?r[de]:r.filter((_,j)=>j!==di&&j!==ci&&j!==ai).join(" ")})));
+}
+function vPayments(){
+ const todo=data.txns.filter(x=>!x.payer);
+ const list=(S.filter==="todo"?todo:S.filter==="all"?data.txns.filter(x=>x.payer&&x.payer!=="ignore"):data.txns.filter(x=>x.payer==="ignore")).slice().sort((a,b)=>b.date.localeCompare(a.date));
+ const opts=sel=>`<option value="">Choose payer</option>${PAYERS.map(p=>`<option value="${p.id}" ${sel===p.id?"selected":""}>${p.name}</option>`).join("")}<option value="ignore" ${sel==="ignore"?"selected":""}>Not practice income</option>`;
+ return `<div class="pad">
+  <div class="card pcard" style="${pv("nuffield")}">
+   <div class="qt" style="font-size:19px;font-weight:600">Upload a bank statement</div>
+   <p class="help" style="margin-top:6px">Use a CSV export from your bank's app or website. The file is read on this phone only. Only incoming payments are kept, and payments already imported are skipped.</p>
+   <label class="btn filebtn">Choose CSV file<input type="file" accept=".csv,text/csv,text/comma-separated-values" id="csv"></label>
+  </div>
+  <h2>Add a payment by hand</h2>
+  <div class="card form">
+   <label>Date<input class="t" type="date" id="mdate" value="${iso(today())}"></label>
+   <label>Amount (£)<input class="t" type="number" inputmode="decimal" id="mamt"></label>
+   <label>Paid by<select class="t" id="mpayer">${PAYERS.map(p=>`<option value="${p.id}">${p.name}</option>`).join("")}</select></label>
+   <label>Note<input class="t" id="mnote"></label>
+   <button class="btn alt" style="grid-column:1/-1" data-act="addpay">Add payment</button>
+  </div>
+  <div class="chips">${[["todo",`To match (${todo.length})`],["all","Practice income"],["ignore","Not practice income"]].map(([id,l])=>`<button class="chip ${S.filter===id?"on":""}" data-act="filter" data-f="${id}">${l}</button>`).join("")}</div>
+  ${S.filter==="todo"&&todo.length?`<button class="link" data-act="ignoreall" style="margin-bottom:8px">Mark all of these as not practice income</button>`:""}
+  <div class="card" style="padding:0">
+   ${list.length?list.map(x=>`<div class="tx" ${PNAME[x.payer]?`style="border-left:6px solid ${PAYERS.find(p=>p.id===x.payer).color}"`:""}><div class="d">${esc(x.description)}</div><div class="a">${fmt(x.amount)}</div>
+    <div class="muted" style="font-size:14px;align-self:center">${dayLabel(parseISO(x.date))} ${x.date.slice(0,4)}</div>
+    <div style="display:flex;gap:4px;align-items:center"><select data-txn="${esc(x.id)}" aria-label="Payer">${opts(x.payer)}</select><button class="x" data-act="deltx" data-id="${esc(x.id)}" aria-label="Delete payment">×</button></div></div>`).join("")
+   :`<div style="padding:16px" class="muted">${S.filter==="todo"?"Everything is matched. Upload a new statement when it arrives.":"No payments here yet."}</div>`}
+  </div>
+ </div>`;
+}
+
+// ---------- tariffs ----------
+function vTariffs(){
+ const inp=(path,label)=>`<input class="n" style="width:86px" type="number" inputmode="decimal" min="0" step="any" aria-label="${esc(label)}" data-tpath="${path}" data-num="1" value="${getPath(data,path.split("."))}">`;
+ const trow=(label,path,note)=>`<label class="trow"><span>${label}${note?`<em>${note}</em>`:""}</span>${inp(path,label)}</label>`;
+ 
+ return `<div class="pad">
+  <p class="help">Changes save straight away and apply to every logged week, past and future. When a fee changes, update it from that date rather than earlier.</p>
+  <h2>Consultations</h2>
+  <div class="card"><table><thead><tr><th>Payer</th><th>New (£)</th><th>Follow-up (£)</th></tr></thead><tbody>
+   ${INS.map(i=>`<tr><td>${i.name}</td><td class="c">${inp(`tariffs.consult.${i.id}.new`,`${i.name} new fee`)}</td><td class="c">${inp(`tariffs.consult.${i.id}.fu`,`${i.name} follow-up fee`)}</td></tr>`).join("")}
+  </tbody></table></div>
+  <div class="grid3">${["spire","nuffield","kp"].map(h=>`<div><h2 style="color:${PAL[h].c}">${HOSP[h].name}</h2><div class="card pcard" style="${pv(h)}">${HOSP[h].inv.map(([k,l])=>trow(l,`tariffs.inv.${h}.${k}`)).join("")}</div></div>`).join("")}</div>
+  <h2 style="color:${PAL.spire.c}">Procedures at Spire</h2>
+  <div class="card pcard" style="${pv("spire")}">${trow("TOE, self-pay","tariffs.procs.toe.self")}${trow("TOE, insured","tariffs.procs.toe.insured","Provisional average. Update when insurer rates are confirmed.")}${trow("DC cardioversion, self-pay","tariffs.procs.dccv.self")}${trow("DC cardioversion, insured","tariffs.procs.dccv.insured")}</div>
+  <h2 style="color:${PAL.reporting.c}">CT and MRI reporting</h2>
+  <div class="card pcard" style="${pv("reporting")}">${trow("Insured, per scan","tariffs.scans.insured")}${trow("Self-pay, per scan","tariffs.scans.self")}</div>
+  <h2>Matching bank payments</h2>
+  <div class="card"><p class="help">Words that appear in the bank description for each payer, separated by commas. Add the exact wording from your statements if a payer isn't being matched.</p>
+   ${PAYERS.map(p=>`<label style="display:block;font-size:14px;margin-bottom:8px;color:${PAL[p.id].c};font-weight:600">${p.name}<input class="t" style="font-weight:400;color:var(--ink)" data-tpath="settings.keywords.${p.id}" value="${esc(data.settings.keywords[p.id])}"></label>`).join("")}</div>
+  <h2>Owed before you started logging</h2>
+  <div class="card"><p class="help">If a statement includes payments for work done before your first logged week, enter what each payer owed you at that point so the balances stay accurate.</p>
+   ${PAYERS.map(p=>trow(p.name,`settings.opening.${p.id}`)).join("")}</div>
+  <h2>Backup</h2>
+  <div class="card"><p class="help">Your data lives only on this phone. Save a backup every few weeks, for example to Files or by emailing it to yourself.</p>
+   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn alt" data-act="backup">Save backup</button><label class="btn alt filebtn">Restore backup<input type="file" accept=".json,application/json" id="restore"></label></div>
+   <div style="margin-top:12px">${S.confirm==="reset"?`<p style="font-size:15px">Delete all weeks, payments and settings? <button class="btn red small" data-act="reset">Delete everything</button> <button class="link" data-act="cancel">Keep</button></p>`:`<button class="link red" data-act="askreset">Delete all data</button>`}</div>
+  </div>
+ </div>`;
+}
+async function backup(){
+ const text=JSON.stringify(data),name=`practice-backup-${iso(today())}.json`;
+ try{const f=new File([text],name,{type:"application/json"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Practice dashboard backup"});return}}
+ catch(e){if(e&&e.name==="AbortError")return}
+ const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:"application/json"}));a.download=name;document.body.appendChild(a);a.click();a.remove();
+}
+
+// ---------- events ----------
+document.addEventListener("click",e=>{
+ const tb=e.target.closest("[data-tab]");
+ if(tb){S.tab=tb.dataset.tab;S.confirm="";render();window.scrollTo(0,0);return}
+ const b=e.target.closest("[data-act]");if(!b||b.tagName==="SELECT")return;
+ const a=b.dataset.act,mon=parseISO(S.start);
+ if(a==="prev"){S.start=iso(addDays(mon,-7));S.confirm=""}
+ else if(a==="next"){S.start=iso(addDays(mon,7));S.confirm=""}
+ else if(a==="thisweek")S.start=iso(mondayOf(today()));
+ else if(a==="goweek"){S.start=b.dataset.week;window.scrollTo(0,0)}
+ else if(a==="quickgo"){S.tab="log";S.start=iso(mondayOf(today()));S.qsess=guessSession();render();window.scrollTo(0,0);const q=document.getElementById("qtext");if(q)q.focus();return}
+ else if(a==="qadd"){if(rec)rec.stop();quickAdd();return}
+ else if(a==="mic"){startMic();return}
+ else if(a==="qclear")S.qtext="";
+ else if(a==="askclear")S.confirm="week";
+ else if(a==="askreset")S.confirm="reset";
+ else if(a==="cancel")S.confirm="";
+ else if(a==="clearweek"){delete data.weeks[S.start];persist();S.confirm="";toast("Week cleared")}
+ else if(a==="reset"){data=clone(DEFAULT);persist();S.confirm="";toast("All data deleted")}
+ else if(a==="filter")S.filter=b.dataset.f;
+ else if(a==="ignoreall"){data.txns.forEach(x=>{if(!x.payer)x.payer="ignore"});persist();toast("Marked as not practice income")}
+ else if(a==="deltx"){data.txns=data.txns.filter(x=>x.id!==b.dataset.id);persist()}
+ else if(a==="addpay"){
+  const amt=parseAmt(document.getElementById("mamt").value);
+  if(!(amt>0)){toast("Enter an amount above zero.");return}
+  data.txns.push({id:`manual|${Date.now()}`,date:document.getElementById("mdate").value||iso(today()),amount:amt,description:document.getElementById("mnote").value||"Added by hand",payer:document.getElementById("mpayer").value});
+  persist();toast("Payment added");
+ }
+ else if(a==="backup"){backup();return}
+ else return;
+ render();
+});
+document.addEventListener("input",e=>{
+ const el=e.target;
+ if(el.id==="qtext"){S.qtext=el.value;document.getElementById("qprev").innerHTML=qPreviewHTML();return}
+ if(el.dataset.path){onLogInput(el);return}
+ if(el.dataset.tpath){setPath(data,el.dataset.tpath.split("."),el.dataset.num?Math.max(0,parseFloat(el.value)||0):el.value);persist()}
+});
+document.addEventListener("change",async e=>{
+ const el=e.target;
+ if(el.dataset.act==="month"){S.month=el.value;render();return}
+ if(el.dataset.act==="qsess"){S.qsess=el.value;document.getElementById("qprev").innerHTML=qPreviewHTML();return}
+ if(el.dataset.txn!==undefined){const t=data.txns.find(x=>x.id===el.dataset.txn);if(t){t.payer=el.value;persist();render()}return}
+ if(el.id==="csv"&&el.files[0]){const f=el.files[0];el.value="";try{await importCSV(f)}catch(err){toast("Couldn't read that file. Check it's a CSV export from your bank.")}return}
+ if(el.id==="restore"&&el.files[0]){const f=el.files[0];el.value="";try{data=deepMerge(clone(DEFAULT),JSON.parse(await f.text()));persist();render();toast("Backup restored")}catch(err){toast("That file isn't a valid backup.")}}
+});
+document.addEventListener("toggle",e=>{const d=e.target;if(d.dataset&&d.dataset.sess&&d.open)S.open=d.dataset.sess},true);
+render();
+</script>
+</body>
+</html>
