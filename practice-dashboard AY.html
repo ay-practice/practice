@@ -316,7 +316,8 @@ const PHR=[
  [/\bbupa\b/g,()=>"payer:bupa"],[/\baviva\b/g,()=>"payer:aviva"],[/\bvitality\b/g,()=>"payer:vitality"],[/\bhealix\b/g,()=>"payer:healix"],
  [/\binsur(?:ed|ance)\b/g,()=>"payer:ins"],
  [/\bfollow[\s-]?ups?\b|\bf\/u\b|\bfus?\b|\breviews?\b/g,()=>"kind:fu"],
- [/\bnew(?:\s+patients?)?\b|\bnews\b|\bnps?\b/g,()=>"kind:new"]
+ [/\bnew(?:\s+patients?)?\b|\bnews\b|\bnps?\b/g,()=>"kind:new"],
+ [/\bconsult(?:ation)?s?\b|\bappointments?\b|\bpatients?\b|\bclinic\s+visits?\b/g,()=>"kind:any"]
 ];
 const NORM=[
  [/\be\s*c\s*g(?:\s*s)?\b|\beasy\s*gs?\b|\bec\s+gs?\b|\bee\s+c\s+g\b|\bei\s+c\s+g\b|\be\s*k\s*g(?:\s*s)?\b/g," ecg "],
@@ -327,12 +328,13 @@ const NORM=[
  [/\bhelix\b|\bheel\s*ix\b|\bhealics\b|\bhealex\b|\bhealicks\b/g," healix "],
  [/\bhalters?\b/g," holter "],
  [/\bt\s+o\s+e\b/g," toe "],
- [/\bzeo\b|\bzeeo\b|\bzio's\b|\bzeo\s+patch\b/g," zio "],
+ [/\bzero\s+patch(?:es)?\b|\bzeo\s+patch(?:es)?\b|\bzeeo\b|\bzeo\b|\bxio\b|\bzio's\b|\bz\s+i\s+o\b/g," zio "],
  [/\bc\s+t\b/g," ct "],[/\bm\s+r\s+i\b/g," mri "],[/\bc\s+m\s+r\b/g," cmr "],[/\bd\s+c\s+c\s+v\b/g," dccv "],
  [/\bf\s+u\b/g," fu "],[/\bfollow\s+ups\b/g," follow-up "]
 ];
 const normText=s=>{for(const[re,r]of NORM)s=s.replace(re,r);return s};
 function tokenize(text){
+ text=String(text).replace(/\b(?:to|too)\b(?=\s*(?:[,.;!?\n]|$))/gi," 2 ").replace(/\b(?:for|fore)\b(?=\s*(?:[,.;!?\n]|$))/gi," 4 ");
  let s=normText(" "+text.toLowerCase().replace(/[’']/g,"").replace(/[,;:.!?&+()]/g," ")+" ");
  const T=[];
  for(const[re,fn]of PHR)s=s.replace(re,(...a)=>{T.push(fn(...a));return ` §${T.length-1}§ `});
@@ -359,7 +361,7 @@ function clauses(toks){
    c.num=t.v;
   }else if(t.t==="item"){if(c.item||c.kind)flush();c.item=t.v}
   else if(t.t==="payer"){if(c.payer||(c.item&&!special(c.item)))flush();c.payer=t.v}
-  else if(t.t==="kind"){if(c.kind||c.item)flush();c.kind=t.v}
+  else if(t.t==="kind"){if(t.v==="any"){if(c.item)flush();if(!c.kind)c.kind="any"}else{if((c.kind&&c.kind!=="any")||c.item)flush();c.kind=t.v}}
  });
  flush();
  return out;
@@ -381,9 +383,12 @@ function interpret(text,sid){
    ok.push({path:[target,"inv",c.item],n:k,label:`${k} ${ITEMNAME[c.item]}${k>1&&!/patch|test|monitor/.test(ITEMNAME[c.item])?"s":""}`});
   }else if(c.payer||c.kind){
    if(sess.scans){bad.push("Consultations need a clinic. Choose the clinic above first");continue}
-   if(!c.payer||c.payer==="ins"){bad.push(`"${k} ${c.kind==="fu"?"follow-up":"new"}" left out: say which payer, such as Bupa or self-pay`);continue}
-   const kind=c.kind||(sid.endsWith("Fri")?"fu":"new");
-   ok.push({path:[sid,"consult",c.payer,kind],n:k,label:`${k} ${INAME[c.payer]} ${kind==="new"?"new":"follow-up"}${c.kind?"":" (assumed "+(kind==="new"?"new":"follow-up")+")"}`});
+   const dp=data.settings.qpayer||"self",named=c.payer&&c.payer!=="ins";
+   if(!named&&dp==="ask"){bad.push(`"${k} ${c.kind==="fu"?"follow-up":c.kind==="new"?"new":"consultation"}" left out: say which payer, such as Bupa or self-pay`);continue}
+   const payer=named?c.payer:dp,kk=c.kind==="any"?"":c.kind;
+   const kind=kk||(sid.endsWith("Fri")?"fu":"new");
+   const notes=[!named?`payer assumed ${INAME[payer]}`:"",!kk?`assumed ${kind==="new"?"new":"follow-up"}`:""].filter(Boolean).join(", ");
+   ok.push({path:[sid,"consult",payer,kind],n:k,label:`${k} ${INAME[payer]} ${kind==="new"?"new":"follow-up"}${notes?" ("+notes+")":""}`});
   }else bad.push(`The number ${k} was left out because it wasn't clear what it was for`);
  }
  return{ok,bad};
@@ -512,9 +517,11 @@ function vLog(){
 
   <div class="card quick" id="quick" style="margin-top:16px">
    <div class="qt">Quick add</div>
-   <p class="help" style="margin-top:4px">Type what you did, or tap the microphone on your keyboard to dictate. Check the list below, then add it.</p>
+   <p class="help" style="margin-top:4px">Type what you did, or tap the microphone on your keyboard to dictate, for example "Bupa new 2, self-pay follow-up 3, echo 4". Check the list below, then add it.</p>
    <label class="muted" style="font-size:14px">Clinic
     <select class="t" data-act="qsess">${SESS.map(s=>`<option value="${s.id}" ${S.qsess===s.id?"selected":""}>${s.title} (${dayLabel(addDays(mon,s.off))})</option>`).join("")}</select></label>
+   <label class="muted" style="font-size:14px;display:block;margin-top:8px">If no payer is said, use
+    <select class="t" data-act="qpayer">${[["self","Self-pay"],...INS.filter(i=>i.id!=="self").map(i=>[i.id,i.name]),["ask","Don't assume (ask me)"]].map(([v,t])=>`<option value="${v}" ${(data.settings.qpayer||"self")===v?"selected":""}>${t}</option>`).join("")}</select></label>
    <div class="qline"><textarea class="t" id="qtext" rows="3" placeholder="echos 4, ECGs 2, self-pay new 1, AXA follow-up">${esc(S.qtext)}</textarea></div>
    <div id="qprev">${qPreviewHTML()}</div>
    <div style="display:flex;gap:8px;margin-top:10px"><button class="btn" data-act="qadd">Add to this clinic</button><button class="btn alt" data-act="qclear">Clear</button></div>
@@ -920,8 +927,8 @@ document.addEventListener("click",e=>{
  else if(a==="thisweek")S.start=iso(mondayOf(today()));
  else if(a==="goweek"){S.start=b.dataset.week;window.scrollTo(0,0)}
  else if(a==="quickgo"){S.tab="log";S.start=iso(mondayOf(today()));S.qsess=guessSession();render();window.scrollTo(0,0);const q=document.getElementById("qtext");if(q)q.focus();return}
- else if(a==="qadd"){quickAdd();return}
- else if(a==="qclear")S.qtext="";
+ else if(a==="qadd"){const q=document.getElementById("qtext");if(q)S.qtext=q.value;quickAdd();return}
+ else if(a==="qclear"){const q=document.getElementById("qtext");if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();S.qtext="";if(q)q.value="";const pv=document.getElementById("qprev");if(pv)pv.innerHTML=qPreviewHTML();setTimeout(()=>{const q2=document.getElementById("qtext");if(q2&&q2.value){q2.value="";S.qtext="";const p2=document.getElementById("qprev");if(p2)p2.innerHTML=qPreviewHTML()}},300);toast("Cleared");return}
  else if(a==="askclear")S.confirm="week";
  else if(a==="askreset")S.confirm="reset";
  else if(a==="cancel")S.confirm="";
@@ -955,6 +962,7 @@ document.addEventListener("click",e=>{
  else return;
  render();
 });
+["change","compositionend","blur","keyup"].forEach(ev=>document.addEventListener(ev,e=>{const el=e.target;if(el&&el.id==="qtext"&&el.value!==S.qtext){S.qtext=el.value;const pv=document.getElementById("qprev");if(pv)pv.innerHTML=qPreviewHTML()}},true));
 document.addEventListener("input",e=>{
  const el=e.target;
  if(el.id==="ptext"){S.ptext=el.value;return}
@@ -976,6 +984,7 @@ document.addEventListener("change",async e=>{
  if(el.dataset.rd!==undefined){S.rdraft[+el.dataset.rd].match=el.value;render();return}
  if(el.id==="odays"){render();return}
  if(el.dataset.act==="qsess"){S.qsess=el.value;document.getElementById("qprev").innerHTML=qPreviewHTML();return}
+ if(el.dataset.act==="qpayer"){data.settings.qpayer=el.value;persist();document.getElementById("qprev").innerHTML=qPreviewHTML();return}
  if(el.dataset.txn!==undefined){const t=data.txns.find(x=>x.id===el.dataset.txn);if(t){t.payer=el.value;persist();render()}return}
  if(el.id==="csv"&&el.files[0]){const f=el.files[0];el.value="";try{await importCSV(f)}catch(err){toast("Couldn't read that file. Check it's a CSV export from your bank.")}return}
  if(el.id==="restore"&&el.files[0]){const f=el.files[0];el.value="";try{data=deepMerge(clone(DEFAULT),JSON.parse(await f.text()));persist();render();toast("Backup restored")}catch(err){toast("That file isn't a valid backup.")}}
