@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="COPD">
+<meta name="theme-color" content="#14505F">
+<title>COPD &amp; Community Care</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEDklEQVR4nO3dPY4jVRSGYTdiCb0AcqRZS8dIo06I2QAiQrMBYjIkFjQSOUshKGSZdn/ucpXvPfdSz5PNn318563jmh+5n55fXk/wnm+qB2Bc4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRB9G31AKP464/fLr/5/eefqiYZh81xOl2V8e73HJA4Ygf6OHoctws4eB+HjmPN7/2R+zh0HNwmDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRBN8DmkP//6Y/qhL7/83nOSbead/+n55bV6hvfdONNr20555YfBbfvA2g7ztzZiHHcd66V7j7hRHN3mb22sODYf66X1R/zwODrP39pAN6QPOdkHPk7V81bNf22IzdHoOD68BB+1Oarmb61+c7S7UPpcgrPPf0NxHK1fv8ffozKO2it7/Yeap585+2b6UFkcPV/z9XPd+3H31z+/dv4+auLo/2ovn3HbF0K4/FW183dTf0Pa2Z4vkXG0L69R8EfZwjfRH777tP9B/vz76/4H2abzH257b47a2+/9v6+FZZy6n97h3lZYr2sc5X+rc9p36deujUXPM7Q5/sOXk73UL44R1sYiLYCljNTHCGtj0e0kbY5/XTZhfyw6xTHO2li8WQPXNbz5nnHWxqLPedoccU/YHz3iGG1tLJZlcLuA5UdHWxuLDqd66M2xZjcceX8cOg5uax7HmO8pizWzzT7/HofeHGv+Hav8P3IWOnQc3CYOorZxjPyG/f/Q9IRtDiJxEImDSBxEDeNwN9pHu3O2OYjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxEDeM48n/q76ndOdscROIgEgeROIjaxuGetLWmJ2xzEImDSBxEzeNw29FO67O1OYjEQdQjjjHfWdZPNfv8m9kcRJ3iGO3iu3ee2effxuYg6hfHOBfftklmn38Dm4OoaxwjXHx7Zph9/nvZHES946i9+PY/++zz36Vgc1Sd76Oed/b51/O2QlQTR/+L4LHPOPv8K5Vtjp6vtsVzzT7/GpVvK31ec7tnmX3+DxXfc7R+5R5/j/obUld2/0de6en55bV2grMHfkxzybHOPv+1+s1x5u8hHvs4+w20Oc42X4KDHOvs85+NGMfiriMe7VhP889/GjmOsxunPOaZvjHv/BPEQZWBbkgZjTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDqJ/APK2LgS61VOcAAAAAElFTkSuQmCC">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEDklEQVR4nO3dPY4jVRSGYTdiCb0AcqRZS8dIo06I2QAiQrMBYjIkFjQSOUshKGSZdn/ucpXvPfdSz5PNn318563jmh+5n55fXk/wnm+qB2Bc4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRB9G31AKP464/fLr/5/eefqiYZh81xOl2V8e73HJA4Ygf6OHoctws4eB+HjmPN7/2R+zh0HNwmDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRBN8DmkP//6Y/qhL7/83nOSbead/+n55bV6hvfdONNr20555YfBbfvA2g7ztzZiHHcd66V7j7hRHN3mb22sODYf66X1R/zwODrP39pAN6QPOdkHPk7V81bNf22IzdHoOD68BB+1Oarmb61+c7S7UPpcgrPPf0NxHK1fv8ffozKO2it7/Yeap585+2b6UFkcPV/z9XPd+3H31z+/dv4+auLo/2ovn3HbF0K4/FW183dTf0Pa2Z4vkXG0L69R8EfZwjfRH777tP9B/vz76/4H2abzH257b47a2+/9v6+FZZy6n97h3lZYr2sc5X+rc9p36deujUXPM7Q5/sOXk73UL44R1sYiLYCljNTHCGtj0e0kbY5/XTZhfyw6xTHO2li8WQPXNbz5nnHWxqLPedoccU/YHz3iGG1tLJZlcLuA5UdHWxuLDqd66M2xZjcceX8cOg5uax7HmO8pizWzzT7/HofeHGv+Hav8P3IWOnQc3CYOorZxjPyG/f/Q9IRtDiJxEImDSBxEDeNwN9pHu3O2OYjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxEDeM48n/q76ndOdscROIgEgeROIjaxuGetLWmJ2xzEImDSBxEzeNw29FO67O1OYjEQdQjjjHfWdZPNfv8m9kcRJ3iGO3iu3ee2effxuYg6hfHOBfftklmn38Dm4OoaxwjXHx7Zph9/nvZHES946i9+PY/++zz36Vgc1Sd76Oed/b51/O2QlQTR/+L4LHPOPv8K5Vtjp6vtsVzzT7/GpVvK31ec7tnmX3+DxXfc7R+5R5/j/obUld2/0de6en55bV2grMHfkxzybHOPv+1+s1x5u8hHvs4+w20Oc42X4KDHOvs85+NGMfiriMe7VhP889/GjmOsxunPOaZvjHv/BPEQZWBbkgZjTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDqJ/APK2LgS61VOcAAAAAElFTkSuQmCC">
+<style>
+:root{--navy:#1C2541;--ink:#1D2433;--muted:#5C6375;--line:#E2E5EC;--paper:#FFFFFF;--bg:#F4F5F8;--gold:#D9A93F;--red:#A33A3A;--accent:#2E3A6B}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.45;color:var(--ink);background:var(--bg);min-height:100vh}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #7FA7E0;outline-offset:2px}
+header{background:linear-gradient(180deg,#1C2541 0%,#243056 100%);color:#fff;position:sticky;top:0;z-index:10;padding-top:env(safe-area-inset-top)}
+.hin{max-width:760px;margin:0 auto;padding:12px 16px 0}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+h1{font-family:"Iowan Old Style","Charter",Georgia,serif;font-size:22px;font-weight:600;letter-spacing:.01em}
+.newc{font-size:14px;color:var(--gold);white-space:nowrap}
+.tabs{display:flex;gap:2px;margin-top:10px}
+.tabs button{flex:1;border:0;background:none;color:#B9C1D6;padding:10px 2px 11px;font-size:15px;border-bottom:3px solid transparent}
+.tabs button.on{color:#fff;font-weight:600;border-bottom-color:var(--gold)}
+main{max-width:760px;margin:0 auto;padding:14px 16px calc(40px + env(safe-area-inset-bottom))}
+.search{width:100%;font-size:16px;padding:11px 12px;border:1px solid #D3D8E4;border-radius:10px;background:#fff}
+.row{display:flex;gap:6px;overflow-x:auto;padding:10px 0 2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.row::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;font-size:15px;padding:7px 12px;border-radius:18px;border:1px solid #CDD3E1;background:#fff;color:var(--ink);white-space:nowrap}
+.chip.on{background:var(--cc,var(--accent));border-color:var(--cc,var(--accent));color:#fff}
+.chip.cat{border-color:#D3D7E2;color:var(--ink);font-weight:500}
+.chip.cat::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--cc);margin-right:6px;vertical-align:1px}
+.chip.cat.on::before{background:#fff}
+.chip.cat.on{color:#fff}
+.chip i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.meta{font-size:14px;color:var(--muted);margin:12px 2px 8px;display:flex;justify-content:space-between;gap:8px}
+.art{background:var(--paper);border:1px solid var(--line);border-left:6px solid var(--jc);box-shadow:0 1px 3px rgba(20,30,60,.05);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.art .jn{font-size:13px;font-weight:600;color:var(--jc);display:flex;justify-content:space-between;gap:8px}
+.art .jn .dt{color:var(--muted);font-weight:400}
+.new{display:inline-block;font-size:12px;font-weight:600;color:#fff;background:#3E6EA8;border-radius:8px;padding:0 6px;margin-left:6px}
+.art h2{font-family:"Iowan Old Style","Charter",Georgia,serif;font-size:18px;line-height:1.3;font-weight:600;margin:4px 0 4px}
+.au{font-size:14px;color:var(--muted)}
+.pt{font-size:13px;color:var(--muted);margin-top:2px}
+.acts{display:flex;gap:16px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.acts a,.acts button{font-size:15px;color:#2E4A86;text-decoration:none;border:0;background:none;padding:4px 0;font-weight:600}
+.star{margin-left:auto;font-size:22px!important;line-height:1;color:#B8BECC!important;font-weight:400!important}
+.star.on{color:var(--gold)!important}
+.abs{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-family:"Iowan Old Style","Charter",Georgia,serif;font-size:16px;line-height:1.55}
+.abs p+p{margin-top:8px}
+.abs b{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif;font-size:14px}
+.more{display:block;width:100%;margin-top:6px;padding:12px;border-radius:10px;border:1px solid #CDD3E1;background:#fff;font-size:16px;font-weight:600;color:var(--navy)}
+.msg{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;color:var(--muted)}
+.msg.err{border-color:#F0C9CF;background:#FDF2F4;color:#8E2335}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 14px;margin-bottom:16px}
+.set{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0}
+.set+.set{border-top:1px solid var(--line)}
+.set select{font-size:16px;padding:6px 8px;border:1px solid #D3D8E4;border-radius:8px;background:#fff}
+.set input[type=checkbox]{width:22px;height:22px;accent-color:var(--navy)}
+h3{font-size:17px;margin:18px 2px 8px}
+.help{font-size:14px;color:var(--muted);margin:0 2px 10px}
+.link{border:0;background:none;color:var(--red);font-size:15px;text-decoration:underline;padding:6px 0}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid #CDD3E1;border-top-color:var(--navy);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-3px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.spin{animation:none}}
+.tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.tag{font-size:12px;padding:1px 8px;border-radius:8px;border:1px solid var(--tc,#5F6475);color:var(--tc,#5F6475);background:#fff;font-weight:600}
+.arch{margin-left:auto}
+.arch.on{color:#3E7D3A!important}
+.sub{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 12px}
+.gl{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.gl a.gi{display:block;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.gl a.gi+a.gi{border-top:1px solid var(--line)}
+.gl .code{font-size:13px;color:var(--muted)}
+.doc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:4px 14px 14px}
+.doc h2,.doc h3{font-family:"Iowan Old Style","Charter",Georgia,serif;margin:18px 0 6px;font-size:18px;line-height:1.3;color:#1C2541}
+.doc h3{font-size:17px}
+.doc p,.doc li{font-size:14px;margin:6px 0;line-height:1.45}
+.doc ul,.doc ol{padding-left:20px}
+.doc .tw{margin:8px 0}
+.doc table{border-collapse:collapse;font-size:13px;width:100%;table-layout:fixed}
+.doc th,.doc td{border:1px solid var(--line);padding:5px 6px;vertical-align:top;text-align:left;overflow-wrap:anywhere;hyphens:auto}
+.doc *{max-width:100%}
+.doc{overflow-wrap:anywhere}
+.doc th{background:#F3F5F9}
+.doc a{color:#2D4E8A}
+.sec[hidden]{display:none}
+.kp{padding:12px 14px}
+.kp+.kp{border-top:1px solid var(--line)}
+.kp h4{font-size:16px;margin-bottom:4px}
+.kp ul{padding-left:18px;font-size:15px}
+.kp li{margin:3px 0}
+.kp .lk{margin-top:6px;display:flex;gap:14px;flex-wrap:wrap}
+.kp .lk a{font-size:14px;color:#2D4E8A;font-weight:600;text-decoration:none}
+.note{font-size:13px;color:var(--muted);margin:8px 2px 14px}
+.hl{border-radius:16px;padding:14px;margin:12px 0 6px;background:linear-gradient(135deg,#5B21B6,#C2185B);color:#fff;box-shadow:0 6px 18px rgba(91,33,182,.25)}
+.hl h3{margin:0 0 8px;font-size:17px;color:#fff;display:flex;justify-content:space-between;align-items:baseline}
+.hl h3 small{font-weight:400;font-size:13px;opacity:.85}
+.hi{display:block;background:rgba(255,255,255,.12);border-radius:10px;padding:9px 10px;margin-top:6px;color:#fff;text-decoration:none}
+.hi .k{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;background:var(--gold);color:#2A1B6E;border-radius:6px;padding:1px 6px;margin-right:6px}
+.hi .k.g{background:#7CF5C9}
+.hi b{font-family:"Iowan Old Style","Charter",Georgia,serif;font-weight:600;font-size:15px;line-height:1.3}
+.hi .s{font-size:12px;opacity:.85;margin-top:2px}
+.calc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;border-top:4px solid var(--cc,var(--accent))}
+.calc h3{margin:2px 0 4px;font-size:18px;color:var(--cc,var(--accent))}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.fg label{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+.fg .full{grid-column:1/-1}
+.fg input[type=number],.fg select{font-size:16px;padding:8px;border:1px solid #D8D3EA;border-radius:8px;background:#fff;color:var(--ink);width:100%}
+.ck{display:flex!important;flex-direction:row!important;align-items:center;gap:10px;font-size:15px!important;color:var(--ink)!important;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:#FBFAFE}
+.ck input{width:22px;height:22px;accent-color:var(--accent);flex:0 0 auto}
+.ck .pts{margin-left:auto;font-size:13px;color:var(--muted)}
+.res{margin-top:14px;border-radius:10px;padding:12px 14px;background:var(--rb,#EEF1F7);color:var(--rc,#1C2541)}
+.res .big{font-size:32px;font-weight:700;line-height:1.1}
+.res p{font-size:14px;margin-top:4px}
+.res.low{--rb:#E7F2EC;--rc:#2D6A47}.res.mid{--rb:#FAF0DC;--rc:#7A5418}.res.high{--rb:#F7E4E4;--rc:#8C2F39}
+.pk{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.pk a{flex:1 1 140px;text-align:center;padding:12px;border-radius:10px;font-weight:600;text-decoration:none;color:#fff;background:#2E3A6B}
+.pk a.alt{background:#fff;color:#2E3A6B;border:1px solid #2E3A6B}
+
+/* pastel glass theme */
+.fg label{justify-content:flex-end}
+.tabs button{font-size:14px!important}
+:root{--ink:#22263A;--muted:#5E6378;--line:rgba(255,255,255,.65);--accent:#5A63B8;--glass:rgba(255,255,255,.55);--glass2:rgba(255,255,255,.72)}
+body{background:#F3F0FA;background-image:radial-gradient(at 12% 8%,#E9DDFB 0,transparent 45%),radial-gradient(at 88% 12%,#D7ECFB 0,transparent 45%),radial-gradient(at 80% 85%,#FBE2EC 0,transparent 50%),radial-gradient(at 10% 90%,#DDF4EA 0,transparent 50%);background-attachment:fixed}
+header{background:rgba(255,255,255,.55)!important;-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);color:var(--ink);border-bottom:1px solid rgba(255,255,255,.7);box-shadow:0 1px 12px rgba(80,70,140,.08)}
+h1{color:#262A44}
+.newc{color:#7A4FB8}
+.tabs{background:rgba(120,120,160,.12);border-radius:12px;padding:3px;margin:10px 0 10px}
+.tabs button{color:#4A4F66!important;border-bottom:0!important;border-radius:9px;padding:8px 2px!important;font-weight:500}
+.tabs button.on{background:rgba(255,255,255,.9);color:#1E2236!important;font-weight:600;box-shadow:0 1px 4px rgba(60,60,110,.15)}
+.search,.chip,.more,.msg,.card,.art,.gl,.doc,.calc,.set select,.fg input[type=number],.fg select{-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
+.search{background:var(--glass2);border:1px solid rgba(255,255,255,.8);border-radius:14px;box-shadow:inset 0 1px 2px rgba(60,60,110,.06)}
+.chip{background:var(--glass);border:1px solid rgba(255,255,255,.8);color:var(--ink);box-shadow:0 1px 3px rgba(60,60,110,.06)}
+.chip.cat{border-color:rgba(255,255,255,.8);color:var(--ink)}
+.chip.on,.chip.cat.on{background:var(--cc,#CBD2F0);border-color:rgba(255,255,255,.9);color:#1E2236;font-weight:600}
+.chip.cat.on::before{background:rgba(30,34,54,.55)}
+.art{background:var(--glass);border:1px solid rgba(255,255,255,.75);border-left:6px solid var(--jc);border-radius:18px;box-shadow:0 4px 18px rgba(70,60,130,.08)}
+.art .jn{color:#3D4258}
+.art .jn span:first-child{background:var(--jc);padding:1px 8px;border-radius:8px}
+.new{background:#C9B8F2;color:#2A2350}
+.tag{border:0;background:var(--tc,#D9DEE7);color:#2B3043}
+.acts a,.acts button{color:#4B55A8}
+.arch.on{color:#3B7A55!important}
+.abs{border-top-color:rgba(120,120,160,.2)}
+.more,.msg,.card,.gl,.doc,.calc{background:var(--glass);border:1px solid rgba(255,255,255,.75);border-radius:18px;box-shadow:0 4px 18px rgba(70,60,130,.07)}
+.msg.err{background:rgba(253,226,231,.7);border-color:rgba(255,255,255,.8);color:#8C2F45}
+.more{color:#3F468E}
+.set+.set,.gl a.gi+a.gi,.kp+.kp,.rl+.rl{border-top-color:rgba(120,120,160,.15)}
+.calc{border-top:5px solid var(--cc,#CBD2F0)}
+.calc h3{color:#2B3050}
+.ck{background:rgba(255,255,255,.6);border-color:rgba(255,255,255,.85)}
+.fg input[type=number],.fg select{background:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.9)}
+.res{background:rgba(255,255,255,.65);color:#22263A;border:1px solid rgba(255,255,255,.85)}
+.res.low{background:rgba(214,240,224,.8);color:#2E6B48}.res.mid{background:rgba(252,236,206,.8);color:#7A5418}.res.high{background:rgba(250,222,228,.85);color:#8C2F45}
+.pk a{background:linear-gradient(135deg,#C9B8F2,#B9D4F5);color:#22263A;border:1px solid rgba(255,255,255,.85)}
+.pk a.alt{background:var(--glass2);color:#3F468E;border:1px solid rgba(255,255,255,.85)}
+.doc h2,.doc h3{color:#3F468E}
+.doc th{background:rgba(220,214,245,.5)}
+.doc th,.doc td{border-color:rgba(120,120,160,.2)}
+.link{color:#9A3C5A}
+.spin{border-color:rgba(120,120,160,.25);border-top-color:#5A63B8}
+
+/* plain background, standout buttons */
+.tabs button{flex:1 1 auto!important;font-size:13.5px!important;padding:8px 4px!important;white-space:nowrap}
+body{background:#F4F5F9!important;background-image:none!important}
+.art,.card,.gl,.doc,.calc,.msg,.more{background:#fff}
+.chip,.acts a,.acts button,.more,.pk a,.tabs button,.link{position:relative;overflow:hidden;transition:transform .15s ease,box-shadow .15s ease,background-color .15s ease;-webkit-tap-highlight-color:transparent}
+.chip{background:#fff;border:1px solid #E3E6F0;box-shadow:0 2px 6px rgba(40,50,100,.10)}
+.chip.on,.chip.cat.on{box-shadow:0 4px 12px rgba(40,50,100,.20);transform:translateY(-1px)}
+.acts{gap:8px}
+.acts a,.acts button{background:#EEF0FB;border:1px solid #DCE0F4!important;border-radius:999px;padding:6px 14px!important;font-size:14px!important;font-weight:600;color:#3F478F!important;box-shadow:0 1px 3px rgba(40,50,100,.10)}
+.acts .arch{margin-left:auto;background:#F4ECFB}
+.acts .arch.on{background:#DDF2E5;border-color:#C5E6D2!important;color:#2E6B48!important}
+.more{background:#EEF0FB;border:1px solid #DCE0F4;box-shadow:0 2px 6px rgba(40,50,100,.10);color:#3F478F}
+.link[data-act="refresh"]{background:#EEF0FB;border-radius:999px;padding:4px 12px!important;text-decoration:none;font-weight:600;font-size:14px}
+.pk a{box-shadow:0 3px 10px rgba(40,50,100,.15)}
+.chip:active,.acts a:active,.acts button:active,.more:active,.pk a:active,.tabs button:active{transform:scale(1.07)}
+.pop{animation:pop .34s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.12)}100%{transform:scale(1)}}
+.pop::after{content:"";position:absolute;top:0;bottom:0;left:0;width:100%;background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.9) 48%,transparent 72%);transform:translateX(-120%);animation:shine .5s ease forwards;pointer-events:none}
+@keyframes shine{to{transform:translateX(120%)}}
+@media(prefers-reduced-motion:reduce){.pop,.pop::after{animation:none}.chip:active,.acts a:active,.acts button:active,.more:active,.pk a:active,.tabs button:active{transform:none}}
+
+/* professional section colours */
+.chip.cat{background:#fff;color:var(--ink);font-weight:500}
+.chip.cat::before{background:var(--cc)}
+.chip.on,.chip.cat.on{background:var(--cc,#2E3A6B)!important;border-color:var(--cc,#2E3A6B)!important;color:#fff!important;font-weight:600}
+.chip.cat.on::before{background:rgba(255,255,255,.85)!important}
+.art{border-left:5px solid var(--jc)!important}
+.art .jn span:first-child{background:none!important;padding:0!important}
+.jname{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#5C6375}
+.tag{background:#F1F3F8;background:color-mix(in srgb,var(--tc) 13%,white)!important;color:var(--tc)!important;border:1px solid color-mix(in srgb,var(--tc) 28%,white)!important;font-weight:600}
+.sect{display:inline-block;color:var(--cc);border-left:3px solid var(--cc);padding-left:6px;margin-right:4px;font-weight:700}
+.new{background:#2E3A6B!important;color:#fff!important}
+.acts a,.acts button{background:#F1F3F9;border-color:#DFE3EE!important;color:#2E3A6B!important}
+.acts .arch{background:#F1F3F9}
+.calc{border-top:4px solid var(--cc)!important}
+.calc h3{color:var(--cc)!important}
+.pk a{background:#2E3A6B!important;color:#fff!important;border-color:#2E3A6B!important}
+.pk a.alt{background:#fff!important;color:#2E3A6B!important}
+.doc h2,.doc h3{color:#2E3A6B!important}
+.doc th{background:#EEF1F7!important}
+.ck input{accent-color:#2E3A6B!important}
+
+/* navy top section, stronger section colours */
+header{background:linear-gradient(180deg,#1C2541 0%,#26335C 100%)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-bottom:0!important;box-shadow:0 2px 10px rgba(20,30,60,.25)!important}
+h1{color:#fff!important}
+.newc{color:#F2C14E!important}
+.tabs{background:rgba(255,255,255,.12)!important}
+.tabs button{color:#C9D1E6!important}
+.tabs button.on{background:#fff!important;color:#1C2541!important}
+.tag{background:var(--tc)!important;color:#fff!important;border:0!important;padding:2px 9px!important}
+.art{border-left:6px solid var(--jc)!important}
+.chip.cat::before{width:10px!important;height:10px!important}
+.sect{font-size:15px}
+
+/* bigger title and tabs */
+h1{font-size:27px!important;letter-spacing:.005em}
+.tabs{padding:4px!important}
+.tabs button{font-size:15px!important;padding:9px 2px!important;font-weight:500;letter-spacing:-.01em}
+.tabs button.on{font-weight:700}
+@media (max-width:370px){.tabs button{font-size:14.5px!important}}
+
+/* teal theme for respiratory */
+header{background:linear-gradient(180deg,#123F4B 0%,#1B5E6E 100%)!important}
+.chip.on:not(.cat){background:#1D4E5F!important;border-color:#1D4E5F!important}
+.new{background:#1D4E5F!important}
+.acts a,.acts button,.more,.link[data-act="refresh"]{color:#1D4E5F!important}
+.pk a{background:#1D4E5F!important;border-color:#1D4E5F!important}
+.gl a.gi b{font-size:16px;color:#123F4B}
+.gl a.gi .code{margin-top:2px;line-height:1.4}
+.ck input{accent-color:#1D4E5F!important}
+
+.fg input[type=number],.fg select{border:1px solid #D3D8E4!important;background:#fff!important}
+.res .big{font-size:27px!important}
+</style>
+</head>
+<body>
+<header><div class="hin">
+ <div class="top"><h1>COPD &amp; Community Care</h1><span class="newc" id="newc"></span></div>
+ <nav class="tabs" aria-label="Sections"><button data-tab="latest">Articles</button><button data-tab="guide">Guidelines</button><button data-tab="scores">Scores</button><button data-tab="saved">Archive</button><button data-tab="settings">Settings</button></nav>
+</div></header>
+<main id="main"></main>
+<script>
+"use strict";
+const KEY="copd-reader-v1";
+const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
+const J=[
+ {id:"ajrccm",name:"AJRCCM",ta:"Am J Respir Crit Care Med"},
+ {id:"erj",name:"Eur Respir J",ta:"Eur Respir J"},
+ {id:"lrm",name:"Lancet Respir Med",ta:"Lancet Respir Med"},
+ {id:"thorax",name:"Thorax",ta:"Thorax"},
+ {id:"chest",name:"Chest",ta:"Chest"},
+ {id:"ijcopd",name:"Int J COPD",ta:"Int J Chron Obstruct Pulmon Dis"},
+ {id:"copdj",name:"COPD (journal)",ta:"COPD"},
+ {id:"npj",name:"npj Prim Care Respir Med",ta:"NPJ Prim Care Respir Med"},
+ {id:"crd",name:"Chron Respir Dis",ta:"Chron Respir Dis"},
+ {id:"bmjorr",name:"BMJ Open Respir Res",ta:"BMJ Open Respir Res"},
+ {id:"erjor",name:"ERJ Open Res",ta:"ERJ Open Res"},
+ {id:"nejm",name:"NEJM",ta:"N Engl J Med"},
+ {id:"lancet",name:"Lancet",ta:"Lancet"},
+ {id:"bmj",name:"BMJ",ta:"BMJ"},
+ {id:"bjgp",name:"Br J Gen Pract",ta:"Br J Gen Pract"},
+ {id:"hscc",name:"Health Soc Care Community",ta:"Health Soc Care Community"}
+];
+const JBY=Object.fromEntries(J.map(j=>[j.ta.toLowerCase(),j]));
+const COPDQ=`("Pulmonary Disease, Chronic Obstructive"[mh] OR COPD[tiab] OR "chronic obstructive pulmonary"[tiab] OR "chronic obstructive lung"[tiab] OR emphysema[tiab] OR "chronic bronchitis"[tiab])`;
+const BROAD=`(${COPDQ} OR "chronic respiratory"[tiab] OR "lung disease"[tiab] OR "lung condition"[tiab] OR "long-term condition"[tiab] OR "long term condition"[tiab] OR "long-term conditions"[tiab] OR "chronic illness"[tiab] OR "chronic disease"[tiab] OR "chronic conditions"[tiab] OR multimorbidity[tiab])`;
+const tiab=a=>"("+a.map(w=>/\s/.test(w)?`"${w}"[tiab]`:`${w}[tiab]`).join(" OR ")+")";
+// broad: search all of PubMed for this section, whatever the journal setting
+const CATS=[
+ {id:"comm",c:"#2E7D6B",name:"Community care",q:tiab(["community","primary care","general practice","general practitioner","home-based","home care","hospital at home","integrated care","community nursing","community health","district nurse","care home","out-of-hospital"]),re:/communit|primary care|general practi|\bgp\b|home-based|home care|hospital at home|integrated care|district nurs|care home|out-of-hospital/i},
+ {id:"third",c:"#B5552B",broad:1,name:"Third sector",q:tiab(["third sector","voluntary sector","voluntary organisation","voluntary organisations","voluntary organization","voluntary organizations","charity","charities","charitable","non-profit","nonprofit","not-for-profit","community organisations","community-based organisations","community-based organizations","social prescribing","link worker","peer support","support group","support groups","befriending","volunteer","volunteers","Breathe Easy","Chest Heart","Asthma + Lung UK","British Lung Foundation"]),re:/third sector|voluntary|charit|non-?profit|not-for-profit|community(-based)? organi[sz]ation|social prescrib|link worker|peer support|support group|befriend|volunteer|breathe easy|chest heart|lung foundation|asthma \+ lung/i},
+ {id:"rehab",c:"#3E6EA8",name:"Pulmonary rehab",q:tiab(["pulmonary rehabilitation","exercise training","physical activity","exercise programme","exercise program","rehabilitation"]),re:/rehabilitation|exercise|physical activity/i},
+ {id:"self",c:"#6D5BA8",name:"Self-management",q:tiab(["self-management","self management","self-care","action plan","patient education","health literacy","supported self-management","health coaching"]),re:/self-?manag|self-care|action plan|education|health literacy|coaching/i},
+ {id:"exac",c:"#9E2B3A",name:"Exacerbations",q:tiab(["exacerbation","exacerbations","AECOPD","hospital admission","hospital admissions","readmission","readmissions","hospitalisation","hospitalization","emergency department"]),re:/exacerbat|aecopd|admission|readmission|hospitali[sz]|emergency department/i},
+ {id:"pharm",c:"#4E8F5E",name:"Inhalers and drugs",q:tiab(["inhaler","inhalers","inhaled corticosteroid","inhaled corticosteroids","bronchodilator","bronchodilators","LAMA","LABA","triple therapy","dupilumab","mepolizumab","ensifentrine","azithromycin","roflumilast","pharmacological","medication adherence"]),re:/inhal|bronchodilat|\blama\b|\blaba\b|triple therapy|dupilumab|mepolizumab|ensifentrine|azithromycin|roflumilast|pharmacolog|adherence|biologic/i},
+ {id:"pall",c:"#8E6C3E",name:"Palliative and breathlessness",q:tiab(["palliative","end of life","end-of-life","breathlessness","dyspnoea","dyspnea","advance care planning","anticipatory care","supportive care","hospice"]),re:/palliat|end[- ]of[- ]life|breathless|dyspn|advance care|anticipatory care|supportive care|hospice/i},
+ {id:"digital",c:"#2E8B88",name:"Digital health",q:tiab(["telehealth","telemedicine","telemonitoring","telerehabilitation","digital health","mHealth","eHealth","remote monitoring","smartphone","mobile application","virtual","online"]),re:/tele(health|medicine|monitor|rehab)|digital|m-?health|e-?health|remote monitor|smartphone|mobile app|virtual|online/i},
+ {id:"ineq",c:"#A84B7B",broad:1,name:"Inequalities",q:tiab(["deprivation","deprived","inequality","inequalities","inequity","socioeconomic","socio-economic","health inequalities","fuel poverty","social determinants","rural","loneliness","social isolation"]),re:/depriv|inequal|inequit|socio-?economic|fuel poverty|social determinant|rural|loneliness|isolation/i},
+ {id:"qual",c:"#5A6E8C",broad:1,name:"Qualitative",q:tiab(["qualitative","interview","interviews","focus group","focus groups","lived experience","patient experience","patient experiences","carer","carers","caregiver","caregivers","thematic analysis","ethnograph*"]),re:/qualitative|interview|focus group|lived experience|patient experience|carer|caregiver|thematic|ethnograph/i},
+ {id:"uk",c:"#1F3B73",broad:1,name:"Scotland and UK",q:tiab(["Scotland","Scottish","NHS","United Kingdom","UK","England","Wales","Northern Ireland","British"]),re:/scotland|scottish|\bnhs\b|united kingdom|\buk\b|england|wales|northern ireland|british/i}
+];
+const OTHERS={id:"oth",name:"Others",c:"#6B7280"};
+const CBY=Object.fromEntries(CATS.map(c=>[c.id,c]).concat([["oth",OTHERS]]));
+const EXCL=" NOT (letter[pt] OR comment[pt] OR published erratum[pt] OR retraction of publication[pt] OR news[pt])";
+const PAGE=25;
+const BIG=`((randomized controlled trial[pt] AND multicenter study[pt]) OR ((randomized[ti] OR randomised[ti] OR trial[ti]) AND (multicenter[tiab] OR multicentre[tiab] OR multinational[tiab] OR international[tiab] OR cluster[tiab])) OR guideline[pt] OR practice guideline[pt] OR systematic review[pt] OR "Global Strategy"[ti] OR guideline[ti])`;
+const GQ=`${COPDQ} AND (guideline[pt] OR practice guideline[pt] OR guideline*[ti] OR "Global Strategy"[ti] OR "official"[ti] OR "statement"[ti] OR "consensus"[ti] OR "standards"[ti]) NOT (comment[pt] OR letter[pt] OR published erratum[pt] OR correction[ti] OR erratum[ti])`;
+const LINKS={
+ gold:[["GOLD 2026 Report (full PDF)","https://goldcopd.org/wp-content/uploads/2025/12/GOLD-REPORT-2026-v1.3-8Dec2025_WMV.pdf","Global Strategy for the Diagnosis, Management and Prevention of COPD. Free to read."],["GOLD 2026: key changes","https://goldcopd.org/wp-content/uploads/2025/11/KEY-CHANGES-GOLD-2026-10Nov2025.pdf","Summary of what changed from the 2025 report."],["GOLD website","https://goldcopd.org/","Reports, pocket guides and teaching slides."]],
+ uk:[["NICE NG115: COPD in over 16s","https://www.nice.org.uk/guidance/ng115","Diagnosis and management, including pulmonary rehabilitation and self-management."],["NICE QS10: COPD in adults","https://www.nice.org.uk/guidance/qs10","Quality standard."],["Respiratory Care Action Plan for Scotland 2021 to 2026","https://www.gov.scot/publications/respiratory-care-action-plan-scotland-2021-2026/","Scottish Government plan, with commitments on self-management, peer support, carers and working with the third sector."],["BTS guidelines","https://www.brit-thoracic.org.uk/quality-improvement/guidelines/","British Thoracic Society, including pulmonary rehabilitation and home oxygen."],["Primary Care Respiratory Society","https://www.pcrs-uk.org/","Primary care respiratory resources."],["Respiratory Futures","https://www.respiratoryfutures.org.uk/","UK respiratory policy and service development."]],
+ third:[["Chest Heart & Stroke Scotland","https://www.chss.org.uk/","Scottish charity supporting people with chest, heart and stroke conditions, including community support and peer groups."],["Asthma + Lung UK","https://www.asthmaandlung.org.uk/","UK lung charity (formerly British Lung Foundation), including Breathe Easy support groups."],["Health and Social Care Alliance Scotland (the ALLIANCE)","https://www.alliance-scotland.org.uk/","National third sector intermediary for health and social care."],["Voluntary Health Scotland","https://vhscotland.org.uk/","Network of voluntary health organisations in Scotland."],["SCVO","https://scvo.scot/","Scottish Council for Voluntary Organisations: sector data and research."]]
+};
+
+const DEF={days:60,research:true,scope:"pubmed",off:{},saved:{},seen:[],last:null};
+let st;try{st=Object.assign({},DEF,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){st={...DEF}}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+const seen=new Set(st.seen);
+const S={tab:"latest",cat:"all",j:"all",q:"",items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,g:"gold",gl:null,gerr:"",gload:false};
+const $m=document.getElementById("main");
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const clean=s=>String(s||"").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'");
+const catsOf=title=>{const c=CATS.filter(x=>x.re.test(title)).map(x=>x.id);return c.length?c:["oth"]};
+const jClause=list=>list.length?"("+list.map(j=>`"${j.ta}"[ta]`).join(" OR ")+")":"";
+const keyJournals=()=>J.filter(j=>!st.off[j.id]);
+
+function term(){
+ const cat=CBY[S.cat];
+ let t=cat&&cat.id==="third"?BROAD:COPDQ;
+ if(S.j!=="all"){const j=J.find(x=>x.id===S.j);if(j)t+=" AND "+jClause([j])}
+ else if(st.scope==="journals"&&!(cat&&cat.broad)){const jc=jClause(keyJournals());if(!jc)return "";t+=" AND "+jc}
+ if(S.cat==="oth")t+=" NOT ("+CATS.map(c=>c.q).join(" OR ")+")";
+ else if(cat&&cat.q)t+=" AND "+cat.q;
+ const words=S.q.replace(/[()"\[\]]/g," ").split(/\s+/).filter(w=>w.length>1);
+ if(words.length)t+=" AND ("+words.map(w=>w+"[tiab]").join(" AND ")+")";
+ if(st.research)t+=EXCL;
+ return t;
+}
+async function getJSON(url,tries=3){
+ for(let i=0;i<tries;i++){
+  try{const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),15000);
+   const r=await fetch(url,{signal:ctl.signal});clearTimeout(tm);
+   if(r.status===429){await new Promise(z=>setTimeout(z,900*(i+1)));continue}
+   if(!r.ok)throw new Error("HTTP "+r.status);
+   return await r.json();
+  }catch(e){if(i===tries-1)throw e;await new Promise(z=>setTimeout(z,700))}
+ }
+ throw new Error("busy");
+}
+function toItem(d){
+ const doi=(d.articleids||[]).find(a=>a.idtype==="doi");
+ const au=(d.authors||[]).filter(a=>a.authtype==="Author").map(a=>a.name);
+ const coll=(d.authors||[]).find(a=>a.authtype==="CollectiveName");
+ const types=(d.pubtype||[]).filter(t=>!/^Journal Article$/i.test(t));
+ const title=clean(d.title);
+ return{pmid:d.uid,title,src:d.source,journal:d.fulljournalname||d.source,vol:d.volume||"",iss:d.issue||"",pages:d.pages||"",aus:au.length?au:coll?[coll.name]:[],
+  authors:au.length>3?au.slice(0,3).join(", ")+", et al.":au.length?au.join(", "):coll?coll.name:"",date:d.epubdate||d.pubdate||"",year:String((d.pubdate||d.epubdate||"").match(/\d{4}/)||""),doi:doi?doi.value:"",types:types.slice(0,2).join(", "),cats:catsOf(title)};
+}
+async function search(t,start,n,extra){
+ const sr=await getJSON(`${E}esearch.fcgi?db=pubmed&retmode=json&tool=copdreader&sort=pub_date&retmax=${n}&retstart=${start}${extra}&term=${encodeURIComponent(t)}`);
+ const ids=(sr.esearchresult&&sr.esearchresult.idlist)||[];
+ const count=+((sr.esearchresult&&sr.esearchresult.count)||0);
+ if(!ids.length)return{count,items:[]};
+ const sm=await getJSON(`${E}esummary.fcgi?db=pubmed&retmode=json&tool=copdreader&id=${ids.join(",")}`);
+ return{count,items:(sm.result&&sm.result.uids||[]).map(u=>toItem(sm.result[u]))};
+}
+async function load(more){
+ if(S.cat==="top"){
+  const id=++S.reqId;S.loading=true;S.err="";S.items=[];S.count=0;render();
+  try{const r=await search(COPDQ+" AND "+BIG+EXCL,0,5,"&datetype=edat&reldate=60");if(id!==S.reqId)return;S.items=r.items;S.count=r.items.length}
+  catch(e){if(id!==S.reqId)return;S.err="PubMed didn't respond. Tap Try again in a moment."}
+  S.loading=false;render();return}
+ const t=term();
+ if(!t){S.items=[];S.count=0;S.err="Every journal is switched off. Turn some on in Settings.";render();return}
+ const id=++S.reqId;
+ S.loading=true;S.err="";if(!more){S.items=[];S.count=0}render();
+ try{
+  const r=await search(t,more?S.items.length:0,PAGE,`&datetype=edat&reldate=${st.days}`);
+  if(id!==S.reqId)return;
+  for(const it of r.items){if(st.last&&!seen.has(it.pmid))S.newIds.add(it.pmid);seen.add(it.pmid)}
+  st.seen=[...seen].slice(-4000);st.last=Date.now();save();
+  S.count=r.count;S.items=more?S.items.concat(r.items):r.items;
+ }catch(e){
+  if(id!==S.reqId)return;
+  S.err=navigator.onLine===false?"You're offline. Connect to the internet and tap Try again.":"PubMed didn't respond. Tap Try again in a moment.";
+ }
+ S.loading=false;render();
+}
+async function loadGuide(){
+ if(S.gload)return;S.gload=true;S.gerr="";render();
+ try{const r=await search(GQ,0,40,"&datetype=pdat&mindate=2018&maxdate=3000");S.gl=r.items}
+ catch(e){S.gerr="Couldn't reach PubMed. Check your connection and try again."}
+ S.gload=false;render();
+}
+async function loadAbs(pmid){
+ if(S.abs[pmid]&&S.abs[pmid]!=="error"){S.open[pmid]=!S.open[pmid];render();return}
+ S.open[pmid]=true;S.abs[pmid]="loading";render();
+ try{
+  const r=await fetch(`${E}efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&tool=copdreader&id=${pmid}`);
+  const x=new DOMParser().parseFromString(await r.text(),"text/xml");
+  const parts=[...x.getElementsByTagName("AbstractText")].map(n=>({l:n.getAttribute("Label")||"",t:n.textContent.trim()})).filter(p=>p.t);
+  S.abs[pmid]=parts.length?parts:"none";
+ }catch(e){S.abs[pmid]="error"}
+ render();
+}
+const jOf=it=>JBY[String(it.src||"").toLowerCase()]||{name:it.src||"Journal"};
+function card(it){
+ const j=jOf(it),sv=!!st.saved[it.pmid],ab=S.abs[it.pmid],cs=it.cats||catsOf(it.title),pc=(CBY[S.cat]&&S.cat!=="oth"&&cs.includes(S.cat))?CBY[S.cat]:(CBY[cs[0]]||OTHERS);
+ const cats=cs.map(c=>{const k=CBY[c]||OTHERS;return `<span class="tag" style="--tc:${k.c}">${esc(k.name)}</span>`}).join("");
+ return `<article class="art" style="--jc:${pc.c}">
+  <div class="jn"><span class="jname">${esc(j.name)}${S.newIds.has(it.pmid)?`<span class="new">New</span>`:""}</span><span class="dt">${esc(it.date)}</span></div>
+  <h2>${esc(it.title)}</h2>
+  <div class="au">${esc(it.authors)}</div>
+  ${S.cat==="top"&&S.tab==="latest"?`<div class="pt"><b>${/guideline|global strategy/i.test(it.title+" "+it.types)?"Guideline":/systematic review|meta-analysis/i.test(it.title+" "+it.types)?"Systematic review":"Major trial"}</b>${it.types?", "+esc(it.types):""}</div>`:it.types?`<div class="pt">${esc(it.types)}</div>`:""}
+  <div class="tags">${cats}</div>
+  <div class="acts">
+   <button data-act="abs" data-id="${it.pmid}">${S.open[it.pmid]?"Hide abstract":"Abstract"}</button>
+   ${it.doi?`<a href="https://doi.org/${encodeURI(it.doi)}" target="_blank" rel="noopener">Full text</a>`:""}
+   <a href="https://pubmed.ncbi.nlm.nih.gov/${it.pmid}/" target="_blank" rel="noopener">PubMed</a>
+   <button class="arch ${sv?"on":""}" data-act="star" data-id="${it.pmid}" aria-pressed="${sv}">${sv?"Archived ✓":"Archive"}</button>
+  </div>
+  ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")}</div>`:""}
+ </article>`;
+}
+function vLatest(){
+ const catChips=[["all","All COPD","#1D4E5F"],["top","Top 5","#A87A12"]].concat(CATS.map(c=>[c.id,c.name,c.c]),[["oth","Others",OTHERS.c]]).map(([id,l,c])=>`<button class="chip cat ${S.cat===id?"on":""}" style="--cc:${c}" data-act="c" data-v="${id}">${l}</button>`).join("");
+ const jChips=[`<button class="chip ${S.j==="all"?"on":""}" data-act="j" data-v="all">${st.scope==="journals"?"Key journals":"All of PubMed"}</button>`].concat(keyJournals().map(j=>`<button class="chip ${S.j===j.id?"on":""}" data-act="j" data-v="${j.id}">${j.name}</button>`)).join("");
+ const sc=S.cat==="all"?null:S.cat==="top"?{name:"Top 5",c:"#A87A12"}:CBY[S.cat];
+ return `<input class="search" id="q" type="search" enterkeyhint="search" placeholder="Search titles and abstracts" value="${esc(S.q)}" autocomplete="off">
+  <div class="row" aria-label="Section">${catChips}</div>
+  <div class="row" aria-label="Source">${jChips}</div>
+  <div class="meta"><span>${sc?`<b class="sect" style="--cc:${sc.c}">${esc(sc.name)}</b> `:""}${S.loading&&!S.items.length?`<span class="spin"></span>Loading from PubMed`:S.count?(S.cat==="top"?"Latest major trials, systematic reviews and guidelines, last 60 days":`${S.count.toLocaleString("en-GB")} articles, last ${st.days} days`):""}</span>${S.items.length?`<button class="link" data-act="refresh">Refresh</button>`:""}</div>
+  ${S.cat==="third"?`<p class="note">Third sector covers COPD, lung disease and long-term conditions, searched across all of PubMed.</p>`:""}
+  ${S.err?`<div class="msg err">${esc(S.err)} <button class="link" data-act="refresh">Try again</button></div>`:""}
+  ${!S.loading&&!S.err&&!S.items.length?`<div class="msg">No articles in this section. Try another section, a longer period in Settings, or fewer search words.</div>`:""}
+  ${S.items.map(card).join("")}
+  ${S.items.length&&S.items.length<S.count?`<button class="more" data-act="more">${S.loading?`<span class="spin"></span>Loading`:"Show more"}</button>`:""}`;
+}
+function links(list){return `<div class="gl">${list.map(([t,u,d])=>`<a class="gi" href="${u}" target="_blank" rel="noopener"><b>${esc(t)}</b><div class="code">${esc(d)}</div></a>`).join("")}</div>`}
+function vGuide(){
+ const top=[["gold","GOLD"],["clin","Published guidelines"],["uk","Scotland and UK policy"],["third","Third sector"]].map(([id,l])=>`<button class="chip ${S.g===id?"on":""}" data-act="g" data-v="${id}">${l}</button>`).join("");
+ let body="";
+ if(S.g==="gold")body=`<p class="note">GOLD reports are free to read but protected by copyright, so they open on the GOLD website.</p>${links(LINKS.gold)}`;
+ else if(S.g==="uk")body=links(LINKS.uk);
+ else if(S.g==="third")body=`<p class="note">Key third sector organisations for respiratory and long-term conditions in Scotland and the UK.</p>${links(LINKS.third)}<p class="note">For research on the third sector's role, see the <b>Third sector</b> section under Articles.</p>`;
+ else{
+  if(!S.gl&&!S.gload&&!S.gerr)setTimeout(loadGuide);
+  body=`<p class="note">COPD guidelines, official statements and consensus documents (GOLD, ERS, ATS, BTS and others) from PubMed since 2018, newest first.</p>
+   ${S.gerr?`<div class="msg err">${esc(S.gerr)} <button class="link" data-act="gretry">Try again</button></div>`:""}
+   ${S.gload?`<div class="msg"><span class="spin"></span>Loading from PubMed</div>`:""}
+   ${S.gl?S.gl.length?S.gl.map(card).join(""):`<div class="msg">No guidelines found.</div>`:""}`;
+ }
+ return `<div class="row" style="flex-wrap:wrap;overflow:visible">${top}</div>${body}`;
+}
+function vSaved(){
+ const items=Object.values(st.saved).sort((a,b)=>(b.at||0)-(a.at||0));
+ return items.length?`<p class="help">${items.length} archived ${items.length===1?"article":"articles"}, newest first. Tap Archived to remove one.</p>
+  <div class="pk"><a href="#" data-act="ris">Export to reference manager</a></div>
+  <p class="note">Saves an RIS file that EndNote, Zotero and Mendeley can import.</p>${items.map(card).join("")}`:`<div class="msg">Nothing archived yet. Tap Archive on any article to keep it here, and export the list to your reference manager.</div>`;
+}
+function exportRIS(){
+ const items=Object.values(st.saved).sort((a,b)=>(b.at||0)-(a.at||0));
+ const L=[];for(const it of items){L.push("TY  - JOUR");L.push("TI  - "+it.title);for(const a of (it.aus&&it.aus.length?it.aus:String(it.authors||"").replace(/, et al\.$/,"").split(", ").filter(Boolean)))L.push("AU  - "+a);
+  L.push("JO  - "+(it.journal||it.src||""));if(it.year)L.push("PY  - "+it.year);if(it.vol)L.push("VL  - "+it.vol);if(it.iss)L.push("IS  - "+it.iss);if(it.pages)L.push("SP  - "+it.pages);if(it.doi)L.push("DO  - "+it.doi);L.push("AN  - "+it.pmid);L.push("UR  - https://pubmed.ncbi.nlm.nih.gov/"+it.pmid+"/");L.push("ER  - ");L.push("")}
+ const txt=L.join("\r\n"),name="copd-archive.ris",file=new File([txt],name,{type:"application/x-research-info-systems"});
+ if(navigator.canShare&&navigator.canShare({files:[file]})){navigator.share({files:[file],title:"COPD archive"}).catch(()=>{});return}
+ const a=document.createElement("a");a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
+}
+function vSettings(){
+ return `<h3>What to show</h3><div class="card">
+  <label class="set"><span>Period</span><select id="days">${[14,30,60,90,180,365].map(d=>`<option value="${d}" ${st.days===d?"selected":""}>Last ${d} days</option>`).join("")}</select></label>
+  <label class="set"><span>Search in</span><select id="scope"><option value="pubmed" ${st.scope==="pubmed"?"selected":""}>All of PubMed</option><option value="journals" ${st.scope==="journals"?"selected":""}>Key journals only</option></select></label>
+  <label class="set"><span>Research and reviews only<br><small class="au">Hides letters, comments and corrections</small></span><input type="checkbox" id="research" ${st.research?"checked":""}></label>
+ </div>
+ <p class="help">Third sector, Inequalities, Qualitative and Scotland and UK always search all of PubMed, because much of that research is outside the main respiratory journals.</p>
+ <h3>Key journals</h3>
+ <div class="card">${J.map(j=>`<label class="set"><span>${j.name}</span><input type="checkbox" data-jt="${j.id}" ${st.off[j.id]?"":"checked"}></label>`).join("")}</div>
+ <h3>About</h3><p class="help">Articles come from PubMed each time you open the app. Sections are matched on title and abstract words, so some articles appear in more than one. Archived articles and settings stay on this phone.</p>
+ ${Object.keys(st.saved).length?`<button class="link" data-act="clearsaved">Remove all archived articles</button>`:""}`;
+}
+// ---------- COPD scores ----------
+const CALCS=[{id:"gold",name:"GOLD grade and group",c:"#1D4E5F"},{id:"bode",name:"BODE index",c:"#3E6EA8"},{id:"decaf",name:"DECAF",c:"#9E2B3A"},{id:"curb",name:"CURB-65",c:"#B5552B"},{id:"pack",name:"Pack-years",c:"#8E6C3E"},{id:"bmi",name:"BMI",c:"#4E8F5E"}];
+const CDEF={gold:{fev1:"",ratio:"",mmrc:"0",cat:"",mod:"0",hosp:"0",eos:""},bode:{fev1:"",walk:"",mmrc:"0",ht:"",wt:""},decaf:{d:"0",eos:false,cons:false,acid:false,af:false},curb:{c:false,u:false,r:false,b:false,a:false},pack:{cig:"",yrs:""},bmi:{ht:"",wt:""}};
+S.calc="gold";S.cv=JSON.parse(JSON.stringify(CDEF));
+const num=v=>{const x=parseFloat(String(v).replace(",","."));return isFinite(x)?x:NaN};
+const f1=x=>(Math.round(x*10)/10).toLocaleString("en-GB",{minimumFractionDigits:1,maximumFractionDigits:1});
+const R=(cls,big,lines)=>`<div class="res ${cls}"><div class="big">${big}</div>${lines.map(l=>`<p>${l}</p>`).join("")}</div>`;
+const need=t=>`<div class="res"><p>${t}</p></div>`;
+function inp(id,label,ph,full){return `<label${full?' class="full"':""}>${label}<input type="number" inputmode="decimal" data-cv="${id}" value="${esc(S.cv[S.calc][id])}" placeholder="${ph||""}"></label>`}
+function sel(id,label,opts,full){return `<label${full?' class="full"':""}>${label}<select data-cv="${id}">${opts.map(([v,t])=>`<option value="${v}" ${String(S.cv[S.calc][id])===String(v)?"selected":""}>${t}</option>`).join("")}</select></label>`}
+function ck(id,label,pts){return `<label class="ck full"><input type="checkbox" data-cv="${id}" ${S.cv[S.calc][id]?"checked":""}>${label}${pts!=null?`<span class="pts">${pts}</span>`:""}</label>`}
+const MMRC=[["0","0: breathless only with strenuous exercise"],["1","1: when hurrying or walking up a slight hill"],["2","2: walks slower than others, or stops for breath on the level"],["3","3: stops for breath after about 100 m or a few minutes"],["4","4: too breathless to leave the house, or when dressing"]];
+function calcForm(id){
+ switch(id){
+ case "gold":return `<p class="help">Spirometric grade and GOLD ABE group, with the initial treatment suggested by the GOLD report.</p><div class="fg">
+  ${inp("fev1","Post-bronchodilator FEV1 (% predicted)","55")}${inp("ratio","FEV1/FVC ratio","0.62")}
+  ${sel("mmrc","mMRC breathlessness",MMRC,true)}${inp("cat","CAT score (0 to 40)","optional")}${inp("eos","Blood eosinophils (cells/µL)","optional")}
+  ${sel("mod","Moderate exacerbations in past year",[["0","0"],["1","1"],["2","2 or more"]])}${sel("hosp","Exacerbations needing hospital",[["0","0"],["1","1 or more"]])}</div>`;
+ case "bode":return `<div class="fg">${inp("fev1","FEV1 (% predicted)","45")}${inp("walk","6-minute walk (m)","300")}${sel("mmrc","mMRC breathlessness",MMRC,true)}${inp("ht","Height (cm)","165")}${inp("wt","Weight (kg)","60")}</div>`;
+ case "decaf":return `<p class="help">Predicts in-hospital death in people admitted with an exacerbation of COPD.</p><div class="fg">${sel("d","Breathlessness before admission (eMRCD)",[["0","eMRCD 1 to 4 (0)"],["1","5a: housebound, independent with washing or dressing (1)"],["2","5b: housebound, needs help with washing and dressing (2)"]],true)}
+  ${ck("eos","Eosinopenia (eosinophils under 0.05 × 10⁹/L)",1)}${ck("cons","Consolidation on chest X-ray",1)}${ck("acid","Acidaemia (pH under 7.30)",1)}${ck("af","Atrial fibrillation",1)}</div>`;
+ case "curb":return `<div class="fg">${ck("c","Confusion (new)",1)}${ck("u","Urea over 7 mmol/L",1)}${ck("r","Respiratory rate 30 or more",1)}${ck("b","Systolic BP under 90 or diastolic 60 or less",1)}${ck("a","Age 65 or over",1)}</div>`;
+ case "pack":return `<div class="fg">${inp("cig","Cigarettes per day","20")}${inp("yrs","Years smoked","30")}</div>`;
+ case "bmi":return `<div class="fg">${inp("ht","Height (cm)","165")}${inp("wt","Weight (kg)","60")}</div>`;
+ }
+ return "";
+}
+function calcResult(id){
+ const v=S.cv[id];
+ switch(id){
+ case "gold":{
+  const fev=num(v.fev1),ra=num(v.ratio),cat=num(v.cat),eos=num(v.eos),mm=+v.mmrc;
+  const lines=[];let big="";
+  if(!isNaN(fev)){const g=fev>=80?1:fev>=50?2:fev>=30?3:4;big=`GOLD ${g}`;lines.push(["Mild","Moderate","Severe","Very severe"][g-1]+` airflow obstruction (FEV1 ${Math.round(fev)}% predicted).`)}
+  if(!isNaN(ra)){const r=ra>1?ra/100:ra;lines.push(r<0.7?`FEV1/FVC ${r.toFixed(2)}: obstruction confirmed (under 0.70).`:`FEV1/FVC ${r.toFixed(2)}: not under 0.70, so the GOLD spirometric criterion isn't met.`)}
+  const E=(+v.mod>=2)||(+v.hosp>=1),B=mm>=2||(!isNaN(cat)&&cat>=10),grp=E?"E":B?"B":"A";
+  lines.push(`Group ${grp}: ${E?"2 or more moderate exacerbations, or 1 or more leading to hospital, in the past year.":B?"mMRC 2 or more, or CAT 10 or more, with 0 to 1 moderate exacerbations.":"mMRC 0 to 1 and CAT under 10, with 0 to 1 moderate exacerbations."}`);
+  lines.push(`Initial treatment: ${grp==="A"?"a bronchodilator.":grp==="B"?"LABA + LAMA.":`LABA + LAMA${!isNaN(eos)&&eos>=300?". With eosinophils 300 or more, consider LABA + LAMA + ICS.":"; consider adding ICS if blood eosinophils are 300 or more."}`}`);
+  lines.push("Check against the current GOLD report, especially for follow-up treatment.");
+  return R(grp==="E"?"high":grp==="B"?"mid":"low",`${big?big+", ":""}Group ${grp}`,lines);}
+ case "bode":{
+  const fev=num(v.fev1),w=num(v.walk),h=num(v.ht)/100,wt=num(v.wt);if([fev,w,h,wt].some(isNaN)||!h)return need("Enter FEV1, walk distance, height and weight.");
+  const bmi=wt/(h*h),b=(bmi<=21?1:0),o=fev>=65?0:fev>=50?1:fev>=36?2:3,d=[0,0,1,2,3][+v.mmrc],e=w>=350?0:w>=250?1:w>=150?2:3,s=b+o+d+e;
+  const q=s<=2?1:s<=4?2:s<=6?3:4;
+  return R(q>=3?"high":q===2?"mid":"low",`${s}`,[`BODE quartile ${q} (BMI ${f1(bmi)}).`,"Higher scores mean higher mortality risk. Quartiles: 0 to 2, 3 to 4, 5 to 6, 7 to 10."]);}
+ case "decaf":{
+  const s=+v.d+(v.eos?1:0)+(v.cons?1:0)+(v.acid?1:0)+(v.af?1:0);
+  return R(s>=3?"high":s===2?"mid":"low",`${s}`,[s<=1?"Low risk (0 to 1). May be suitable for early supported discharge or hospital at home.":s===2?"Intermediate risk (2).":"High risk (3 to 6). Consider escalation planning and early senior review."]);}
+ case "curb":{
+  const s=["c","u","r","b","a"].reduce((a,k)=>a+(v[k]?1:0),0);
+  return R(s>=3?"high":s===2?"mid":"low",`${s}`,[s<=1?"Low severity: consider home treatment.":s===2?"Moderate severity: consider hospital treatment.":"High severity: hospital treatment; consider critical care assessment if 4 or 5."]);}
+ case "pack":{
+  const c=num(v.cig),y=num(v.yrs);if(isNaN(c)||isNaN(y))return need("Enter cigarettes per day and years smoked.");
+  const p=c/20*y;return R(p>=20?"mid":"low",`${f1(p)}`,["Pack-years (cigarettes per day ÷ 20 × years)."]);}
+ case "bmi":{
+  const h=num(v.ht)/100,w=num(v.wt);if(isNaN(h)||isNaN(w)||!h)return need("Enter height and weight.");
+  const b=w/(h*h);return R(b<18.5||b>=30?"high":b>=25?"mid":"low",f1(b),[b<18.5?"Underweight: in COPD, low BMI is linked to worse outcomes; consider nutritional support.":b<21?"BMI 21 or under adds a point to the BODE index.":b<25?"Healthy weight.":b<30?"Overweight.":"Obesity."]);}
+ }
+ return "";
+}
+function vScores(){
+ const c=CALCS.find(x=>x.id===S.calc);
+ return `<div class="row" style="flex-wrap:wrap;overflow:visible">${CALCS.map(x=>`<button class="chip cat ${S.calc===x.id?"on":""}" style="--cc:${x.c}" data-act="calc" data-v="${x.id}">${x.name}</button>`).join("")}</div>
+ <div class="calc" style="--cc:${c.c};margin-top:10px"><h3>${c.name}</h3>${calcForm(c.id)}<div id="cres">${calcResult(c.id)}</div>
+ <button class="link" style="margin-top:8px" data-act="creset">Clear</button></div>
+ <p class="note">Calculated on your phone; nothing is sent anywhere. For clinical decisions, check results against the source guideline.</p>`;
+}
+const POPSEL=".chip,.acts a,.acts button,.more,.pk a,.tabs button,.link";
+let popKey=null,popAt=0;
+function popEl(el){if(!el)return;el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop");setTimeout(()=>el.classList.remove("pop"),550)}
+document.addEventListener("pointerdown",e=>{const el=e.target.closest(POPSEL);if(!el)return;
+ const d=el.dataset;popKey=d.tab?`[data-tab="${d.tab}"]`:d.act?`[data-act="${d.act}"]${d.v!=null?`[data-v="${d.v}"]`:""}${d.id?`[data-id="${d.id}"]`:""}`:null;popAt=Date.now();popEl(el)},{passive:true});
+document.addEventListener("touchstart",()=>{},{passive:true});
+function render(){
+ document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
+ const n=S.newIds.size;document.getElementById("newc").textContent=n?`${n} new`:"";
+ const fid=document.activeElement&&document.activeElement.id==="q"?"q":"";
+ $m.innerHTML=S.tab==="latest"?vLatest():S.tab==="guide"?vGuide():S.tab==="scores"?vScores():S.tab==="saved"?vSaved():vSettings();
+ if(popKey&&Date.now()-popAt<450){popEl(document.querySelector(popKey))}
+ if(fid){const q=document.getElementById(fid);if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
+}
+function findItem(id){return S.items.find(x=>x.pmid===id)||(S.gl||[]).find(x=>x.pmid===id)}
+let qTimer;
+document.addEventListener("click",e=>{
+ const tb=e.target.closest("[data-tab]");if(tb){S.tab=tb.dataset.tab;render();window.scrollTo(0,0);return}
+ const b=e.target.closest("[data-act]");if(!b)return;
+ const a=b.dataset.act;
+ if(a==="c"){S.cat=b.dataset.v;load()}
+ else if(a==="j"){S.j=b.dataset.v;load()}
+ else if(a==="refresh")load();
+ else if(a==="more"){if(!S.loading)load(true)}
+ else if(a==="abs")loadAbs(b.dataset.id);
+ else if(a==="star"){const id=b.dataset.id;if(st.saved[id])delete st.saved[id];else{const it=findItem(id);if(it)st.saved[id]={...it,at:Date.now()}}save();render()}
+ else if(a==="g"){S.g=b.dataset.v;render()}
+ else if(a==="gretry"){S.gerr="";loadGuide()}
+ else if(a==="ris"){e.preventDefault();exportRIS()}
+ else if(a==="calc"){S.calc=b.dataset.v;render()}
+ else if(a==="creset"){S.cv[S.calc]=JSON.parse(JSON.stringify(CDEF[S.calc]));render()}
+ else if(a==="clearsaved"){if(confirm("Remove all archived articles?")){st.saved={};save();render()}}
+});
+function cvSet(el){
+ const k=el.dataset.cv;S.cv[S.calc][k]=el.type==="checkbox"?el.checked:el.value;
+ const r=document.getElementById("cres");if(r)r.innerHTML=calcResult(S.calc);
+}
+document.addEventListener("input",e=>{
+ if(e.target.dataset&&e.target.dataset.cv){cvSet(e.target);return}
+ if(e.target.id==="q"){S.q=e.target.value;clearTimeout(qTimer);qTimer=setTimeout(()=>load(),700)}
+});
+document.addEventListener("change",e=>{
+ const el=e.target;
+ if(el.dataset&&el.dataset.cv){cvSet(el);return}
+ if(el.id==="days"){st.days=+el.value;save();load()}
+ else if(el.id==="scope"){st.scope=el.value;S.j="all";save();load()}
+ else if(el.id==="research"){st.research=el.checked;save();load()}
+ else if(el.dataset.jt){if(el.checked)delete st.off[el.dataset.jt];else st.off[el.dataset.jt]=true;if(st.off[S.j])S.j="all";save();load()}
+});
+document.addEventListener("keydown",e=>{if(e.target.id==="q"&&e.key==="Enter"){clearTimeout(qTimer);e.target.blur();load()}});
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&st.last&&Date.now()-st.last>3*3600e3&&S.tab==="latest")load()});
+render();load();
+
+</script>
+</body>
+</html>
