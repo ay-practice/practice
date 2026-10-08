@@ -180,7 +180,7 @@ const INS=[{id:"self",name:"Self-pay"},{id:"aviva",name:"Aviva"},{id:"axa",name:
 const INAME=Object.fromEntries(INS.map(i=>[i.id,i.name]));
 const HOSP={
  kp:{name:"Kings Park",inv:[["ecg","ECG"],["echo","Echocardiogram"],["zio","ZIO patch"]]},
- spire:{name:"Spire",inv:[["echo","Echocardiogram"],["synexus","Synexus echo"],["ecg","ECG"],["h24","24h ECG monitor"],["h48","48h ECG monitor"],["h72","72h ECG monitor"],["bp24","24h BP monitor"],["ett","Exercise treadmill test"],["cac","CAC scoring"]]},
+ spire:{name:"Spire",inv:[["echo","Echocardiogram"],["synexus","Synexus echo"],["ecg","ECG"],["h24","24h ECG monitor"],["h48","48h ECG monitor"],["h72","72h ECG monitor"],["bp24","24h BP monitor"],["ett","Exercise treadmill test"]]},
  nuffield:{name:"Nuffield",inv:[["ecg","ECG"],["echo","Echocardiogram"],["zio","ZIO patch"]]}
 };
 const ITEMNAME={ecg:"ECG",echo:"echo",zio:"ZIO patch",synexus:"Synexus echo",h24:"24h ECG monitor",h48:"48h ECG monitor",h72:"72h ECG monitor",bp24:"24h BP monitor",ett:"treadmill test",toe:"TOE",dccv:"DC cardioversion",ct:"CT",mri:"MRI",cac:"CAC score"};
@@ -189,8 +189,8 @@ const SESS=[
  {id:"spire",hosp:"spire",off:3,title:"Spire Shawfair Park",when:"morning",pal:"spire",procs:true},
  {id:"reporting",hosp:"spire",off:3,title:"CT and MRI reporting",when:"afternoon",pal:"reporting",scans:true},
  {id:"nuffield",hosp:"nuffield",off:3,title:"Nuffield",when:"evening",pal:"nuffield"},
- {id:"spireFri",hosp:"spire",off:4,title:"Spire follow-up clinic",when:"evening",pal:"spire"},
- {id:"nuffieldFri",hosp:"nuffield",off:4,title:"Nuffield follow-up clinic",when:"evening",pal:"nuffield"}
+ {id:"spireFri",hosp:"spire",off:4,title:"Spire follow-up clinic",when:"evening",pal:"spire",consultOnly:true},
+ {id:"nuffieldFri",hosp:"nuffield",off:4,title:"Nuffield follow-up clinic",when:"evening",pal:"nuffield",consultOnly:true}
 ];
 const SMAP=Object.fromEntries(SESS.map(s=>[s.id,s]));
 const CLINICS=SESS.filter(s=>!s.scans);
@@ -203,9 +203,9 @@ const SCHED={
 const DEFAULT={
  tariffs:{
   consult:{self:{new:225,fu:150},aviva:{new:204,fu:144},axa:{new:195,fu:132},bupa:{new:190,fu:115},vitality:{new:160,fu:100},healix:{new:200,fu:150}},
-  inv:{spire:{echo:200,synexus:550,ecg:30,h24:50,h48:70,h72:90,bp24:50,ett:150,cac:50},nuffield:{ecg:45,echo:214,zio:75},kp:{ecg:70,echo:223,zio:180}},
+  inv:{spire:{echo:200,synexus:550,ecg:30,h24:50,h48:70,h72:90,bp24:50,ett:150},nuffield:{ecg:45,echo:214,zio:75},kp:{ecg:70,echo:223,zio:180}},
   procs:{toe:{self:300,insured:280},dccv:{self:150,insured:150}},
-  scans:{self:200,insured:150}
+  scans:{self:200,insured:150,cac:50}
  },
  settings:{overdueDays:45,keywords:{spire:"spire",nuffield:"nuffield",kp:"kings park, kingspark, circle",medserv:"medserv"},opening:{spire:0,nuffield:0,kp:0,medserv:0}},
  weeks:{},txns:[],patients:[],remits:[]
@@ -242,13 +242,24 @@ function emptyWeek(start){
  const w={start};
  for(const s of CLINICS)w[s.id]={consult:emptyConsult(),inv:{}};
  w.spire.procs={toe:{self:0,bupa:0,ins:0},dccv:{self:0,bupa:0,ins:0}};
- w.reporting={ct:{ins:0,self:0},mri:{ins:0,self:0}};
+ w.reporting={ct:{ins:0,self:0},mri:{ins:0,self:0},cac:0};
  return w;
 }
 
 // storage
 let data;
 try{const s=localStorage.getItem(KEY);data=s?deepMerge(clone(DEFAULT),JSON.parse(s)):clone(DEFAULT)}catch(e){data=clone(DEFAULT)}
+(function migrate(){
+ let ch=false;const iv=data.tariffs.inv.spire;
+ if(iv&&iv.cac!=null){data.tariffs.scans.cac=n(iv.cac)||data.tariffs.scans.cac;delete iv.cac;ch=true}
+ for(const w of Object.values(data.weeks)){
+  const sp=w.spire&&w.spire.inv;
+  if(sp&&n(sp.cac)){w.reporting=w.reporting||{};w.reporting.cac=n(w.reporting.cac)+n(sp.cac);ch=true}
+  if(sp&&"cac" in sp){delete sp.cac;ch=true}
+  for(const[f,m]of [["spireFri","spire"],["nuffieldFri","nuffield"]]){const fi=w[f]&&w[f].inv;if(fi)for(const[k,v]of Object.entries(fi)){if(n(v)){w[m]=w[m]||{consult:{},inv:{}};w[m].inv=w[m].inv||{};w[m].inv[k]=n(w[m].inv[k])+n(v)}delete fi[k];ch=true}}
+ }
+ if(ch)try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}
+})();
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(data));return true}catch(e){toast("Couldn't save on this phone. Free up some storage and try again.");return false}}
 if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
 
@@ -274,7 +285,7 @@ function computeLines(w){
   }
  }
  const r=w.reporting||{};
- push("reporting",3,"spire","spireMonthly",["ct","mri"].reduce((a,k)=>a+n((r[k]||{}).self)*n(T.scans.self)+n((r[k]||{}).ins)*n(T.scans.insured),0));
+ push("reporting",3,"spire","spireMonthly",["ct","mri"].reduce((a,k)=>a+n((r[k]||{}).self)*n(T.scans.self)+n((r[k]||{}).ins)*n(T.scans.insured),0)+n(r.cac)*n(T.scans.cac));
  return L;
 }
 const dueOf=l=>l.stream==="spireWeekly"?addDays(l.date,14):(l.stream==="spireMonthly"||l.stream==="nuffieldMonthly")?endNextMonth(l.date):null;
@@ -288,7 +299,7 @@ function activity(w){
   out[s.id]={date:addDays(mon,s.off),newc:nw,fu,inv,scans:0};
  }
  const r=w.reporting||{};
- out.reporting={date:addDays(mon,3),newc:0,fu:0,inv:0,scans:["ct","mri"].reduce((a,k)=>a+n((r[k]||{}).self)+n((r[k]||{}).ins),0)};
+ out.reporting={date:addDays(mon,3),newc:0,fu:0,inv:0,scans:["ct","mri"].reduce((a,k)=>a+n((r[k]||{}).self)+n((r[k]||{}).ins),0)+n(r.cac)};
  return out;
 }
 const getWeek=s=>deepMerge(emptyWeek(s),data.weeks[s]||{});
@@ -372,16 +383,18 @@ function interpret(text,sid){
  for(const c of clauses(tokenize(text))){
   const k=c.num==null?1:c.num;
   if(k<=0)continue;
-  if(c.item==="ct"||c.item==="mri"){
+  if(c.item==="cac"){
+   ok.push({path:["reporting","cac"],n:k,label:`${k} CAC score${k>1?"s":""} reported`});
+  }else if(c.item==="ct"||c.item==="mri"){
    const col=c.payer==="self"?"self":"ins";
    ok.push({path:["reporting",c.item,col],n:k,label:`${k} ${ITEMNAME[c.item]} reported, ${col==="self"?"self-pay":"insured"}${c.payer?"":" (assumed insured)"}`});
   }else if(c.item==="toe"||c.item==="dccv"){
    const col=!c.payer||c.payer==="self"?"self":c.payer==="bupa"?"bupa":"ins";
    ok.push({path:["spire","procs",c.item,col],n:k,label:`${k} ${ITEMNAME[c.item]} at Spire, ${col==="self"?"self-pay":col==="bupa"?"Bupa":"insured"}${c.payer?"":" (assumed self-pay)"}`});
   }else if(c.item){
-   const target=sess.scans?"spire":sid,h=SMAP[target].hosp;
+   const target=sess.scans?"spire":sess.consultOnly?(sess.hosp==="spire"?"spire":"nuffield"):sid,h=SMAP[target].hosp;
    if(!HOSP[h].inv.some(([x])=>x===c.item)){bad.push(`${ITEMNAME[c.item]} isn't set up at ${HOSP[h].name}, so it was left out`);continue}
-   ok.push({path:[target,"inv",c.item],n:k,label:`${k} ${ITEMNAME[c.item]}${k>1&&!/patch|test|monitor/.test(ITEMNAME[c.item])?"s":""}`});
+   ok.push({path:[target,"inv",c.item],n:k,label:`${k} ${ITEMNAME[c.item]}${k>1&&!/patch|test|monitor/.test(ITEMNAME[c.item])?"s":""}${sess.consultOnly?` (added to ${SMAP[target].title}, as this clinic is consultations only)`:""}`});
   }else if(c.payer||c.kind){
    if(sess.scans){bad.push("Consultations need a clinic. Choose the clinic above first");continue}
    const dp=data.settings.qpayer||"self",named=c.payer&&c.payer!=="ins";
@@ -489,7 +502,7 @@ function vOverview(){
 }
 
 // ---------- log week ----------
-function siteSummary(id,a){return id==="reporting"?`${a.scans} scans`:`${a.newc+a.fu} patients, ${a.inv} tests`}
+function siteSummary(id,a){return id==="reporting"?`${a.scans} scans`:SMAP[id]&&SMAP[id].consultOnly?`${a.newc+a.fu} patients`:`${a.newc+a.fu} patients, ${a.inv} tests`}
 function sessDate(s,mon){const d=addDays(mon,s.off);return `${dayLabel(d)}, ${s.when}`}
 function qPreviewHTML(){
  if(!S.qtext.trim())return `<p class="help" style="margin:8px 0 0">Example: echos 4, ECGs 2, self-pay new 1, AXA follow-up 2</p>`;
@@ -506,8 +519,8 @@ function vLog(){
    return `<tr><td>${i.name}${via}</td><td class="c">${num(`${s.id}.consult.${i.id}.new`,`${i.name} new`,w[s.id].consult[i.id].new)}</td><td class="c">${num(`${s.id}.consult.${i.id}.fu`,`${i.name} follow-up`,w[s.id].consult[i.id].fu)}</td></tr>`}).join("")}</tbody></table>`;
  const inv=s=>`<div class="sub">Investigations</div>${HOSP[s.hosp].inv.map(([k,l])=>`<div class="irow"><span>${l} <span class="tag">${fmt(T.inv[s.hosp][k])}</span></span>${num(`${s.id}.inv.${k}`,l,w[s.id].inv[k])}</div>`).join("")}`;
  const procs=`<table style="margin-top:8px"><thead><tr><th>Procedures</th><th>Self-pay</th><th>Bupa</th><th>Other insured</th></tr></thead><tbody>${[["toe","TOE"],["dccv","DC cardioversion"]].map(([k,l])=>`<tr><td>${l}</td>${["self","bupa","ins"].map(c=>`<td class="c">${num(`spire.procs.${k}.${c}`,`${l} ${c}`,w.spire.procs[k][c],54)}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
- const rep=`<table><thead><tr><th>Scans reported</th><th>Insured</th><th>Self-pay</th></tr></thead><tbody>${[["ct","CT"],["mri","MRI"]].map(([k,l])=>`<tr><td>${l}</td><td class="c">${num(`reporting.${k}.ins`,`${l} insured`,w.reporting[k].ins)}</td><td class="c">${num(`reporting.${k}.self`,`${l} self-pay`,w.reporting[k].self)}</td></tr>`).join("")}</tbody></table>`;
- const card=s=>`<details class="sess" style="${pv(s.pal)}" data-sess="${s.id}" ${S.open===s.id?"open":""}><summary><span><b>${s.title}</b><small>${sessDate(s,mon)} · <span data-sum="${s.id}">${siteSummary(s.id,act[s.id])}</span></small></span><span class="amt" data-total="${s.id}">${fmt(tot(s.id))}</span></summary><div class="sbody">${s.scans?rep:consult(s)+inv(s)+(s.procs?procs:"")}</div></details>`;
+ const rep=`<table><thead><tr><th>Scans reported</th><th>Insured</th><th>Self-pay</th></tr></thead><tbody>${[["ct","CT"],["mri","MRI"]].map(([k,l])=>`<tr><td>${l}</td><td class="c">${num(`reporting.${k}.ins`,`${l} insured`,w.reporting[k].ins)}</td><td class="c">${num(`reporting.${k}.self`,`${l} self-pay`,w.reporting[k].self)}</td></tr>`).join("")}</tbody></table><div class="irow" style="margin-top:8px"><span>CAC scoring <span class="tag">${fmt(T.scans.cac)}</span></span>${num("reporting.cac","CAC scoring",w.reporting.cac)}</div>`;
+ const card=s=>`<details class="sess" style="${pv(s.pal)}" data-sess="${s.id}" ${S.open===s.id?"open":""}><summary><span><b>${s.title}</b><small>${sessDate(s,mon)} · <span data-sum="${s.id}">${siteSummary(s.id,act[s.id])}</span></small></span><span class="amt" data-total="${s.id}">${fmt(tot(s.id))}</span></summary><div class="sbody">${s.scans?rep:consult(s)+(s.consultOnly?`<p class="help" style="margin-top:8px">Consultations only.</p>`:inv(s))+(s.procs?procs:"")}</div></details>`;
  const logged=Object.keys(data.weeks).sort().reverse().slice(0,8);
  const thisWeek=iso(mondayOf(today()));
  return `<div class="pad">
@@ -620,6 +633,7 @@ function estAmount(hosp,payer,kind,items){
  if(kind&&payer&&T.consult[payer])a+=n(T.consult[payer][kind]);
  for(const[k,q]of Object.entries(items)){
   if(k==="toe"||k==="dccv")a+=q*n(payer&&payer!=="self"?T.procs[k].insured:T.procs[k].self);
+  else if(k==="cac")a+=q*n(T.scans.cac);
   else if(k==="ct"||k==="mri")a+=q*n(payer==="self"?T.scans.self:T.scans.insured);
   else if(T.inv[hosp]&&T.inv[hosp][k]!=null)a+=q*n(T.inv[hosp][k]);
  }
@@ -896,7 +910,7 @@ function vTariffs(){
   <h2 style="color:${PAL.spire.c}">Procedures at Spire</h2>
   <div class="card pcard" style="${pv("spire")}">${trow("TOE, self-pay","tariffs.procs.toe.self")}${trow("TOE, insured","tariffs.procs.toe.insured","Provisional average. Update when insurer rates are confirmed.")}${trow("DC cardioversion, self-pay","tariffs.procs.dccv.self")}${trow("DC cardioversion, insured","tariffs.procs.dccv.insured")}</div>
   <h2 style="color:${PAL.reporting.c}">CT and MRI reporting</h2>
-  <div class="card pcard" style="${pv("reporting")}">${trow("Insured, per scan","tariffs.scans.insured")}${trow("Self-pay, per scan","tariffs.scans.self")}</div>
+  <div class="card pcard" style="${pv("reporting")}">${trow("Insured, per scan","tariffs.scans.insured")}${trow("Self-pay, per scan","tariffs.scans.self")}${trow("CAC scoring, per scan","tariffs.scans.cac")}</div>
   <h2>Matching bank payments</h2>
   <div class="card"><p class="help">Words that appear in the bank description for each payer, separated by commas. Add the exact wording from your statements if a payer isn't being matched.</p>
    ${PAYERS.map(p=>`<label style="display:block;font-size:14px;margin-bottom:8px;color:${PAL[p.id].c};font-weight:600">${p.name}<input class="t" style="font-weight:400;color:var(--ink)" data-tpath="settings.keywords.${p.id}" value="${esc(data.settings.keywords[p.id])}"></label>`).join("")}</div>
