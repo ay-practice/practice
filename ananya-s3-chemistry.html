@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Learning dashboard</title>
+<style>
+:root{--ink:#1E2B47;--ink2:#4A5878;--paper:#F6F9FC;--grid:#E1E9F2;--line:#C9D6E5;--card:#fff;
+--u0:#D7263D;--u1:#F46036;--u2:#F2C14E;--u3:#6BBF59;--u4:#2E86AB;--u5:#5B3E96;--r:14px;
+--font:ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);font-size:17px;line-height:1.5;color:var(--ink);background-color:var(--paper);
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px calc(96px + env(safe-area-inset-bottom))}
+h1{font-size:2.1rem;line-height:1.08;letter-spacing:-.02em;margin:.15em 0 .3em;font-weight:800}
+h2{font-size:1.3rem;margin:1.8em 0 .6em;font-weight:800;line-height:1.2}
+h3{font-size:1.08rem;margin:0 0 .25em}
+p{margin:.45em 0}
+sub,sup{line-height:0}
+.sub{color:var(--ink2);font-size:.95rem}
+small{display:block;color:var(--ink2);font-size:.82rem;margin-top:2px}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--u4);outline-offset:2px}
+.btn{border:2px solid var(--ink);background:var(--card);border-radius:12px;padding:10px 16px;font-weight:700;min-height:44px}
+.btn.primary{background:var(--ink);color:#fff}
+.btn.sm{padding:4px 10px;min-height:32px;font-size:.85rem}
+.btn.danger{border-color:var(--u0);color:var(--u0)}
+.btn:disabled{opacity:.35;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.back{background:none;border:0;padding:6px 0;color:var(--ink2);font-weight:700}
+.back::before{content:"‹ "}
+.hero{padding:8px 0 4px}
+.ind{position:relative;margin:14px 0 8px;padding-top:30px}
+.scale{height:18px;border-radius:9px;border:2px solid var(--ink);background:linear-gradient(90deg,var(--u0),var(--u1) 30%,var(--u2) 50%,var(--u3) 62%,var(--u4) 80%,var(--u5))}
+.mk{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center}
+.mk b{background:var(--ink);color:#fff;font-size:.8rem;padding:1px 8px;border-radius:8px}
+.mk::after{content:"";width:3px;height:30px;background:var(--ink);margin-top:-2px}
+.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--ink2);margin-top:4px}
+.table{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tile{position:relative;border:2px solid var(--ink);border-radius:6px;background:var(--card);padding:10px 12px;text-align:left;display:flex;flex-direction:column;gap:2px;min-height:150px}
+.tile .n{font-weight:800;font-size:.95rem}
+.tile .pc{position:absolute;top:10px;right:12px;font-weight:800;font-size:.85rem}
+.tile .sym{font-size:3rem;font-weight:800;line-height:1;letter-spacing:-.03em;margin-top:auto}
+.tile .nm{font-weight:700;font-size:.88rem;line-height:1.2}
+.tile.new{border-style:dashed;background:rgba(255,255,255,.85)}
+.tile:active{transform:translateY(1px)}
+.chhead{display:flex;gap:14px;align-items:center;margin-top:8px}
+.mini{flex:none;width:64px;height:64px;border:2px solid var(--ink);border-radius:6px;display:grid;place-items:center;font-weight:800;font-size:1.6rem;background:var(--card)}
+.chhead h1{margin:0;font-size:1.8rem}
+.topics{list-style:none;padding:0;margin:0;display:grid;gap:10px;counter-reset:t}
+.topics li{counter-increment:t}
+.trow{width:100%;text-align:left;border:2px solid var(--ink);border-radius:var(--r);background:var(--card);padding:12px 14px 12px 52px;position:relative;display:block}
+.trow::before{content:counter(t);position:absolute;left:14px;top:12px;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-weight:800;font-size:.85rem;display:grid;place-items:center}
+.tn{display:block;font-weight:800}
+.meta{display:block;font-size:.85rem;color:var(--ink2)}
+.pbar{display:block;height:6px;background:var(--grid);border-radius:3px;margin-top:8px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--u4)}
+.testcard,.card{border:2px solid var(--ink);border-radius:var(--r);background:var(--card);padding:16px;margin-top:22px}
+.card{padding:10px;margin-top:0}
+.slide{border:2px solid var(--ink);border-radius:var(--r);background:var(--card);padding:18px 18px 20px;margin-top:6px;box-shadow:4px 4px 0 var(--ink)}
+.slide h2{margin:0 0 .5em;font-size:1.45rem}
+.fig{margin:6px 0 12px;display:flex;justify-content:center;background:#FAFCFE;border:1px solid var(--line);border-radius:10px;padding:8px}
+.fig svg{height:auto;display:block}
+.body ul,.body ol{padding-left:1.2em;margin:.4em 0}.body li{margin:.25em 0}
+table.t{border-collapse:collapse;width:100%;font-size:.9rem;margin:.5em 0}
+table.t th,table.t td{border:1px solid var(--line);padding:6px 7px;text-align:left;vertical-align:top}
+table.t th{background:#EEF3F9}
+.ex{border-left:5px solid var(--u4);background:#EEF6FA;padding:10px 12px;border-radius:0 10px 10px 0;margin-top:12px}
+.ex>b:first-child{display:block;color:var(--u4);margin-bottom:2px}
+.key{background:#FFF6D9;border:2px dashed #D9A520;border-radius:10px;padding:8px 12px;margin-top:12px}
+.pager{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:16px}
+.dots{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--ink);transform:scale(1.3)}
+.faces{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0}
+.face{border:2px solid var(--ink);border-radius:10px;background:var(--card);padding:8px 4px;font-size:.75rem;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:64px;line-height:1.15}
+.face b{font-size:1.2rem}
+.face.on{background:var(--ink);color:#fff}
+.examtop{display:flex;justify-content:space-between;align-items:center}
+.qbar{height:6px;background:var(--grid);border-radius:3px;overflow:hidden;margin:6px 0 10px}.qbar i{display:block;height:100%;background:var(--ink)}
+.qtext{font-size:1.08rem;font-weight:600}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:2px solid var(--ink);border-radius:12px;background:var(--card);padding:10px 12px;min-height:48px}
+.opt .l{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-weight:800;font-size:.8rem}
+.opt.right{background:#E6F5E2;border-color:#2F8F3A}
+.opt.wrong{background:#FCE4E7;border-color:var(--u0)}
+.opt:disabled{cursor:default}
+.opt:disabled:not(.right):not(.wrong){opacity:.55}
+.numrow{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.numrow input{font:inherit;font-size:1.1rem;padding:10px 12px;border:2px solid var(--ink);border-radius:12px;width:9em}
+.err{color:var(--u0);font-weight:700;font-size:.9rem;width:100%}
+textarea{width:100%;font:inherit;border:2px solid var(--ink);border-radius:12px;padding:10px;margin:12px 0 8px}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;border:2px solid}
+.fb.good{background:#E6F5E2;border-color:#2F8F3A}.fb.mid{background:#FFF6D9;border-color:#C99A1E}.fb.bad{background:#FCE4E7;border-color:var(--u0)}
+.fb>b{display:block}
+.next{margin-top:14px}
+.result{border:2px solid var(--ink);border-radius:var(--r);padding:20px;text-align:center;margin-top:8px;box-shadow:4px 4px 0 var(--ink)}
+.result .big{font-size:3.6rem;font-weight:800;line-height:1;margin:.1em 0}
+.bt,.hist,.elist,.ladder{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.bt li{display:grid;grid-template-columns:1fr 70px 44px auto;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.bt .pbar{margin:0}
+.ecard{display:flex;gap:12px;justify-content:space-between;align-items:center;border:2px solid var(--ink);border-radius:var(--r);background:var(--card);padding:12px 14px}
+.ladder .ecard{border-left-width:10px}
+.ladder li:nth-child(1){border-left-color:var(--u3)}.ladder li:nth-child(2){border-left-color:var(--u4)}.ladder li:nth-child(3){border-left-color:var(--u5)}
+table.pt{width:100%;border-collapse:collapse;background:var(--card);font-size:.88rem;border:1px solid var(--line)}
+table.pt th,table.pt td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+table.pt th:not(:first-child),table.pt td:not(:first-child){width:60px;text-align:center}
+.chh{margin-top:18px}
+.chip{display:inline-block;border-radius:8px;padding:1px 7px;font-weight:800}
+.hist li{display:grid;grid-template-columns:60px 1fr auto;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.foot{margin-top:28px}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:6px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(246,249,252,.95);border-top:2px solid var(--ink)}
+.nav button{flex:1;max-width:200px;border:2px solid transparent;background:none;border-radius:12px;padding:8px;font-weight:800}
+.nav button.on{border-color:var(--ink);background:var(--card)}
+@media (prefers-reduced-motion:no-preference){.anim{animation:in .22s ease-out}@keyframes in{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:none}}}
+</style>
+</head>
+<body>
+<main id="app" class="wrap"></main>
+<nav id="nav" class="nav" aria-label="Main"></nav>
+
+<script>
+/* Generic SVG helpers that course diagram functions can use */
+const PAL={ink:'#1E2B47',ink2:'#4A5878',line:'#9AB0C8',u0:'#D7263D',u1:'#F46036',u2:'#F2C14E',u3:'#6BBF59',u4:'#2E86AB',u5:'#5B3E96'};
+const SVG=(w,h,inner,label='')=>`<svg viewBox="0 0 ${w} ${h}" width="${w}" style="max-width:100%" role="img" aria-label="${label}" font-family="inherit" font-size="13" fill="${PAL.ink}">${inner}</svg>`;
+const TX=(x,y,t,a='')=>`<text x="${x}" y="${y}" ${a}>${t}</text>`;
+const BOX=(x,y,w,h,lines,fill='#fff',fs=12)=>{let s=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" fill="${fill}" stroke="${PAL.ink}" stroke-width="2"/>`;const L=[].concat(lines),y0=y+h/2-(L.length-1)*fs*0.6+fs*0.35;L.forEach((l,i)=>s+=TX(x+w/2,y0+i*fs*1.2,l,`text-anchor="middle" font-size="${fs}" font-weight="700"`));return s;};
+const ARROW=(x1,y1,x2,y2,col=PAL.ink,dash='')=>{const a=Math.atan2(y2-y1,x2-x1),h=8;return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="2" ${dash?`stroke-dasharray="${dash}"`:''}/><path d="M${x2} ${y2} L${x2-h*Math.cos(a-0.45)} ${y2-h*Math.sin(a-0.45)} L${x2-h*Math.cos(a+0.45)} ${y2-h*Math.sin(a+0.45)} Z" fill="${col}"/>`;};
+</script>
+
+<script>
+/* ===== S3 Chemistry: diagram library ===== */
+const CHEM = {};
+CHEM.atomFrag=(cx,cy,sh,o={})=>{const r0=o.r0||40,st=o.st||26,nr=o.nr||24,er=o.er||5;let s='';
+  sh.forEach((e,i)=>{const r=r0+i*st;s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${PAL.line}" stroke-width="1.5"/>`;
+    for(let k=0;k<e;k++){const a=-Math.PI/2+2*Math.PI*k/e,x=(cx+r*Math.cos(a)).toFixed(1),y=(cy+r*Math.sin(a)).toFixed(1);
+      const hi=o.hi&&i===sh.length-1&&k===e-1;s+=`<circle cx="${x}" cy="${y}" r="${er}" fill="${hi?PAL.u0:PAL.u4}"/>`;}});
+  return s+`<circle cx="${cx}" cy="${cy}" r="${nr}" fill="${PAL.u1}"/>`;};
+CHEM.dataN=(lst)=>lst; /* placeholder for readability */
+
+const DIAGRAMS={
+atom:(sym,p,n,sh,cap)=>{const R=40+(sh.length-1)*26,W=Math.max(2*R+40,340),cx=W/2,cy=R+14,H=cy+R+34;
+  let s=CHEM.atomFrag(cx,cy,sh);
+  s+=TX(cx,cy-2,p+'p','text-anchor="middle" font-weight="800" fill="#fff" font-size="12"')+TX(cx,cy+12,n+'n','text-anchor="middle" font-weight="800" fill="#fff" font-size="12"');
+  s+=TX(cx,H-10,cap||`${sym}  ${sh.join(',')}`,'text-anchor="middle" font-weight="700" font-size="13"');
+  return SVG(W,H,s,cap||sym+' atom');},
+
+nuclide:(sym,A,Z,charge)=>{let s=TX(162,100,sym,'font-size="76" font-weight="800" text-anchor="middle"')+TX(104,52,A,'font-size="26" font-weight="700" text-anchor="end" fill="'+PAL.u4+'"')+TX(104,104,Z,'font-size="26" font-weight="700" text-anchor="end" fill="'+PAL.u1+'"');
+  if(charge)s+=TX(212,52,charge,'font-size="26" font-weight="700" fill="'+PAL.u0+'"');
+  s+=TX(150,140,'Top: mass number = protons + neutrons','text-anchor="middle" font-weight="700" fill="'+PAL.u4+'"')+TX(150,160,'Bottom: atomic number = protons','text-anchor="middle" font-weight="700" fill="'+PAL.u1+'"');
+  return SVG(300,170,s,'Nuclide notation for '+sym);},
+
+isotopes:()=>{let s='';[[85,35,18],[255,37,20]].forEach(([x,A,n])=>{
+  s+=TX(x,82,'Cl','font-size="56" font-weight="800" text-anchor="middle"')+TX(x-36,40,A,'font-size="22" font-weight="700" text-anchor="end" fill="'+PAL.u4+'"')+TX(x-36,82,17,'font-size="22" font-weight="700" text-anchor="end" fill="'+PAL.u1+'"');
+  s+=TX(x,112,'17 protons','text-anchor="middle"')+TX(x,130,n+' neutrons','text-anchor="middle" font-weight="800" fill="'+PAL.u0+'"')+TX(x,148,'17 electrons','text-anchor="middle"');});
+  s+=TX(170,62,'vs','text-anchor="middle" font-size="16" fill="'+PAL.ink2+'"');
+  return SVG(340,160,s,'Chlorine-35 and chlorine-37 isotopes');},
+
+periodic:()=>{const E=[[1,'H',1,1],[2,'He',8,1],[3,'Li',1,2],[4,'Be',2,2],[5,'B',3,2],[6,'C',4,2],[7,'N',5,2],[8,'O',6,2],[9,'F',7,2],[10,'Ne',8,2],[11,'Na',1,3],[12,'Mg',2,3],[13,'Al',3,3],[14,'Si',4,3],[15,'P',5,3],[16,'S',6,3],[17,'Cl',7,3],[18,'Ar',8,3],[19,'K',1,4],[20,'Ca',2,4]];
+  const metal=new Set(['Li','Be','Na','Mg','Al','K','Ca']),fam={Li:'u1',Na:'u1',K:'u1',F:'u3',Cl:'u3',He:'u5',Ne:'u5',Ar:'u5'},S0=44,X0=30,Y0=38;let s='';
+  for(let g=1;g<=8;g++)s+=TX(X0+(g-1)*S0+S0/2-2,Y0-9,g===8?'0':g,`text-anchor="middle" font-size="11" font-weight="800" fill="${PAL.ink2}"`);
+  for(let p=1;p<=4;p++)s+=TX(X0-8,Y0+(p-1)*S0+S0/2+4,p,`text-anchor="end" font-size="11" font-weight="800" fill="${PAL.ink2}"`);
+  E.forEach(([z,sym,g,p])=>{const x=X0+(g-1)*S0,y=Y0+(p-1)*S0,f=fam[sym]?PAL[fam[sym]]:metal.has(sym)?'#FCE3D5':'#DCEBF7',tc=(fam[sym]&&fam[sym]!=='u3')?'#fff':PAL.ink;
+    s+=`<rect x="${x+1}" y="${y+1}" width="${S0-4}" height="${S0-4}" rx="4" fill="${f}" stroke="${PAL.ink}" stroke-width="1.5"/>`+TX(x+5,y+12,z,`font-size="9" fill="${tc}"`)+TX(x+S0/2-1,y+32,sym,`text-anchor="middle" font-size="16" font-weight="800" fill="${tc}"`);});
+  s+=`<path d="M${X0+2*S0-1} ${Y0+S0} V${Y0+2*S0} H${X0+3*S0-1} V${Y0+4*S0}" fill="none" stroke="${PAL.u0}" stroke-width="4"/>`;
+  const ly=Y0+4*S0+14,L=[[PAL.u1,'Alkali metals'],[PAL.u3,'Halogens'],[PAL.u5,'Noble gases'],['#FCE3D5','Other metals'],['#DCEBF7','Other non-metals']];
+  L.forEach(([c,t],i)=>{const x=10+(i%3)*118,y=ly+Math.floor(i/3)*20;s+=`<rect x="${x}" y="${y}" width="14" height="14" rx="3" fill="${c}" stroke="${PAL.ink}"/>`+TX(x+19,y+11,t,'font-size="11"');});
+  s+=`<line x1="246" y1="${ly+27}" x2="262" y2="${ly+27}" stroke="${PAL.u0}" stroke-width="4"/>`+TX(266,ly+31,'metal | non-metal','font-size="11"');
+  s+=TX(X0+8*S0/2,12,'Groups across the top, periods down the side','text-anchor="middle" font-size="11" fill="'+PAL.ink2+'"');
+  return SVG(X0+8*S0+8,ly+44,s,'Periodic table of the first 20 elements');},
+
+dotcross:(lN,rN,lE,rE,pairs,cap)=>{const cy=92,R=52,xl=128,xr=208;let s=`<circle cx="${xl}" cy="${cy}" r="${R}" fill="#F3F7FB" stroke="${PAL.ink}" stroke-width="2"/><circle cx="${xr}" cy="${cy}" r="${R}" fill="none" stroke="${PAL.ink}" stroke-width="2"/>`;
+  const offs=pairs===1?[0]:pairs===2?[-12,12]:[-22,0,22];
+  offs.forEach(o=>{s+=`<circle cx="162" cy="${cy+o}" r="5" fill="${PAL.u4}"/>`+TX(175,cy+o+6,'×',`text-anchor="middle" font-size="18" font-weight="800" fill="${PAL.u0}"`);});
+  const ang=n=>n===1?[180]:n===2?[145,215]:[130,180,230],put=(cx,a,dot)=>{let r='';[-7,7].forEach(d=>{const rad=(a+d)*Math.PI/180,x=cx+R*Math.cos(rad),y=cy-R*Math.sin(rad);r+=dot?`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5" fill="${PAL.u4}"/>`:TX(x.toFixed(1),(y+6).toFixed(1),'×',`text-anchor="middle" font-size="18" font-weight="800" fill="${PAL.u0}"`);});return r;};
+  if(lE)ang(lE/2).forEach(a=>s+=put(xl,a,true));if(rE)ang(rE/2).forEach(a=>s+=put(xr,180-a,false));
+  s+=TX(xl-16,cy+7,lN,'text-anchor="middle" font-size="20" font-weight="800"')+TX(xr+16,cy+7,rN,'text-anchor="middle" font-size="20" font-weight="800"');
+  s+=`<circle cx="70" cy="172" r="5" fill="${PAL.u4}"/>`+TX(80,177,'electron from '+lN)+TX(196,178,'×',`font-size="18" font-weight="800" fill="${PAL.u0}"`)+TX(210,177,'electron from '+rN);
+  if(cap)s+=TX(168,200,cap,'text-anchor="middle" font-weight="700"');
+  return SVG(336,cap?210:190,s,cap||'Dot and cross diagram');},
+
+shapes:()=>{const P=[
+  {n:'Hydrogen chloride',f:'HCl',sh:'linear',c:['Cl',95,70,19],h:[[45,70]]},
+  {n:'Water',f:'H₂O',sh:'angular (bent)',c:['O',80,58,17],h:[[42,94],[118,94]]},
+  {n:'Ammonia',f:'NH₃',sh:'trigonal pyramidal',c:['N',80,52,17],h:[[38,92],[80,110],[122,92]]},
+  {n:'Methane',f:'CH₄',sh:'tetrahedral',c:['C',80,66,17],h:[[80,20],[36,96],[124,96],[96,114]]}];
+  let s='';P.forEach((p,i)=>{const ox=(i%2)*170,oy=Math.floor(i/2)*170,[sym,cx,cy,r]=p.c;
+    p.h.forEach(([x,y])=>s+=`<line x1="${ox+cx}" y1="${oy+cy}" x2="${ox+x}" y2="${oy+y}" stroke="${PAL.ink}" stroke-width="4"/>`);
+    p.h.forEach(([x,y])=>s+=`<circle cx="${ox+x}" cy="${oy+y}" r="11" fill="#fff" stroke="${PAL.ink}" stroke-width="2"/>`+TX(ox+x,oy+y+4,'H','text-anchor="middle" font-size="11" font-weight="800"'));
+    s+=`<circle cx="${ox+cx}" cy="${oy+cy}" r="${r}" fill="${PAL.u4}" stroke="${PAL.ink}" stroke-width="2"/>`+TX(ox+cx,oy+cy+5,sym,'text-anchor="middle" font-size="13" font-weight="800" fill="#fff"');
+    s+=TX(ox+80,oy+136,p.n,'text-anchor="middle" font-weight="800"')+TX(ox+80,oy+152,p.f,'text-anchor="middle"')+TX(ox+80,oy+168,p.sh,`text-anchor="middle" fill="${PAL.u4}" font-weight="700"`);});
+  return SVG(340,350,s,'Shapes of four molecules');},
+
+ionForm:()=>{const o={r0:14,st:12,nr:8,er:3.2,hi:true};let s='';
+  s+=CHEM.atomFrag(60,60,[2,8,1],o)+TX(60,118,'Na atom 2,8,1','text-anchor="middle" font-weight="700"');
+  s+=ARROW(115,60,205,60)+TX(160,50,'loses 1 e⁻','text-anchor="middle" font-size="12"');
+  s+=CHEM.atomFrag(270,60,[2,8],{r0:14,st:12,nr:8,er:3.2})+TX(270,118,'Na⁺ ion 2,8','text-anchor="middle" font-weight="700"');
+  s+=CHEM.atomFrag(60,200,[2,8,7],{r0:14,st:12,nr:8,er:3.2})+TX(60,258,'Cl atom 2,8,7','text-anchor="middle" font-weight="700"');
+  s+=ARROW(115,200,205,200)+TX(160,190,'gains 1 e⁻','text-anchor="middle" font-size="12"');
+  s+=CHEM.atomFrag(270,200,[2,8,8],o)+TX(270,258,'Cl⁻ ion 2,8,8','text-anchor="middle" font-weight="700"');
+  s+=ARROW(60,126,60,156,PAL.u0,'5 4')+TX(68,145,'1 electron moves','font-size="11" fill="'+PAL.u0+'" font-weight="700"');
+  return SVG(340,268,s,'Sodium gives an electron to chlorine');},
+
+lattice:()=>{let s='';for(let r=0;r<4;r++)for(let c=0;c<6;c++){const x=30+c*46,y=26+r*46,pos=(r+c)%2===0;
+  s+=pos?`<circle cx="${x}" cy="${y}" r="12" fill="${PAL.u1}" stroke="${PAL.ink}" stroke-width="1.5"/>`+TX(x,y+5,'+','text-anchor="middle" font-size="16" font-weight="800" fill="#fff"'):`<circle cx="${x}" cy="${y}" r="18" fill="${PAL.u3}" stroke="${PAL.ink}" stroke-width="1.5"/>`+TX(x,y+6,'−','text-anchor="middle" font-size="18" font-weight="800"');}
+  s+=`<circle cx="40" cy="214" r="8" fill="${PAL.u1}"/>`+TX(52,218,'Na⁺')+`<circle cx="120" cy="214" r="10" fill="${PAL.u3}"/>`+TX(134,218,'Cl⁻')+TX(180,218,'every + pulls every −','font-size="12" fill="'+PAL.ink2+'"');
+  return SVG(310,230,s,'Ionic lattice of sodium chloride');},
+
+metallic:()=>{let s='',seed=7;const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280;};
+  for(let i=0;i<34;i++)s+=`<circle cx="${(15+rnd()*290).toFixed(0)}" cy="${(15+rnd()*130).toFixed(0)}" r="3.5" fill="${PAL.u4}"/>`;
+  for(let r=0;r<3;r++)for(let c=0;c<6;c++){const x=35+c*50,y=30+r*48;s+=`<circle cx="${x}" cy="${y}" r="15" fill="${PAL.u1}" stroke="${PAL.ink}" stroke-width="1.5"/>`+TX(x,y+5,'+','text-anchor="middle" font-size="16" font-weight="800" fill="#fff"');}
+  s+=TX(160,172,'Positive ions in a sea of delocalised electrons','text-anchor="middle" font-weight="700" font-size="12"');
+  return SVG(320,182,s,'Metallic bonding');},
+
+detective:()=>{let s='';const qx=4,qw=160,ax=194,aw=142,h=48;
+  [[10,['Conducts as a solid?'],['Metallic','(or graphite)'],PAL.u4],[92,['Conducts when melted','or dissolved?'],['Ionic lattice'],PAL.u1],[174,['Very high melting','point?'],['Covalent network'],PAL.u5]].forEach(([y,q,a,c])=>{
+    s+=BOX(qx,y,qw,h,q,'#fff')+BOX(ax,y,aw,h,a,'#fff')+`<rect x="${ax}" y="${y}" width="8" height="${h}" rx="3" fill="${c}"/>`+ARROW(qx+qw,y+h/2,ax-2,y+h/2)+TX(180,y+h/2-6,'yes','text-anchor="middle" font-size="11" font-weight="800"');
+    s+=ARROW(qx+qw/2,y+h,qx+qw/2,y+h+32)+TX(qx+qw/2+8,y+h+22,'no','font-size="11" font-weight="800"');});
+  s+=BOX(qx,256,qw,h,['Covalent molecular','(low melting point)'],'#fff')+`<rect x="${qx}" y="256" width="8" height="${h}" rx="3" fill="${PAL.u3}"/>`;
+  return SVG(340,312,s,'Flowchart to identify a structure');},
+
+eqWater:()=>{let s=TX(170,18,'2H₂ + O₂ → 2H₂O','text-anchor="middle" font-weight="800" font-size="15"');
+  const H=(x,y)=>`<circle cx="${x}" cy="${y}" r="9" fill="#fff" stroke="${PAL.ink}" stroke-width="2"/>`+TX(x,y+4,'H','text-anchor="middle" font-size="10" font-weight="800"');
+  const O=(x,y)=>`<circle cx="${x}" cy="${y}" r="13" fill="${PAL.u0}" stroke="${PAL.ink}" stroke-width="2"/>`+TX(x,y+5,'O','text-anchor="middle" font-size="12" font-weight="800" fill="#fff"');
+  [55,95].forEach(y=>s+=H(32,y)+H(49,y));s+=TX(80,80,'+','text-anchor="middle" font-size="22" font-weight="800"')+O(110,75)+O(134,75)+ARROW(160,75,196,75);
+  [50,104].forEach(y=>s+=H(232,y+13)+H(268,y+13)+O(250,y));
+  s+=TX(85,140,'Left: 4 H, 2 O','text-anchor="middle" font-weight="700"')+TX(250,140,'Right: 4 H, 2 O','text-anchor="middle" font-weight="700"');
+  return SVG(340,150,s,'Balanced equation for making water');},
+
+triangle:(top,bl,br,cap)=>{let s=`<path d="M150 12 L22 170 L278 170 Z" fill="#F3F7FB" stroke="${PAL.ink}" stroke-width="2.5" stroke-linejoin="round"/><line x1="77" y1="102" x2="223" y2="102" stroke="${PAL.ink}" stroke-width="2.5"/><line x1="150" y1="102" x2="150" y2="170" stroke="${PAL.ink}" stroke-width="2.5"/>`;
+  s+=TX(150,82,top,'text-anchor="middle" font-size="24" font-weight="800" fill="'+PAL.u0+'"')+TX(104,146,bl,'text-anchor="middle" font-size="24" font-weight="800" fill="'+PAL.u4+'"')+TX(198,146,br,'text-anchor="middle" font-size="24" font-weight="800" fill="'+PAL.u5+'"');
+  s+=TX(150,94,'÷','text-anchor="middle" font-size="12" fill="'+PAL.ink2+'"')+TX(150,140,'×','text-anchor="middle" font-size="14" font-weight="800" fill="'+PAL.ink2+'"');
+  if(cap)s+=TX(150,192,cap,'text-anchor="middle" font-weight="700"');
+  return SVG(300,cap?200:180,s,'Formula triangle');},
+
+rateGraph:(curves,marks,ylab)=>{const L=46,B=196,Rr=328,Tp=16,tmax=60,vmax=80,X=t=>L+t*(Rr-L)/tmax,Y=v=>B-v*(B-Tp)/vmax;let s='';
+  for(let t=0;t<=60;t+=10)s+=`<line x1="${X(t)}" x2="${X(t)}" y1="${Tp}" y2="${B}" stroke="#E3EAF2"/>`+TX(X(t),B+15,t,'text-anchor="middle" font-size="11"');
+  for(let v=0;v<=80;v+=20)s+=`<line x1="${L}" x2="${Rr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#E3EAF2"/>`+TX(L-6,Y(v)+4,v,'text-anchor="end" font-size="11"');
+  s+=`<path d="M${L} ${Tp} V${B} H${Rr}" fill="none" stroke="${PAL.ink}" stroke-width="2"/>`;
+  curves.forEach(c=>{let d='';for(let t=0;t<=60;t+=1)d+=(t?'L':'M')+X(t).toFixed(1)+' '+Y(c.v*(1-Math.exp(-c.k*t))).toFixed(1)+' ';
+    s+=`<path d="${d}" fill="none" stroke="${c.c||PAL.u4}" stroke-width="3" ${c.dash?'stroke-dasharray="6 4"':''}/>`;
+    if(c.l)s+=TX(c.lx?X(c.lx):Rr-4,Y(c.v*(1-Math.exp(-c.k*(c.lx||60))))+(c.below?18:-7),c.l,`text-anchor="end" font-size="12" font-weight="800" fill="${c.c||PAL.u4}"`);});
+  (marks||[]).forEach(t=>{const c=curves[0],v=Math.round(c.v*(1-Math.exp(-c.k*t)));s+=`<path d="M${X(t)} ${B} V${Y(v)} H${L}" fill="none" stroke="${PAL.u0}" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="${X(t)}" cy="${Y(v)}" r="4.5" fill="${PAL.u0}"/>`+TX(X(t)+6,Y(v)+15,`${v} cm³ at ${t} s`,`font-size="11" font-weight="800" fill="${PAL.u0}"`);});
+  s+=TX((L+Rr)/2,B+31,'Time (s)','text-anchor="middle" font-weight="700"')+`<text transform="translate(13 ${(Tp+B)/2}) rotate(-90)" text-anchor="middle" font-weight="700">${ylab||'Volume of gas (cm³)'}</text>`;
+  return SVG(340,236,s,'Graph of gas volume against time');},
+
+collide:()=>{let s='',seed=3;const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280;};
+  [[10,5,'Low concentration'],[178,16,'High concentration']].forEach(([x,n,l])=>{s+=`<rect x="${x}" y="10" width="152" height="120" rx="8" fill="#F3F7FB" stroke="${PAL.ink}" stroke-width="2"/><rect x="${x+2}" y="112" width="148" height="16" fill="#B8C2CC"/>`+TX(x+76,124,'magnesium','text-anchor="middle" font-size="10" font-weight="700"');
+    for(let i=0;i<n;i++)s+=`<circle cx="${(x+14+rnd()*124).toFixed(0)}" cy="${(22+rnd()*82).toFixed(0)}" r="6" fill="${PAL.u0}"/>`;s+=TX(x+76,150,l,'text-anchor="middle" font-weight="800"');});
+  s+=`<circle cx="120" cy="170" r="6" fill="${PAL.u0}"/>`+TX(132,175,'acid particle','font-size="12"');
+  return SVG(340,182,s,'More particles means more collisions');},
+
+surface:()=>{let s=`<rect x="40" y="25" width="96" height="96" fill="${PAL.u2}" stroke="${PAL.u0}" stroke-width="4"/>`;
+  for(let r=0;r<3;r++)for(let c=0;c<3;c++)s+=`<rect x="${200+c*40}" y="${22+r*40}" width="30" height="30" fill="${PAL.u2}" stroke="${PAL.u0}" stroke-width="4"/>`;
+  s+=TX(88,148,'One lump','text-anchor="middle" font-weight="800"')+TX(88,165,'small surface','text-anchor="middle" font-size="12"')+TX(245,148,'Same mass, cut up','text-anchor="middle" font-weight="800"')+TX(245,165,'much more surface (red)','text-anchor="middle" font-size="12"');
+  return SVG(340,175,s,'Smaller pieces have more surface area');},
+
+gasSetup:()=>{const flask=(x,y,liq)=>`<path d="M${x-21.5} ${y+55} L${x-35} ${y+80} L${x+35} ${y+80} L${x+21.5} ${y+55} Z" fill="${liq}"/><path d="M${x-8} ${y} L${x-8} ${y+30} L${x-35} ${y+80} L${x+35} ${y+80} L${x+8} ${y+30} L${x+8} ${y}" fill="none" stroke="${PAL.ink}" stroke-width="2.5" stroke-linejoin="round"/>`;
+  let s=flask(80,40,'#CFE6F3')+`<circle cx="74" cy="38" r="7" fill="#fff" stroke="${PAL.ink2}"/><circle cx="84" cy="35" r="7" fill="#fff" stroke="${PAL.ink2}"/>`+TX(110,36,'cotton wool','font-size="11"');
+  s+=`<rect x="30" y="122" width="100" height="26" rx="4" fill="${PAL.ink}"/><rect x="48" y="128" width="64" height="15" rx="2" fill="#DFF5E1"/>`+TX(80,140,'149.80 g','text-anchor="middle" font-size="11" font-weight="800"')+TX(80,166,'Mass falls as','text-anchor="middle" font-size="12" font-weight="700"')+TX(80,181,'gas escapes','text-anchor="middle" font-size="12" font-weight="700"');
+  s+=flask(220,60,'#CFE6F3')+`<path d="M220 60 V40 H246" fill="none" stroke="${PAL.ink}" stroke-width="3"/><rect x="246" y="30" width="80" height="20" fill="#fff" stroke="${PAL.ink}" stroke-width="2"/><rect x="246" y="32" width="30" height="16" fill="#E3EAF2"/><line x1="276" y1="31" x2="276" y2="49" stroke="${PAL.ink}" stroke-width="3"/><line x1="276" y1="40" x2="334" y2="40" stroke="${PAL.ink}" stroke-width="3"/>`;
+  for(let i=0;i<6;i++)s+=`<line x1="${252+i*12}" y1="30" x2="${252+i*12}" y2="35" stroke="${PAL.ink}"/>`;
+  s+=TX(286,22,'gas syringe','text-anchor="middle" font-size="11"')+TX(250,166,'Volume of gas','text-anchor="middle" font-size="12" font-weight="700"')+TX(250,181,'collected','text-anchor="middle" font-size="12" font-weight="700"');
+  return SVG(340,190,s,'Two ways to follow a reaction');},
+
+energy:(kind,cat)=>{const exo=kind==='exo',yr=exo?110:160,yp=exo?160:110,L=40;let s=`<path d="M${L} 18 V196 H330" fill="none" stroke="${PAL.ink}" stroke-width="2"/>`;
+  s+=`<path d="M${L+8} ${yr} H110 C150 ${yr}, 150 38, 175 38 C200 38, 200 ${yp}, 240 ${yp} H318" fill="none" stroke="${PAL.u4}" stroke-width="3"/>`;
+  if(cat)s+=`<path d="M110 ${yr} C150 ${yr}, 150 82, 175 82 C200 82, 200 ${yp}, 240 ${yp}" fill="none" stroke="${PAL.u3}" stroke-width="3" stroke-dasharray="6 4"/>`+TX(205,82,'with catalyst','font-size="12" font-weight="800" fill="#3E8E31"');
+  s+=TX(80,yr-8,'Reactants','text-anchor="middle" font-weight="700"')+TX(262,yp-8,'Products','text-anchor="middle" font-weight="700"')+TX(175,30,'energy barrier','text-anchor="middle" font-size="12" font-weight="700"');
+  s+=ARROW(326,yr,326,yp,exo?PAL.u0:PAL.u4)+TX(320,(yr+yp)/2+4,exo?'heat out':'heat in',`text-anchor="end" font-size="12" font-weight="800" fill="${exo?PAL.u0:PAL.u4}"`);
+  s+=`<text transform="translate(22 108) rotate(-90)" text-anchor="middle" font-weight="700">Energy</text>`+TX(185,214,'Progress of reaction','text-anchor="middle" font-weight="700"');
+  return SVG(340,222,s,exo?'Exothermic energy diagram':'Endothermic energy diagram');},
+
+pH:()=>{const c=['#D7263D','#E0323A','#EB4A35','#F46036','#F68A3A','#F6B03F','#F2C14E','#9BCB5B','#6BBF59','#3FA88F','#2E86AB','#3F6DB0','#4E57A8','#5B3E96','#4B2C7F'];let s='';
+  c.forEach((col,i)=>{s+=`<rect x="${10+i*22}" y="22" width="22" height="34" fill="${col}"/>`+TX(21+i*22,44,i,`text-anchor="middle" font-size="11" font-weight="800" fill="${i>=6&&i<=9?PAL.ink:'#fff'}"`);});
+  s+=`<rect x="10" y="22" width="330" height="34" fill="none" stroke="${PAL.ink}" stroke-width="2"/>`;
+  [[1,'Stomach acid',0],[3,'Vinegar',1],[5,'Rain',0],[7,'Pure water',1],[9,'Baking soda',0],[11,'Ammonia',1],[13,'Oven cleaner',0]].forEach(([p,t,r])=>{const x=21+p*22,y=r?100:78;s+=`<line x1="${x}" y1="56" x2="${x}" y2="${y-11}" stroke="${PAL.ink2}"/>`+TX(x,y,t,'text-anchor="middle" font-size="11"');});
+  s+=TX(10,14,'more acidic','font-size="11" font-weight="800" fill="'+PAL.u0+'"')+TX(340,14,'more alkaline','text-anchor="end" font-size="11" font-weight="800" fill="'+PAL.u5+'"')+TX(175,14,'neutral','text-anchor="middle" font-size="11" font-weight="800" fill="#3E8E31"');
+  s+=TX(76,126,'ACID below 7','text-anchor="middle" font-weight="800" fill="'+PAL.u0+'"')+TX(175,126,'7','text-anchor="middle" font-weight="800"')+TX(276,126,'ALKALI above 7','text-anchor="middle" font-weight="800" fill="'+PAL.u5+'"');
+  return SVG(350,136,s,'The pH scale with everyday examples');},
+
+ions:()=>{let s='';[[8,'Acid',5,1,PAL.u0],[120,'Water',2,2,'#3E8E31'],[232,'Alkali',1,5,PAL.u5]].forEach(([x,l,h,o,c])=>{
+  s+=`<path d="M${x} 20 V120 Q${x} 128 ${x+8} 128 H${x+92} Q${x+100} 128 ${x+100} 120 V20" fill="#F3F7FB" stroke="${PAL.ink}" stroke-width="2.5"/>`;
+  let k=0;for(let i=0;i<h;i++,k++)s+=TX(x+20+(k%3)*30,48+Math.floor(k/3)*26,'H⁺',`text-anchor="middle" font-weight="800" fill="${PAL.u0}"`);
+  for(let i=0;i<o;i++,k++)s+=TX(x+20+(k%3)*30,48+Math.floor(k/3)*26,'OH⁻',`text-anchor="middle" font-weight="800" font-size="12" fill="${PAL.u5}"`);
+  s+=TX(x+50,148,l,`text-anchor="middle" font-weight="800" fill="${c}"`);});
+  return SVG(340,158,s,'Hydrogen and hydroxide ions in acid, water and alkali');},
+
+neutral:()=>{let s='';s+=`<circle cx="40" cy="50" r="18" fill="#fff" stroke="${PAL.ink}" stroke-width="2"/>`+TX(40,55,'H⁺','text-anchor="middle" font-weight="800" fill="'+PAL.u0+'"')+TX(78,57,'+','text-anchor="middle" font-size="22" font-weight="800"');
+  s+=`<circle cx="120" cy="50" r="18" fill="${PAL.u0}" stroke="${PAL.ink}" stroke-width="2"/><circle cx="145" cy="62" r="11" fill="#fff" stroke="${PAL.ink}" stroke-width="2"/>`+TX(120,55,'O','text-anchor="middle" font-weight="800" fill="#fff"')+TX(145,66,'H','text-anchor="middle" font-size="10" font-weight="800"')+TX(140,30,'−','font-size="18" font-weight="800" fill="'+PAL.u5+'"');
+  s+=ARROW(170,52,214,52);
+  s+=`<circle cx="262" cy="46" r="18" fill="${PAL.u0}" stroke="${PAL.ink}" stroke-width="2"/><circle cx="240" cy="66" r="11" fill="#fff" stroke="${PAL.ink}" stroke-width="2"/><circle cx="284" cy="66" r="11" fill="#fff" stroke="${PAL.ink}" stroke-width="2"/>`+TX(262,51,'O','text-anchor="middle" font-weight="800" fill="#fff"')+TX(240,70,'H','text-anchor="middle" font-size="10" font-weight="800"')+TX(284,70,'H','text-anchor="middle" font-size="10" font-weight="800"');
+  s+=TX(40,98,'from the acid','text-anchor="middle" font-size="11"')+TX(130,98,'from the alkali','text-anchor="middle" font-size="11"')+TX(262,98,'water, pH 7','text-anchor="middle" font-size="11"');
+  return SVG(320,108,s,'Hydrogen ion plus hydroxide ion makes water');},
+
+titration:()=>{let s=`<rect x="20" y="292" width="90" height="10" rx="2" fill="${PAL.ink2}"/><line x1="40" y1="20" x2="40" y2="292" stroke="${PAL.ink2}" stroke-width="5"/><line x1="40" y1="70" x2="128" y2="70" stroke="${PAL.ink2}" stroke-width="4"/>`;
+  s+=`<rect x="128" y="10" width="24" height="168" fill="#fff" stroke="${PAL.ink}" stroke-width="2"/><rect x="130" y="42" width="20" height="134" fill="#CFE6F3"/>`;
+  for(let i=0;i<10;i++)s+=`<line x1="128" y1="${20+i*16}" x2="${i%2?136:140}" y2="${20+i*16}" stroke="${PAL.ink}"/>`;
+  s+=`<path d="M134 178 L146 178 L142 196 L138 196 Z" fill="${PAL.ink}"/><rect x="124" y="182" width="32" height="6" rx="2" fill="${PAL.u1}"/>`;
+  const x=140,y=216;s+=`<path d="M${x-21.5} ${y+50} L${x-35} ${y+74} L${x+35} ${y+74} L${x+21.5} ${y+50} Z" fill="#F9C9DA"/><path d="M${x-8} ${y} L${x-8} ${y+28} L${x-35} ${y+74} L${x+35} ${y+74} L${x+8} ${y+28} L${x+8} ${y}" fill="none" stroke="${PAL.ink}" stroke-width="2.5" stroke-linejoin="round"/><rect x="92" y="290" width="96" height="6" fill="#fff" stroke="${PAL.ink2}"/>`;
+  s+=TX(162,36,'Burette: alkali of','font-size="12" font-weight="700"')+TX(162,51,'known concentration','font-size="12" font-weight="700"')+TX(162,186,'Tap: open slowly','font-size="12" font-weight="700"')+TX(182,256,'Flask: acid +','font-size="12" font-weight="700"')+TX(182,271,'indicator','font-size="12" font-weight="700"')+TX(194,297,'white tile','font-size="12" font-weight="700"');
+  return SVG(340,308,s,'Titration apparatus');}
+};
+/* ===== Chapter 1: Atoms & the periodic table ===== */
+const CH1={id:'c1',num:1,sym:'At',name:'Atoms & the periodic table',
+blurb:`What everything is made of, what's inside an atom, and how the periodic table is organised.`,
+topics:[
+{id:'t1a',name:'Inside the atom',slides:[
+ {t:'Everything is made of atoms',d:['atom','He',2,2,[2],'Helium: 2 protons, 2 neutrons, 2 electrons'],
+  h:`<p>Your phone, your breakfast and the air you breathe are all built from about 118 kinds of atom. Each kind is an <b>element</b>.</p><p>Atoms are tiny. The full stop at the end of this sentence is roughly two million carbon atoms wide.</p>`,
+  k:`An element contains only one kind of atom.`},
+ {t:'Three tiny particles',
+  h:`<table class="t"><tr><th>Particle</th><th>Charge</th><th>Mass</th><th>Where</th></tr><tr><td>Proton</td><td>+1</td><td>1</td><td>Nucleus</td></tr><tr><td>Neutron</td><td>0</td><td>1</td><td>Nucleus</td></tr><tr><td>Electron</td><td>−1</td><td>almost 0</td><td>Shells (energy levels) around the nucleus</td></tr></table>`,
+  ex:`Imagine the atom is Hampden Park. The nucleus would be a pea on the centre spot, and the electrons would be whizzing around the top of the stands. An atom is mostly empty space.`,
+  k:`Protons and neutrons are in the nucleus. Electrons are in shells outside it.`},
+ {t:'Atomic number and mass number',d:['nuclide','Na',23,11],
+  h:`<ul><li><b>Atomic number</b> = number of protons. It is the element's identity card: every sodium atom has 11.</li><li><b>Mass number</b> = protons + neutrons (the heavy particles).</li><li><b>Neutrons</b> = mass number − atomic number.</li></ul>`,
+  ex:`Sodium, mass number 23 and atomic number 11:<br>11 protons, 11 electrons, 23 − 11 = 12 neutrons.`},
+ {t:'Atoms are neutral, ions are not',
+  h:`<p>In an atom, protons = electrons, so the charges cancel. An <b>ion</b> forms when an atom gains or loses electrons. Protons never change.</p>`,
+  ex:`Mg<sup>2+</sup> with mass number 24 and atomic number 12: 12 protons, 12 neutrons, 10 electrons (it lost 2).<br>Cl<sup>−</sup> with mass number 35 and atomic number 17: 17 protons, 18 neutrons, 18 electrons (it gained 1).`,
+  k:`Charge = protons − electrons. Lose electrons and you become positive.`}
+]},
+{id:'t1b',name:'Electrons and the periodic table',slides:[
+ {t:'Electron shells',d:['atom','Na',11,12,[2,8,1],'Sodium  2,8,1'],
+  h:`<p>Electrons fill shells from the inside out. For the first 20 elements: the first shell holds <b>2</b>, the next holds <b>8</b>, the third holds 8 before the fourth starts.</p><p>The SQA data booklet lists every arrangement, so you can always check.</p>`,
+  ex:`Sodium has 11 electrons: 2 in the first shell, 8 in the second, 1 left over in the third. Written as 2,8,1.`},
+ {t:'Reading the periodic table',d:['periodic'],
+  h:`<ul><li><b>Groups</b> are columns. Elements in a group have the same number of outer electrons, so they react in similar ways.</li><li><b>Periods</b> are rows. The period number tells you how many shells are in use.</li></ul>`,
+  ex:`Chlorine is 2,8,7. Seven outer electrons puts it in group 7. Three shells puts it in period 3.`},
+ {t:'Chemical families',
+  h:`<ul><li><b>Group 1, alkali metals:</b> soft metals that react quickly with water, faster as you go down.</li><li><b>Group 7, halogens:</b> reactive non-metals that exist as pairs like Cl<sub>2</sub>.</li><li><b>Group 0, noble gases:</b> full outer shell, so very unreactive. Helium fills party balloons; neon glows in signs.</li><li><b>Transition metals</b> (the middle block): often coloured compounds and useful catalysts.</li></ul>`,
+  k:`The number of outer electrons decides how an element reacts.`},
+ {t:'Metals and non-metals',
+  h:`<p>Metals sit to the left of the staircase line on the periodic table. They are shiny and conduct electricity. Non-metals sit to the right and usually don't conduct (graphite is the famous exception).</p>`,
+  ex:`Sort these: magnesium, sulfur, aluminium, bromine.<br>Metals: magnesium, aluminium. Non-metals: sulfur, bromine.`}
+]},
+{id:'t1c',name:'Isotopes and relative atomic mass',slides:[
+ {t:'Isotopes',d:['isotopes'],
+  h:`<p><b>Isotopes</b> are atoms with the same atomic number but different mass numbers. They have different numbers of neutrons.</p><p>They react the same way because they have the same electrons.</p>`,
+  ex:`Think of two identical school bags, one with an extra textbook inside. Same bag, different weight.`},
+ {t:'Why relative atomic mass is not a whole number',
+  h:`<p><b>Relative atomic mass (RAM)</b> is the average mass of an element's atoms, taking into account how common each isotope is.</p>`,
+  ex:`Chlorine's RAM is 35.5. About three quarters of chlorine atoms are Cl-35 and one quarter are Cl-37, so the average sits between them, closer to 35.`},
+ {t:'Calculating RAM',
+  h:`<ol><li>Multiply each mass number by its percentage.</li><li>Add the answers.</li><li>Divide by 100.</li></ol>`,
+  ex:`Chlorine: 75% Cl-35 and 25% Cl-37<br>(75 × 35 + 25 × 37) ÷ 100<br>= (2625 + 925) ÷ 100 = <b>35.5</b>`,
+  k:`The RAM is always closest to the most common isotope. Use that to check your answer makes sense.`},
+ {t:'Reasoning with RAM',
+  h:`<p>You can work backwards from a RAM to say which isotope is more common, with no calculator.</p>`,
+  ex:`Bromine has isotopes Br-79 and Br-81. Its RAM is 79.9.<br>Halfway would be 80. 79.9 is just below, so Br-79 is very slightly more common.`}
+]}],
+exam:{id:'x1',name:'Chapter 1 test',questions:[
+ {t:'t1a',q:`Which particle has no charge?`,o:['Proton','Neutron','Electron','Ion'],a:1,x:`Neutrons are neutral and sit in the nucleus with the protons.`},
+ {t:'t1a',q:`An atom has atomic number 13 and mass number 27. How many neutrons does it have?`,o:['13','14','27','40'],a:1,x:`Neutrons = 27 − 13 = 14.`},
+ {t:'t1a',q:`How many electrons are in a neutral atom of potassium (atomic number 19)?`,n:19,x:`In a neutral atom, electrons = protons = atomic number.`},
+ {t:'t1b',q:`What is the electron arrangement of sulfur (atomic number 16)?`,o:['2,8,6','2,6,8','2,8,8','8,8'],a:0,x:`Fill from the inside: 2, then 8, then the remaining 6.`},
+ {t:'t1b',q:`An element has the electron arrangement 2,8,1. Which group is it in?`,o:['Group 1','Group 2','Group 3','Group 8'],a:0,x:`One outer electron means group 1. It is sodium.`},
+ {t:'t1b',q:`Why are the noble gases so unreactive?`,o:['They are gases','They have a full outer shell of electrons','They have no electrons','Their atoms are very heavy'],a:1,x:`A full outer shell is stable, so there is no need to gain, lose or share electrons.`},
+ {t:'t1c',q:`Isotopes of an element have the same number of ___ but different numbers of ___.`,o:['protons, neutrons','neutrons, protons','electrons, protons','protons, electrons'],a:0,x:`Same atomic number (protons), different mass number (neutrons).`},
+ {t:'t1c',m:2,q:`Boron is 20% boron-10 and 80% boron-11. Calculate its relative atomic mass.`,n:10.8,tol:0.02,x:`(20 × 10 + 80 × 11) ÷ 100 = (200 + 880) ÷ 100 = 10.8. Closer to 11 because boron-11 is more common.`},
+ {t:'t1c',m:2,q:`Explain why the relative atomic mass of chlorine is 35.5 and not a whole number.`,ans:`Chlorine has more than one isotope (Cl-35 and Cl-37) [1]. The RAM is the average mass taking into account how common each isotope is; there is more Cl-35, so the average is nearer 35 [1].`},
+ {t:'t1a',m:2,q:`An ion has mass number 24, atomic number 12 and a 2+ charge. State the number of protons, neutrons and electrons.`,ans:`12 protons and 12 neutrons [1]; 10 electrons, because it has lost 2 to become 2+ [1].`}
+]}};
+
+/* ===== Chapter 2: Bonding & structure ===== */
+const CH2={id:'c2',num:2,sym:'Bd',name:'Bonding & structure',
+blurb:`Why atoms join together, the different ways they do it, and how that explains whether something melts, dissolves or conducts.`,
+topics:[
+{id:'t2a',name:'Covalent bonds and molecules',slides:[
+ {t:'Why atoms bond',
+  h:`<p>Noble gases are stable because their outer shell is full. Other atoms bond to get the same full outer shell.</p><ul><li>Non-metal + non-metal: <b>share</b> electrons (covalent)</li><li>Metal + non-metal: <b>transfer</b> electrons (ionic)</li></ul>`,
+  k:`Bonding is all about getting a full outer shell.`},
+ {t:'Sharing electrons',d:['dotcross','H','H',0,0,1,'Hydrogen, H₂: one shared pair'],
+  h:`<p>A <b>covalent bond</b> is a shared pair of electrons. The two positive nuclei are both attracted to the shared negative electrons, and that attraction holds the atoms together.</p>`,
+  ex:`Like two people both gripping the same rope. Neither lets go, so they stay connected.`},
+ {t:'Diatomic elements',d:['dotcross','Cl','Cl',6,6,1,'Chlorine, Cl₂: one shared pair'],
+  h:`<p>Seven elements exist as pairs of atoms: H<sub>2</sub>, N<sub>2</sub>, O<sub>2</sub>, F<sub>2</sub>, Cl<sub>2</sub>, Br<sub>2</sub>, I<sub>2</sub>.</p><p>Memory hook: <b>HOFBrINCl</b>, say it "hof-brinkle".</p>`,
+  ex:`Oxygen shares two pairs (a double bond, O=O). Nitrogen shares three pairs (a triple bond).`},
+ {t:'Shapes of molecules',d:['shapes'],
+  h:`<p>Molecules have definite 3D shapes. These four come up again and again.</p>`,
+  ex:`The methane in a Bunsen burner is tetrahedral, like a camera tripod with one leg pointing up.`}
+]},
+{id:'t2b',name:'Ionic bonds',slides:[
+ {t:'Making ions',d:['ionForm'],
+  h:`<p>Metal atoms <b>lose</b> their outer electrons and become positive ions. Non-metal atoms <b>gain</b> electrons and become negative ions. Both end up with a noble gas arrangement.</p>`,
+  k:`Metals lose, non-metals gain.`},
+ {t:'The ionic bond',d:['lattice'],
+  h:`<p>An <b>ionic bond</b> is the electrostatic attraction between positive and negative ions.</p><p>Ions don't form small molecules. They pack into a giant <b>ionic lattice</b>.</p>`,
+  ex:`Look at table salt under a magnifying glass: the crystals are little cubes because the lattice is built in a cube pattern.`},
+ {t:'Ion charges from the group',
+  h:`<table class="t"><tr><th>Group</th><th>1</th><th>2</th><th>3</th><th>5</th><th>6</th><th>7</th></tr><tr><td>Ion charge</td><td>+1</td><td>+2</td><td>+3</td><td>−3</td><td>−2</td><td>−1</td></tr></table>`,
+  ex:`Magnesium oxide: magnesium (group 2) forms Mg<sup>2+</sup>; oxygen (group 6) forms O<sup>2−</sup>.`}
+]},
+{id:'t2c',name:'Structure and properties',slides:[
+ {t:'Four types of structure',
+  h:`<table class="t"><tr><th>Structure</th><th>Example</th><th>Melting point</th><th>Conducts?</th></tr><tr><td>Covalent molecular</td><td>Water, CO<sub>2</sub></td><td>Low</td><td>No</td></tr><tr><td>Covalent network</td><td>Diamond, sand (SiO<sub>2</sub>)</td><td>Very high</td><td>No (graphite does)</td></tr><tr><td>Ionic lattice</td><td>Salt (NaCl)</td><td>High</td><td>Only when molten or dissolved</td></tr><tr><td>Metallic</td><td>Copper</td><td>Usually high</td><td>Yes, as a solid</td></tr></table>`},
+ {t:'Covalent molecular substances',
+  h:`<p>Inside each molecule the covalent bonds are strong. Between molecules the forces are weak. Melting or boiling only has to separate the molecules, so melting and boiling points are low.</p><p>They don't conduct because there are no charged particles free to move.</p>`,
+  ex:`When a kettle boils, the water molecules move apart. The O–H bonds inside each molecule are not broken; steam is still H<sub>2</sub>O.`},
+ {t:'Networks, lattices and metals',d:['metallic'],
+  h:`<ul><li><b>Covalent network:</b> a giant web of strong covalent bonds, so very high melting point and very hard.</li><li><b>Ionic:</b> conducts when molten or dissolved because the ions are then free to move.</li><li><b>Metallic:</b> positive ions in a sea of delocalised electrons. The electrons move, so metals conduct even when solid.</li></ul>`},
+ {t:'Structure detective',d:['detective'],
+  h:`<p>Exam questions often give you data and ask for the structure. Work down the flowchart.</p>`,
+  ex:`Melts at 801 °C, conducts only when melted or dissolved: <b>ionic lattice</b>.<br>Melts at −183 °C, never conducts: <b>covalent molecular</b>.`}
+]}],
+exam:{id:'x2',name:'Chapter 2 test',questions:[
+ {t:'t2a',q:`What is a covalent bond?`,o:['A shared pair of electrons between two atoms','Electrons transferred from a metal to a non-metal','Attraction between positive and negative ions','Positive ions in a sea of electrons'],a:0,x:`Covalent bonds form between non-metal atoms that share a pair of electrons.`},
+ {t:'t2a',q:`Which element exists as diatomic molecules?`,o:['Helium','Chlorine','Carbon','Sodium'],a:1,x:`Remember HOFBrINCl: hydrogen, oxygen, fluorine, bromine, iodine, nitrogen, chlorine.`},
+ {t:'t2a',q:`What is the shape of a methane (CH₄) molecule?`,o:['Linear','Angular','Trigonal pyramidal','Tetrahedral'],a:3,x:`Four bonds spread out evenly in 3D make a tetrahedron.`},
+ {t:'t2a',q:`What is the shape of a water molecule?`,o:['Linear','Angular','Tetrahedral','Trigonal pyramidal'],a:1,x:`Water is bent, which chemists call angular.`},
+ {t:'t2b',q:`When magnesium forms an ion, it:`,o:['gains 2 electrons to form Mg²⁻','loses 2 electrons to form Mg²⁺','loses 2 protons','gains 2 protons'],a:1,x:`Metals lose their outer electrons. Magnesium is 2,8,2 and loses 2 to become 2,8.`},
+ {t:'t2b',q:`Ionic bonding is found between:`,o:['two non-metals','a metal and a non-metal','two metals','two noble gases'],a:1,x:`The metal gives electrons to the non-metal.`},
+ {t:'t2c',q:`A substance melts at 801 °C and conducts only when molten or dissolved. What is its structure?`,o:['Covalent molecular','Covalent network','Ionic lattice','Metallic'],a:2,x:`Conducting only when the ions are free to move is the giveaway.`},
+ {t:'t2c',q:`A substance melts at −183 °C and does not conduct in any state. What is its structure?`,o:['Covalent molecular','Covalent network','Ionic lattice','Metallic'],a:0,x:`A very low melting point means only weak forces between molecules need to be overcome.`},
+ {t:'t2c',m:2,q:`Explain why sodium chloride conducts electricity when dissolved in water but not as a solid.`,ans:`In the solid, the ions are held in fixed positions in the lattice and cannot move [1]. When dissolved, the ions are free to move and carry the charge [1].`},
+ {t:'t2c',m:2,q:`Covalent bonds are strong. Explain why covalent molecular substances still have low melting points.`,ans:`Melting only overcomes the weak forces of attraction between the molecules [1]; the strong covalent bonds inside the molecules are not broken [1].`}
+]}};
+
+/* ===== Chapter 3: Formulae & the mole ===== */
+const CH3={id:'c3',num:3,sym:'Mo',name:'Formulae & the mole',
+blurb:`Writing chemical formulae, balancing equations, and using moles to calculate how much you need or make.`,
+topics:[
+{id:'t3a',name:'Writing formulae',slides:[
+ {t:'Valency',
+  h:`<p><b>Valency</b> is the number of bonds an atom makes. You can read it from the group.</p><table class="t"><tr><th>Group</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>0</th></tr><tr><td>Valency</td><td>1</td><td>2</td><td>3</td><td>4</td><td>3</td><td>2</td><td>1</td><td>0</td></tr></table>`,
+  k:`It goes up to 4 in the middle, then back down.`},
+ {t:'The SVSDF method',
+  h:`<p><b>S</b>ymbols, <b>V</b>alencies, <b>S</b>wap, <b>D</b>ivide (if you can), <b>F</b>ormula.</p>`,
+  ex:`Aluminium oxide: Al and O; valencies 3 and 2; swap to get Al<sub>2</sub>O<sub>3</sub>; nothing to divide. <b>Al<sub>2</sub>O<sub>3</sub></b><br><br>Magnesium oxide: Mg and O; valencies 2 and 2; swap to Mg<sub>2</sub>O<sub>2</sub>; divide by 2. <b>MgO</b>`},
+ {t:'Prefixes give it away',
+  h:`<p>mono = 1, di = 2, tri = 3, tetra = 4, penta = 5. When the name has a prefix, use it and ignore valency.</p>`,
+  ex:`carbon monoxide CO, carbon dioxide CO<sub>2</sub>, nitrogen dioxide NO<sub>2</sub>, carbon tetrachloride CCl<sub>4</sub>`},
+ {t:'Group ions and Roman numerals',
+  h:`<p>Some ions are groups of atoms. They're in the data booklet: hydroxide OH<sup>−</sup>, carbonate CO<sub>3</sub><sup>2−</sup>, sulfate SO<sub>4</sub><sup>2−</sup>, nitrate NO<sub>3</sub><sup>−</sup>, ammonium NH<sub>4</sub><sup>+</sup>.</p><p>Put brackets round a group ion when you need more than one. A Roman numeral gives the valency: copper(II) has valency 2.</p>`,
+  ex:`Calcium hydroxide: Ca(OH)<sub>2</sub><br>Ammonium sulfate: (NH<sub>4</sub>)<sub>2</sub>SO<sub>4</sub><br>Iron(III) oxide: Fe<sub>2</sub>O<sub>3</sub>`}
+]},
+{id:'t3b',name:'Balanced equations',slides:[
+ {t:'From words to formulae',
+  h:`<p>Write the word equation, then swap each name for its formula. Watch out for the diatomic elements.</p>`,
+  ex:`hydrogen + oxygen → water<br>H<sub>2</sub> + O<sub>2</sub> → H<sub>2</sub>O (not balanced yet)`},
+ {t:'Why we balance',d:['eqWater'],
+  h:`<p>In a reaction, atoms are rearranged. None are created or destroyed, so each side must have the same number of each kind of atom.</p><p>Only change the big numbers in front. Never change the small numbers inside a formula: that would make a different substance.</p>`},
+ {t:'Balancing step by step',
+  ex:`CH<sub>4</sub> + O<sub>2</sub> → CO<sub>2</sub> + H<sub>2</sub>O<br>1. Carbon: 1 on each side. Fine.<br>2. Hydrogen: 4 on the left, so make it 2H<sub>2</sub>O.<br>3. Oxygen: now 2 + 2 = 4 on the right, so make it 2O<sub>2</sub>.<br><b>CH<sub>4</sub> + 2O<sub>2</sub> → CO<sub>2</sub> + 2H<sub>2</sub>O</b>`,
+  k:`Balance oxygen and hydrogen last. They usually appear in more than one place.`},
+ {t:'State symbols',
+  h:`<p>(s) solid, (l) liquid, (g) gas, (aq) dissolved in water.</p>`,
+  ex:`Mg(s) + 2HCl(aq) → MgCl<sub>2</sub>(aq) + H<sub>2</sub>(g)`}
+]},
+{id:'t3c',name:'The mole',slides:[
+ {t:'Counting by weighing',
+  h:`<p>Atoms are far too small to count, so chemists weigh them. One <b>mole</b> of a substance is its gram formula mass (GFM) in grams.</p><p>Find the GFM by adding the relative atomic masses from the data booklet.</p>`,
+  ex:`Banks count coins by weighing the bag. Same idea.<br>GFM of CO<sub>2</sub> = 12 + (2 × 16) = 44 g`},
+ {t:'Mass and moles',d:['triangle','m','n','GFM','m = n × GFM'],
+  h:`<p>Cover the one you want. Mass on top, moles × GFM underneath.</p>`,
+  ex:`22 g of CO<sub>2</sub>: n = 22 ÷ 44 = <b>0.5 mol</b><br>0.25 mol of NaOH (GFM 40): m = 0.25 × 40 = <b>10 g</b>`},
+ {t:'Concentration',d:['triangle','n','c','V','n = c × V'],
+  h:`<p>Concentration is in mol l<sup>−1</sup> (moles per litre). V must be in <b>litres</b>: divide cm<sup>3</sup> by 1000.</p>`,
+  ex:`0.1 mol dissolved to make 250 cm<sup>3</sup>:<br>V = 250 ÷ 1000 = 0.25 l<br>c = 0.1 ÷ 0.25 = <b>0.4 mol l<sup>−1</sup></b>`,
+  k:`Forgetting to convert cm³ to litres is the most common lost mark.`},
+ {t:'Calculating from an equation',
+  h:`<ol><li>Write the balanced equation.</li><li>Work out moles of what you know.</li><li>Use the mole ratio.</li><li>Convert to mass.</li></ol>`,
+  ex:`What mass of CO<sub>2</sub> comes from 10 g of CaCO<sub>3</sub>?<br>CaCO<sub>3</sub> + 2HCl → CaCl<sub>2</sub> + H<sub>2</sub>O + CO<sub>2</sub><br>n(CaCO<sub>3</sub>) = 10 ÷ 100 = 0.1 mol<br>Ratio 1 : 1, so 0.1 mol CO<sub>2</sub><br>m = 0.1 × 44 = <b>4.4 g</b>`}
+]}],
+exam:{id:'x3',name:'Chapter 3 test',questions:[
+ {t:'t3a',q:`What is the formula for aluminium oxide?`,o:['AlO','Al₂O₃','Al₃O₂','AlO₃'],a:1,x:`Valencies 3 and 2. Swap them: Al₂O₃.`},
+ {t:'t3a',q:`What is the formula for carbon tetrachloride?`,o:['CCl','CCl₂','C₄Cl','CCl₄'],a:3,x:`Tetra means 4, and it belongs to the chlorine.`},
+ {t:'t3a',q:`What is the formula for calcium hydroxide?`,o:['CaOH','Ca(OH)₂','Ca₂OH','CaOH₂'],a:1,x:`Calcium has valency 2 and hydroxide has valency 1. You need two hydroxides, so brackets: Ca(OH)₂.`},
+ {t:'t3b',q:`Which numbers balance this equation?<br>__ H₂ + O₂ → __ H₂O`,o:['1 and 1','2 and 2','2 and 1','4 and 2'],a:1,x:`2H₂ + O₂ → 2H₂O gives 4 H and 2 O on each side.`},
+ {t:'t3b',q:`Which state symbol shows a substance dissolved in water?`,o:['(s)','(l)','(g)','(aq)'],a:3,x:`aq is short for aqueous.`},
+ {t:'t3c',q:`Calculate the gram formula mass of NaOH. (Na = 23, O = 16, H = 1)`,n:40,u:'g',x:`23 + 16 + 1 = 40 g.`},
+ {t:'t3c',m:2,q:`How many moles are in 22 g of carbon dioxide (GFM 44 g)?`,n:0.5,u:'mol',x:`n = m ÷ GFM = 22 ÷ 44 = 0.5 mol.`},
+ {t:'t3c',m:2,q:`0.1 mol of sodium chloride is dissolved to make 500 cm³ of solution. Calculate the concentration.`,n:0.2,u:'mol l⁻¹',x:`V = 500 ÷ 1000 = 0.5 l. c = 0.1 ÷ 0.5 = 0.2 mol l⁻¹.`},
+ {t:'t3c',m:3,q:`CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂<br>Calculate the mass of carbon dioxide produced from 10 g of calcium carbonate. (GFM CaCO₃ = 100 g, CO₂ = 44 g)`,n:4.4,u:'g',x:`n(CaCO₃) = 10 ÷ 100 = 0.1 mol. Ratio 1:1, so 0.1 mol CO₂. Mass = 0.1 × 44 = 4.4 g.`},
+ {t:'t3b',m:2,q:`Write a balanced formula equation for:<br>magnesium + hydrochloric acid → magnesium chloride + hydrogen`,ans:`Mg + 2HCl → MgCl₂ + H₂<br>1 mark for all formulae correct, 1 mark for balancing.`}
+]}};
+/* ===== Chapter 4: Rates of reaction ===== */
+const CH4={id:'c4',num:4,sym:'Rt',name:'Rates of reaction',
+blurb:`What makes reactions go faster or slower, how to measure the speed, and how to read rate graphs.`,
+topics:[
+{id:'t4a',name:'Collision theory',slides:[
+ {t:'Reactions need collisions',
+  h:`<p>For particles to react they must <b>collide</b>, and with enough energy. Anything that causes more successful collisions per second makes the reaction faster.</p>`,
+  ex:`Think of dodgems. More cars on the floor, or cars going faster, means more bumps every minute.`},
+ {t:'Concentration',d:['collide'],
+  h:`<p>A higher concentration means more particles in the same space, so they collide more often.</p>`,
+  ex:`Magnesium fizzes much faster in 2 mol l<sup>−1</sup> acid than in 0.5 mol l<sup>−1</sup> acid.`},
+ {t:'Particle size',d:['surface'],
+  h:`<p>Smaller pieces have a bigger <b>surface area</b>, so more particles are exposed and available to collide.</p>`,
+  ex:`Chopped potatoes boil faster than whole ones. Fine flour dust in the air can even explode.`},
+ {t:'Temperature',
+  h:`<p>Heating makes particles move faster. They collide more often <b>and</b> more of the collisions have enough energy to react.</p>`,
+  ex:`Food lasts longer in the fridge because the reactions that make it go off slow down. A glow stick shines brighter in hot water.`,
+  k:`Concentration, particle size, temperature, catalyst. Four ways to change the rate.`}
+]},
+{id:'t4b',name:'Following a reaction',slides:[
+ {t:'Measuring the rate',d:['gasSetup'],
+  h:`<p>If a gas is made, you can measure its <b>volume</b> with a gas syringe (or an upturned measuring cylinder in water), or record the <b>loss of mass</b> on a balance as the gas escapes.</p>`,
+  ex:`The cotton wool lets gas out but stops acid spray escaping, so only the gas affects the mass.`},
+ {t:'Reading the graph',d:['rateGraph',[{v:80,k:0.0347,c:PAL.u4}]],
+  h:`<ul><li><b>Steep</b> at the start: fast, lots of reactant.</li><li><b>Curving over:</b> slowing as reactants get used up.</li><li><b>Flat:</b> the reaction has stopped because one reactant has run out.</li></ul>`},
+ {t:'Average rate',d:['rateGraph',[{v:80,k:0.0347,c:PAL.u4}],[20,40]],
+  h:`<p>Average rate = change in quantity ÷ change in time</p>`,
+  ex:`Between 20 s and 40 s:<br>(60 − 40) ÷ (40 − 20) = 20 ÷ 20 = <b>1.0 cm<sup>3</sup> s<sup>−1</sup></b>`,
+  k:`Always include units: cm³ s⁻¹ for gas volume, g s⁻¹ for mass.`},
+ {t:'Comparing experiments',d:['rateGraph',[{v:60,k:0.05,c:PAL.u4,l:'A: chips',lx:56,below:true},{v:60,k:0.16,c:PAL.u0,l:'B: powder',lx:28},{v:30,k:0.05,c:PAL.u5,l:'C: half the marble',lx:58}]],
+  h:`<ul><li>B is steeper than A: faster. Same final volume because the same amount of marble was used.</li><li>C uses half the marble, so it makes half the gas.</li></ul>`,
+  k:`Rate changes the slope. Amount of reactant changes where the line levels off.`}
+]},
+{id:'t4c',name:'Catalysts and energy',slides:[
+ {t:'Catalysts',
+  h:`<p>A <b>catalyst</b> speeds up a reaction but is not used up. It can be recovered at the end, unchanged.</p><p><b>Enzymes</b> are biological catalysts.</p>`,
+  ex:`A car's catalytic converter cleans up exhaust gases. Biological washing powder uses enzymes so it works at low temperatures.`},
+ {t:'Exothermic and endothermic',d:['energy','exo'],
+  h:`<ul><li><b>Exothermic:</b> gives out heat, surroundings get warmer. Burning, neutralisation, hand warmers.</li><li><b>Endothermic:</b> takes in heat, surroundings get colder. Instant ice packs, photosynthesis.</li></ul>`},
+ {t:'How a catalyst helps (extra)',d:['energy','exo',true],
+  h:`<p>A catalyst gives the reaction an easier route with a lower energy barrier. More collisions have enough energy to get over it, so the reaction speeds up.</p><p>You'll meet this properly at Higher. It helps to picture it now.</p>`}
+]}],
+exam:{id:'x4',name:'Chapter 4 test',questions:[
+ {t:'t4a',q:`Which change would NOT speed up the reaction between marble chips and acid?`,o:['Heating the acid','Using powder instead of chips','Adding water to the acid','Adding a catalyst'],a:2,x:`Adding water dilutes the acid, lowering its concentration, so there are fewer collisions.`},
+ {t:'t4a',q:`Why does powder react faster than lumps?`,o:['It has a larger surface area, so more collisions','Powder is hotter','Powder is more concentrated','Powder has fewer particles'],a:0,x:`More exposed surface means more particles available to collide.`},
+ {t:'t4a',q:`Why does increasing temperature increase the rate?`,o:['Particles move faster, collide more often and with more energy','There are more particles','A catalyst forms','The particles get bigger'],a:0,x:`Both the number of collisions and their energy go up.`},
+ {t:'t4b',m:2,d:['rateGraph',[{v:80,k:0.0347,c:PAL.u4}]],q:`Use the graph. Calculate the average rate of reaction over the first 20 seconds.`,n:2,u:'cm³ s⁻¹',x:`At 20 s the volume is 40 cm³. Rate = (40 − 0) ÷ (20 − 0) = 2.0 cm³ s⁻¹.`},
+ {t:'t4b',m:2,q:`30 cm³ of gas had been collected at 10 s and 50 cm³ at 30 s. Calculate the average rate between these times.`,n:1,u:'cm³ s⁻¹',x:`(50 − 30) ÷ (30 − 10) = 20 ÷ 20 = 1.0 cm³ s⁻¹.`},
+ {t:'t4b',m:2,q:`The mass of a flask fell from 150.40 g to 149.80 g in 60 s. Calculate the average rate of mass loss.`,n:0.01,u:'g s⁻¹',tol:0.0005,x:`Change in mass = 0.60 g. Rate = 0.60 ÷ 60 = 0.01 g s⁻¹.`},
+ {t:'t4b',q:`Why does the graph of gas volume eventually level off?`,o:['One of the reactants has been used up','The catalyst has been used up','The temperature has dropped','The gas syringe is broken'],a:0,x:`No more reactant means no more gas.`},
+ {t:'t4b',q:`An experiment is repeated with the same mass of marble, but powdered. Compared with the first, the final volume of gas will be:`,o:['higher','lower','the same, reached sooner','the same, reached later'],a:2,x:`Same amount of reactant gives the same amount of gas. Powder just gets there faster.`},
+ {t:'t4c',q:`A catalyst:`,o:['is used up in the reaction','speeds up a reaction and is not used up','slows down a reaction','changes what the products are'],a:1,x:`It can be recovered unchanged at the end.`},
+ {t:'t4c',q:`In an exothermic reaction:`,o:['heat is given out, so the surroundings get warmer','heat is taken in, so the surroundings get colder','there is no energy change','something must be burning'],a:0,x:`Exo means out. Neutralisation is exothermic but nothing burns.`},
+ {t:'t4a',m:2,q:`Using collision theory, explain why increasing the concentration of acid speeds up its reaction with magnesium.`,ans:`There are more acid particles in the same volume [1], so they collide with the magnesium more often, giving more successful collisions per second [1].`}
+]}};
+
+/* ===== Chapter 5: Acids & bases ===== */
+const CH5={id:'c5',num:5,sym:'Ab',name:'Acids & bases',
+blurb:`The pH scale, what makes something acidic or alkaline, neutralisation, salts and titrations.`,
+topics:[
+{id:'t5a',name:'The pH scale',slides:[
+ {t:'The pH scale',d:['pH'],
+  h:`<p>Below 7 is <b>acidic</b>, 7 is <b>neutral</b>, above 7 is <b>alkaline</b>. Universal indicator shows the pH by colour.</p>`,
+  ex:`A bee sting is acidic. A wasp sting is alkaline. That's why different remedies are suggested for each.`},
+ {t:'The ions behind pH',d:['ions'],
+  h:`<p>Water contains a tiny number of H<sup>+</sup> and OH<sup>−</sup> ions, in equal amounts.</p><ul><li>Acids have more H<sup>+</sup> than OH<sup>−</sup>.</li><li>Alkalis have more OH<sup>−</sup> than H<sup>+</sup>.</li></ul>`,
+  k:`H⁺ makes it acidic. OH⁻ makes it alkaline.`},
+ {t:'Dilution',
+  h:`<p>Adding water spreads the ions out. The concentration of H<sup>+</sup> in an acid falls, so its pH <b>rises towards 7</b>. An alkali's pH <b>falls towards 7</b>. Dilution never takes it past 7.</p>`,
+  ex:`Like adding water to strong squash: it gets weaker and weaker but never turns into a different drink.`},
+ {t:'Oxides and acid rain',
+  h:`<ul><li>Non-metal oxides that dissolve make <b>acids</b>: CO<sub>2</sub> in fizzy drinks, SO<sub>2</sub> and NO<sub>2</sub> in acid rain.</li><li>Metal oxides that dissolve make <b>alkalis</b>: sodium oxide forms sodium hydroxide.</li></ul>`,
+  ex:`Acid rain slowly eats away limestone and marble buildings and statues.`}
+]},
+{id:'t5b',name:'Neutralisation and salts',slides:[
+ {t:'Neutralisation',d:['neutral'],
+  h:`<p>A <b>base</b> neutralises an acid. The pH moves towards 7. The key reaction is:</p><p style="font-weight:800">H<sup>+</sup>(aq) + OH<sup>−</sup>(aq) → H<sub>2</sub>O(l)</p>`,
+  ex:`Indigestion tablets neutralise extra stomach acid. Farmers spread lime to neutralise acidic soil.`},
+ {t:'Three kinds of base',
+  h:`<ul><li>acid + metal hydroxide → salt + water</li><li>acid + metal oxide → salt + water</li><li>acid + metal carbonate → salt + water + carbon dioxide</li></ul>`,
+  ex:`hydrochloric acid + calcium carbonate → calcium chloride + water + carbon dioxide. The CO<sub>2</sub> is the fizz.`,
+  k:`A soluble base is called an alkali.`},
+ {t:'Naming salts',
+  h:`<table class="t"><tr><th>Acid</th><th>Salt name ends</th></tr><tr><td>Hydrochloric</td><td>…chloride</td></tr><tr><td>Sulfuric</td><td>…sulfate</td></tr><tr><td>Nitric</td><td>…nitrate</td></tr></table><p>The first part of the name comes from the metal in the base.</p>`,
+  ex:`nitric acid + potassium hydroxide → <b>potassium nitrate</b> + water`},
+ {t:'Spectator ions',
+  h:`<p><b>Spectator ions</b> are in the mixture but don't change during the reaction. Like spectators at a match, they watch.</p>`,
+  ex:`H<sup>+</sup> + Cl<sup>−</sup> + Na<sup>+</sup> + OH<sup>−</sup> → Na<sup>+</sup> + Cl<sup>−</sup> + H<sub>2</sub>O<br>Na<sup>+</sup> and Cl<sup>−</sup> are unchanged, so they are the spectators.`}
+]},
+{id:'t5c',name:'Titration',slides:[
+ {t:'What a titration does',d:['titration'],
+  h:`<p>A <b>titration</b> measures exactly how much of one solution reacts with a set volume of another. The indicator changes colour at the <b>end-point</b>.</p>`},
+ {t:'Getting reliable results',
+  h:`<ul><li>Do a rough run first, then repeat carefully.</li><li>Add drop by drop near the end-point, swirling the flask.</li><li>Read the burette at the bottom of the meniscus.</li><li>Repeat until two results are <b>concordant</b>: within 0.2 cm<sup>3</sup> of each other.</li></ul>`,
+  ex:`Results: 21.0 (rough), 20.2, 20.1 cm<sup>3</sup><br>Average of the concordant results: (20.2 + 20.1) ÷ 2 = <b>20.15 cm<sup>3</sup></b>`},
+ {t:'Titration calculation',
+  ex:`25.0 cm<sup>3</sup> of HCl is neutralised by 20.0 cm<sup>3</sup> of 0.10 mol l<sup>−1</sup> NaOH. Find the HCl concentration.<br>HCl + NaOH → NaCl + H<sub>2</sub>O<br>n(NaOH) = 0.10 × 0.0200 = 0.0020 mol<br>Ratio 1 : 1, so n(HCl) = 0.0020 mol<br>c(HCl) = 0.0020 ÷ 0.0250 = <b>0.080 mol l<sup>−1</sup></b>`,
+  k:`n = c × V, then use the ratio, then c = n ÷ V. Volumes in litres.`},
+ {t:'When the ratio is not 1 : 1',
+  ex:`10.0 cm<sup>3</sup> of H<sub>2</sub>SO<sub>4</sub> is neutralised by 20.0 cm<sup>3</sup> of 0.10 mol l<sup>−1</sup> NaOH.<br>H<sub>2</sub>SO<sub>4</sub> + 2NaOH → Na<sub>2</sub>SO<sub>4</sub> + 2H<sub>2</sub>O<br>n(NaOH) = 0.10 × 0.0200 = 0.0020 mol<br>Ratio 1 : 2, so n(H<sub>2</sub>SO<sub>4</sub>) = 0.0010 mol<br>c = 0.0010 ÷ 0.0100 = <b>0.10 mol l<sup>−1</sup></b>`,
+  k:`Always check the balanced equation before using the ratio.`}
+]}],
+exam:{id:'x5',name:'Chapter 5 test',questions:[
+ {t:'t5a',q:`An acid has a pH that is:`,o:['below 7','exactly 7','above 7','always 14'],a:0},
+ {t:'t5a',q:`Alkaline solutions contain:`,o:['more H⁺ ions than OH⁻ ions','more OH⁻ ions than H⁺ ions','equal numbers of H⁺ and OH⁻','no ions at all'],a:1},
+ {t:'t5a',q:`An acid is diluted with water. What happens to its pH?`,o:['It falls towards 0','It rises towards 7','It rises above 7','It stays the same'],a:1,x:`The H⁺ concentration falls, so the pH rises towards 7 but never past it.`},
+ {t:'t5a',q:`Sulfur dioxide dissolves in rain water. The solution formed is:`,o:['alkaline','acidic','neutral','a salt'],a:1,x:`Non-metal oxides that dissolve form acids. This causes acid rain.`},
+ {t:'t5b',q:`Which salt forms when hydrochloric acid reacts with sodium hydroxide?`,o:['Sodium sulfate','Sodium chloride','Sodium nitrate','Sodium hydride'],a:1},
+ {t:'t5b',q:`An acid reacts with a metal carbonate. The products are:`,o:['salt + water','salt + hydrogen','salt + water + carbon dioxide','salt only'],a:2},
+ {t:'t5b',q:`Which equation shows what happens in every neutralisation of an acid by an alkali?`,o:['H⁺ + OH⁻ → H₂O','Na⁺ + Cl⁻ → NaCl','2H₂ + O₂ → 2H₂O','H₂O → H⁺ + OH⁻'],a:0},
+ {t:'t5c',q:`Titration results were 21.0 cm³ (rough), 20.2 cm³ and 20.1 cm³. What volume should be used in the calculation?`,o:['20.43 cm³','20.15 cm³','20.10 cm³','21.00 cm³'],a:1,x:`Ignore the rough result and average the two concordant ones: (20.2 + 20.1) ÷ 2 = 20.15 cm³.`},
+ {t:'t5c',m:3,q:`25.0 cm³ of hydrochloric acid is neutralised by 20.0 cm³ of 0.10 mol l⁻¹ sodium hydroxide.<br>HCl + NaOH → NaCl + H₂O<br>Calculate the concentration of the acid.`,n:0.08,u:'mol l⁻¹',tol:0.002,x:`n(NaOH) = 0.10 × 0.020 = 0.002 mol. 1:1 ratio. c(HCl) = 0.002 ÷ 0.025 = 0.08 mol l⁻¹.`},
+ {t:'t5b',m:2,q:`Nitric acid reacts with potassium hydroxide. Name the salt formed and name the spectator ions.`,ans:`Potassium nitrate [1]. The spectator ions are K⁺ and NO₃⁻, because they are unchanged by the reaction [1].`}
+]}};
+
+/* ===== Exam ladder (mixed chapters, rising difficulty) ===== */
+const FINALS=[
+{id:'f1',level:1,name:'Foundations',blurb:'Recall and simple recognition from every chapter.',questions:[
+ {t:'t1a',q:`Where are protons found?`,o:['In the nucleus','In the electron shells','Outside the atom','Moving between atoms'],a:0},
+ {t:'t1b',q:`Elements in the same group have the same:`,o:['number of outer electrons','mass number','number of neutrons','number of shells'],a:0},
+ {t:'t1c',q:`Isotopes of the same element have different:`,o:['atomic numbers','mass numbers','numbers of electrons','symbols'],a:1},
+ {t:'t2a',q:`Which pair of elements would form a covalent bond?`,o:['Sodium and chlorine','Carbon and hydrogen','Magnesium and oxygen','Copper and zinc'],a:1,x:`Two non-metals share electrons.`},
+ {t:'t2b',q:`What is the charge on a chloride ion?`,o:['+1','−1','+2','−2'],a:1,x:`Chlorine is in group 7 and gains one electron.`},
+ {t:'t3a',q:`What is the formula for sodium oxide?`,o:['NaO','Na₂O','NaO₂','Na₂O₂'],a:1,x:`Valencies 1 and 2. Swap: Na₂O.`},
+ {t:'t3b',q:`What does (l) mean after a formula?`,o:['Solid','Liquid','Gas','Dissolved in water'],a:1},
+ {t:'t3c',q:`Calculate the gram formula mass of water, H₂O. (H = 1, O = 16)`,n:18,u:'g',x:`(2 × 1) + 16 = 18 g.`},
+ {t:'t4a',q:`Which of these reacts fastest with acid at the same temperature?`,o:['One large lump of marble','A few marble chips','Marble powder','They all react at the same rate'],a:2},
+ {t:'t4c',q:`Biological catalysts are called:`,o:['enzymes','ions','salts','isotopes'],a:0},
+ {t:'t5a',q:`What is the pH of pure water?`,o:['0','5','7','14'],a:2},
+ {t:'t5b',q:`Salts made from sulfuric acid are called:`,o:['chlorides','sulfates','nitrates','sulfides'],a:1}
+]},
+{id:'f2',level:2,name:'Exam practice',blurb:'National 5 style: calculations and short explanations.',questions:[
+ {t:'t1a',m:2,q:`State the numbers of protons, neutrons and electrons in a chloride ion with mass number 35 and atomic number 17 (Cl⁻).`,ans:`17 protons and 18 neutrons [1]; 18 electrons, because it has gained one [1].`},
+ {t:'t1c',m:2,q:`Copper is 69% copper-63 and 31% copper-65. Calculate its relative atomic mass to 2 decimal places.`,n:63.62,tol:0.02,x:`(69 × 63 + 31 × 65) ÷ 100 = (4347 + 2015) ÷ 100 = 63.62.`},
+ {t:'t2c',q:`Which substance is most likely to have a covalent network structure?`,o:['Melts at 1700 °C, does not conduct as a solid or when melted','Melts at 801 °C, conducts only when melted','Melts at −7 °C, does not conduct','Melts at 1083 °C, conducts as a solid'],a:0,x:`Very high melting point with no conduction in any state points to a covalent network, like silicon dioxide.`},
+ {t:'t2a',m:2,q:`Chlorine is a gas at room temperature even though covalent bonds are strong. Explain why.`,ans:`Chlorine is made of small Cl₂ molecules with only weak forces of attraction between them [1]. Little energy is needed to separate the molecules, so the boiling point is low; the covalent bonds don't break [1].`},
+ {t:'t3a',q:`What is the formula for ammonium sulfate?`,o:['NH₄SO₄','(NH₄)₂SO₄','NH₄(SO₄)₂','(NH₄)SO₄'],a:1,x:`Ammonium is NH₄⁺ (valency 1), sulfate is SO₄²⁻ (valency 2). Two ammoniums are needed, in brackets.`},
+ {t:'t3b',q:`Propane burns: C₃H₈ + __O₂ → 3CO₂ + 4H₂O<br>What number balances the oxygen?`,o:['3','4','5','10'],a:2,x:`Right side oxygens: 3 × 2 + 4 × 1 = 10. So 5O₂.`},
+ {t:'t3c',m:2,q:`How many moles are in 10 g of calcium carbonate (GFM 100 g)?`,n:0.1,u:'mol'},
+ {t:'t3c',m:2,q:`What mass of sodium hydroxide (GFM 40 g) is needed to make 250 cm³ of 0.2 mol l⁻¹ solution?`,n:2,u:'g',x:`n = 0.2 × 0.25 = 0.05 mol. m = 0.05 × 40 = 2 g.`},
+ {t:'t4b',m:2,q:`36 cm³ of gas was collected in the first 20 seconds. Calculate the average rate of reaction.`,n:1.8,u:'cm³ s⁻¹',x:`36 ÷ 20 = 1.8 cm³ s⁻¹.`},
+ {t:'t4a',m:2,q:`Explain why a reaction slows down as it goes on.`,ans:`Reactants are being used up, so their concentration falls [1]. There are fewer collisions per second, so the rate drops [1].`},
+ {t:'t5c',m:3,q:`10.0 cm³ of hydrochloric acid is neutralised by 20.0 cm³ of 0.10 mol l⁻¹ sodium hydroxide. HCl + NaOH → NaCl + H₂O<br>Calculate the concentration of the acid.`,n:0.2,u:'mol l⁻¹',x:`n(NaOH) = 0.10 × 0.020 = 0.002 mol. 1:1 ratio. c = 0.002 ÷ 0.010 = 0.2 mol l⁻¹.`},
+ {t:'t5b',m:2,q:`Write a word equation for the reaction of hydrochloric acid with calcium carbonate.`,ans:`hydrochloric acid + calcium carbonate → calcium chloride + water + carbon dioxide<br>1 mark for calcium chloride, 1 mark for water and carbon dioxide.`}
+]},
+{id:'f3',level:3,name:'Challenge',blurb:'Multi-step problems and unfamiliar contexts, like the hardest exam questions.',questions:[
+ {t:'t1a',q:`A particle has 16 protons, 16 neutrons and 18 electrons. What is it?`,o:['A sulfur atom','A sulfide ion, S²⁻','An argon atom','A sulfur ion, S²⁺'],a:1,x:`16 protons makes it sulfur. Two extra electrons give a 2− charge.`},
+ {t:'t1c',m:3,q:`Element X has two isotopes, X-10 and X-11. Its relative atomic mass is 10.8. What percentage of X atoms are X-10?`,n:20,u:'%',tol:0.5,x:`Let the % of X-10 be p. 10p + 11(100 − p) = 1080, so 1100 − p = 1080 and p = 20%.`},
+ {t:'t2b',m:3,q:`Magnesium oxide melts at 2852 °C. Explain, in terms of electrons and bonding, how magnesium and oxygen form this compound and why its melting point is so high.`,ans:`Magnesium (2,8,2) loses 2 electrons to form Mg²⁺ [1]. Oxygen (2,6) gains those 2 electrons to form O²⁻ [1]. The ions are held in a lattice by strong electrostatic attraction between oppositely charged ions, which needs a lot of energy to overcome [1].`},
+ {t:'t2c',q:`Why can metals conduct electricity when solid?`,o:['Their delocalised electrons are free to move','Their ions are free to move','They have full outer shells','They contain covalent bonds'],a:0},
+ {t:'t3a',q:`What is the formula for iron(III) sulfate?`,o:['FeSO₄','Fe₂(SO₄)₃','Fe₃(SO₄)₂','Fe(SO₄)₃'],a:1,x:`Iron(III) has valency 3, sulfate has valency 2. Swap: Fe₂(SO₄)₃.`},
+ {t:'t3c',m:3,q:`Mg + 2HCl → MgCl₂ + H₂<br>Calculate the mass of hydrogen produced when 4.9 g of magnesium reacts with excess acid. (Mg = 24.5, H = 1)`,n:0.4,u:'g',x:`n(Mg) = 4.9 ÷ 24.5 = 0.2 mol. Ratio 1:1, so 0.2 mol H₂. GFM H₂ = 2 g. Mass = 0.4 g.`},
+ {t:'t3c',m:3,q:`2Mg + O₂ → 2MgO<br>Calculate the mass of magnesium oxide formed when 4.9 g of magnesium burns completely. (Mg = 24.5, O = 16)`,n:8.1,u:'g',x:`n(Mg) = 0.2 mol. Ratio 2:2, so 0.2 mol MgO. GFM MgO = 40.5 g. Mass = 0.2 × 40.5 = 8.1 g.`},
+ {t:'t4b',q:`Experiment A: 1 g of magnesium ribbon with excess acid. Experiment B: 0.5 g of magnesium powder with the same acid. Compared with A, the curve for B will be:`,o:['steeper, levelling off at half the volume','steeper, levelling off at the same volume','less steep, levelling off at half the volume','less steep, levelling off at the same volume'],a:0,x:`Powder makes it faster (steeper). Half the magnesium makes half the hydrogen (lower final volume).`},
+ {t:'t4c',m:2,q:`A pupil says a catalyst gets used up, so more must be added each time. Explain why this is wrong and describe how you could show it.`,ans:`A catalyst speeds up a reaction without being used up [1]. Weigh the catalyst before the reaction, then filter it out, dry it and reweigh it: the mass is unchanged [1].`},
+ {t:'t5c',m:3,q:`10.0 cm³ of sulfuric acid is neutralised by 20.0 cm³ of 0.10 mol l⁻¹ sodium hydroxide.<br>H₂SO₄ + 2NaOH → Na₂SO₄ + 2H₂O<br>Calculate the concentration of the sulfuric acid.`,n:0.1,u:'mol l⁻¹',tol:0.002,x:`n(NaOH) = 0.002 mol. Ratio 1:2, so n(H₂SO₄) = 0.001 mol. c = 0.001 ÷ 0.010 = 0.10 mol l⁻¹.`},
+ {t:'t5a',m:2,q:`Explain, in terms of ions, why the pH of hydrochloric acid increases when it is diluted.`,ans:`Dilution lowers the concentration of H⁺ ions [1], so the solution becomes less acidic and the pH rises towards 7 (but not above it) [1].`},
+ {t:'t5b',m:3,q:`Copper(II) oxide is an insoluble base. Describe how you would make pure, dry copper(II) sulfate crystals from it.`,ans:`Add copper(II) oxide to warm dilute sulfuric acid until no more dissolves, so the oxide is in excess and all the acid is used up [1]. Filter off the excess copper(II) oxide [1]. Evaporate some of the water from the filtrate, leave it to crystallise, then dry the crystals [1].`}
+]}];
+
+/* ===== Course definition ===== */
+const COURSE={
+ id:'s3-chemistry-ananya',
+ title:"Ananya's Chemistry",
+ student:'Ananya',
+ subtitle:'S3 Chemistry: Chemical changes and structure',
+ source:'Aligned to the National 5 Chemistry course specification (Qualifications Scotland, valid from session 2026–27), area 1: Chemical changes and structure. Schools teach these in different orders, so follow whichever chapter matches class. Numbers use the SQA data booklet values.',
+ grades:[[70,'A'],[60,'B'],[50,'C'],[40,'D']],
+ chapters:[CH1,CH2,CH3,CH4,CH5],
+ finals:FINALS,
+ diagrams:DIAGRAMS
+};
+
+</script>
+
+<script>
+(function(){
+const C=COURSE, D=C.diagrams||{};
+const app=document.getElementById('app'), nav=document.getElementById('nav');
+document.title=C.title;
+const KEY='progress-'+C.id;
+const blank=()=>({seen:{},conf:{},attempts:[]});
+let S=blank(), V={v:'home'}, resetArm=false;
+const storageOK=!!(window.storage&&window.storage.get&&window.storage.set);
+
+/* ---------- lookups ---------- */
+const topics=[];C.chapters.forEach(ch=>ch.topics.forEach(t=>{t.ch=ch;topics.push(t);}));
+const exams=[];C.chapters.forEach(ch=>{if(ch.exam){ch.exam.ch=ch;exams.push(ch.exam);}});(C.finals||[]).forEach(f=>exams.push(f));
+const T=id=>topics.find(t=>t.id===id), E=id=>exams.find(e=>e.id===id), CH=id=>C.chapters.find(c=>c.id===id);
+
+/* ---------- measures ---------- */
+const know=t=>Math.round(100*(S.seen[t.id]||[]).length/t.slides.length);
+function und(id){for(let i=S.attempts.length-1;i>=0;i--){const b=(S.attempts[i].byTopic||{})[id];if(b&&b[1])return Math.round(100*b[0]/b[1]);}return null;}
+function mast(t){const k=know(t),u=und(t.id);if(!k&&u===null)return null;return Math.round(.3*k+.7*(u||0));}
+const avg=a=>a.every(x=>x===null)?null:Math.round(a.reduce((s,x)=>s+(x||0),0)/a.length);
+const chM=ch=>avg(ch.topics.map(mast)), allM=()=>avg(C.chapters.map(chM));
+const BANDS=[[40,'u0','Just starting'],[50,'u1','Warming up'],[60,'u2','Getting there'],[70,'u3','Solid'],[85,'u4','Strong'],[101,'u5','Mastered']];
+const band=p=>p===null||p===undefined?null:BANDS.find(b=>p<b[0]);
+const dark=b=>b&&(b[1]==='u2'||b[1]==='u3');
+const paint=p=>{const b=band(p);return b?`background:${PAL[b[1]]};color:${dark(b)?PAL.ink:'#fff'}`:'';};
+const grade=p=>{const g=C.grades||[[70,'A'],[60,'B'],[50,'C'],[40,'D']];const f=g.find(x=>p>=x[0]);return f?f[1]:'Not yet';};
+const pct=a=>Math.round(100*a.score/a.max);
+const tries=id=>S.attempts.filter(x=>x.id===id);
+const best=id=>{const a=tries(id);return a.length?Math.max(...a.map(pct)):null;};
+const last=id=>{const a=tries(id);return a.length?a[a.length-1]:null;};
+const marksOf=e=>e.questions.reduce((s,q)=>s+(q.m||1),0);
+const fig=d=>{if(!d)return '';if(Array.isArray(d)){const f=D[d[0]];try{return f?f(...d.slice(1)):'';}catch(e){console.error(e);return '';}}return d;};
+const FACES=['Lost','Shaky','Okay','Good','Could teach it'];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- storage ---------- */
+async function load(){
+  if(storageOK){try{const r=await window.storage.get(KEY,false);if(r&&r.value)S=Object.assign(blank(),JSON.parse(r.value));}catch(e){/* nothing saved yet */}}
+  render();
+}
+let st;function save(){if(!storageOK)return;clearTimeout(st);st=setTimeout(async()=>{try{await window.storage.set(KEY,JSON.stringify(S),false);}catch(e){console.error('Could not save progress',e);}},250);}
+
+/* ---------- views ---------- */
+function go(v){V=v;resetArm=false;render();window.scrollTo(0,0);}
+
+function nextUp(){
+  for(const t of topics){const n=(S.seen[t.id]||[]).length;if(n<t.slides.length)return {label:n?`Carry on: ${t.name}`:`Start: ${t.name}`,attrs:`data-go="slides" data-t="${t.id}" data-i="${firstUnseen(t)}"`};}
+  for(const ch of C.chapters)if(ch.exam&&best(ch.exam.id)===null)return {label:`Take the ${ch.name} test`,attrs:`data-go="start" data-e="${ch.exam.id}"`};
+  for(const f of (C.finals||[]))if((best(f.id)||0)<70)return {label:`Exam ladder level ${f.level}`,attrs:`data-go="start" data-e="${f.id}"`};
+  return null;
+}
+function firstUnseen(t){const s=S.seen[t.id]||[];for(let i=0;i<t.slides.length;i++)if(!s.includes(i))return i;return 0;}
+
+function indicator(p){return `<div class="ind" role="img" aria-label="Overall mastery ${p===null?'not started':p+' percent'}"><div class="scale"></div>${p!==null?`<div class="mk" style="left:${Math.max(3,Math.min(97,p))}%"><b>${p}%</b></div>`:''}<div class="ends"><span>Just starting</span><span>Mastered</span></div></div>`;}
+
+function tile(ch){const m=chM(ch);return `<button class="tile ${m===null?'new':''}" style="${paint(m)}" data-go="chapter" data-ch="${ch.id}" aria-label="Chapter ${ch.num}, ${ch.name}, ${m===null?'not started':m+' percent mastered'}"><span class="n">${ch.num}</span>${m!==null?`<span class="pc">${m}%</span>`:''}<span class="sym">${ch.sym}</span><span class="nm">${ch.name}</span></button>`;}
+
+function vHome(){
+  const o=allM(),b=band(o),n=nextUp();
+  return `<header class="hero"><p class="sub">${C.subtitle||''}</p><h1>${C.title}</h1>${indicator(o)}
+  <p>${o===null?`Hi ${C.student}. Pick a chapter to begin. Your colour moves along the indicator from red to purple as you learn.`:`${b[2]}, ${C.student}. Each chapter's colour shows how well you know it.`}</p>
+  ${n?`<div class="row"><button class="btn primary" ${n.attrs}>${n.label}</button></div>`:''}</header>
+  <h2>Chapters</h2><div class="table">${C.chapters.map(tile).join('')}</div>
+  ${C.source?`<p class="foot sub">${C.source}</p>`:''}`;
+}
+
+function vChapter(){
+  const ch=CH(V.ch);
+  let h=`<button class="back" data-go="home">All chapters</button><div class="chhead"><span class="mini" style="${paint(chM(ch))}">${ch.sym}</span><div><p class="sub">Chapter ${ch.num}</p><h1>${ch.name}</h1></div></div>${ch.blurb?`<p>${ch.blurb}</p>`:''}<h2>Topics</h2><ol class="topics">`;
+  ch.topics.forEach(t=>{const k=know(t),u=und(t.id),c=S.conf[t.id];
+    h+=`<li><button class="trow" data-go="slides" data-t="${t.id}" data-i="${k===100?0:firstUnseen(t)}"><span class="tn">${t.name}</span><span class="meta">${t.slides.length} slides, ${k}% read${u!==null?`, ${u}% in tests`:''}${c?`, feels ${FACES[c-1].toLowerCase()}`:''}</span><span class="pbar"><i style="width:${k}%"></i></span></button></li>`;});
+  h+='</ol>';
+  if(ch.exam){const l=last(ch.exam.id);h+=`<div class="testcard"><h3>${ch.exam.name}</h3><p class="sub">${ch.exam.questions.length} questions, ${marksOf(ch.exam)} marks. ${l?`Last score ${pct(l)}%, grade ${grade(pct(l))}.`:'Not taken yet.'}</p><div class="row"><button class="btn primary" data-go="start" data-e="${ch.exam.id}">${l?'Retake test':'Start test'}</button></div></div>`;}
+  return h;
+}
+
+function vSlides(){
+  const t=T(V.t),n=t.slides.length,i=V.i;
+  let h=`<button class="back" data-go="chapter" data-ch="${t.ch.id}">${t.ch.name}</button><p class="sub">${t.name}, slide ${Math.min(i+1,n)} of ${n}</p>`;
+  if(i<n){
+    const s=t.slides[i],seen=S.seen[t.id]||(S.seen[t.id]=[]);if(!seen.includes(i)){seen.push(i);save();}
+    h+=`<article class="slide anim" id="slide"><h2>${s.t}</h2>${s.d?`<figure class="fig">${fig(s.d)}</figure>`:''}${s.h?`<div class="body">${s.h}</div>`:''}${s.ex?`<div class="ex"><b>Example</b>${s.ex}</div>`:''}${s.k?`<p class="key"><b>Remember:</b> ${s.k}</p>`:''}</article>`;
+  }else{
+    const c=S.conf[t.id],idx=t.ch.topics.indexOf(t),nx=t.ch.topics[idx+1];
+    h+=`<article class="slide"><h2>How well do you understand this now?</h2><p>Be honest. Your rating is compared with your test scores so you can spot topics that feel fine but need another look.</p><div class="faces">${FACES.map((f,k)=>`<button class="face ${c===k+1?'on':''}" data-act="conf" data-v="${k+1}" aria-pressed="${c===k+1}"><b>${k+1}</b>${f}</button>`).join('')}</div>
+    <div class="row">${nx?`<button class="btn primary" data-go="slides" data-t="${nx.id}" data-i="0">Next topic: ${nx.name}</button>`:t.ch.exam?`<button class="btn primary" data-go="start" data-e="${t.ch.exam.id}">Take the chapter test</button>`:''}<button class="btn" data-go="chapter" data-ch="${t.ch.id}">Chapter overview</button></div></article>`;
+  }
+  h+=`<div class="pager"><button class="btn" data-act="prev" ${i===0?'disabled':''}>Previous</button><span class="dots" aria-hidden="true">${Array.from({length:n+1},(_,k)=>`<i class="${k===i?'on':''}"></i>`).join('')}</span><button class="btn primary" data-act="next" ${i>=n?'disabled':''}>Next</button></div>`;
+  return h;
+}
+
+function vExam(){
+  const e=E(V.id),q=e.questions[V.i],m=q.m||1,s=V.st,N=e.questions.length;
+  let h=`<div class="examtop"><button class="back" data-act="quit">Leave test</button><span class="sub">Question ${V.i+1} of ${N}</span></div><div class="qbar"><i style="width:${100*V.i/N}%"></i></div>
+  <article class="slide ${s?'':'anim'}"><p class="sub">${e.name}, ${m} mark${m>1?'s':''}</p>${q.d?`<figure class="fig">${fig(q.d)}</figure>`:''}<div class="qtext">${q.q}</div>`;
+  if(q.o){
+    h+=`<div class="opts">${q.o.map((o,k)=>{let c='';if(s){if(k===q.a)c='right';else if(k===s.pick)c='wrong';}return `<button class="opt ${c}" data-act="pick" data-o="${k}" ${s?'disabled':''}><span class="l">${'ABCDE'[k]}</span><span>${o}</span></button>`;}).join('')}</div>`;
+  }else if(q.n!==undefined){
+    h+=`<div class="numrow"><input id="num" inputmode="decimal" autocomplete="off" aria-label="Your answer" placeholder="Your answer" ${s?`value="${s.val}" disabled`:''}>${q.u?`<span>${q.u}</span>`:''}${s?'':'<button class="btn primary" data-act="checknum">Check</button>'}${V.err?'<span class="err">Type a number, for example 0.25</span>':''}</div>`;
+  }else{
+    if(!s)h+=`<textarea id="wa" rows="4" aria-label="Your answer" placeholder="Write your answer here or on paper, then check it against the model answer."></textarea><button class="btn primary" data-act="reveal">Show model answer</button>`;
+    else if(s.got===undefined){const part=Math.max(1,Math.floor(m/2));h+=`<div class="ex"><b>Model answer</b>${q.ans}</div><p>Mark yourself honestly against the model answer.</p><div class="row"><button class="btn" data-act="self" data-v="${m}">Got it all (${m})</button>${m>1?`<button class="btn" data-act="self" data-v="${part}">Got part (${part})</button>`:''}<button class="btn" data-act="self" data-v="0">Not yet (0)</button></div>`;}
+  }
+  if(s&&s.got!==undefined){
+    const ok=s.got===m,cls=ok?'good':s.got>0?'mid':'bad';
+    h+=`<div class="fb ${cls}"><b>${ok?'Correct':s.got>0?'Partly right':'Not quite'}</b>${q.n!==undefined&&!ok?`<p>The answer is ${q.n}${q.u?' '+q.u:''}.</p>`:''}${q.ans&&!q.o&&q.n===undefined?`<div class="ex"><b>Model answer</b>${q.ans}</div>`:''}${q.x?`<p>${q.x}</p>`:''}</div><button class="btn primary next" data-act="nextq">${V.i+1<N?'Next question':'See my results'}</button>`;
+  }
+  return h+'</article>';
+}
+
+function finish(){
+  const e=E(V.id),byTopic={};let score=0,max=0;
+  e.questions.forEach((q,k)=>{const m=q.m||1,g=V.marks[k]||0;score+=g;max+=m;const b=byTopic[q.t]||(byTopic[q.t]=[0,0]);b[0]+=g;b[1]+=m;});
+  S.attempts.push({id:e.id,name:e.name,date:Date.now(),score,max,byTopic});save();
+  go({v:'result',k:S.attempts.length-1});
+}
+
+function vResult(){
+  const a=S.attempts[V.k],p=pct(a);
+  let h=`<div class="result" style="${paint(p)}"><p><b>${a.name}</b></p><p class="big">${p}%</p><p>${a.score} out of ${a.max} marks. Grade ${grade(p)}.</p></div><h2>By topic</h2><ul class="bt">`;
+  Object.entries(a.byTopic).forEach(([tid,[g,m]])=>{const t=T(tid),tp=Math.round(100*g/m);h+=`<li><span>${t?t.name:tid}</span><span class="pbar"><i style="width:${tp}%;background:${PAL[band(tp)[1]]}"></i></span><b>${tp}%</b>${tp<60&&t?`<button class="btn sm" data-go="slides" data-t="${tid}" data-i="0">Review</button>`:'<span></span>'}</li>`;});
+  return h+`</ul><div class="row"><button class="btn primary" data-go="start" data-e="${a.id}">Try again</button><button class="btn" data-go="exams">All exams</button></div>`;
+}
+
+function ecard(e,label){const b=best(e.id),l=last(e.id);return `<li class="ecard"><div><h3>${label||e.name}</h3><p class="sub">${e.blurb?e.blurb+' ':''}${e.questions.length} questions, ${marksOf(e)} marks.</p><p class="sub">${b===null?'Not taken yet.':`Best ${b}%, last ${pct(l)}%, ${tries(e.id).length} attempt${tries(e.id).length>1?'s':''}.`}</p></div><button class="btn ${b===null?'primary':''}" data-go="start" data-e="${e.id}">${b===null?'Start':'Retake'}</button></li>`;}
+function vExams(){
+  return `<h1>Exams</h1><p class="sub">Chapter tests check one chapter at a time. The exam ladder mixes every chapter and gets harder at each level. Aim for 70% before moving up.</p>
+  ${(C.finals||[]).length?`<h2>Exam ladder</h2><ol class="ladder">${C.finals.map(f=>ecard(f,`Level ${f.level}: ${f.name}`)).join('')}</ol>`:''}
+  <h2>Chapter tests</h2><ul class="elist">${C.chapters.filter(c=>c.exam).map(c=>ecard(c.exam)).join('')}</ul>`;
+}
+
+function chart(){
+  const a=S.attempts;if(!a.length)return '<p class="sub">Take a test to start your score chart.</p>';
+  const W=340,H=200,L=40,R=10,Tp=14,B=20,n=a.length,xs=k=>L+(n===1?(W-L-R)/2:k*(W-L-R)/(n-1)),ys=p=>Tp+(100-p)*(H-Tp-B)/100;
+  let s='';[0,50,70,100].forEach(p=>{s+=`<line x1="${L}" x2="${W-R}" y1="${ys(p)}" y2="${ys(p)}" stroke="#C9D6E5" ${p===70?'stroke-dasharray="4 4"':''}/>`+TX(L-6,ys(p)+4,p+'%',`text-anchor="end" font-size="11" fill="${PAL.ink2}"`);});
+  s+=TX(W-R,ys(70)-5,'Grade A line',`text-anchor="end" font-size="11" fill="${PAL.ink2}"`);
+  if(n>1)s+=`<polyline fill="none" stroke="${PAL.ink}" stroke-width="2" points="${a.map((x,k)=>xs(k)+','+ys(pct(x))).join(' ')}"/>`;
+  a.forEach((x,k)=>{const p=pct(x);s+=`<circle cx="${xs(k)}" cy="${ys(p)}" r="6" fill="${PAL[band(p)[1]]}" stroke="${PAL.ink}" stroke-width="1.5"><title>${x.name}: ${p}%</title></circle>`;});
+  return SVG(W,H,s,'Test scores over time');
+}
+
+function vProgress(){
+  let h=`<h1>Progress</h1><p class="sub">Read is the share of slides opened. Score is the latest test result for that topic. Feel is your own rating. When they disagree, a note tells you what to do next.</p><h2>Scores over time</h2><div class="card">${chart()}</div><h2>Topic by topic</h2>`;
+  C.chapters.forEach(ch=>{
+    h+=`<h3 class="chh">${ch.num}. ${ch.name}</h3><table class="pt"><thead><tr><th>Topic</th><th>Read</th><th>Score</th><th>Feel</th></tr></thead><tbody>`;
+    ch.topics.forEach(t=>{const k=know(t),u=und(t.id),c=S.conf[t.id];let note='';
+      if(c>=4&&u!==null&&u<60)note='Feels easy, but scores say revisit the slides and retest.';
+      else if(c&&c<=2&&u!==null&&u>=70)note='You know more than you think.';
+      else if(k===100&&u===null)note='All read. Test yourself next.';
+      else if(u!==null&&u<50)note='Worth another look.';
+      h+=`<tr><td>${t.name}${note?`<small>${note}</small>`:''}</td><td>${k}%</td><td>${u===null?'–':`<span class="chip" style="${paint(u)}">${u}%</span>`}</td><td>${c?FACES[c-1]:'–'}</td></tr>`;});
+    h+='</tbody></table>';
+  });
+  h+=`<h2>Test history</h2>${S.attempts.length?`<ul class="hist">${S.attempts.slice().reverse().map(a=>`<li><span>${new Date(a.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</span><span>${a.name}</span><b>${pct(a)}%</b></li>`).join('')}</ul>`:'<p class="sub">No tests yet.</p>'}`;
+  h+=`<h2>Settings</h2><p class="sub">${storageOK?'Progress saves automatically.':'Progress cannot be saved when this file is opened outside Claude. Open it in Claude to keep progress.'}</p><button class="btn danger" data-act="reset">${resetArm?'Tap again to erase all progress':'Reset progress'}</button>`;
+  return h;
+}
+
+function render(){
+  const map={home:vHome,chapter:vChapter,slides:vSlides,exams:vExams,exam:vExam,result:vResult,progress:vProgress};
+  app.innerHTML=(map[V.v]||vHome)();
+  const tab=['home','chapter','slides'].includes(V.v)?'home':['exams','exam','result'].includes(V.v)?'exams':'progress';
+  nav.innerHTML=[['home','Learn'],['exams','Exams'],['progress','Progress']].map(([k,l])=>`<button data-go="${k}" class="${tab===k?'on':''}" ${tab===k?'aria-current="page"':''}>${l}</button>`).join('');
+  nav.style.display=V.v==='exam'?'none':'';
+}
+
+/* ---------- actions ---------- */
+function checkNum(){
+  const e=E(V.id),q=e.questions[V.i],m=q.m||1,raw=(document.getElementById('num').value||'').trim().replace(',','.'),x=parseFloat(raw);
+  if(isNaN(x)){V.err=true;render();document.getElementById('num').focus();return;}
+  const tol=q.tol!==undefined?q.tol:Math.max(0.01,Math.abs(q.n)*0.02);
+  V.err=false;V.st={val:esc(raw),got:Math.abs(x-q.n)<=tol?m:0};V.marks[V.i]=V.st.got;render();
+}
+document.addEventListener('click',ev=>{
+  const el=ev.target.closest('[data-go],[data-act]');if(!el||el.disabled)return;
+  const g=el.dataset.go,a=el.dataset.act;
+  if(g){
+    if(g==='start')return go({v:'exam',id:el.dataset.e,i:0,marks:[],st:null});
+    const v={v:g};if(el.dataset.ch)v.ch=el.dataset.ch;if(el.dataset.t){v.t=el.dataset.t;v.i=+el.dataset.i||0;}return go(v);
+  }
+  const e=V.id&&E(V.id),q=e&&e.questions[V.i];
+  switch(a){
+    case 'prev':V.i=Math.max(0,V.i-1);render();window.scrollTo(0,0);break;
+    case 'next':V.i++;render();window.scrollTo(0,0);break;
+    case 'conf':S.conf[V.t]=+el.dataset.v;save();render();break;
+    case 'pick':if(V.st)return;{const o=+el.dataset.o;V.st={pick:o,got:o===q.a?(q.m||1):0};V.marks[V.i]=V.st.got;render();}break;
+    case 'checknum':checkNum();break;
+    case 'reveal':V.st={revealed:true};render();break;
+    case 'self':V.st.got=+el.dataset.v;V.marks[V.i]=V.st.got;render();break;
+    case 'nextq':if(V.i+1<e.questions.length){V.i++;V.st=null;V.err=false;render();window.scrollTo(0,0);}else finish();break;
+    case 'quit':go({v:'exams'});break;
+    case 'reset':if(!resetArm){resetArm=true;render();}else{S=blank();save();resetArm=false;render();}break;
+  }
+});
+document.addEventListener('keydown',ev=>{
+  if(V.v==='exam'&&ev.key==='Enter'&&ev.target.id==='num'){ev.preventDefault();checkNum();}
+  if(V.v==='slides'&&ev.target===document.body){if(ev.key==='ArrowRight'&&V.i<T(V.t).slides.length){V.i++;render();}if(ev.key==='ArrowLeft'&&V.i>0){V.i--;render();}}
+});
+let tx=null,ty=null;
+app.addEventListener('touchstart',ev=>{tx=ev.touches[0].clientX;ty=ev.touches[0].clientY;},{passive:true});
+app.addEventListener('touchend',ev=>{if(tx===null||V.v!=='slides')return;const dx=ev.changedTouches[0].clientX-tx,dy=ev.changedTouches[0].clientY-ty;tx=null;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){const n=T(V.t).slides.length;if(dx<0&&V.i<n){V.i++;render();window.scrollTo(0,0);}else if(dx>0&&V.i>0){V.i--;render();window.scrollTo(0,0);}}},{passive:true});
+
+load();
+})();
+</script>
+</body>
+</html>
