@@ -868,6 +868,324 @@ const COURSE={id:'n5-economics-kieran',title:"Kieran's Economics",student:'Kiera
   {label:'SCHOLAR',url:'http://scholar.hw.ac.uk/Scotland/',note:'Online course materials: ask school for the login.'},
   {label:'Save My Exams: National 5 Economics past papers',url:'https://savemyexams.com/national-5/economics/sqa/past-papers',note:'Past papers organised by year.'},
   {label:'tutor2u Economics',url:'https://www.tutor2u.net/economics',note:'UK economics explainers and videos (aimed at GCSE/A level, good for the basics).'}]};
+/* ===== Expansion: deeper explanations, more examples, diagrams and questions ===== */
+Object.assign(DIAGRAMS,{
+plot:(pts,kind,yl,xl,maxP,maxQ)=>{const {L,B,R,T}=EC,X=q=>L+q/maxQ*(R-L-10),Y=p=>B-p/maxP*(B-T-10);let s=EC.frame(yl,xl);
+  for(let k=0;k<=4;k++){const p=maxP*k/4,q=maxQ*k/4;s+=TX(L-5,Y(p)+4,+p.toFixed(1),'text-anchor="end" font-size="10"')+TX(X(q),B+13,Math.round(q),'text-anchor="middle" font-size="10"');}
+  const c=kind==='S'?PAL.u1:PAL.u4,d=pts.map(([p,q],i)=>(i?'L':'M')+X(q).toFixed(1)+' '+Y(p).toFixed(1)).join(' ');
+  s+=`<path d="${d}" fill="none" stroke="${c}" stroke-width="3" pathLength="100" stroke-dasharray="100" stroke-dashoffset="${MOTION?100:0}">${AN('<animate attributeName="stroke-dashoffset" from="100" to="0" dur="2s" fill="freeze"/>')}</path>`;
+  pts.forEach(([p,q],i)=>s+=`<circle cx="${X(q)}" cy="${Y(p)}" r="5" fill="${c}" stroke="#fff" stroke-width="1.5">${AN(`<animate attributeName="r" values="0;7;5" dur="0.5s" begin="${(i*0.35).toFixed(2)}s" fill="freeze"/>`)}</circle>`);
+  const lp=pts[pts.length-1];s+=TX(X(lp[1])+8,Y(lp[0])+4,kind,`font-weight="800" fill="${c}"`);return SVG(340,232,s,kind==='S'?'Supply curve from a schedule':'Demand curve from a schedule');},
+moveShift:()=>{const mini=(ox,title,shift)=>{let s=`<path d="M${ox+20} 30 V150 H${ox+150}" fill="none" stroke="${PAL.ink}" stroke-width="2"/>`+TX(ox+85,20,title,'text-anchor="middle" font-weight="800" font-size="12"');
+  s+=`<line x1="${ox+35}" y1="45" x2="${ox+135}" y2="140" stroke="${PAL.u4}" stroke-width="3"/>`;
+  if(shift)s+=`<line x1="${ox+65}" y1="45" x2="${ox+165}" y2="140" stroke="${PAL.u0}" stroke-width="3" stroke-dasharray="5 4"/>`+ARROW(ox+80,95,ox+110,95,PAL.u0);
+  else s+=AN(`<circle r="6" fill="${PAL.u5}"><animateMotion dur="3s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;0.5;1" calcMode="linear" path="M${ox+55} 64 L${ox+110} 116"/></circle>`);
+  s+=TX(ox+85,172,shift?'other factor changes':'own price changes','text-anchor="middle" font-size="11"')+TX(ox+85,188,shift?'→ curve SHIFTS':'→ MOVE along curve','text-anchor="middle" font-size="12" font-weight="800" fill="'+(shift?PAL.u0:PAL.u5)+'"');return s;};
+  return SVG(340,196,mini(0,'Movement',false)+mini(170,'Shift',true),'Movement along vs shift of a curve');},
+cycle:()=>{const L=30,B=170,R=330;let d='';for(let x=0;x<=300;x+=4){const y=110-40*Math.sin(x/300*2*Math.PI*1.5)-x*0.12;d+=(x?'L':'M')+(L+x)+' '+y.toFixed(1)+' ';}
+  let s=`<path d="M${L} 20 V${B} H${R}" fill="none" stroke="${PAL.ink}" stroke-width="2"/><path d="${d}" fill="none" stroke="${PAL.u4}" stroke-width="3"/><line x1="${L}" y1="110" x2="${R}" y2="74" stroke="${PAL.ink2}" stroke-dasharray="5 4"/>`;
+  s+=AN(`<circle r="7" fill="${PAL.u0}" stroke="#fff" stroke-width="2"><animateMotion dur="6s" repeatCount="indefinite" path="${d}"/></circle>`);
+  s+=TX(L+52,48,'boom','font-weight="800" fill="#2F8F3A"')+TX(L+150,148,'recession','text-anchor="middle" font-weight="800" fill="'+PAL.u0+'"')+TX(R-4,66,'long-term growth','text-anchor="end" font-size="11" fill="'+PAL.ink2+'"');
+  s+=`<text transform="translate(16 95) rotate(-90)" text-anchor="middle" font-weight="700" font-size="12">Output (GDP)</text>`+TX(180,188,'Time','text-anchor="middle" font-weight="700"');return SVG(340,196,s,'The economic cycle');},
+cpiChart:()=>{const data=[['2019',1.8],['2020',0.9],['2021',2.6],['2022',9.1],['2023',7.3],['2024',2.5]],L=44,B=170,T=20,R=330,Y=v=>B-v*(B-T)/10;let s=`<path d="M${L} ${T} V${B} H${R}" fill="none" stroke="${PAL.ink}" stroke-width="2"/><line x1="${L}" x2="${R}" y1="${Y(2)}" y2="${Y(2)}" stroke="#2F8F3A" stroke-dasharray="5 4"/>`+TX(L+4,Y(2)-5,'2% target','font-size="11" font-weight="800" fill="#2F8F3A"');
+  [0,5,10].forEach(v=>s+=TX(L-6,Y(v)+4,v+'%','text-anchor="end" font-size="10"'));
+  data.forEach(([y,v],i)=>{const x=L+20+i*46,h=B-Y(v);s+=`<rect x="${x}" y="${Y(v)}" width="30" height="${h}" fill="${v>2?PAL.u0:PAL.u4}">${AN(`<animate attributeName="height" from="0" to="${h}" dur="0.8s" begin="${i*0.2}s" fill="freeze"/><animate attributeName="y" from="${B}" to="${Y(v)}" dur="0.8s" begin="${i*0.2}s" fill="freeze"/>`)}</rect>`+TX(x+15,Y(v)-4,v,'text-anchor="middle" font-size="10" font-weight="800"')+TX(x+15,B+13,y,'text-anchor="middle" font-size="10"');});
+  s+=TX(187,200,'UK CPI inflation, yearly average (approximate)','text-anchor="middle" font-size="11" font-weight="700"');return SVG(340,206,s,'UK inflation 2019 to 2024');},
+convert:()=>{let s=BOX(20,60,110,50,['£ pounds'],'#FFF6D9',15)+BOX(210,60,110,50,['$ dollars'],'#E6F5E2',15);
+  s+=ARROW(130,74,208,74,PAL.u4)+TX(170,64,'× rate','text-anchor="middle" font-weight="800" fill="'+PAL.u4+'"')+ARROW(210,98,132,98,PAL.u0)+TX(170,122,'÷ rate','text-anchor="middle" font-weight="800" fill="'+PAL.u0+'"');
+  s+=EC.coin('M135 74 L205 74',2,2)+TX(170,160,'£1 = $1.25 → £80 × 1.25 = $100','text-anchor="middle" font-size="12" font-weight="700"')+TX(170,178,'$100 ÷ 1.25 = £80','text-anchor="middle" font-size="12" font-weight="700"');
+  return SVG(340,186,s,'Converting currencies');},
+borrowCost:()=>{const d=[['Mortgage',5,PAL.u3],['Personal loan',8,PAL.u4],['Credit card',24,PAL.u1],['Payday loan',60,PAL.u0]],L=110,W=150;let s='';
+  d.forEach(([n,v,c],i)=>{const y=20+i*40,w=Math.min(v,60)/60*W;s+=TX(L-8,y+18,n,'text-anchor="end" font-size="12" font-weight="700"')+`<rect x="${L}" y="${y}" width="${w}" height="26" rx="4" fill="${c}">${AN(`<animate attributeName="width" from="0" to="${w}" dur="1s" begin="${i*0.2}s" fill="freeze"/>`)}</rect>`+TX(L+w+6,y+18,i===3?'hundreds %':'~'+v+'%','font-size="12" font-weight="800"');});
+  s+=TX(170,190,'Typical APR: illustrative, rates change','text-anchor="middle" font-size="11" fill="'+PAL.ink2+'"');return SVG(340,198,s,'Cost of borrowing compared');}
+});
+const AT=()=>COURSE.chapters.flatMap(c=>c.topics);
+const XP=(id,o)=>{const t=AT().find(z=>z.id===id);if(o.slides)t.slides.push(...o.slides);if(o.quiz)t.quiz.push(...o.quiz);};
+const XT=(xid,qs)=>COURSE.chapters.find(c=>c.exam.id===xid).exam.questions.push(...qs);
+
+/* Chapter 1 */
+XP('t1a',{slides:[
+ {t:'Influences on money choices',h:`<p>What makes someone spend, save or borrow?</p>`,w:{type:'cards',items:[['Income','More income = more choice: can spend and save'],['Age/life stage','Students borrow; workers save for a house; retirees spend savings'],['Interest rates','High rates reward saving and make borrowing dearer'],['Confidence','Worried about jobs? People save more and spend less'],['Advertising and peers','Can push spending on wants']]}},
+ {t:'Worked example: a first wage',ex:`Kieran gets a Saturday job paying £60 a week (under the tax threshold, so disposable income is £60).<br>Essentials he pays for: phone £15, bus £10 → discretionary income £35.<br>He saves £20 for a car and spends £15 on going out.<br>Over a year: £20 × 52 = <b>£1040 saved</b>, plus any interest.`,
+  w:{type:'quiz',q:'Interest rates rise sharply. What are households most likely to do?',o:['Borrow more','Save more and borrow less','Spend all savings','Stop working'],a:1,x:'Saving is better rewarded and borrowing costs more.'}}],
+ quiz:[{q:'Which person is most likely to be a net borrower?',o:['A retired person with savings','A university student','A high earner with no debts','A child'],a:1},
+  {m:2,q:'Explain how a rise in interest rates affects spending and saving.',ans:'Saving earns more, so people save more [1]; borrowing costs more, so people borrow and spend less [1].'},
+  {m:2,q:'Weekly pay £60; essentials £25. Saving £20 a week, how much is saved in a year (52 weeks)?',n:1040,u:'£'}]});
+XP('t1b',{slides:[
+ {t:'Calculating interest',w:{type:'steps',title:'£800 in a savings account at 3% for one year',steps:['Interest = £800 × 3 ÷ 100 = <b>£24</b>','Balance after one year = 800 + 24 = <b>£824</b>','Year 2 (compound): 824 × 1.03 = <b>£848.72</b>']},
+  tip:`Show every line of a calculation. If one number is wrong, you can still earn marks for the method.`},
+ {t:'Banks, building societies and risk',h:`<ul><li><b>Banks</b> are companies owned by shareholders. <b>Building societies</b> are owned by their members (the savers and borrowers).</li><li>Savings in UK banks are protected up to a set limit by the Financial Services Compensation Scheme if the bank fails.</li><li>Higher interest often means less flexibility or more risk.</li></ul>`,
+  w:{type:'tf',items:[['A fixed-term bond lets you take money out any time without penalty.',false,'You usually lose interest or can\'t withdraw early.'],['ISA interest is tax-free.',true],['Premium Bonds pay a guaranteed interest rate.',false,'They pay prizes in a draw instead.']]}}],
+ quiz:[{m:2,q:'£1500 saved at 4% for one year. Calculate the interest earned.',n:60,u:'£'},
+  {q:'Building societies are owned by:',o:['shareholders','the government','their members','the Bank of England'],a:2},
+  {m:2,q:'Justify which savings account a 16-year-old saving for a car in three years should choose.',ans:'A fixed-term bond (or a fixed-rate ISA) [1], because they won\'t need the money for three years, so they can get a higher interest rate [1].'}]});
+XP('t1c',{slides:[
+ {t:'Cost of borrowing compared',d:['borrowCost'],h:`<p>Secured loans like mortgages are cheapest because the house is security: the lender can take it if you don't pay. Unsecured, quick borrowing costs most.</p>`},
+ {t:'Worked example: what a loan really costs',w:{type:'steps',title:'£6000 car loan at 8% a year, repaid over 3 years',steps:['Rough interest each year on the full amount: 6000 × 8 ÷ 100 = £480','Repayments reduce the balance, so the real total interest is less than 3 × 480','A typical 3-year repayment plan costs about £770 in interest','Total repaid ≈ <b>£6770</b>, about £188 a month']},
+  fun:`Paying only the minimum on a credit card can mean a £1000 debt takes many years to clear, costing more in interest than the original £1000.`}],
+ quiz:[{q:'Why is a mortgage usually cheaper than a credit card?',o:['It is shorter','It is secured on the house','Banks like houses','There is no interest'],a:1},
+  {m:2,q:'Describe hire purchase.',ans:'Paying for an item in instalments over time [1]; you only own it once the final payment is made [1].'},
+  {m:2,q:'Explain one disadvantage of using a payday loan.',ans:'Very high interest/APR [1], so the amount repaid is much more than borrowed and debt can spiral [1].'}]});
+XP('t1d',{slides:[
+ {t:'Life events change budgets',w:{type:'match',pairs:[['New baby','childcare and nappies raise spending'],['Redundancy','income falls sharply'],['Promotion','income rises'],['Mortgage rate rise','housing costs rise'],['Car breaks down','unexpected one-off cost']]},
+  h:`<p>Exam questions often describe a change in someone's life and ask its effect on their income or spending. Say what changes, then the effect on the budget.</p>`},
+ {t:'Building a budget step by step',w:{type:'order',items:['List all income after tax','List essential spending','List non-essential spending','Subtract total spending from income','Plan what to do with a surplus or how to fix a deficit']},
+  tip:`Use the right word: income left over is a surplus, overspending is a deficit.`}],
+ quiz:[{q:'A family\'s income rises but childcare costs rise more. Their budget:',o:['improves','gets worse','is unchanged','becomes a surplus'],a:1},
+  {m:2,q:'Monthly income £2400, spending £2650. Calculate the deficit.',n:250,u:'£'},
+  {m:2,q:'Explain how a budget helps reduce financial uncertainty.',ans:'Shows where money goes so spending can be controlled [1]; helps plan savings/emergency fund for unexpected events [1].'}]});
+XT('x1',[{t:'t1c',q:'Which form of borrowing is secured on a property?',o:['Credit card','Overdraft','Mortgage','Payday loan'],a:2},
+ {t:'t1b',m:2,q:'£2400 saved at 2.5% for one year. Calculate the balance at the end of the year.',n:2460,u:'£'}]);
+
+/* Chapter 2 */
+XP('t2a',{slides:[
+ {t:'Opportunity cost for everyone',w:{type:'cards',items:[['Individual','Spend Saturday working = give up football with friends'],['Firm','Buy a new machine = give up hiring two staff'],['Government','Build a new prison = give up building a school'],['You right now','Revising economics = giving up gaming time']]}},
+ {t:'Choices on a curve',d:['ppf'],h:`<p>This curve shows all the combinations a government could build with its resources. Moving along it means getting more of one thing by giving up some of the other: that's opportunity cost in a picture.</p>`,
+  w:{type:'gap',text:'Scarcity means resources are [0], so we must make [1], which always has an [2].',g:[[['limited','unlimited'],0],[['choices','profits'],0],[['opportunity cost','interest rate'],0]]}}],
+ quiz:[{m:3,q:'Using an example, describe the opportunity cost of a government choice.',ans:'Reason: limited budget [1]; choice: e.g. spending on a new hospital [1]; opportunity cost: e.g. the new schools that could have been built [1].'},
+  {q:'Which best describes scarcity?',o:['Resources are limited compared with wants','Goods are expensive','Shops run out of stock','Too many people'],a:0},
+  {q:'A firm buys a robot instead of training staff. The training is the:',o:['scarcity','opportunity cost','factor of production','want'],a:1}]});
+XP('t2b',{slides:[
+ {t:'Factors in a real business',h:`<p>Take a Scottish salmon farm:</p><ul><li><b>Land:</b> the sea loch and the fish</li><li><b>Labour:</b> farm workers, vets, drivers</li><li><b>Capital:</b> nets, feeding boats, processing machines</li><li><b>Enterprise:</b> the owner who set it up and takes the risk</li></ul>`,
+  w:{type:'match',pairs:[['A sea loch','land'],['A fish processing machine','capital'],['A boat skipper','labour'],['The person who risks money to start the farm','enterprise']]}},
+ {t:'Improving mobility',h:`<ul><li><b>Occupational mobility</b> improves with training, apprenticeships, college courses.</li><li><b>Geographical mobility</b> improves with relocation grants, affordable housing, better transport.</li></ul>`,
+  ex:`When oil jobs in Aberdeen fall, retraining schemes help workers move into offshore wind: improving occupational mobility.`}],
+ quiz:[{q:'Retraining coal miners as wind-turbine engineers improves:',o:['geographical mobility','occupational mobility','enterprise','land'],a:1},
+  {m:2,q:'Describe enterprise as a factor of production.',ans:'The entrepreneur who brings together/organises the other factors [1] and takes the risk, rewarded by profit [1].'},
+  {m:2,q:'Suggest two ways to improve the geographical mobility of labour.',ans:'Any two [1 each]: relocation grants; cheaper/more housing; better transport links; information about jobs elsewhere.'}]});
+XT('x2',[{t:'t2b',q:'The return to capital is:',o:['rent','wages','interest','profit'],a:2},
+ {t:'t2a',m:2,q:'Give an example of opportunity cost for a firm.',ans:'E.g. a firm spends its budget on advertising [1] so gives up buying new equipment [1].'}]);
+
+/* Chapter 3 */
+XP('t3a',{slides:[
+ {t:'Plotting a demand schedule',d:['plot',[[12,100],[10,150],[8,200],[6,250],[4,300]],'D','Price (£)','Quantity demanded',14,320],
+  h:`<p>Each row of a schedule becomes a point. Join them to make the demand curve. Always label: <b>Price (£)</b> on the vertical axis and <b>Quantity</b> on the horizontal.</p>`,
+  tip:`When a question says "draw a demand curve from this schedule", plot accurately to the scale, label both axes and label the curve D.`},
+ {t:'Utility in numbers',h:`<table class="t"><tr><th>Slices of pizza</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr><tr><td>Total utility</td><td>10</td><td>17</td><td>21</td><td>23</td><td>23</td></tr><tr><td>Marginal utility</td><td>10</td><td>7</td><td>4</td><td>2</td><td>0</td></tr></table>`,
+  w:{type:'quiz',q:'Total utility from 3 slices is 21 and from 4 slices is 23. What is the marginal utility of the 4th slice?',o:['2','23','21','44'],a:0,x:'MU = 23 − 21 = 2.'}}],
+ quiz:[{m:1,q:'Total utility from 2 drinks is 14 and from 3 drinks is 18. Calculate the marginal utility of the 3rd drink.',n:4},
+  {q:'When marginal utility is zero, total utility is:',o:['at its maximum','zero','falling fast','negative'],a:0},
+  {m:2,q:'Explain the income effect.',ans:'When price falls, consumers\' real income rises (their money goes further) [1], so they can afford to buy more of the good [1].'}]});
+XP('t3b',{slides:[
+ {t:'Movement or shift?',d:['moveShift'],h:`<p>The single most-tested idea in demand: the <b>good's own price</b> moves you along the curve; <b>anything else</b> shifts the whole curve.</p>`},
+ {t:'Determinants in action',w:{type:'match',title:'What happens to demand for electric cars?',pairs:[['Government grant cuts their price','extension (movement)'],['Petrol prices soar','demand increases (shift right)'],['Charging costs rise sharply','demand decreases (shift left)'],['Celebrity drivers promote them','demand increases (shift right)']]},
+  ex:`Population: Scotland's ageing population increases demand for care homes and hearing aids, and decreases demand for some things like school uniforms in areas with fewer children.`}],
+ quiz:[{q:'An ageing population would increase demand for:',o:['nappies','care homes','school places','student flats'],a:1},
+  {q:'Which causes a movement along (not a shift of) the demand curve for bus travel?',o:['Petrol price rises','Bus fares fall','More people work from home','Population grows'],a:1},
+  {m:2,q:'Explain why a rise in the price of games consoles reduces demand for video games.',ans:'They are complements, used together [1]; fewer people buy consoles so fewer games are demanded: demand for games shifts left [1].'}]});
+XT('x3',[{t:'t3b',d:['demand','left'],q:'This diagram shows:',o:['an increase in demand','a decrease in demand','an extension of demand','a contraction of demand'],a:1},
+ {t:'t3a',m:1,q:'TU from 4 units is 30 and from 5 units is 33. Calculate the MU of the 5th unit.',n:3}]);
+
+/* Chapter 4 */
+XP('t4a',{slides:[
+ {t:'Cost table',h:`<table class="t"><tr><th>Output</th><th>FC (£)</th><th>VC (£)</th><th>TC (£)</th><th>AC (£)</th></tr><tr><td>0</td><td>500</td><td>0</td><td>500</td><td>–</td></tr><tr><td>100</td><td>500</td><td>300</td><td>800</td><td>8.00</td></tr><tr><td>200</td><td>500</td><td>600</td><td>1100</td><td>5.50</td></tr><tr><td>500</td><td>500</td><td>1500</td><td>2000</td><td>4.00</td></tr></table>`,
+  w:{type:'gap',text:'At zero output, total cost equals [0] cost. As output rises, average cost [1].',g:[[['fixed','variable'],0],[['falls','rises'],0]]},
+  tip:`On a short-run cost diagram label the axes Cost (£) and Output, and the lines FC, VC and TC. FC is horizontal; TC starts where FC does and runs parallel to VC.`},
+ {t:'Average fixed and average variable cost',h:`<ul><li><b>Average fixed cost</b> = FC ÷ output (keeps falling as output rises)</li><li><b>Average variable cost</b> = VC ÷ output</li><li>Average cost = AFC + AVC</li></ul>`,
+  ex:`Output 200: AFC = 500 ÷ 200 = £2.50; AVC = 600 ÷ 200 = £3.00; AC = £5.50.`}],
+ quiz:[{m:2,q:'Fixed costs £900, output 300. Calculate average fixed cost.',n:3,u:'£'},
+  {q:'Average fixed cost as output rises:',o:['rises','falls','stays the same','becomes negative'],a:1},
+  {m:2,q:'Total cost £1100 at output 200 and fixed costs £500. Calculate total variable cost.',n:600,u:'£'}]});
+XP('t4b',{slides:[
+ {t:'Profit and loss table',h:`<table class="t"><tr><th>Sales</th><th>Price (£)</th><th>TR (£)</th><th>TC (£)</th><th>Profit (£)</th></tr><tr><td>50</td><td>10</td><td>500</td><td>700</td><td>−200</td></tr><tr><td>100</td><td>10</td><td>1000</td><td>1000</td><td>0</td></tr><tr><td>150</td><td>10</td><td>1500</td><td>1300</td><td>300</td></tr></table><p>At 100 sales the firm <b>breaks even</b>: revenue exactly covers costs.</p>`},
+ {t:'Ways to raise profit',w:{type:'sort',title:'Does it raise revenue or cut costs?',cats:['Raise revenue','Cut costs'],items:[['Advertising to sell more',0],['Cheaper supplier for ingredients',1],['New product range',0],['Energy-efficient ovens',1],['Selling online as well',0],['Moving to smaller premises',1]]},
+  fun:`Low-cost airlines cut costs by charging for bags and seats, flying older routes at odd hours and turning planes round in about 25 minutes.`}],
+ quiz:[{q:'When total revenue equals total cost, the firm:',o:['makes a loss','breaks even','makes maximum profit','closes'],a:1},
+  {m:2,q:'TR £4500, TC £5100. Calculate the loss (as a positive number).',n:600,u:'£'},
+  {m:2,q:'Describe two ways a firm could increase its total revenue.',ans:'Any two [1 each]: sell more through advertising/promotions; raise price if demand allows; new products; new markets (online, exports).'}]});
+XT('x4',[{t:'t4b',q:'Average sales revenue equals:',o:['total cost ÷ output','total revenue ÷ quantity sold','profit ÷ sales','fixed cost ÷ output'],a:1},
+ {t:'t4a',m:2,q:'Output 400, total cost £2000. Calculate the average cost.',n:5,u:'£'}]);
+
+/* Chapter 5 */
+XP('t5a',{slides:[
+ {t:'Plotting a supply schedule',d:['plot',[[1,100],[2,250],[3,400],[4,550]],'S','Price (£)','Quantity supplied',5,600],
+  h:`<p>Plot each price–quantity pair and join them. Higher price, more supplied: the curve slopes upwards from left to right.</p>`},
+ {t:'Movement along supply',d:['supply','move'],w:{type:'gap',text:'When the price of the good rises, there is an [0] of supply; when it falls there is a [1] of supply.',g:[[['extension','contraction'],0],[['contraction','extension'],0]]},
+  ex:`Ticket resellers flood the market when concert prices are high (extension) and disappear when prices drop (contraction).`}],
+ quiz:[{q:'A fall in the good\'s own price leads to:',o:['an extension of supply','a contraction of supply','a shift right','a shift left'],a:1},
+  {m:2,q:'Explain why new firms enter a market when price rises.',ans:'Higher prices mean higher potential profit [1], attracting new producers, so total supply extends [1].'},
+  {q:'Supply is the quantity producers are:',o:['forced to sell','willing and able to offer for sale','able to make in a day','told to supply by government'],a:1}]});
+XP('t5b',{slides:[
+ {t:'Technology and costs',w:{type:'cards',items:[['Robots in warehouses','faster, cheaper → supply increases'],['Higher energy prices','dearer to run factories → supply decreases'],['Minimum wage rise','higher labour costs → supply may decrease'],['Cheaper fertiliser','lower farming costs → supply increases']]}},
+ {t:'Weather shocks',d:['supply','left'],h:`<p>Farming, fishing and tourism depend on the weather. Floods, drought and storms cut supply; good weather increases it.</p>`,
+  w:{type:'tf',items:[['A drought shifts the supply of wheat to the left.',true],['A heatwave shifts the supply of ice cream to the right.',false,'It shifts demand to the right; supply isn\'t directly affected.'],['Storms can cut the supply of fish.',true,'Boats can\'t go out.']]}}],
+ quiz:[{q:'A heatwave is most likely to affect the:',o:['supply of ice cream','demand for ice cream','price of houses','supply of cars'],a:1},
+  {q:'Higher energy prices will shift supply of bread:',o:['right','left','not at all','up and right'],a:1},
+  {m:2,q:'Explain how new technology affects the supply of smartphones.',ans:'Production becomes cheaper/faster [1], so more is supplied at every price: supply shifts right [1].'}]});
+XT('x5',[{t:'t5b',d:['supply','right'],q:'This diagram shows:',o:['a decrease in supply','an increase in supply','an extension of supply','a fall in demand'],a:1}]);
+
+/* Chapter 6 */
+XP('t6a',{slides:[
+ {t:'Price as a signal',h:`<p>Prices send signals. A high price tells producers "make more" and tells consumers "buy less". A low price does the opposite. This is how markets allocate scarce resources without anyone in charge.</p>`,
+  ex:`When the price of cocoa doubled, chocolate firms used less cocoa, made bars smaller and raised prices, while farmers in Ghana and Côte d'Ivoire planted more cocoa trees.`},
+ {t:'Reading a market table',h:`<table class="t"><tr><th>Price (£)</th><th>Quantity demanded</th><th>Quantity supplied</th></tr><tr><td>5</td><td>100</td><td>500</td></tr><tr><td>4</td><td>200</td><td>400</td></tr><tr><td>3</td><td>300</td><td>300</td></tr><tr><td>2</td><td>400</td><td>200</td></tr></table>`,
+  w:{type:'quiz',q:'What is the equilibrium price?',o:['£5','£4','£3','£2'],a:2,x:'At £3 quantity demanded = quantity supplied = 300.'}}],
+ quiz:[{q:'Using the table on the slide, at £4 there is:',o:['a shortage of 200','a surplus of 200','equilibrium','a shortage of 400'],a:1},
+  {q:'At £2 in the same table there is:',o:['a surplus of 200','a shortage of 200','equilibrium','no demand'],a:1},
+  {m:2,q:'Explain what is meant by "market clearing".',ans:'At the equilibrium price [1], everything supplied is bought, with no surplus or shortage [1].'}]});
+XP('t6b',{slides:[
+ {t:'Double shifts',d:['market',50,-50],h:`<p>If demand rises <b>and</b> supply falls at the same time, price definitely rises. What happens to quantity depends on which shift is bigger.</p>`,
+  ex:`Christmas trees in a bad growing year: more demand in December, less supply. Prices jump.`},
+ {t:'Real markets',w:{type:'match',title:'Predict the price change',pairs:[['Housing: more people, few new homes built','price rises'],['TVs: cheaper screens and new factories','price falls'],['Concert tickets: superstar announces tour','price rises'],['Strawberries: perfect summer harvest','price falls']]},
+  tip:`Always say what happens to <b>both</b> price and quantity traded, and why.`}],
+ quiz:[{q:'A rise in demand and a rise in supply together will definitely:',o:['raise price','increase quantity traded','lower price','lower quantity'],a:1},
+  {m:2,q:'Explain why house prices tend to rise when population grows faster than new homes are built.',ans:'Demand increases (more people) [1] while supply rises only slowly, so there is excess demand and price rises [1].'},
+  {q:'Cheaper production of solar panels will make their price:',o:['rise','fall','unchanged','double'],a:1}]});
+XT('x6',[{t:'t6a',q:'At a price above equilibrium, sellers will:',o:['raise prices','cut prices','stop selling','increase supply'],a:1}]);
+
+/* Chapter 7 */
+XP('t7a',{slides:[
+ {t:'Income Tax made simple',w:{type:'steps',title:'How Income Tax works',steps:['Everyone gets a <b>personal allowance</b>: the first £12 570 a year is tax-free.','Income above that is taxed in <b>bands</b>; higher bands pay a higher rate.','Scotland sets its own rates and bands for Income Tax.','Employers take tax and National Insurance off wages through PAYE (Pay As You Earn).']},
+  tip:`You won't be asked for exact tax rates. Know the difference between direct and indirect taxes and their effects.`},
+ {t:'VAT in your shopping',h:`<ul><li>Standard rate <b>20%</b>: most goods, like clothes for adults, phones, takeaways.</li><li>Reduced rate 5%: e.g. home energy.</li><li>Zero rate: most food, children's clothes, books.</li></ul>`,
+  ex:`A £40 hoodie before VAT: VAT = 40 × 20% = £8, so you pay £48.`,
+  w:{type:'quiz',q:'A £50 item has 20% VAT added. What is the final price?',o:['£52','£60','£70','£55'],a:1}}],
+ quiz:[{m:2,q:'A phone costs £300 before VAT at 20%. Calculate the VAT.',n:60,u:'£'},
+  {q:'PAYE means tax is:',o:['paid once a year','taken from wages by the employer','paid on shopping','only for companies'],a:1},
+  {q:'Which tax is set partly by the Scottish Parliament?',o:['VAT','Income Tax','Corporation Tax','Fuel duty'],a:1}]});
+XP('t7b',{slides:[
+ {t:'Reasons for spending',w:{type:'match',pairs:[['Health','a healthy workforce and care for all'],['Education','skills and productivity'],['Defence','protect the country'],['Welfare','support people on low incomes'],['Transport','help firms and people move goods and get to work']]},
+  h:`<p>Welfare (including pensions) is the single biggest area of UK Government spending, followed by health.</p>`},
+ {t:'Redistribution of income',h:`<p>Taxing higher incomes more and paying benefits to those on low incomes narrows the gap between rich and poor. This is <b>redistribution</b>.</p>`,
+  ex:`Progressive Income Tax + Universal Credit and free school meals = redistribution.`,
+  w:{type:'tf',items:[['Pensions are a transfer payment.',true],['Building a new school is current spending.',false,'It\'s capital spending.'],['Street lighting is a public good.',true]]}}],
+ quiz:[{q:'Which is the largest area of UK Government spending?',o:['Defence','Welfare (including pensions)','Transport','Culture'],a:1},
+  {m:2,q:'Describe what is meant by redistribution of income.',ans:'Moving income from richer to poorer people [1] through progressive taxes and benefits [1].'},
+  {m:2,q:'Explain why government spends on education.',ans:'Creates a skilled, productive workforce [1], boosting growth and incomes; it is a merit good that might be under-consumed [1].'}]});
+XP('t7c',{slides:[
+ {t:'Money flows vs real flows',w:{type:'sort',cats:['Money flow','Real flow'],items:[['Wages',0],['Labour',1],['Consumer spending',0],['Goods and services',1],['Profit',0],['Land and capital',1]]},
+  tip:`The examiners say pupils wrote about real flows when asked for money flows. Money flows always involve £.`},
+ {t:'Why the flow matters',h:`<p>If households cut spending, firms earn less, so they pay less in wages, so households have less to spend… The flow shrinks. If spending rises, the flow grows.</p>`,
+  fun:`This "knock-on" effect means £1 of new spending can create more than £1 of extra income across the economy.`}],
+ quiz:[{q:'If households cut spending, firms\' income:',o:['rises','falls','is unchanged','doubles'],a:1},
+  {q:'Which is a money flow from firms to households?',o:['Goods','Labour','Wages','Consumer spending'],a:2},
+  {m:2,q:'Explain what happens in the circular flow if consumer spending falls.',ans:'Firms receive less revenue [1], so they pay less in factor incomes/cut jobs, reducing households\' income further [1].'}]});
+XT('x7',[{t:'t7a',m:2,q:'A games console costs £350 before VAT at 20%. Calculate the price including VAT.',n:420,u:'£'},
+ {t:'t7c',q:'In a closed economy circular flow, there are:',o:['injections and withdrawals','only households and firms','government and banks','imports and exports'],a:1}]);
+
+/* Chapter 8 */
+XP('t8a',{slides:[
+ {t:'Recent UK inflation',d:['cpiChart'],h:`<p>Inflation stayed near the 2% target for years, then shot up in 2022 as energy and food prices soared. It then fell back.</p>`,
+  w:{type:'quiz',q:'In which year was UK inflation highest on the chart?',o:['2020','2021','2022','2024'],a:2}},
+ {t:'Weights and indices',w:{type:'steps',title:'Why weights matter',steps:['Families spend much more on food than on matches.','If food prices rise 10% it hurts far more than matches rising 10%.','So food gets a bigger weight in the basket.','The index combines each price change × its weight.']},
+  ex:`If the index goes from 100 to 105, prices have risen by 5% on average.`}],
+ quiz:[{m:2,q:'A price index rises from 120 to 126. Calculate the percentage rise.',n:5,u:'%',x:'(126 − 120) ÷ 120 × 100 = 5%.'},
+  {q:'CPIH differs from CPI because it includes:',o:['food','owner-occupiers\' housing costs','petrol','clothing'],a:1},
+  {m:2,q:'Explain why items in the basket are weighted.',ans:'Households spend different amounts on different items [1], so price changes in big items like food affect the cost of living more [1].'}]});
+XP('t8b',{slides:[
+ {t:'Cause and effect chains',w:{type:'order',title:'Put this cost-push chain in order',items:['World oil prices rise','Transport and energy costs rise for firms','Firms raise prices to protect profits','Workers ask for higher wages','Costs rise again: a wage-price spiral']}},
+ {t:'Inflation and you',h:`<ul><li>£100 of savings at 1% interest with 5% inflation buys less each year.</li><li>Pocket money that doesn't rise buys fewer things.</li><li>Firms face uncertainty and may delay investing.</li></ul>`,
+  w:{type:'sort',cats:['Loses','Gains'],items:[['Saver with low interest',0],['Borrower with fixed-rate loan',1],['Pensioner on fixed income',0],['Worker whose pay rises faster than prices',1]]}}],
+ quiz:[{q:'A wage-price spiral is an example of:',o:['demand-pull','cost-push','imported','deflation'],a:1},
+  {m:2,q:'Explain why savers lose from inflation.',ans:'If interest rates are below inflation [1], the real value (purchasing power) of savings falls [1].'},
+  {m:2,q:'Explain one effect of high inflation on UK exports.',ans:'UK goods become dearer compared to foreign goods [1], so demand for UK exports falls [1].'}]});
+XT('x8',[{t:'t8a',m:2,q:'A price index rises from 100 to 107. What is the rate of inflation?',n:7,u:'%'}]);
+
+/* Chapter 9 */
+XP('t9a',{slides:[
+ {t:'Who is in the working population?',w:{type:'sort',cats:['In working population','Not in it'],items:[['Employed nurse',0],['Unemployed person looking for work',0],['Retired grandparent',1],['Full-time school pupil',1],['Self-employed plumber',0],['Stay-at-home parent not seeking work',1]]},
+  h:`<p>The working population (labour force) is everyone employed plus everyone unemployed and looking for work.</p>`},
+ {t:'Seasonal patterns',h:`<p>Unemployment rises every summer as school and university leavers look for jobs, and falls at Christmas as shops hire. <b>Seasonally adjusted</b> figures remove these regular patterns so the underlying trend is clear.</p>`,
+  fun:`Scotland's tourism jobs swell in summer and shrink in winter, so seasonal adjustment matters a lot in places like the Highlands.`}],
+ quiz:[{q:'Which person is NOT part of the working population?',o:['A self-employed builder','An unemployed graduate seeking work','A retired teacher','A part-time worker'],a:2},
+  {m:2,q:'Working population 4 000 000, unemployed 160 000. Calculate the rate.',n:4,u:'%',tol:0.01},
+  {m:2,q:'Explain why the Labour Force Survey figure is usually higher than the claimant count.',ans:'The LFS includes everyone without work who is looking for it [1], including people who are not claiming benefits/not eligible [1].'}]});
+XP('t9b',{slides:[
+ {t:'The economic cycle',d:['cycle'],h:`<p>Economies go through booms and recessions. In a recession demand falls, firms cut output and jobs: <b>cyclical unemployment</b> rises.</p>`},
+ {t:'Costs of unemployment to society',w:{type:'cards',items:[['Lost output','The goods and services unemployed people could have produced'],['Lower tax revenue','Less Income Tax, NI and VAT'],['Higher spending','More on Universal Credit and health'],['Social costs','Higher crime, poorer health and wellbeing in affected areas']]},
+  tip:`Write separate points for individuals, firms and government if the question names them.`}],
+ quiz:[{q:'In a recession, which type of unemployment rises most?',o:['Frictional','Cyclical','Seasonal','Voluntary'],a:1},
+  {m:2,q:'Explain one effect of unemployment on firms.',ans:'Consumers have less income, so demand/sales fall [1], reducing profits and possibly causing more job cuts [1]. (Or: larger pool of labour, easier recruitment.)'},
+  {m:2,q:'Describe structural unemployment, using a Scottish example.',ans:'Long-term decline of an industry so workers\' skills are no longer needed [1], e.g. shipbuilding on the Clyde or coal mining [1].'}]});
+XT('x9',[{t:'t9b',q:'Self-service checkouts replacing cashiers causes:',o:['frictional','technological/structural','seasonal','cyclical'],a:1}]);
+
+/* Chapter 10 */
+XP('t10a',{slides:[
+ {t:'Growth and the cycle',d:['cycle'],h:`<p>Output goes up and down in the short run, but the long-term trend (dashed line) is upward: that's economic growth.</p>`,
+  w:{type:'gap',text:'Economic growth is an increase in [0] over a period of time using the [1] or fewer resources.',g:[[['total output','prices','population'],0],[['same','more'],0]]}},
+ {t:'Measuring living standards',w:{type:'cards',items:[['GDP per person','Total output divided by population'],['Life expectancy','How long people live'],['Education','Literacy and years in school'],['Access to services','Clean water, healthcare, internet'],['Wellbeing','Happiness, leisure time, environment']]},
+  ex:`GDP can rise while living standards fall, e.g. if growth goes to a few people or pollution damages health.`,
+  tip:`When defining growth, include "using the same or fewer resources". It was the most common missing part in 2025.`}],
+ quiz:[{q:'GDP per person is calculated by:',o:['GDP × population','GDP ÷ population','population ÷ GDP','GDP − population'],a:1},
+  {m:2,q:'GDP £2400bn and population 60m. Calculate GDP per person in £.',n:40000,u:'£',tol:1},
+  {m:2,q:'Explain one disadvantage of economic growth.',ans:'E.g. pollution/environmental damage [1] from more production, harming health and quality of life (or inequality) [1].'}]});
+XT('x10',[{t:'t10a',q:'A long-term rise in total output is called:',o:['inflation','economic growth','recession','unemployment'],a:1}]);
+
+/* Chapter 11 */
+XP('t11a',{slides:[
+ {t:'Why industries locate where they do',w:{type:'match',pairs:[['Whisky in Speyside','soft water and tradition'],['Oil services in Aberdeen','close to the North Sea fields'],['Finance in Edinburgh','skilled workforce and history'],['Wind farms in the Highlands and offshore','strong, reliable wind'],['Games in Dundee','university courses and talent']]}},
+ {t:'Scotland and the UK',h:`<ul><li>Scotland contributes jobs, output and exports to the UK economy; whisky is one of the UK's most valuable food and drink exports.</li><li>Changes in one industry (like oil) can hit a whole region's economy.</li></ul>`,
+  w:{type:'tf',items:[['Most Scottish jobs are in the primary sector.',false,'Most are in the tertiary (services) sector.'],['Scotch whisky can only be made in Scotland.',true],['Tourism supports jobs in rural areas.',true]]},
+  fun:`More than 40 bottles of Scotch whisky are exported every second, on average.`}],
+ quiz:[{q:'Which sector does tourism belong to?',o:['Primary','Secondary','Tertiary','None'],a:2},
+  {m:2,q:'Explain why a fall in oil prices could affect the Aberdeen economy.',ans:'Oil firms earn less and cut investment/jobs [1], so local incomes and spending fall, hurting other businesses [1].'},
+  {q:'Specialisation means:',o:['producing a narrow range of goods a region is good at','producing everything','only importing','only exporting'],a:0}]});
+XP('t11b',{slides:[
+ {t:'What makes an entrepreneur?',w:{type:'cards',items:[['Spots an opportunity','A gap in the market'],['Takes risks','Invests their own money'],['Organises','Brings together land, labour and capital'],['Innovates','New products or better ways of doing things']]}},
+ {t:'Impact on the economy',w:{type:'order',title:'How one entrepreneur helps the economy',items:['Starts a new business','Hires local workers','Workers spend their wages locally','Business pays taxes','Business grows and exports']},
+  tip:`For "impact" questions, explain the effect, e.g. "creates jobs, which reduces unemployment and benefit spending".`}],
+ quiz:[{m:2,q:'Explain how entrepreneurs create jobs and reduce government spending.',ans:'New businesses hire workers [1], so fewer people need unemployment benefits and more pay tax [1].'},
+  {q:'Which is a characteristic of an entrepreneur?',o:['Avoids risk','Takes risks to start businesses','Works only for government','Never innovates'],a:1}]});
+XT('x11',[{t:'t11a',q:'Whisky distilling is mainly in which sector?',o:['Primary','Secondary','Tertiary','Public'],a:1}]);
+
+/* Chapter 12 */
+XP('t12a',{slides:[
+ {t:'Why countries trade',h:`<ul><li>No country has every resource: the UK can't grow bananas or coffee.</li><li>Countries <b>specialise</b> in what they're good at and trade the surplus.</li><li>Trade gives economies of scale, competition and more choice.</li></ul>`,
+  ex:`The UK exports financial services and whisky; it imports clothes from Bangladesh and electronics from China.`},
+ {t:'Import or export?',w:{type:'sort',cats:['UK import','UK export'],items:[['A London bank insures a US company',1],['Coffee from Brazil',0],['Scottish salmon sold in France',1],['A Chinese-made laptop sold in Glasgow',0],['A US tourist stays in Edinburgh',1],['German car sold in the UK',0]]},
+  tip:`Foreign tourists spending in the UK count as a UK <b>export</b> (of services).`}],
+ quiz:[{q:'A French tourist spends money in Edinburgh. This is a UK:',o:['import','export','tariff','subsidy'],a:1},
+  {m:2,q:'Explain why the UK imports bananas.',ans:'The UK climate is unsuitable for growing them [1], so it is cheaper/only possible to buy from countries that can grow them [1].'},
+  {q:'Which is a disadvantage of global trade?',o:['More choice','Lower prices','Some UK jobs lost to imports','Bigger markets'],a:2}]});
+XP('t12b',{slides:[
+ {t:'Tariff calculations',w:{type:'steps',title:'A 25% tariff on a £40 import',steps:['Tariff = 40 × 25 ÷ 100 = <b>£10</b>','New price = 40 + 10 = <b>£50</b>','A similar UK product at £45 is now cheaper, so UK producers sell more.']}},
+ {t:'Winners and losers from barriers',w:{type:'match',pairs:[['UK producers','protected from cheaper imports'],['UK consumers','pay higher prices, less choice'],['Government','gains tariff revenue'],['Foreign exporters','sell less to the UK']]},
+  fun:`The UK joined the CPTPP trading bloc of Pacific countries (including Japan, Canada and Australia) in December 2024.`}],
+ quiz:[{m:2,q:'A £60 import faces a 20% tariff. Calculate the new price.',n:72,u:'£'},
+  {q:'Who loses from tariffs?',o:['Home producers','Government','Home consumers','No one'],a:2},
+  {m:2,q:'Explain one disadvantage of barriers to trade for UK firms.',ans:'Imported raw materials/components become dearer [1], raising costs; other countries may retaliate, hurting UK exports [1].'}]});
+XT('x12',[{t:'t12b',m:2,q:'A £80 import has a 15% tariff. Calculate the tariff.',n:12,u:'£'}]);
+
+/* Chapter 13 */
+XP('t13a',{slides:[
+ {t:'Multinationals you know',w:{type:'match',title:'Match the multinational to its home country',pairs:[['Amazon','USA'],['Toyota','Japan'],['Samsung','South Korea'],['Diageo','UK'],['Nestlé','Switzerland']]},
+  h:`<p>Many multinationals' products are in your house right now: phones, cars, food, clothes.</p>`},
+ {t:'Location decisions',w:{type:'order',title:'A multinational choosing a new factory site: order its steps',items:['Research markets and costs in several countries','Compare wages, taxes and grants','Check transport and skilled workers','Choose the site and build','Hire local workers and start production']},
+  tip:`Give the reason and its benefit: "low Corporation Tax, so more profit is kept".`}],
+ quiz:[{q:'Which is a reason multinationals locate in low-wage countries?',o:['Higher costs','Lower labour costs','More tariffs','Less profit'],a:1},
+  {m:2,q:'Explain why a multinational might locate inside the EU.',ans:'To avoid EU tariffs/trade barriers [1] and gain access to a large single market of customers [1].'},
+  {q:'Diageo is a multinational with headquarters in:',o:['USA','UK','France','Japan'],a:1}]});
+XT('x13',[{t:'t13a',m:2,q:'Explain one disadvantage of multinationals to a developing country.',ans:'E.g. profits go back to the home country [1], so little benefit stays locally; or low wages/poor conditions; or environmental damage [1].'}]);
+
+/* Chapter 14 */
+XP('t14a',{slides:[
+ {t:'Converting both ways',d:['convert'],h:`<p>Multiply to go from pounds to the foreign currency; divide to go back.</p>`,
+  w:{type:'quiz',q:'£1 = €1.20. How many euros for £250?',o:['€208','€300','€250','€270'],a:1}},
+ {t:'Why rates change',w:{type:'cards',items:[['Interest rates','Higher UK rates attract savers, demand for £ rises, £ strengthens'],['Trade','More demand for UK exports means more demand for £'],['Confidence','Political or economic uncertainty can weaken the pound'],['Speculation','Traders buy and sell currencies expecting changes']]}},
+ {t:'An exporter\'s problem',w:{type:'steps',title:'A Scottish firm sells £50 of shortbread to the US',steps:['At £1 = $1.20: US price = 50 × 1.20 = <b>$60</b>','The pound strengthens to £1 = $1.50: US price = 50 × 1.50 = <b>$75</b>','American buyers now pay $15 more, so demand falls.','Strong pound: Exports Dearer.']},
+  tip:`State the effect in words after calculating: dearer or cheaper, and what happens to sales.`}],
+ quiz:[{m:2,q:'£1 = $1.25. A UK holidaymaker changes £800. How many dollars?',n:1000,u:'$'},
+  {m:2,q:'£1 = €1.10. A French wine costs €22. What is its price in pounds?',n:20,u:'£'},
+  {q:'Higher UK interest rates tend to make the pound:',o:['weaker','stronger','unchanged','worthless'],a:1}]});
+XT('x14',[{t:'t14a',m:2,q:'£1 = $1.30. A Scottish firm sells a £200 product in the US. Calculate the dollar price.',n:260,u:'$'}]);
+
+/* Chapter 15 */
+XP('t15a',{slides:[
+ {t:'Problems with aid',w:{type:'tf',items:[['Tied aid can force a country to buy from the donor at higher prices.',true],['All aid reaches the people who need it.',false,'Some may be lost to corruption or poor distribution.'],['Food aid can hurt local farmers if prices fall.',true],['Emergency aid helps after disasters.',true]]},
+  h:`<p>Aid can save lives and support growth, but it can also create dependency, debt (if it's loans) or harm local producers.</p>`},
+ {t:'Long-term vs short-term aid',w:{type:'sort',cats:['Short-term','Long-term'],items:[['Emergency food after a flood',0],['Building schools',1],['Training doctors',1],['Tents after an earthquake',0],['Clean water projects',1]]},
+  ex:`"Give a man a fish and you feed him for a day; teach him to fish and you feed him for a lifetime." Technical expertise and capital equipment aim at long-term development.`}],
+ quiz:[{q:'Which aid is most likely to build long-term development?',o:['Emergency food','Technical expertise','Blankets','Bottled water'],a:1},
+  {m:2,q:'Explain one problem with tied aid.',ans:'The country must buy from the donor [1], possibly at higher prices than elsewhere, so the aid is worth less [1].'},
+  {m:2,q:'Describe two characteristics of a developing economy.',ans:'Any two [1 each]: low income per head; reliance on primary sector; poor infrastructure; low life expectancy; high birth rate; low literacy.'}]});
+XP('t15b',{slides:[
+ {t:'Emerging giants',w:{type:'match',title:'Match the emerging economy to a strength',pairs:[['India','IT services and software'],['Brazil','farming exports and mining'],['Indonesia','manufacturing and natural resources'],['Mexico','car manufacturing for North America']]},
+  fun:`India overtook the UK to become the world's fifth-largest economy in 2022.`},
+ {t:'Opportunities and threats for the UK',w:{type:'sort',cats:['Opportunity','Threat'],items:[['New customers for Scotch whisky',0],['Cheaper imports for UK shoppers',0],['UK factories face cheaper competition',1],['UK firms can invest and expand there',0],['Jobs moving from UK to lower-cost countries',1]]}}],
+ quiz:[{q:'Which is a typical emerging economy?',o:['Malawi','Brazil','Norway','UK'],a:1},
+  {m:2,q:'Explain one threat to the UK from emerging economies.',ans:'Lower-cost competition [1] may take sales/jobs from UK firms, e.g. in manufacturing [1].'},
+  {q:'A growing middle class in an emerging economy means:',o:['less demand','more consumers able to buy goods','lower growth','no imports'],a:1}]});
+XT('x15',[{t:'t15b',m:2,q:'Explain one opportunity for UK firms from emerging economies.',ans:'Growing markets/middle class [1] give UK firms more customers for exports such as whisky or financial services [1].'}]);
 
 </script>
 
