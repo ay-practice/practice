@@ -119,6 +119,20 @@ table.pt th:not(:first-child),table.pt td:not(:first-child){width:60px;text-alig
 .nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:6px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:rgba(246,249,252,.95);border-top:2px solid var(--ink)}
 .nav button{flex:1;max-width:200px;border:2px solid transparent;background:none;border-radius:12px;padding:8px;font-weight:800}
 .nav button.on{border-color:var(--ink);background:var(--card)}
+.tip{background:#FFF0E6;border-left:5px solid var(--u1);padding:10px 12px;border-radius:0 10px 10px 0;margin-top:12px}
+.tip b{color:#B5441B}
+.tact{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0 52px}
+.tact a,.res a{color:var(--u4);font-weight:700}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.watch{margin-top:14px;border:2px solid var(--line);border-radius:12px;padding:12px;background:#FBFDFF}
+.watch ul{margin:.3em 0;padding-left:1.1em}.watch li{margin:.35em 0}
+.res{list-style:none;padding:0;display:grid;gap:8px}.res li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.gsel{font:inherit;font-weight:700;border:2px solid var(--ink);border-radius:8px;padding:2px 4px;margin:2px;background:#fff;max-width:100%}
+.gsel.right{border-color:#2F8F3A;background:#E6F5E2}.gsel.wrong{border-color:var(--u0);background:#FCE4E7}
+.ord{display:grid;gap:6px}.ord button{text-align:left}
+.ord button.right{background:#E6F5E2;border-color:#2F8F3A}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}.shake{animation:shake .25s 2}
+.mrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--grid);flex-wrap:wrap}
 .fun{background:#F3EEFF;border-left:5px solid var(--u5);padding:10px 12px;border-radius:0 10px 10px 0;margin-top:12px}
 .fun b{color:var(--u5)}
 .wg{border:2px dashed #AFC3D8;border-radius:12px;padding:12px;margin-top:12px;background:#FBFDFF}
@@ -1534,6 +1548,378 @@ const COURSE={
  diagrams:DIAGRAMS,
  sims:SIMS
 };
+/* ===== Expansion: exam-skills slides, topic quizzes, videos =====
+   Question styles and common mistakes follow SQA's 2025 National 5 Chemistry course report. */
+DIAGRAMS.peNumbers=()=>{const L=50,B=196,Y=v=>B-v*0.85;let s=`<path d="M${L} 14 V${B} H330" fill="none" stroke="${PAL.ink}" stroke-width="2"/>`;
+  [0,50,100,150,200].forEach(v=>s+=`<line x1="${L-4}" x2="${L}" y1="${Y(v)}" y2="${Y(v)}" stroke="${PAL.ink}"/>`+TX(L-7,Y(v)+4,v,'text-anchor="end" font-size="11"'));
+  s+=`<path d="M${L+6} ${Y(100)} H110 C150 ${Y(100)}, 150 ${Y(180)}, 175 ${Y(180)} C200 ${Y(180)}, 200 ${Y(40)}, 240 ${Y(40)} H322" fill="none" stroke="${PAL.u4}" stroke-width="3"/>`;
+  s+=`<path d="M110 ${Y(100)} C150 ${Y(100)}, 150 ${Y(130)}, 175 ${Y(130)} C200 ${Y(130)}, 200 ${Y(40)}, 240 ${Y(40)}" fill="none" stroke="${PAL.u3}" stroke-width="3" stroke-dasharray="6 4"/>`;
+  s+=ARROW(122,Y(100),122,Y(180),PAL.u0)+TX(116,Y(150),'Eₐ','text-anchor="end" font-weight="800" fill="'+PAL.u0+'"')+ARROW(300,Y(100),300,Y(40),PAL.u5)+TX(306,Y(70)+4,'ΔH','font-weight="800" fill="'+PAL.u5+'"');
+  s+=`<line x1="240" x2="306" y1="${Y(100)}" y2="${Y(100)}" stroke="${PAL.ink2}" stroke-dasharray="3 3"/>`+TX(86,Y(100)-7,'reactants','text-anchor="middle" font-size="11" font-weight="700"')+TX(268,Y(40)+16,'products','text-anchor="middle" font-size="11" font-weight="700"')+TX(208,Y(130)-4,'catalyst','font-size="11" font-weight="800" fill="#3E8E31"');
+  s+=AN(`<circle r="6" fill="${PAL.u0}" stroke="#fff" stroke-width="2"><animateMotion dur="4s" repeatCount="indefinite" path="M${L+6} ${Y(100)-7} H110 C150 ${Y(100)-7}, 150 ${Y(180)-7}, 175 ${Y(180)-7} C200 ${Y(180)-7}, 200 ${Y(40)-7}, 240 ${Y(40)-7} H322"/></circle>`);
+  s+=`<text transform="translate(14 110) rotate(-90)" text-anchor="middle" font-size="12" font-weight="700">Potential energy (kJ)</text>`+TX(190,214,'Progress of reaction','text-anchor="middle" font-size="12" font-weight="700"');
+  return SVG(340,220,s,'Potential energy diagram with values');};
+DIAGRAMS.burette=(top,read)=>{let s=`<rect x="120" y="10" width="60" height="200" fill="#EAF4FB" stroke="${PAL.ink}" stroke-width="2.5"/>`;const Y=v=>20+(v-top)*80;
+  for(let k=0;k<=24;k++){const v=top+k*0.1,y=Y(v);if(y>205)break;const major=k%10===0;s+=`<line x1="120" x2="${major?150:k%5===0?142:134}" y1="${y}" y2="${y}" stroke="${PAL.ink}" stroke-width="${major?2:1}"/>`;if(major)s+=TX(156,y+5,v.toFixed(0),'font-size="14" font-weight="800"');}
+  const ym=Y(read);s+=`<rect x="122" y="${ym-6}" width="56" height="${210-ym+6}" fill="#9CC9E3" opacity="0.7"/><path d="M122 ${ym-8} Q150 ${ym+8} 178 ${ym-8}" fill="none" stroke="${PAL.u4}" stroke-width="2.5"/>`;
+  s+=`<line x1="72" x2="118" y1="${ym}" y2="${ym}" stroke="${PAL.u0}" stroke-dasharray="4 3"/>`+TX(68,ym+4,'eye level','text-anchor="end" font-size="11" font-weight="700" fill="'+PAL.u0+'"')+TX(200,ym+30,'read the bottom','font-size="11"')+TX(200,ym+44,'of the meniscus','font-size="11"');
+  return SVG(340,220,s,'Close-up of a burette scale');};
+
+const ALLT=()=>[CH1,CH2,CH3,CH4,CH5,CH6,CH7,CH8,CH9,CH10,CH11,CH12,CH13].flatMap(c=>c.topics);
+const X=(id,o)=>{const t=ALLT().find(z=>z.id===id);if(o.vid)t.vid=o.vid;if(o.slide)t.slides.push(...[].concat(o.slide));if(o.quiz)t.quiz=o.quiz;};
+
+/* ---------- Chapter 1 ---------- */
+X('t1a',{vid:'atomic structure nuclide notation',
+ slide:{t:'Exam skills: protons, neutrons and electrons',h:`<p>Questions often give a nuclide like ${NUC(27,13,'Al')}<sup>3+</sup> and ask you to count particles. Work in this order: protons first (bottom number), then neutrons (top − bottom), then electrons (adjust for the charge).</p>`,
+  w:{type:'gap',text:'Protons and neutrons are found in the [0]. Electrons have a [1] charge. The atomic number is the number of [2].',g:[[['nucleus','shells'],0],[['positive','negative','neutral'],1],[['protons','neutrons','electrons'],0]]},
+  tip:`Symbols need the right capitals: Na, not NA or na. Charges go top right (Mg<sup>2+</sup>), numbers of atoms go bottom right. The examiners say these slips cost lots of marks.`},
+ quiz:[{q:'Which statement about a neutral atom is correct?',o:['Protons = neutrons','Protons = electrons','Neutrons = electrons','Mass number = atomic number'],a:1},
+  {q:'How many neutrons are in a calcium-40 atom (atomic number 20)?',n:20},
+  {m:2,q:'An aluminium ion, mass number 27, has the charge 3+. It has [0] protons and [1] electrons.',g:[[['13','27','10'],0],[['10','13','16'],0]]},
+  {q:'Which particle has almost no mass?',o:['Proton','Neutron','Electron','Nucleus'],a:2},
+  {m:2,q:'Write the nuclide notation for an atom with 9 protons and 10 neutrons.',ans:`Mass number 19, atomic number 9 [1]; the element is fluorine, F [1]: ${NUC(19,9,'F')}`}]});
+X('t1b',{vid:'electron arrangement periodic table groups',
+ slide:{t:'Exam skills: groups from arrangements',h:`<p>Count only the <b>last number</b> in an electron arrangement for the group, and <b>how many numbers</b> there are for the period.</p>`,
+  ex:`2,8,8,1 → 4 numbers = period 4, last number 1 = group 1: potassium.<br>2,8 → full outer shell = group 0 (noble gases): neon.`,
+  w:{type:'order',title:'Tap in order of increasing number of electron shells',items:['Hydrogen','Lithium','Sodium','Potassium']},
+  tip:`Most candidates get "which group?" questions right. The trap is group 0: a full outer shell of 8 (or 2 for helium) means noble gas, not group 8.`},
+ quiz:[{q:'Which element has the electron arrangement 2,8,2?',o:['Beryllium','Magnesium','Calcium','Silicon'],a:1},
+  {q:'Which element is in group 7, period 2?',o:['Chlorine','Fluorine','Oxygen','Bromine'],a:1},
+  {m:2,q:'Elements in the same [0] have the same number of outer electrons. The number of [1] tells you the period.',g:[[['group','period'],0],[['shells','protons','neutrons'],0]]},
+  {q:'Which is a non-metal?',o:['Calcium','Phosphorus','Lithium','Aluminium'],a:1},
+  {q:'Which element has similar chemical properties to oxygen?',o:['Nitrogen','Sulfur','Fluorine','Neon'],a:1,x:'Same group (6), same number of outer electrons.'}]});
+X('t1c',{vid:'isotopes relative atomic mass',
+ slide:{t:'Isotope true or false',w:{type:'tf',items:[['Chlorine-35 and chlorine-37 are isotopes.',true,'Same protons (17), different neutrons.'],['Isotopes have different numbers of protons.',false,'Different protons would make a different element.'],['Isotopes of an element react in the same way.',true,'Same electrons, same chemistry.'],['Chlorine\'s RAM is 35.5 because there are equal amounts of Cl-35 and Cl-37.',false,'Equal amounts would give 36. There is more Cl-35.']]},
+  tip:`Always sense-check an RAM answer: it must lie between the isotope masses and closest to the most common one.`},
+ quiz:[{m:2,q:'Gallium is 60% gallium-69 and 40% gallium-71. Calculate its relative atomic mass.',n:69.8,tol:0.02,x:'(60 × 69 + 40 × 71) ÷ 100 = (4140 + 2840) ÷ 100 = 69.8'},
+  {q:'Which pair are isotopes?',o:['Carbon-12 and carbon-14','Carbon-14 and nitrogen-14','O₂ and O₃','Na and Na⁺'],a:0},
+  {q:'Lithium has isotopes Li-6 and Li-7 and an RAM of 6.9. Which is more common?',o:['Li-6','Li-7','Equal','Can\'t tell'],a:1},
+  {m:2,q:'Explain why isotopes of an element have the same chemical properties.',ans:'They have the same number of electrons (same electron arrangement) [1], and chemical reactions depend on electrons, not neutrons [1].'}]});
+
+/* ---------- Chapter 2 ---------- */
+X('t2a',{vid:'covalent bonding shapes of molecules',
+ slide:{t:'Exam skills: drawing oxygen',d:['dotcross','O','O',4,4,2,'O₂: two shared pairs in the overlap'],
+  h:`<p>Oxygen has 6 outer electrons and needs 2 more, so each oxygen shares 2 electrons: <b>two shared pairs</b>, a double bond.</p>`,
+  w:{type:'match',pairs:[['HCl','linear'],['H₂O','angular'],['NH₃','trigonal pyramidal'],['CH₄','tetrahedral']]},
+  tip:`In 2025 many pupils drew O₂ with only one shared pair. Count: the overlap must hold 4 electrons, and each oxygen must end with 8.`},
+ quiz:[{m:2,q:'In a covalent bond, two [0] charged nuclei are held together by their attraction for a shared pair of [1].',g:[[['positively','negatively'],0],[['electrons','protons','neutrons'],0]]},
+  {q:'What is the shape of an ammonia molecule?',o:['Linear','Angular','Trigonal pyramidal','Tetrahedral'],a:2},
+  {q:'What term describes a molecule containing two atoms?',o:['Diatomic','Diatomic element','Tetrahedral','Ionic'],a:0,x:'Just "diatomic". In 2025, answers like "diatomic element" lost the mark because compounds can be diatomic too (e.g. HCl).'},
+  {q:'After bonding, how many outer electrons does each chlorine atom have in Cl₂?',o:['6','7','8','2'],a:2},
+  {m:2,q:'Describe the electron arrangement in a hydrogen chloride molecule.',ans:'One shared pair between H and Cl, one electron from each [1]. Cl also has three non-bonding pairs, so H has 2 outer electrons and Cl has 8 [1].'}]});
+X('t2b',{vid:'ionic bonding ions',
+ slide:{t:'Ionic or covalent?',h:`<p>Metal + non-metal → ionic. Non-metal + non-metal → covalent. Look up each element on the periodic table before deciding.</p>`,
+  w:{type:'sort',cats:['Ionic','Covalent'],items:[['NaCl',0],['CO₂',1],['MgO',0],['CH₄',1],['KBr',0],['H₂O',1],['CaF₂',0],['NH₃',1]]},
+  tip:`Write charges as superscripts and after the number: Mg<sup>2+</sup>, O<sup>2−</sup>, not Mg+2.`},
+ quiz:[{q:'What is the charge on a sulfide ion?',o:['1−','2−','2+','6−'],a:1},
+  {q:'Which ion has the electron arrangement 2,8?',o:['Na⁺','Cl⁻','K⁺','S²⁻'],a:0},
+  {m:2,q:'Metal atoms [0] electrons to form [1] ions.',g:[[['lose','gain'],0],[['positive','negative'],0]]},
+  {q:'An ionic bond is the electrostatic attraction between:',o:['positive and negative ions','nuclei and shared electrons','metal ions and delocalised electrons','molecules'],a:0},
+  {m:2,q:'Write ion-electron equations for an aluminium atom and an oxygen atom forming ions.',ans:'Al → Al³⁺ + 3e⁻ [1]<br>O + 2e⁻ → O²⁻ [1]'}]});
+X('t2c',{vid:'bonding structure properties',
+ slide:{t:'Exam skills: data tables',h:`<table class="t"><tr><th></th><th>Melting point (°C)</th><th>Solid conducts?</th><th>Liquid conducts?</th></tr><tr><td>A</td><td>1083</td><td>Yes</td><td>Yes</td></tr><tr><td>B</td><td>801</td><td>No</td><td>Yes</td></tr><tr><td>C</td><td>1610</td><td>No</td><td>No</td></tr><tr><td>D</td><td>−7</td><td>No</td><td>No</td></tr></table>`,
+  w:{type:'match',pairs:[['A','metallic'],['B','ionic lattice'],['C','covalent network'],['D','covalent molecular']]},
+  tip:`Ionic bonding is <b>never</b> found in elements: an element has only one kind of atom, so it can't make positive and negative ions. Some pupils missed this in 2025.`},
+ quiz:[{q:'Which type of bonding is never found in elements?',o:['Metallic','Covalent molecular','Ionic','Covalent network'],a:2},
+  {q:'Which type of substance conducts both as a solid and as a liquid?',o:['Ionic','Metallic','Covalent molecular','Covalent network'],a:1},
+  {q:'Substance X melts at 1610 °C, is insoluble and never conducts. X is:',o:['ionic','metallic','covalent molecular','covalent network'],a:3},
+  {q:'Which solvent would dissolve candle wax?',o:['Water','White spirit','Salt water','Vinegar'],a:1},
+  {m:2,q:'Explain why ionic compounds have high melting points.',ans:'There is strong electrostatic attraction between oppositely charged ions in the lattice [1], which needs a lot of energy to overcome [1].'}]});
+
+/* ---------- Chapter 3 ---------- */
+X('t3a',{vid:'chemical formulae valency group ions',
+ slide:{t:'Formula match-up',w:{type:'match',pairs:[['sodium chloride','NaCl'],['calcium oxide','CaO'],['aluminium chloride','AlCl₃'],['carbon disulfide','CS₂'],['potassium sulfate','K₂SO₄']]},
+  h:`<p>Use SVSDF for two elements, prefixes when they're given, and brackets for group ions.</p>`,
+  tip:`Capitals change meaning: Co is cobalt, CO is carbon monoxide. Always check each symbol's capital letter.`},
+ quiz:[{q:'What is the formula for magnesium nitride?',o:['MgN','Mg₃N₂','Mg₂N₃','MgN₂'],a:1},
+  {q:'What is the formula for sodium carbonate?',o:['NaCO₃','Na₂CO₃','Na(CO₃)₂','NaC'],a:1},
+  {q:'What is the charge on the iron ion in Fe₂O₃?',o:['2+','3+','2−','6+'],a:1,x:'Three O²⁻ = 6−, shared between two iron ions: 3+ each.'},
+  {q:'What is the formula for copper(II) nitrate?',o:['CuNO₃','Cu(NO₃)₂','Cu₂NO₃','CuN₂'],a:1},
+  {q:'What is the formula for sulfur trioxide?',o:['SO₂','S₃O','SO₃','S₂O₃'],a:2}]});
+X('t3b',{vid:'balancing chemical equations state symbols',
+ slide:{t:'Balancing practice',w:{type:'gap',title:'Balance the Haber process equation',text:'[0] N₂ + [1] H₂ → [2] NH₃',g:[[['1','2','3'],0],[['1','2','3'],2],[['1','2','3'],1]]},
+  h:`<p>Count each type of atom on both sides. Change only the big numbers.</p>`,
+  tip:`In 2025 many pupils balanced the carbon and hydrogen in an alcohol combustion equation but not the oxygen. Count the oxygen inside the alcohol too.`},
+ quiz:[{q:'Which equation is balanced?',o:['Mg + O₂ → MgO','2Mg + O₂ → 2MgO','Mg + 2O₂ → MgO₂','2Mg + 2O₂ → 2MgO'],a:1},
+  {m:2,q:'Balance: [0] Na + [1] H₂O → 2NaOH + H₂',g:[[['1','2','3'],1],[['1','2','3'],1]]},
+  {q:'What is the state symbol for water at room temperature?',o:['(s)','(ℓ)','(g)','(aq)'],a:1},
+  {q:'In a chemical reaction:',o:['atoms are created','atoms are destroyed','atoms are rearranged','the number of molecules must stay the same'],a:2},
+  {m:2,q:'Balance: C₄H₁₀ + O₂ → CO₂ + H₂O',ans:'2C₄H₁₀ + 13O₂ → 8CO₂ + 10H₂O [2]<br>(or C₄H₁₀ + 6½O₂ → 4CO₂ + 5H₂O)'}]});
+X('t3c',{vid:'mole calculations concentration',
+ slide:{t:'Units match-up',w:{type:'match',pairs:[['mass','g'],['number of moles','mol'],['concentration','mol l⁻¹'],['volume (for c = n/V)','litres'],['GFM','g']]},
+  h:`<p>Page 3 of the data booklet lists the relationships you need: n = m ÷ GFM and c = n ÷ V. Learn a routine and show every line of working: each line can earn a mark.</p>`,
+  tip:`The examiners say pupils lose marks for not converting cm³ to litres, and for using a mole ratio of 1:1 when the equation says otherwise. Expect ratios like 2:7 or 1:3.`},
+ quiz:[{m:2,q:'How many moles are in 4 g of sodium hydroxide (GFM 40 g)?',n:0.1,u:'mol'},
+  {m:2,q:'What is the mass of 0.25 mol of calcium carbonate (GFM 100 g)?',n:25,u:'g'},
+  {m:2,q:'0.05 mol is dissolved in 200 cm³. Calculate the concentration.',n:0.25,u:'mol l⁻¹'},
+  {m:2,q:'What mass of NaCl (GFM 58.5 g) is needed for 100 cm³ of 0.5 mol l⁻¹ solution?',n:2.93,u:'g',tol:0.02,x:'n = 0.5 × 0.1 = 0.05 mol. m = 0.05 × 58.5 = 2.925 ≈ 2.93 g.'},
+  {m:3,q:'2C₂H₆ + 7O₂ → 4CO₂ + 6H₂O<br>What mass of CO₂ forms from 3 g of ethane (GFM 30 g)? (CO₂ = 44 g)',n:8.8,u:'g',x:'n(C₂H₆) = 0.1 mol. Ratio 2:4, so 0.2 mol CO₂. 0.2 × 44 = 8.8 g.'}]});
+X('t3d',{vid:'percentage composition by mass',
+ slide:{t:'Which calculation?',h:`<p>Exam questions often show four calculations and ask which is right. Check the top number counts <b>every</b> atom of the element.</p>`,
+  w:{type:'quiz',q:'Which calculation gives the % nitrogen in NH₄NO₃ (GFM 80)?',o:['(14 ÷ 80) × 100','(28 ÷ 80) × 100','(80 ÷ 28) × 100','(28 ÷ 100) × 80'],a:1,x:'There are 2 N atoms: 2 × 14 = 28.'},
+  tip:`Atoms inside brackets are multiplied: (NH₄)₂SO₄ has 2 N and 8 H.`},
+ quiz:[{m:2,q:'Calculate the % of copper in CuO (Cu = 63.5, O = 16).',n:79.9,u:'%',tol:0.1},
+  {m:2,q:'Calculate the % of carbon in methane, CH₄.',n:75,u:'%',tol:0.1},
+  {m:2,q:'Calculate the % of oxygen in CaCO₃ (GFM 100).',n:48,u:'%',tol:0.1},
+  {q:'Which compound has the highest % nitrogen by mass?',o:['NH₄NO₃','(NH₄)₂SO₄','NH₃','KNO₃'],a:2,x:'NH₃: 14 ÷ 17 = 82%.'}]});
+
+/* ---------- Chapter 4 ---------- */
+X('t4a',{vid:'rates of reaction collision theory',
+ slide:{t:'Predict the change',w:{type:'tf',items:[['Raising the temperature increases the number of collisions per second.',true],['A catalyst is used up during the reaction.',false,'It is recovered unchanged.'],['Using lumps instead of powder increases the rate.',false,'Lumps have less surface area.'],['Diluting the acid decreases the rate.',true,'Fewer acid particles in the same volume.']]},
+  tip:`"Explain" questions need collision theory words: "more collisions per second" or "more successful collisions". Just saying "it goes faster" won't get the mark.`},
+ quiz:[{q:'Which change would increase the rate of zinc reacting with acid?',o:['Lowering the temperature','More dilute acid','Zinc powder instead of lumps','Bigger lumps of zinc'],a:2},
+  {q:'Increasing concentration increases the rate because:',o:['particles move faster','there are more particles in the same volume, so more collisions','the activation energy falls','the particles get bigger'],a:1},
+  {m:2,q:'Raising the temperature makes particles move [0], so there are [1] successful collisions.',g:[[['faster','slower'],0],[['more','fewer'],0]]},
+  {m:2,q:'Explain why food lasts longer in a fridge.',ans:'At lower temperature particles move more slowly, so there are fewer (successful) collisions per second [1], so the reactions that spoil food are slower [1].'}]});
+X('t4b',{vid:'average rate of reaction graphs',
+ slide:{t:'Exam skills: changing an experiment',d:['rateGraph',[{v:60,k:0.08,c:PAL.u4,l:'original',lx:40},{v:60,k:0.03,c:PAL.u5,dash:true,l:'cooler',lx:58}]],
+  h:`<p>You may be asked to add a curve to a graph. Ask two questions: <b>is it faster or slower?</b> (slope) and <b>is there more or less reactant?</b> (final height).</p>`,
+  ex:`Same reactants, lower temperature: a less steep curve that levels off at the <b>same</b> volume.<br>Half the limiting reactant: levels off at <b>half</b> the volume.`,
+  tip:`Harder: switching from sulfuric acid to hydrochloric acid of the same concentration and volume. Each H₂SO₄ gives two H⁺ but each HCl gives one, so if the acid runs out first, HCl makes half as much hydrogen.`},
+ quiz:[{m:2,q:'A flask loses 0.48 g in 2 minutes. Calculate the average rate in g s⁻¹.',n:0.004,u:'g s⁻¹',tol:0.0002,x:'0.48 ÷ 120 s = 0.004 g s⁻¹. Convert minutes to seconds!'},
+  {q:'A gas volume graph is flat after 50 s. This means:',o:['the reaction has finished','the reaction is at its fastest','the gas has escaped','a catalyst was added'],a:0},
+  {d:['rateGraph',[{v:80,k:0.0347,c:PAL.u4}]],q:'Use the graph. Roughly what volume of gas had been collected at 40 s?',o:['40 cm³','60 cm³','70 cm³','80 cm³'],a:1},
+  {q:'Which change gives a steeper curve that levels off at the same volume?',o:['Higher temperature','Less acid (acid limiting)','Less metal (metal limiting)','Lower temperature'],a:0},
+  {m:2,q:'Magnesium reacts with excess acid. Explain why using powder instead of ribbon (same mass) doesn\'t change the final volume of hydrogen.',ans:'The same amount of magnesium (the limiting reactant) means the same amount of hydrogen [1]. Powder only changes the rate (more surface area), not the amount [1].'}]});
+X('t4c',{vid:'catalysts activation energy exothermic endothermic',
+ slide:{t:'Reading a potential energy diagram',d:['peNumbers'],
+  h:`<ul><li><b>Activation energy (E<sub>a</sub>)</b> = top of the hump − reactants = 180 − 100 = <b>80 kJ</b></li><li><b>Enthalpy change (ΔH)</b> = products − reactants = 40 − 100 = <b>−60 kJ</b> (negative means exothermic)</li></ul>`,
+  w:{type:'gap',text:'Adding a catalyst [0] the activation energy and [1] the enthalpy change.',g:[[['lowers','raises','does not change'],0],[['lowers','raises','does not change'],2]]},
+  tip:`Questions like this often give a fully worked example first. Copy its method exactly with the new numbers.`},
+ quiz:[{m:2,q:'A catalyst [0] the activation energy and [1] the enthalpy change.',g:[[['lowers','raises','does not change'],0],[['lowers','raises','does not change'],2]]},
+  {m:2,d:['peNumbers'],q:'Using the diagram, calculate the enthalpy change in kJ (include the sign).',n:-60,u:'kJ',tol:0.5},
+  {q:'On an energy diagram, the products are higher than the reactants. The reaction is:',o:['exothermic','endothermic','neutralisation','combustion'],a:1},
+  {q:'In the Ostwald process the platinum is recovered at the end:',o:['unchanged','used up','as platinum oxide','dissolved in the acid'],a:0,x:'It is a catalyst.'}]});
+
+/* ---------- Chapter 5 ---------- */
+X('t5a',{vid:'pH scale acids alkalis',
+ slide:{t:'Everyday pH',w:{type:'sort',cats:['Acidic','Neutral','Alkaline'],items:[['Lemon juice',0],['Oven cleaner',2],['Pure water',1],['Vinegar',0],['Salt solution',1],['Bleach',2],['Cola',0],['Sodium hydroxide',2]]},
+  tip:`Dilution questions are popular. Adding water to an acid lowers the concentration of H⁺ ions, so the pH goes up towards 7.`},
+ quiz:[{q:'Which oxide forms an alkaline solution in water?',o:['SO₂','CO₂','Na₂O','NO₂'],a:2},
+  {q:'An alkali is diluted. Its pH:',o:['rises above 14','falls towards 7','stays the same','becomes acidic'],a:1},
+  {q:'In an acidic solution:',o:['H⁺ ions are fewer than OH⁻','H⁺ ions outnumber OH⁻','there are equal numbers','there are no H⁺ ions'],a:1},
+  {m:3,q:'An alkali has a pH [0] 7 and contains more [1] ions than [2] ions.',g:[[['above','below','equal to'],0],[['OH⁻','H⁺'],0],[['H⁺','OH⁻'],0]]},
+  {q:'What does the symbol ⇌ show?',o:['A fast reaction','A reversible reaction','A catalyst','Neutralisation'],a:1}]});
+X('t5b',{vid:'neutralisation salts spectator ions',
+ slide:{t:'Complete the equation',w:{type:'gap',text:'hydrochloric acid + calcium carbonate → calcium chloride + [0] + [1]',g:[[['water','hydrogen','oxygen'],0],[['carbon dioxide','hydrogen','sodium chloride'],0]]},
+  h:`<p>Learn the three patterns and you can complete any neutralisation equation: hydroxides and oxides give salt + water; carbonates give salt + water + carbon dioxide.</p>`,
+  tip:`Acids <b>react</b> with metals and carbonates. Don't say the metal "dissolves" in the acid: the examiners say this loses marks.`},
+ quiz:[{q:'Name the salt formed from sulfuric acid and potassium hydroxide.',o:['Potassium sulfide','Potassium sulfate','Potassium sulfite','Potassium hydrogen'],a:1},
+  {q:'Complete: H₂SO₄ + 2NaOH → Na₂SO₄ + 2___',o:['H₂','H₂O','O₂','NaH'],a:1},
+  {q:'A base that dissolves in water is called:',o:['an acid','a salt','an alkali','an indicator'],a:2},
+  {q:'Nitric acid reacts with sodium hydroxide. The spectator ions are:',o:['H⁺ and OH⁻','Na⁺ and NO₃⁻','Na⁺ and OH⁻','H⁺ and NO₃⁻'],a:1},
+  {m:2,q:'Write the ionic equation for hydrochloric acid reacting with solid calcium carbonate, leaving out spectator ions.',ans:'2H⁺(aq) + CO₃²⁻(s) → H₂O(ℓ) + CO₂(g) [2]. (Ca²⁺ and Cl⁻ are spectators; 1 mark if the ions are right but it isn\'t balanced.)'}]});
+X('t5c',{vid:'titration calculations',
+ slide:{t:'Reading a burette',d:['burette',23,24.3],
+  h:`<p>Burette scales read <b>downwards</b>. Get your eye level with the liquid and read the bottom of the meniscus to 0.1 cm<sup>3</sup>.</p>`,
+  w:{type:'quiz',q:'What is the reading on this burette?',o:['24.3 cm³','24.7 cm³','23.3 cm³','25.3 cm³'],a:0},
+  tip:`Use a routine every time: n = c × V, then the mole ratio, then c = n ÷ V. In 2025 some pupils used formula masses in a titration calculation, which is the wrong method.`},
+ quiz:[{d:['burette',15,15.6],q:'What is the burette reading?',o:['15.4 cm³','15.6 cm³','16.4 cm³','14.6 cm³'],a:1},
+  {m:3,q:'20.0 cm³ of 0.25 mol l⁻¹ NaOH neutralises 25.0 cm³ of HCl. Calculate the HCl concentration.',n:0.2,u:'mol l⁻¹',x:'n(NaOH) = 0.25 × 0.020 = 0.005. 1:1. c = 0.005 ÷ 0.025 = 0.2.'},
+  {m:3,q:'15.0 cm³ of 0.10 mol l⁻¹ H₂SO₄ neutralises 20.0 cm³ of KOH. H₂SO₄ + 2KOH → K₂SO₄ + 2H₂O. Calculate the KOH concentration.',n:0.15,u:'mol l⁻¹',tol:0.002,x:'n(H₂SO₄) = 0.0015. Ratio 1:2 → n(KOH) = 0.003. c = 0.003 ÷ 0.020 = 0.15.'},
+  {q:'Why is an indicator used in a titration?',o:['To speed up the reaction','To show the end-point','To make the salt','To measure volume'],a:1},
+  {q:'Titres: 12.6 (rough), 12.2, 12.3, 12.7 cm³. What is the average of the concordant results?',o:['12.45','12.25','12.30','12.60'],a:1}]});
+X('t5d',{vid:'making salts',
+ slide:{t:'Put the method in order',w:{type:'order',items:['Add excess insoluble base to the acid','Stir until no more reacts','Filter off the excess solid','Evaporate the filtrate','Leave to crystallise and dry']},
+  tip:`To get a dry sample of a soluble salt, the technique is <b>evaporation</b>. Some pupils wrote "filtration" in 2025: filtering only removes the leftover solid.`},
+ quiz:[{q:'What technique turns a salt solution into a dry sample of the salt?',o:['Filtration','Evaporation','Titration','Distillation'],a:1},
+  {q:'Why is the titration repeated without indicator when making a salt?',o:['To make it faster','So the salt isn\'t contaminated by indicator','To get more salt','To change the pH'],a:1},
+  {q:'Which salt could be made by precipitation?',o:['Barium sulfate','Sodium chloride','Potassium nitrate','Copper(II) sulfate'],a:0,x:'Barium sulfate is insoluble (data booklet).'},
+  {m:2,q:'Explain why an excess of insoluble base is used, and why the mixture is filtered.',ans:'Excess makes sure all the acid is neutralised [1]. Filtering removes the unreacted base, leaving a pure salt solution [1].'}]});
+
+/* ---------- Chapter 6 ---------- */
+X('t6a',{vid:'alkanes homologous series',
+ slide:{t:'Spot the odd one out',w:{type:'quiz',q:'Which formula is NOT an alkane?',o:['C₅H₁₂','C₃H₈','C₄H₈','C₇H₁₆'],a:2,x:'C₄H₈ fits CₙH₂ₙ: an alkene or cycloalkane.'},
+  h:`<p>Test any formula against C<sub>n</sub>H<sub>2n+2</sub>: double the carbons and add two.</p>`,
+  ex:`Trend questions often give a table, such as flashpoints of alkanes. Describe the pattern with a full sentence: "As the number of carbon atoms increases, the boiling point increases."`,
+  tip:`If asked to predict a value from a table, look at the gap between neighbours and continue the pattern.`},
+ quiz:[{q:'What is the general formula of the series containing CH₄, C₂H₆ and C₃H₈?',o:['CₙH₂ₙ','CₙH₂ₙ₊₂','CₙH₂ₙ₋₂','CₙH₂ₙ₊₁OH'],a:1},
+  {q:'Which formula belongs to a different homologous series from the others?',o:['CH₄','C₂H₆','C₃H₆','C₄H₁₀'],a:2},
+  {q:'CH₃CH₂CH₃ is the shortened structural formula for:',o:['ethane','propane','butane','propene'],a:1},
+  {q:'An alkane has 9 carbon atoms. How many hydrogen atoms does it have?',n:20},
+  {m:2,q:'Explain why pentane has a higher boiling point than propane.',ans:'Pentane molecules are bigger [1], so the forces of attraction between molecules are stronger and need more energy to overcome [1].'}]});
+X('t6b',{vid:'naming branched alkanes cycloalkanes',
+ slide:{t:'Exam skills: draw from the name',d:['struct','ane',5,{2:{d:'C₂H₅'}},'3-ethylpentane'],
+  w:{type:'quiz',q:'Name this compound: a 6-carbon chain with CH₃ groups on carbons 2 and 4.',o:['2,4-dimethylhexane','3,5-dimethylhexane','2,4-methylhexane','dimethylhexane'],a:0},
+  tip:`After drawing, count bonds: every carbon must have exactly 4, and every bond must connect to the right atom. Wrong bond connections cost marks.`},
+ quiz:[{d:['struct','ane',5,{2:{d:'C₂H₅'}}],q:'Name this compound.',o:['3-ethylpentane','3-methylpentane','2-ethylpentane','heptane'],a:0},
+  {q:'What is the molecular formula of 2-methylbutane?',o:['C₄H₁₀','C₅H₁₂','C₅H₁₀','C₆H₁₄'],a:1},
+  {q:'What is the general formula of the cycloalkanes?',o:['CₙH₂ₙ₊₂','CₙH₂ₙ','CₙH₂ₙ₋₂','CₙHₙ'],a:1},
+  {q:'A hydrocarbon is saturated, has its carbons in a ring and formula C₆H₁₂. It is:',o:['hexane','hex-1-ene','cyclohexane','benzene'],a:2}]});
+X('t6c',{vid:'alkenes addition reactions bromine test',
+ slide:{t:'Exam skills: describing the bromine test',w:{type:'gap',text:'Add [0] solution to each. The [1] decolourises it quickly; with the [2] it stays orange.',g:[[['bromine','limewater','indicator'],0],[['alkene','alkane'],0],[['alkane','alkene'],0]]},
+  h:`<p>Say which substance decolourises the bromine. It's the <b>bromine</b> that loses its colour, not the hydrocarbon.</p>`,
+  ex:`Adding water to propene gives two products, propan-1-ol and propan-2-ol, because the –OH can go on either carbon of the double bond. A symmetrical alkene like but-2-ene gives only one product.`,
+  tip:`In 2025 many pupils described the test but didn't make clear which chemical decolourised the bromine. Name both.`},
+ quiz:[{q:'Which alkene gives only ONE product when it reacts with water?',o:['Propene','But-1-ene','But-2-ene','Pent-1-ene'],a:2},
+  {q:'Propene + hydrogen gives:',o:['propane','propanol','propyne','1,2-dibromopropane'],a:0},
+  {q:'A 5-carbon chain with the double bond starting at carbon 1 is called:',o:['pent-1-ene','pentane','pent-2-ene','cyclopentene'],a:0},
+  {q:'What is formed when ethene reacts with bromine?',o:['Bromoethane','1,2-dibromoethane','Ethanol','Ethane'],a:1},
+  {m:2,q:'Describe a chemical test to show hexene is unsaturated, with the result.',ans:'Add bromine solution [1]. Hexene decolourises the bromine quickly [1].'}]});
+X('t6d',{vid:'isomers',
+ slide:{t:'Is it C₅H₁₂?',w:{type:'sort',title:'Isomer of pentane or not?',cats:['Isomer of C₅H₁₂','Not'],items:[['2-methylbutane',0],['Cyclopentane',1],['2,2-dimethylpropane',0],['Pent-1-ene',1],['2-methylpentane',1]]},
+  tip:`If asked to "draw and name" an isomer, you need both: the structure and its name each earn a mark.`},
+ quiz:[{q:'Which is an isomer of cyclohexane?',o:['Hexane','Hex-1-ene','Cyclopentane','Benzene'],a:1},
+  {q:'How many isomers does C₄H₁₀ have?',o:['1','2','3','4'],a:1,x:'Butane and 2-methylpropane.'},
+  {q:'Isomers usually have different:',o:['physical properties','molecular formulae','numbers of atoms','masses'],a:0},
+  {q:'Which is an isomer of butan-1-ol?',o:['Butan-2-ol','Butanoic acid','Propan-1-ol','Butane'],a:0}]});
+
+/* ---------- Chapter 7 ---------- */
+X('t7a',{vid:'alcohols',
+ slide:{t:'Exam skills: two-mark explanations',w:{type:'steps',title:'Why does ethanol have a higher boiling point than methanol?',steps:['Point 1, the fact: ethanol molecules are <b>bigger</b> than methanol molecules.','Point 2, the link: bigger molecules have <b>stronger forces of attraction between molecules</b>.','Point 3, the result: more energy is needed to separate them, so the boiling point is higher.']},
+  tip:`A 2-mark "explain" needs the reason <b>and</b> the link to the property. Stopping at "it's bigger" gets 1 mark at most.`},
+ quiz:[{q:'What is the formula of propan-1-ol?',o:['C₃H₈','C₃H₇OH','C₂H₅COOH','C₃H₆'],a:1},
+  {d:['struct','ane',4,{1:{d:'OH'}}],q:'Name this compound.',o:['butan-1-ol','butan-2-ol','butanol-2','propan-2-ol'],a:1},
+  {q:'Which is a use of alcohols?',o:['Fertiliser','Fuel','Indicator','Catalyst'],a:1},
+  {q:'What is meant by a fuel?',o:['Any chemical containing carbon','A chemical that burns, releasing energy','A liquid that is flammable','A gas used for heating'],a:1,x:'The 2025 report says answers must mention burning or combustion.'},
+  {m:2,q:'Explain why ethanol has a higher boiling point than methanol.',ans:'Ethanol molecules are bigger [1], so the forces of attraction between molecules are stronger and need more energy to overcome [1].'}]});
+X('t7b',{vid:'carboxylic acids',
+ slide:{t:'Name that acid',w:{type:'match',pairs:[['HCOOH','methanoic acid'],['CH₃COOH','ethanoic acid'],['C₂H₅COOH','propanoic acid'],['C₃H₇COOH','butanoic acid']]},
+  tip:`When naming from a structure, count every carbon, including the one in COOH.`},
+ quiz:[{q:'What is the name of the –COOH functional group?',o:['Hydroxyl','Carboxyl','Carbonyl','Carbonate'],a:1},
+  {q:'Ethanoic acid reacts with magnesium. The products are:',o:['magnesium ethanoate + hydrogen','magnesium ethanoate + water','magnesium oxide + hydrogen','ethanol + magnesium'],a:0},
+  {q:'A solution of ethanoic acid has a pH:',o:['below 7','of 7','above 7','of 14'],a:0},
+  {d:['struct','oic',3],q:'Name this compound.',o:['Propanoic acid','Ethanoic acid','Propan-1-ol','Butanoic acid'],a:0}]});
+
+/* ---------- Chapter 8 ---------- */
+X('t8a',{vid:'combustion exothermic',
+ slide:{t:'Exam skills: alcohol combustion',w:{type:'steps',title:'Balance: C₃H₇OH + O₂ → CO₂ + H₂O',steps:['Carbon: 3 → 3CO<sub>2</sub>','Hydrogen: 8 (7 + 1 in OH) → 4H<sub>2</sub>O','Oxygen on the right: 6 + 4 = 10. The alcohol already has 1, so O<sub>2</sub> must give 9: 4½O<sub>2</sub>','Double it: <b>2C<sub>3</sub>H<sub>7</sub>OH + 9O<sub>2</sub> → 6CO<sub>2</sub> + 8H<sub>2</sub>O</b>']},
+  tip:`Don't forget the oxygen atom already in the alcohol. That's the mistake most pupils made in 2025.`},
+ quiz:[{q:'How many O₂ molecules burn one molecule of propan-1-ol, C₃H₇OH?',o:['3','4','4.5','5'],a:2},
+  {q:'Which test shows carbon dioxide is produced?',o:['Glowing splint relights','Limewater turns cloudy','Burns with a pop','Bromine decolourises'],a:1},
+  {m:2,q:'5 g of a fuel releases 150 kJ. How much energy would 60 g release?',n:1800,u:'kJ',x:'150 ÷ 5 = 30 kJ per gram. 30 × 60 = 1800 kJ.'},
+  {q:'Complete combustion of a hydrocarbon produces:',o:['carbon and water','carbon dioxide and water','carbon monoxide and hydrogen','water only'],a:1}]});
+X('t8b',{vid:'Eh cm delta T specific heat capacity',
+ slide:{t:'Exam skills: average first, then calculate',h:`<table class="t"><tr><th>Attempt</th><th>1</th><th>2</th><th>3</th></tr><tr><td>Temperature rise (°C)</td><td>15.1</td><td>14.8</td><td>15.3</td></tr></table>`,
+  w:{type:'steps',title:'100 g of water was heated each time',steps:['Mean ΔT = (15.1 + 14.8 + 15.3) ÷ 3 = 15.07 °C','m = 100 g = <b>0.1 kg</b>','E<sub>h</sub> = 4.18 × 0.1 × 15.07','= <b>6.30 kJ</b> (to 3 significant figures)']},
+  tip:`The biggest mark-loser in Eh questions: forgetting to change grams of water into kilograms. A draught shield improves accuracy because less heat is lost to the surroundings.`},
+ quiz:[{m:2,q:'Temperature rises: 12.4, 12.8 and 12.6 °C. Calculate the mean.',n:12.6,u:'°C',tol:0.01},
+  {m:3,q:'150 g of water rises by 12.6 °C. Calculate Eh. (c = 4.18 kJ kg⁻¹ °C⁻¹)',n:7.9,u:'kJ',tol:0.02,x:'4.18 × 0.150 × 12.6 = 7.90 kJ.'},
+  {q:'Why does a draught shield improve the accuracy of the results?',o:['It makes the fuel burn faster','Less heat is lost to the surroundings','It stops evaporation of water','It adds oxygen'],a:1},
+  {m:2,q:'0.5 g of fuel releases 13.4 kJ. How much energy is released per gram?',n:26.8,u:'kJ',tol:0.05}]});
+
+/* ---------- Chapter 9 ---------- */
+X('t9a',{vid:'reactions of metals reactivity series',
+ slide:{t:'Open-ended: placing metals in order',h:`<p>Open-ended questions ("Using your knowledge of chemistry, …") are worth 3 marks. There's no single right answer: show what you understand.</p>`,
+  w:{type:'cards',title:'Good points for "How could you put zinc, magnesium and copper in a reactivity series?"',items:[['Fair test','Same acid, same concentration and volume, same temperature, same size of metal'],['Observe','Compare how fast bubbles of hydrogen form; copper won\'t react'],['Displacement','A more reactive metal displaces a less reactive one from its salt solution'],['Cells','Bigger voltage with copper = further apart in the electrochemical series']]},
+  tip:`For 3 marks, give several relevant points with chemistry behind them. Mentioning how you'd plan or design the experiment helps.`},
+ quiz:[{q:'Potassium reacts with water to form:',o:['potassium oxide + hydrogen','potassium hydroxide + hydrogen','potassium hydroxide + oxygen','potassium + water'],a:1},
+  {q:'Which metal reacts only slowly with water but quickly with dilute acid?',o:['Sodium','Magnesium','Copper','Gold'],a:1},
+  {q:'What is the test for hydrogen?',o:['Relights a glowing splint','Burns with a pop','Turns limewater cloudy','Decolourises bromine'],a:1},
+  {m:3,q:'Using your knowledge of chemistry, describe how you could put zinc, magnesium and copper into a reactivity series.',ans:'Open-ended: award 3 for a good understanding, 2 for reasonable, 1 for limited. Points: fair test with the same acid concentration, volume and temperature, and the same mass/size of each metal; compare the rate of bubbling (magnesium fastest, copper none); or use displacement reactions; or compare voltages in cells with the same second metal.'}]});
+X('t9b',{vid:'redox oxidation reduction',
+ slide:{t:'Redox or not?',w:{type:'sort',cats:['Redox','Not redox'],items:[['Magnesium + copper(II) sulfate',0],['Sodium hydroxide + hydrochloric acid',1],['Burning magnesium',0],['Silver nitrate + sodium chloride (precipitate)',1],['Zinc + hydrochloric acid',0],['Calcium carbonate + hydrochloric acid',1]]},
+  h:`<p>If no element changes its charge, nothing has lost or gained electrons, so it isn't redox. Neutralisation and precipitation are not redox.</p>`,
+  tip:`"Which reaction is not redox?" was one of the hardest multiple-choice questions in 2025. Look for elements changing from atoms to ions or back.`},
+ quiz:[{q:'Which reaction is NOT redox?',o:['Zn + CuSO₄','Mg + O₂','NaOH + HCl','Fe + HCl'],a:2},
+  {q:'Fe³⁺ + e⁻ → Fe²⁺ is an example of:',o:['oxidation','reduction','neutralisation','precipitation'],a:1},
+  {m:2,q:'Oxidation is [0] of electrons; reduction is [1] of electrons.',g:[[['loss','gain'],0],[['gain','loss'],0]]},
+  {m:2,q:'Write the redox equation for iron reacting with copper(II) ions (iron forms Fe²⁺).',ans:'Fe → Fe²⁺ + 2e⁻ and Cu²⁺ + 2e⁻ → Cu [1]<br>Fe + Cu²⁺ → Fe²⁺ + Cu [1]'}]});
+X('t9c',{vid:'electrolysis extraction of metals',
+ slide:{t:'Electrolysis true or false',w:{type:'tf',items:[['Ionic compounds must be molten or dissolved to be electrolysed.',true,'The ions must be free to move.'],['Metals form at the positive electrode.',false,'Positive metal ions go to the negative electrode.'],['A d.c. supply is needed to identify the products.',true],['Gold has to be extracted by electrolysis.',false,'Gold is so unreactive it is found uncombined or extracted by heat alone.']]},
+  tip:`Extraction is always <b>reduction</b>: metal ions gain electrons to become atoms.`},
+ quiz:[{q:'Which metal can be extracted by heat alone?',o:['Iron','Aluminium','Silver','Zinc'],a:2},
+  {q:'In the electrolysis of molten sodium chloride, what forms at the positive electrode?',o:['Sodium','Chlorine','Hydrogen','Oxygen'],a:1},
+  {q:'Why must an ionic compound be molten for electrolysis?',o:['To make it react faster','So the ions are free to move','So electrons can flow through it','To stop it dissolving'],a:1},
+  {q:'Iron is extracted from iron oxide using:',o:['electrolysis','heat alone','carbon monoxide','water'],a:2}]});
+
+/* ---------- Chapter 10 ---------- */
+X('t10a',{vid:'electrochemical cells',
+ slide:{t:'Exam skills: using the series',h:`<p>The further apart two metals are in the electrochemical series, the bigger the voltage. So a metal that gives a voltage <b>between</b> two others must sit <b>between</b> them in the series.</p>`,
+  w:{type:'quiz',q:'Paired with silver, which metal gives a voltage greater than zinc but less than magnesium?',o:['Iron','Copper','Aluminium','Sodium'],a:2,x:'Aluminium sits between magnesium and zinc in the series.'},
+  tip:`Keep the data booklet open at the electrochemical series for every cell question.`},
+ quiz:[{q:'Paired with silver, which metal gives a voltage greater than zinc but less than magnesium?',o:['Iron','Copper','Aluminium','Sodium'],a:2},
+  {q:'What is the purpose of the ion bridge?',o:['To carry electrons','To complete the circuit by allowing ions to move','To increase the voltage','To store energy'],a:1},
+  {q:'Which metal gives the highest voltage when paired with copper?',o:['Zinc','Magnesium','Iron','Tin'],a:1},
+  {q:'In a cell, electrons flow through the:',o:['electrolyte','ion bridge','wires','voltmeter only'],a:2}]});
+X('t10b',{vid:'electrochemical cell reactions',
+ slide:{t:'Follow the electrons',w:{type:'order',title:'Put the events in a zinc–copper cell in order',items:['Zinc atoms lose electrons','Electrons flow through the wire to copper','Copper(II) ions gain electrons','Copper metal is deposited on the electrode']},
+  tip:`Name the direction with both metals: "from zinc to copper through the wires".`},
+ quiz:[{q:'In a magnesium–copper cell, which is oxidised?',o:['Copper','Magnesium','Copper(II) ions','The electrolyte'],a:1},
+  {q:'What happens to the mass of the zinc electrode in a zinc–copper cell?',o:['Increases','Decreases','Stays the same','Doubles'],a:1},
+  {q:'Why is graphite used in a half-cell with iodine solution?',o:['It reacts with iodine','It conducts but is unreactive','It is a metal','It makes iodine'],a:1},
+  {m:2,q:'A cell uses Fe/Fe²⁺ and Ag/Ag⁺ half-cells. Give the reduction equation and the direction of electron flow.',ans:'Ag⁺ + e⁻ → Ag [1]. Electrons flow from iron to silver through the wire [1].'}]});
+
+/* ---------- Chapter 11 ---------- */
+X('t11a',{vid:'addition polymerisation',
+ slide:{t:'Monomer true or false',w:{type:'tf',items:[['Propane can be used as a monomer for addition polymerisation.',false,'It has no C=C double bond.'],['Poly(ethene) is made from ethene.',true],['The repeating unit has two carbons in the main chain.',true],['A plastic that softens at 80 °C is suitable for a kettle.',false,'Water boils at 100 °C.']]},
+  tip:`To draw a monomer from a repeating unit, take the two backbone carbons and put the double bond back between them.`},
+ quiz:[{q:'Why can\'t ethane be used as a monomer for addition polymerisation?',o:['It is a gas','It has no carbon to carbon double bond','It is too small','It is flammable'],a:1},
+  {q:'Name the monomer used to make poly(butene).',o:['Butane','Butene','Butanol','Ethene'],a:1},
+  {q:'PVC melts at 80 °C. Why is it unsuitable for storing boiling water?',o:['It dissolves in water','Its melting point is below the boiling point of water','It is too heavy','It conducts heat'],a:1},
+  {q:'Plastics are made of:',o:['monomers','polymers','ions','metals'],a:1}]});
+X('t11b',{vid:'fertilisers ammonia',
+ slide:{t:'Open-ended: fertilisers',w:{type:'cards',title:'Points you could make about fertilisers',items:[['What they supply','Nitrogen, phosphorus and potassium compounds for plant growth'],['Why soluble','So they dissolve and can be absorbed by roots'],['Making them','Haber (ammonia) and Ostwald (nitric acid); ammonia + acid → ammonium salt'],['Comparing','% nitrogen by mass shows which gives most N per kg']]},
+  tip:`The 2025 fertiliser question was open-ended and only a few pupils got all 3 marks. Use several of these points and explain the chemistry behind each.`},
+ quiz:[{q:'Why must fertilisers be soluble?',o:['So they don\'t blow away','So they can be absorbed by plant roots','So they react with the soil','To make them cheaper'],a:1},
+  {q:'Ammonia reacts with phosphoric acid to form:',o:['ammonium phosphate','ammonium nitrate','phosphorus','nitric acid'],a:0},
+  {q:'Which describes ammonia?',o:['Colourless, pungent, forms an alkaline solution','Brown, odourless, acidic','Colourless, odourless, neutral','Green, toxic, acidic'],a:0},
+  {m:3,q:'Using your knowledge of chemistry, comment on the use of fertilisers.',ans:'Open-ended: 3 marks for good understanding, 2 reasonable, 1 limited. Possible points: crops remove N, P and K which fertilisers restore; must be soluble; ammonia from the Haber process and nitric acid from Ostwald; ammonium salts formed by neutralisation; comparing % N; environmental effects such as run-off into rivers.'}]});
+X('t11c',{vid:'Haber process Ostwald process',
+ slide:{t:'From air to fertiliser',w:{type:'order',items:['Nitrogen taken from the air','Haber process makes ammonia','Ostwald process makes nitric acid','Ammonia neutralises nitric acid','Ammonium nitrate fertiliser']},
+  tip:`Learn the catalysts as a pair: iron for Haber, platinum for Ostwald.`},
+ quiz:[{q:'Which catalyst is used in the Haber process?',o:['Platinum','Iron','Nickel','Copper'],a:1},
+  {q:'What are the raw materials of the Ostwald process?',o:['Nitrogen and hydrogen','Ammonia, oxygen and water','Nitric acid and ammonia','Air and methane'],a:1},
+  {q:'Why are the unreacted gases recycled in the Haber process?',o:['They are toxic','The reaction is reversible, so not all of them become ammonia','To cool the reactor','To make nitric acid'],a:1},
+  {q:'The platinum in the Ostwald process is recovered unchanged because it is:',o:['a reactant','a catalyst','a product','unreactive with ammonia'],a:1}]});
+
+/* ---------- Chapter 12 ---------- */
+X('t12a',{vid:'alpha beta gamma radiation',
+ slide:{t:'Radiation match-up',w:{type:'match',pairs:[['Alpha','2 protons + 2 neutrons'],['Beta','an electron from the nucleus'],['Gamma','electromagnetic radiation'],['Part of the atom that decays','the nucleus']]},
+  tip:`"Which part of the atom is responsible for radioactive decay?" The nucleus, not the electrons.`},
+ quiz:[{q:'Which part of an atom is responsible for radioactive decay?',o:['Electrons','Nucleus','Outer shell','Neutrons only'],a:1},
+  {q:'Which radiation is the most penetrating?',o:['Alpha','Beta','Gamma','They are equal'],a:2},
+  {q:'What is the charge on an alpha particle?',o:['1−','0','2+','1+'],a:2},
+  {q:'Which radiation bends towards the positive plate?',o:['Alpha','Beta','Gamma','None'],a:1}]});
+X('t12b',{vid:'nuclear equations alpha beta decay',
+ slide:{t:'Exam skills: writing nuclide notation',h:`<p>From a passage, you may be given protons and neutrons and asked for nuclide notation. Mass number = protons + neutrons; atomic number = protons; symbol from the periodic table.</p>`,
+  ex:`6 protons and 8 neutrons → ${NUC(14,6,'C')}<br>A proton → ${NUC(1,1,'p')} and a neutron → ${NUC(1,0,'n')}`,
+  w:{type:'gap',text:'When uranium-238 (atomic number 92) emits an alpha particle, the product has mass number [0] and atomic number [1].',g:[[['234','238','236'],0],[['90','92','91'],0]]}},
+ quiz:[{q:`Which is the nuclide notation for a proton?`,o:[NUC(1,1,'p'),NUC(1,0,'n'),NUC(0,'−1','e'),NUC(4,2,'He')],a:0},
+  {m:2,q:'Uranium-238 (atomic number 92) emits an alpha particle. The product has mass number [0] and atomic number [1].',g:[[['234','238','236'],0],[['90','92','91'],0]]},
+  {q:'Bismuth-214 (atomic number 83) emits a beta particle. What is the atomic number of the product?',o:['82','83','84','85'],a:2},
+  {m:2,q:'Write the nuclide notation for an atom with 17 protons and 20 neutrons.',ans:`Mass number 37, atomic number 17 [1]; chlorine [1]: ${NUC(37,17,'Cl')}`}]});
+X('t12c',{vid:'half-life',
+ slide:{t:'Exam skills: half-life graphs',d:['decay',8],
+  w:{type:'quiz',q:'Which is the best label for the time axis?',o:['years','Time (years)','Time','t'],a:1,x:'The label needs the quantity and the unit. In 2025 many pupils wrote only "years".'},
+  tip:`Half-life doesn't change whether the isotope is an element or in a compound, or with temperature. Some pupils lost marks on this in 2025.`},
+ quiz:[{q:'Iodine-131 has the same half-life whether it is in iodine or in sodium iodide because:',o:['half-life depends only on the nucleus','sodium iodide is ionic','iodine is a gas','both contain iodine molecules'],a:0},
+  {m:2,q:'A count rate falls from 160 to 10 in 12 hours. What is the half-life in hours?',n:3,u:'hours',tol:0.01,x:'160 → 80 → 40 → 20 → 10 is 4 half-lives. 12 ÷ 4 = 3 hours.'},
+  {q:'Which is the best label for the x-axis of a decay graph?',o:['years','Time (years)','Time','t'],a:1},
+  {m:2,q:'What percentage of a radioisotope remains after 3 half-lives?',n:12.5,u:'%',tol:0.1}]});
+
+/* ---------- Chapter 13 ---------- */
+X('t13a',{vid:'chemistry apparatus practical techniques',
+ slide:{t:'Pick the right apparatus',w:{type:'match',pairs:[['Exactly 10.0 cm³ of solution','pipette'],['About 50 cm³ of water','measuring cylinder'],['Adding a variable volume in a titration','burette'],['Heating a salt solution to dryness','evaporating basin']]},
+  tip:`"Most appropriate apparatus" questions are about accuracy: a pipette for a fixed exact volume, a burette for variable exact volumes, a measuring cylinder when roughly is good enough.`},
+ quiz:[{q:'Which is the most appropriate apparatus to measure exactly 10.0 cm³?',o:['Beaker','Measuring cylinder','Pipette','Conical flask'],a:2},
+  {q:'Which technique separates an insoluble solid from a liquid?',o:['Evaporation','Filtration','Titration','Distillation'],a:1},
+  {q:'How should ethanol be heated safely?',o:['Blue Bunsen flame','Yellow Bunsen flame','Electric hotplate or water bath','Directly with a match'],a:2},
+  {d:['burette',8,8.7],q:'What is the burette reading?',o:['8.3 cm³','8.7 cm³','9.3 cm³','7.7 cm³'],a:1}]});
+X('t13b',{vid:'gas tests flame tests precipitation',
+ slide:{t:'Gas tests match-up',w:{type:'match',pairs:[['Relights a glowing splint','oxygen'],['Burns with a pop','hydrogen'],['Turns limewater cloudy','carbon dioxide'],['Decolourises bromine quickly','an alkene']]},
+  tip:`Always give the test <b>and</b> the result. "Use a lit splint" alone gets no mark; "a lit splint makes it burn with a pop" does.`},
+ quiz:[{q:'What colour flame does potassium give?',o:['Yellow','Lilac','Green','Red'],a:1},
+  {q:'Barium chloride solution is added to sodium sulfate solution. The white precipitate is:',o:['sodium chloride','barium sulfate','barium chloride','sodium sulfate'],a:1},
+  {q:'Limewater is used to test for:',o:['oxygen','hydrogen','carbon dioxide','chlorine'],a:2},
+  {m:2,q:'Describe the test for hydrogen and its result.',ans:'Hold a lit splint at the mouth of the tube [1]; the hydrogen burns with a pop [1].'}]});
+X('t13c',{vid:'drawing graphs evaluating experiments',
+ slide:{t:'Exam skills: evaluating',w:{type:'tf',items:[['"Repeat the experiment" is a good evaluation on its own.',false,'Name a factor that affected the results AND how to reduce it.'],['Change in mass on its own is raw data.',false,'Raw data is what you measured: initial and final mass.'],['Bars must be plotted accurately using the scale given.',true],['An axis label needs both the quantity and the unit.',true]]},
+  tip:`In the 2025 assignments, many pupils just wrote "repeat it" in the evaluation and scored nothing. Give a factor that affected the results and how you did (or would) reduce its effect.`},
+ quiz:[{q:'Which is the best evaluation point?',o:['Repeat the experiment','Heat was lost to the air, so use a draught shield to reduce heat loss','It went well','Use more chemicals'],a:1},
+  {q:'Which counts as raw data?',o:['Initial and final mass','Change in mass only','The average only','The graph'],a:0},
+  {m:2,q:'Results: 4.2, 4.6 and 4.4 cm³. Calculate the mean.',n:4.4,u:'cm³',tol:0.01},
+  {q:'Which graph type suits "rate of reaction against temperature"?',o:['Line graph','Bar graph','Pie chart','Table'],a:0}]});
+
+/* ---------- Links ---------- */
+COURSE.videoSearches=[{name:'Miss Adams Chemistry',prefix:'Miss Adams Chemistry National 5'},{name:'More National 5 videos',prefix:'National 5 Chemistry'}];
+COURSE.topicLinks=[{label:'BBC Bitesize: National 5 Chemistry',url:'https://www.bbc.co.uk/bitesize/subjects/zmnp34j'}];
+COURSE.resources=[
+ {label:'BBC Bitesize: National 5 Chemistry',url:'https://www.bbc.co.uk/bitesize/subjects/zmnp34j',note:'Free notes, videos and tests for every topic.'},
+ {label:'Miss Adams Chemistry on YouTube',url:'https://www.youtube.com/c/MissAdamsChemistry',note:'National 5 videos recommended by many Scottish schools.'},
+ {label:'Achieve: National 5 study toolkit',url:'https://national5.co.uk/',note:'Ask school for the login code.'},
+ {label:'SQA past papers: National 5 Chemistry',url:'https://www.sqa.org.uk/pastpapers/findpastpaper.htm?subject=Chemistry&level=N5',note:'Real exam papers and marking instructions.'},
+ {label:'SQA Understanding Standards: National 5 Chemistry',url:'https://www.understandingstandards.org.uk/Subjects/Chemistry/national5',note:'Marked examples of real answers.'}];
 
 </script>
 
@@ -1553,6 +1939,7 @@ const storageOK=claudeStore||localOK;
 /* ---------- lookups ---------- */
 const topics=[];C.chapters.forEach(ch=>ch.topics.forEach(t=>{t.ch=ch;topics.push(t);}));
 const exams=[];C.chapters.forEach(ch=>{if(ch.exam){ch.exam.ch=ch;exams.push(ch.exam);}});(C.finals||[]).forEach(f=>exams.push(f));
+topics.forEach(t=>{if(t.quiz)exams.push({id:'q-'+t.id,name:t.name+': quiz',questions:t.quiz.map(q=>Object.assign({t:t.id},q)),tq:t});});
 const T=id=>topics.find(t=>t.id===id), E=id=>exams.find(e=>e.id===id), CH=id=>C.chapters.find(c=>c.id===id);
 
 /* ---------- measures ---------- */
@@ -1572,6 +1959,9 @@ const best=id=>{const a=tries(id);return a.length?Math.max(...a.map(pct)):null;}
 const last=id=>{const a=tries(id);return a.length?a[a.length-1]:null;};
 const marksOf=e=>e.questions.reduce((s,q)=>s+(q.m||1),0);
 const fig=d=>{if(!d)return '';if(Array.isArray(d)){const f=D[d[0]];try{return f?f(...d.slice(1)):'';}catch(e){console.error(e);return '';}}return d;};
+const vids=t=>t.vid?(C.videoSearches||[{name:'YouTube',prefix:''}]).map(v=>({name:v.name,url:'https://www.youtube.com/results?search_query='+encodeURIComponent((v.prefix+' '+t.vid).trim())})):[];
+const watchBox=t=>{const v=vids(t),q=t.quiz?E('q-'+t.id):null;if(!v.length&&!q&&!(C.topicLinks||[]).length)return '';const b=q?best(q.id):null;
+  return `<div class="watch"><b>Watch and practise</b><ul>${v.map(x=>`<li><a href="${x.url}" target="_blank" rel="noopener">▶ ${x.name}: ${t.name}</a></li>`).join('')}${(C.topicLinks||[]).map(x=>`<li><a href="${x.url}" target="_blank" rel="noopener">${x.label}</a></li>`).join('')}</ul>${q?`<button class="btn primary sm" data-go="start" data-e="${q.id}">${b===null?'Take the topic quiz':'Retake the topic quiz'} (${q.questions.length} questions${b===null?'':`, best ${b}%`})</button>`:''}</div>`;};
 const FACES=['Lost','Shaky','Okay','Good','Could teach it'];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -1608,6 +1998,7 @@ function vHome(){
   <p>${o===null?`Hi ${C.student}. Pick a chapter to begin. Your colour moves along the indicator from red to purple as you learn.`:`${b[2]}, ${C.student}. Each chapter's colour shows how well you know it.`}</p>
   ${n?`<div class="row"><button class="btn primary" ${n.attrs}>${n.label}</button></div>`:''}</header>
   ${C.areas?C.areas.map((a,i)=>{const chs=C.chapters.filter(c=>c.area===i),m=avg(chs.map(chM));return `<div class="areah"><h2>${a}</h2>${m!==null?`<span>${m}%</span>`:''}</div><div class="table">${chs.map(tile).join('')}</div>`;}).join(''):`<h2>Chapters</h2><div class="table">${C.chapters.map(tile).join('')}</div>`}
+  ${(C.resources||[]).length?`<h2>More help</h2><ul class="res">${C.resources.map(r=>`<li><a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>${r.note?`<br><span class="sub">${r.note}</span>`:''}</li>`).join('')}</ul>`:''}
   ${C.source?`<p class="foot sub">${C.source}</p>`:''}`;
 }
 
@@ -1615,7 +2006,7 @@ function vChapter(){
   const ch=CH(V.ch);
   let h=`<button class="back" data-go="home">All chapters</button><div class="chhead"><span class="mini" style="${paint(chM(ch))}">${ch.sym}</span><div><p class="sub">Chapter ${ch.num}</p><h1>${ch.name}</h1></div></div>${ch.blurb?`<p>${ch.blurb}</p>`:''}<h2>Topics</h2><ol class="topics">`;
   ch.topics.forEach(t=>{const k=know(t),u=und(t.id),c=S.conf[t.id];
-    h+=`<li><button class="trow" data-go="slides" data-t="${t.id}" data-i="${k===100?0:firstUnseen(t)}"><span class="tn">${t.name}</span><span class="meta">${t.slides.length} slides, ${k}% read${u!==null?`, ${u}% in tests`:''}${c?`, feels ${FACES[c-1].toLowerCase()}`:''}</span><span class="pbar"><i style="width:${k}%"></i></span></button></li>`;});
+    h+=`<li><button class="trow" data-go="slides" data-t="${t.id}" data-i="${k===100?0:firstUnseen(t)}"><span class="tn">${t.name}</span><span class="meta">${t.slides.length} slides, ${k}% read${u!==null?`, ${u}% in tests`:''}${c?`, feels ${FACES[c-1].toLowerCase()}`:''}</span><span class="pbar"><i style="width:${k}%"></i></span></button>${(()=>{const q=t.quiz?E('q-'+t.id):null,b=q?best(q.id):null,v=vids(t)[0];return (q||v)?`<div class="tact">${q?`<button class="btn sm" data-go="start" data-e="${q.id}">Quiz${b===null?'':` ${b}%`}</button>`:''}${v?`<a class="btn sm" href="${v.url}" target="_blank" rel="noopener">▶ Videos</a>`:''}</div>`:'';})()}</li>`;});
   h+='</ol>';
   if(ch.exam){const l=last(ch.exam.id);h+=`<div class="testcard"><h3>${ch.exam.name}</h3><p class="sub">${ch.exam.questions.length} questions, ${marksOf(ch.exam)} marks. ${l?`Last score ${pct(l)}%, grade ${grade(pct(l))}.`:'Not taken yet.'}</p><div class="row"><button class="btn primary" data-go="start" data-e="${ch.exam.id}">${l?'Retake test':'Start test'}</button></div></div>`;}
   return h;
@@ -1626,11 +2017,11 @@ function vSlides(){
   let h=`<button class="back" data-go="chapter" data-ch="${t.ch.id}">${t.ch.name}</button><p class="sub">${t.name}, slide ${Math.min(i+1,n)} of ${n}</p>`;
   if(i<n){
     const s=t.slides[i],seen=S.seen[t.id]||(S.seen[t.id]=[]);if(!seen.includes(i)){seen.push(i);save();}
-    h+=`<article class="slide anim" id="slide"><h2>${s.t}</h2>${s.d?`<figure class="fig">${fig(s.d)}</figure>`:''}${s.h?`<div class="body">${s.h}</div>`:''}${s.sim?`<div class="sim" id="sim"></div>`:''}${s.ex?`<div class="ex"><b>Example</b>${s.ex}</div>`:''}${s.w?widget(s.w):''}${s.k?`<p class="key"><b>Remember:</b> ${s.k}</p>`:''}${s.fun?`<p class="fun"><b>Did you know?</b> ${s.fun}</p>`:''}</article>`;
+    h+=`<article class="slide anim" id="slide"><h2>${s.t}</h2>${s.d?`<figure class="fig">${fig(s.d)}</figure>`:''}${s.h?`<div class="body">${s.h}</div>`:''}${s.sim?`<div class="sim" id="sim"></div>`:''}${s.ex?`<div class="ex"><b>Example</b>${s.ex}</div>`:''}${s.w?widget(s.w):''}${s.k?`<p class="key"><b>Remember:</b> ${s.k}</p>`:''}${s.tip?`<p class="tip"><b>Exam tip:</b> ${s.tip}</p>`:''}${s.fun?`<p class="fun"><b>Did you know?</b> ${s.fun}</p>`:''}</article>`;
   }else{
     const c=S.conf[t.id],idx=t.ch.topics.indexOf(t),nx=t.ch.topics[idx+1];
     h+=`<article class="slide"><h2>How well do you understand this now?</h2><p>Be honest. Your rating is compared with your test scores so you can spot topics that feel fine but need another look.</p><div class="faces">${FACES.map((f,k)=>`<button class="face ${c===k+1?'on':''}" data-act="conf" data-v="${k+1}" aria-pressed="${c===k+1}"><b>${k+1}</b>${f}</button>`).join('')}</div>
-    <div class="row">${nx?`<button class="btn primary" data-go="slides" data-t="${nx.id}" data-i="0">Next topic: ${nx.name}</button>`:t.ch.exam?`<button class="btn primary" data-go="start" data-e="${t.ch.exam.id}">Take the chapter test</button>`:''}<button class="btn" data-go="chapter" data-ch="${t.ch.id}">Chapter overview</button></div></article>`;
+    ${watchBox(t)}<div class="row">${nx?`<button class="btn primary" data-go="slides" data-t="${nx.id}" data-i="0">Next topic: ${nx.name}</button>`:t.ch.exam?`<button class="btn primary" data-go="start" data-e="${t.ch.exam.id}">Take the chapter test</button>`:''}<button class="btn" data-go="chapter" data-ch="${t.ch.id}">Chapter overview</button></div></article>`;
   }
   h+=`<div class="pager"><button class="btn" data-act="prev" ${i===0?'disabled':''}>Previous</button><span class="dots" aria-hidden="true">${Array.from({length:n+1},(_,k)=>`<i class="${k===i?'on':''}"></i>`).join('')}</span><button class="btn primary" data-act="next" ${i>=n?'disabled':''}>Next</button></div>`;
   return h;
@@ -1641,6 +2032,11 @@ function widget(w){
   if(w.type==='quiz')return `<div class="wg quiz"><b class="wt">Quick check</b><p>${w.q}</p><div class="opts">${w.o.map((o,k)=>`<button class="opt" data-act="wq" data-o="${k}" data-a="${w.a}"><span class="l">${'ABCD'[k]}</span><span>${o}</span></button>`).join('')}</div><p class="wx" hidden>${w.x||''}</p></div>`;
   if(w.type==='cards')return `<div class="wg"><b class="wt">${w.title||'Tap each card to flip it'}</b><div class="cards">${w.items.map(([f,b])=>`<button class="card2" data-act="flip"><span class="f">${f}</span><span class="b">${b}</span></button>`).join('')}</div></div>`;
   if(w.type==='sort')return `<div class="wg sort"><b class="wt">${w.title||'Sort them'}</b>${w.items.map(([it,c])=>`<div class="srow"><span>${it}</span><span class="sb">${w.cats.map((cat,k)=>`<button class="btn sm" data-act="sort" data-k="${k}" data-c="${c}">${cat}</button>`).join('')}</span></div>`).join('')}<p class="sscore" aria-live="polite"></p></div>`;
+  if(w.type==='tf')return `<div class="wg tf"><b class="wt">${w.title||'True or false?'}</b>${w.items.map(([st,ans,why])=>`<div class="srow"><span>${st}</span><span class="sb"><button class="btn sm" data-act="tf" data-v="1" data-c="${ans?1:0}">True</button><button class="btn sm" data-act="tf" data-v="0" data-c="${ans?1:0}">False</button></span>${why?`<small class="why" hidden>${why}</small>`:''}</div>`).join('')}<p class="sscore" aria-live="polite"></p></div>`;
+  if(w.type==='gap'){let k=0;const txt=w.text.replace(/\[(\d+)\]/g,(_,i)=>{const [opts]=w.g[+i];return `<select class="gsel" data-gi="${i}" aria-label="Choose a word"><option value="">…</option>${opts.map((o,j)=>`<option value="${j}">${o}</option>`).join('')}</select>`;});
+    return `<div class="wg gap" data-ans="${w.g.map(x=>x[1]).join(',')}"><b class="wt">${w.title||'Choose the right words'}</b><p>${txt}</p><button class="btn sm" data-act="gapw">Check</button><p class="sscore" aria-live="polite"></p></div>`;}
+  if(w.type==='order'){const n=w.items.length,idx=[...Array(n).keys()].sort((a,b)=>((a*7+3)%n)-((b*7+3)%n));return `<div class="wg order" data-n="${n}" data-next="0"><b class="wt">${w.title||'Tap them in the right order'}</b><div class="ord">${idx.map(i=>`<button class="btn sm" data-act="ord" data-i="${i}">${w.items[i]}</button>`).join('')}</div><p class="sscore" aria-live="polite"></p></div>`;}
+  if(w.type==='match'){const R=w.pairs.map((p,i)=>i).sort((a,b)=>((a*5+2)%w.pairs.length)-((b*5+2)%w.pairs.length));return `<div class="wg match"><b class="wt">${w.title||'Match them up'}</b>${w.pairs.map(([l],i)=>`<div class="mrow"><span><b>${l}</b></span><select class="gsel" data-mi="${i}" aria-label="Match for ${l}"><option value="">…</option>${R.map(j=>`<option value="${j}">${w.pairs[j][1]}</option>`).join('')}</select></div>`).join('')}<button class="btn sm" data-act="matchw" style="margin-top:8px">Check</button><p class="sscore" aria-live="polite"></p></div>`;}
   return '';
 }
 
@@ -1650,6 +2046,11 @@ function vExam(){
   <article class="slide ${s?'':'anim'}"><p class="sub">${e.name}, ${m} mark${m>1?'s':''}</p>${q.d?`<figure class="fig">${fig(q.d)}</figure>`:''}<div class="qtext">${q.q}</div>`;
   if(q.o){
     h+=`<div class="opts">${q.o.map((o,k)=>{let c='';if(s){if(k===q.a)c='right';else if(k===s.pick)c='wrong';}return `<button class="opt ${c}" data-act="pick" data-o="${k}" ${s?'disabled':''}><span class="l">${'ABCDE'[k]}</span><span>${o}</span></button>`;}).join('')}</div>`;
+  }else if(q.g){
+    let i=0;const html=q.q.replace(/\[(\d+)\]/g,(_,k)=>{const [opts,ans]=q.g[+k];if(!s)return `<select class="gsel" data-qg="${k}" aria-label="Choose"><option value="">…</option>${opts.map((o,j)=>`<option value="${j}">${o}</option>`).join('')}</select>`;
+      const pick=s.picks[+k];return `<b class="gsel ${pick===ans?'right':'wrong'}">${pick>=0?opts[pick]:'…'}</b>${pick!==ans?` <span class="sub">(${opts[ans]})</span>`:''}`;});
+    h=h.replace(`<div class="qtext">${q.q}</div>`,`<div class="qtext">${html}</div>`);
+    if(!s)h+=`<div class="row"><button class="btn primary" data-act="checkgap">Check</button></div>`;
   }else if(q.n!==undefined){
     h+=`<div class="numrow"><input id="num" inputmode="decimal" autocomplete="off" aria-label="Your answer" placeholder="Your answer" ${s?`value="${s.val}" disabled`:''}>${q.u?`<span>${q.u}</span>`:''}${s?'':'<button class="btn primary" data-act="checknum">Check</button>'}${V.err?'<span class="err">Type a number, for example 0.25</span>':''}</div>`;
   }else{
@@ -1742,6 +2143,13 @@ document.addEventListener('click',ev=>{
     case 'conf':S.conf[V.t]=+el.dataset.v;save();render();break;
     case 'pick':if(V.st)return;{const o=+el.dataset.o;V.st={pick:o,got:o===q.a?(q.m||1):0};V.marks[V.i]=V.st.got;render();}break;
     case 'checknum':checkNum();break;
+    case 'checkgap':{const picks=q.g.map((_,k)=>{const el2=app.querySelector(`[data-qg="${k}"]`);return el2&&el2.value!==''?+el2.value:-1;});const got=picks.filter((p,k)=>p===q.g[k][1]).length;
+      V.st={picks,got:Math.round(got*(q.m||q.g.length)/q.g.length)};V.marks[V.i]=V.st.got;render();break;}
+    case 'tf':{const row=el.closest('.srow');if(row.dataset.ok!==undefined)return;const ok=el.dataset.v===el.dataset.c;row.dataset.ok=ok?1:0;el.classList.add(ok?'right':'wrong');if(!ok)row.querySelector(`[data-v="${el.dataset.c}"]`).classList.add('right');row.querySelectorAll('button').forEach(b=>b.disabled=true);const w=row.querySelector('.why');if(w)w.hidden=false;
+      const box=el.closest('.tf'),rows=box.querySelectorAll('.srow'),d=box.querySelectorAll('.srow[data-ok]').length,g=box.querySelectorAll('.srow[data-ok="1"]').length;box.querySelector('.sscore').textContent=d===rows.length?`${g} out of ${rows.length} right${g===rows.length?' 🎉':''}`:'';break;}
+    case 'gapw':{const box=el.closest('.gap'),ans=box.dataset.ans.split(',').map(Number);let g=0;box.querySelectorAll('[data-gi]').forEach(sel=>{const ok=sel.value!==''&&+sel.value===ans[+sel.dataset.gi];if(ok)g++;sel.classList.remove('right','wrong');sel.classList.add(ok?'right':'wrong');});box.querySelector('.sscore').textContent=g===ans.length?'All correct 🎉':`${g} out of ${ans.length} right. Change the red ones and check again.`;break;}
+    case 'ord':{const box=el.closest('.order'),nx=+box.dataset.next;if(el.classList.contains('right'))return;if(+el.dataset.i===nx){el.classList.add('right');el.innerHTML=`<b>${nx+1}.</b> `+el.innerHTML;box.dataset.next=nx+1;if(nx+1===+box.dataset.n)box.querySelector('.sscore').textContent='Perfect order 🎉';}else{el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');box.querySelector('.sscore').textContent='Not that one yet. Try again.';}break;}
+    case 'matchw':{const box=el.closest('.match');let g=0,n=0;box.querySelectorAll('[data-mi]').forEach(sel=>{n++;const ok=sel.value!==''&&+sel.value===+sel.dataset.mi;if(ok)g++;sel.classList.remove('right','wrong');sel.classList.add(ok?'right':'wrong');});box.querySelector('.sscore').textContent=g===n?'All matched 🎉':`${g} out of ${n} right.`;break;}
     case 'reveal':V.st={revealed:true};render();break;
     case 'self':V.st.got=+el.dataset.v;V.marks[V.i]=V.st.got;render();break;
     case 'nextq':if(V.i+1<e.questions.length){V.i++;V.st=null;V.err=false;render();window.scrollTo(0,0);}else finish();break;
