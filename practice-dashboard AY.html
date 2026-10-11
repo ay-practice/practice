@@ -162,11 +162,12 @@ p.help{font-size:14px;color:var(--muted);margin-bottom:8px}
 .rl{padding:10px 12px}
 .rl+.rl{border-top:1px solid var(--line)}
 .rl .src{font-size:14px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
 </style>
 </head>
 <body>
 <header><div class="hin"><h1><svg viewBox="0 0 34 16" aria-hidden="true"><path d="M0 10h9l2-3 2 3h3l3-9 3 14 2-5h10" fill="none" stroke="#C9566A" stroke-width="2" stroke-linejoin="round"/></svg>Private practice activity</h1>
-<nav aria-label="Sections"><button data-tab="overview">Overview</button><button data-tab="log">Log week</button><button data-tab="patients">Patients</button><button data-tab="payments">Payments</button><button data-tab="tariffs">Tariffs</button></nav></div></header>
+<nav aria-label="Sections"><button data-tab="overview">Overview</button><button data-tab="log">Log week</button><button data-tab="patients">Patients</button><button data-tab="files">Files</button><button data-tab="payments">Payments</button><button data-tab="tariffs">Tariffs</button></nav></div></header>
 <main id="main"></main>
 <div id="toast" role="status"></div>
 <script>
@@ -206,7 +207,7 @@ const DEFAULT={
   inv:{spire:{echo:200,synexus:550,ecg:30,h24:50,h48:70,h72:90,bp24:50,ett:150},nuffield:{ecg:45,echo:214,zio:75},kp:{ecg:70,echo:223,zio:180}},
   procs:{toe:{self:300,insured:280},dccv:{self:150,insured:150}},
   scans:{self:200,insured:150,cac:50},
-  costs:{commission:{spire:5,nuffield:5,kp:5,medserv:3.5},spireRent:{rate:27.5,hours:{spire:5}},nuffieldRent:{rate:25,hours:{nuffield:2}},kpRoom:{block:7.5,newBlocks:2,fuBlocks:1},rentMode:"deducted"}
+  costs:{commission:{spire:5,nuffield:5,kp:5,medserv:3.5},invCommission:{spire:0,nuffield:5,kp:0},spireRent:{rate:27.5,hours:{spire:5}},nuffieldRent:{rate:25,hours:{nuffield:2}},kpRoom:{block:7.5,newBlocks:2,fuBlocks:1},rentMode:"deducted"}
  },
  settings:{overdueDays:45,keywords:{spire:"spire",nuffield:"nuffield",kp:"kings park, kingspark, circle",medserv:"medserv"},opening:{spire:0,nuffield:0,kp:0,medserv:0}},
  weeks:{},txns:[],patients:[],remits:[]
@@ -268,7 +269,7 @@ if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catc
 // income routing
 function computeLines(w){
  const T=data.tariffs,L=[],mon=parseISO(w.start);
- const push=(site,off,payer,stream,amt)=>{if(amt>0)L.push({date:addDays(mon,off),site,payer,stream,amount:amt})};
+ const push=(site,off,payer,stream,amt,kind)=>{if(amt>0)L.push({date:addDays(mon,off),site,payer,stream,amount:amt,kind:kind||"consult"})};
  for(const s of CLINICS){
   const site=w[s.id];if(!site)continue;const h=s.hosp;
   for(const i of INS){
@@ -279,18 +280,19 @@ function computeLines(w){
    else push(s.id,s.off,i.id==="self"?"nuffield":"medserv",i.id==="self"?"nuffieldMonthly":"medserv",amt);
   }
   const stream=h==="kp"?"kp":h==="spire"?"spireMonthly":"nuffieldMonthly";
-  for(const[k]of HOSP[h].inv)push(s.id,s.off,h,stream,n((site.inv||{})[k])*n(T.inv[h][k]));
+  for(const[k]of HOSP[h].inv)push(s.id,s.off,h,stream,n((site.inv||{})[k])*n(T.inv[h][k]),"inv");
   if(s.procs)for(const k of ["toe","dccv"]){
    const p=(site.procs||{})[k]||{},t=T.procs[k];
-   push(s.id,s.off,"spire","spireMonthly",n(p.self)*n(t.self)+n(p.ins)*n(t.insured));
-   push(s.id,s.off,"medserv","medserv",n(p.bupa)*n(t.insured));
+   push(s.id,s.off,"spire","spireMonthly",n(p.self)*n(t.self)+n(p.ins)*n(t.insured),"proc");
+   push(s.id,s.off,"medserv","medserv",n(p.bupa)*n(t.insured),"proc");
   }
  }
  const r=w.reporting||{};
- push("reporting",3,"spire","spireMonthly",["ct","mri"].reduce((a,k)=>a+n((r[k]||{}).self)*n(T.scans.self)+n((r[k]||{}).ins)*n(T.scans.insured),0)+n(r.cac)*n(T.scans.cac));
+ push("reporting",3,"spire","spireMonthly",["ct","mri"].reduce((a,k)=>a+n((r[k]||{}).self)*n(T.scans.self)+n((r[k]||{}).ins)*n(T.scans.insured),0)+n(r.cac)*n(T.scans.cac),"scan");
  // costs: collection commission on every payment, then room charges per clinic held
  const C=T.costs||{},gross=L.slice();
- for(const l of gross){const rt=n((C.commission||{})[l.payer]);if(rt)L.push({...l,amount:-l.amount*rt/100,cost:"commission"})}
+ for(const l of gross){if(l.kind==="scan")continue; // scan reporting is paid in full
+  const rt=l.kind==="inv"?n((C.invCommission||{})[SMAP[l.site].hosp]):n((C.commission||{})[l.payer]);if(rt)L.push({...l,amount:-l.amount*rt/100,cost:"commission"})}
  const inv=C.rentMode==="invoiced";
  for(const s of CLINICS){
   const site=w[s.id]||{};let nw=0,fu=0,tests=0;
@@ -435,13 +437,13 @@ function guessSession(){
 }
 
 // state
-const S={tab:"overview",start:iso(mondayOf(today())),month:monthKey(today()),filter:"todo",open:"",confirm:"",qsess:guessSession(),qtext:"",psess:guessSession()==="reporting"?"spire":guessSession(),pdate:iso(today()),ptext:"",pdraft:null,rsrc:"spire",rdate:iso(today()),rtext:"",rdraft:null,pf:"unpaid",pq:""};
+const S={tab:"overview",start:iso(mondayOf(today())),month:monthKey(today()),filter:"todo",open:"",confirm:"",qsess:guessSession(),qtext:"",psess:guessSession()==="reporting"?"spire":guessSession(),pdate:iso(today()),ptext:"",pdraft:null,rsrc:"spire",rdate:iso(today()),rtext:"",rdraft:null,pf:"unpaid",pq:"",reading:"",df:"all"};
 const $main=document.getElementById("main");
 let toastTimer;
 function toast(m){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.display="none",3400)}
 function render(){
  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
- $main.innerHTML=S.tab==="overview"?vOverview():S.tab==="log"?vLog():S.tab==="patients"?vPatients():S.tab==="payments"?vPayments():vTariffs();
+ $main.innerHTML=S.tab==="overview"?vOverview():S.tab==="log"?vLog():S.tab==="patients"?vPatients():S.tab==="files"?vFiles():S.tab==="payments"?vPayments():vTariffs();
 }
 
 // ---------- overview ----------
@@ -598,7 +600,7 @@ function quickAdd(){
 
 // ---------- patients (all processed on this phone) ----------
 const HNO_RE=/\b[A-Za-z]{0,3}\d{5,10}[A-Za-z]?\b/;
-const NAME_STOP=new Set("mr mrs ms miss mx dr prof sir dob tel tele phone mob mobile hosp hospital no num number mrn id ref nhs chi new follow up fu review self pay private insured insurance and plus with x the of for to at pt patient seen paid fee fees total amount invoice consultation consult appt appointment clinic date time am pm tests test name names surname forename first last dob insurer payer investigations investigation hospno tel no".split(" "));
+const NAME_STOP=new Set("mr mrs ms miss mx dr prof sir dob tel tele phone mob mobile hosp hospital no num number mrn id ref nhs chi new follow up fu review self pay private insured insurance and plus with x the of for to at pt patient seen paid fee fees total amount invoice consultation consult appt appointment clinic date time am pm tests test name names surname forename first last dob insurer payer investigations investigation hospno tel no kings park spire shawfair nuffield medserv jan january feb february mar march apr april may jun june jul july aug august sep sept september oct october nov november dec december mon monday tue tuesday wed wednesday thu thursday fri friday morning evening afternoon list sheet".split(" "));
 const nrm=v=>String(v||"").toUpperCase().replace(/[^A-Z0-9]/g,"");
 const titleCase=w=>w.replace(/(^|[\s'-])([a-z])/g,(m,a,b)=>a+b.toUpperCase());
 const money=v=>"£"+(Math.round(v*100)%100?v.toFixed(2):Math.round(v).toLocaleString("en-GB"));
@@ -811,12 +813,14 @@ function vPatients(){
    <div style="font-size:15px">${unpaid.length} ${unpaid.length===1?"patient":"patients"} unpaid or part paid${late.length?`, <span class="warn">${late.length} for over ${od} days</span>`:""}</div>
   </div>
 
+  ${S.reading?`<div class="card" style="margin:12px 0"><span id="readmsg">${esc(S.reading)}</span></div>`:""}
   <h2>Add a clinic list</h2>
   <div class="card">
    <p class="help">Photograph your clinic sheet, then press and hold on the text in the photo, tap Select All and Copy, and paste it here. Dates of birth and phone numbers are removed as it's read. Nothing leaves this phone.</p>
    <div class="form"><label>Clinic<select class="t" id="psess">${clinicOpts}</select></label><label>Clinic date<input class="t" type="date" id="pdate" value="${S.pdate}"></label></div>
    ${S.pdraft?draftHTML():`<textarea class="t" id="ptext" rows="5" style="margin-top:10px" placeholder="Jane Smith  K123456  Bupa new  echo ECG  £395">${esc(S.ptext)}</textarea>
-   <div style="display:flex;gap:8px;margin-top:10px"><button class="btn" data-act="pread">Read list</button><button class="btn alt" data-act="padd">Add by hand</button></div>`}
+   <div style="display:flex;gap:8px;margin-top:10px"><button class="btn" data-act="pread">Read list</button><button class="btn alt" data-act="padd">Add by hand</button></div>
+   <div style="display:flex;gap:8px;margin-top:8px"><label class="btn alt filebtn">📷 Take photo of clinic sheet<input type="file" accept="image/*" capture="environment" id="camclinic"></label></div>`}
   </div>
 
   <h2>Match a payment receipt</h2>
@@ -824,7 +828,8 @@ function vPatients(){
    <p class="help">Open the hospital's remittance (PDF, email or a photo), select all the text, copy it and paste it here. Each line is matched to a patient by hospital number, then by name and amount.</p>
    <div class="form"><label>Paid by<select class="t" id="rsrc">${PAYERS.map(p=>`<option value="${p.id}" ${S.rsrc===p.id?"selected":""}>${p.name}</option>`).join("")}</select></label><label>Date paid<input class="t" type="date" id="rdate" value="${S.rdate}"></label></div>
    ${S.rdraft?rdraftHTML():`<textarea class="t" id="rtext" rows="5" style="margin-top:10px" placeholder="K123456  SMITH J  Echocardiogram  214.00">${esc(S.rtext)}</textarea>
-   <div style="display:flex;gap:8px;margin-top:10px"><button class="btn" data-act="rread">Match payments</button><button class="btn alt" data-act="rclear">Clear</button></div>`}
+   <div style="display:flex;gap:8px;margin-top:10px"><button class="btn" data-act="rread">Match payments</button><button class="btn alt" data-act="rclear">Clear</button></div>
+   <div style="display:flex;gap:8px;margin-top:8px"><label class="btn alt filebtn">Read a PDF or photo<input type="file" accept=".pdf,application/pdf,image/*" id="remitfile"></label></div>`}
   </div>
 
   <div class="chips">${[["unpaid",`Unpaid (${unpaid.length})`],["late",`Over ${od} days (${late.length})`],["paid","Paid"],["all","All"]].map(([id,l])=>`<button class="chip ${S.pf===id?"on":""}" data-act="pf" data-f="${id}">${l}</button>`).join("")}</div>
@@ -837,6 +842,113 @@ function vPatients(){
    <p class="help" style="margin-top:8px">Patient names stay on this phone and are included in backups. Keep backup files in Files or iCloud Drive rather than email.</p>
    ${data.patients.length?(S.confirm==="pall"?`<p style="font-size:15px">Delete every patient record? <button class="btn red small" data-act="pdelall">Delete patients</button> <button class="link" data-act="cancel">Keep</button></p>`:`<button class="link red" data-act="paskall">Delete all patient records</button>`):""}
   </div>
+ </div>`;
+}
+
+// ---------- documents: stored on this phone (IndexedDB), read on this phone ----------
+const DOCKINDS=[["clinic","Clinic sheet"],["remit","Payment sheet or remittance"],["bank","Bank statement"],["invoice","Invoice"],["other","Other"]];
+const DKN=Object.fromEntries(DOCKINDS);
+const DOCSRC=[["",""],["spire","Spire"],["nuffield","Nuffield"],["kp","Kings Park"],["medserv","Medserv"]];
+let docsCache=null;
+function docDB(){return new Promise((res,rej)=>{const r=indexedDB.open("practice-docs",1);r.onupgradeneeded=()=>r.result.createObjectStore("docs",{keyPath:"id"});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function docTx(mode,fn){const db=await docDB();return new Promise((res,rej)=>{const tx=db.transaction("docs",mode),st=tx.objectStore("docs");const out=fn(st);tx.oncomplete=()=>res(out&&out.result!==undefined?out.result:out);tx.onerror=()=>rej(tx.error)})}
+async function docAll(){const db=await docDB();return new Promise((res,rej)=>{const r=db.transaction("docs").objectStore("docs").getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=()=>rej(r.error)})}
+async function docGet(id){const db=await docDB();return new Promise((res,rej)=>{const r=db.transaction("docs").objectStore("docs").get(id);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function refreshDocs(){try{docsCache=(await docAll()).map(({blob,...m})=>m).sort((a,b)=>b.added-a.added)}catch(e){docsCache=[]}if(S.tab==="files")render()}
+async function addDocs(files,kind,src){
+ let k=0;
+ for(const f of files){
+  const id="d"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  const guess=kind||(/\.csv$/i.test(f.name)||/statement/i.test(f.name)?"bank":/remit|payment|statement of account/i.test(f.name)?"remit":/invoice/i.test(f.name)?"invoice":(f.type||"").startsWith("image/")?"clinic":"other");
+  await docTx("readwrite",st=>st.put({id,name:f.name||"Photo "+iso(today()),type:f.type||"",size:f.size||0,kind:guess,src:src||"",date:iso(today()),added:Date.now(),blob:f}));k++;
+ }
+ await refreshDocs();return k;
+}
+async function docUpdate(id,patch){const d=await docGet(id);if(!d)return;Object.assign(d,patch);await docTx("readwrite",st=>st.put(d));await refreshDocs()}
+async function docDelete(id){await docTx("readwrite",st=>st.delete(id));await refreshDocs()}
+async function docOpen(id){const d=await docGet(id);if(!d)return;const u=URL.createObjectURL(d.blob);const w=window.open(u,"_blank");if(!w){const a=document.createElement("a");a.href=u;a.target="_blank";a.click()}setTimeout(()=>URL.revokeObjectURL(u),60000)}
+async function docShare(id){const d=await docGet(id);if(!d)return;const f=new File([d.blob],d.name,{type:d.type});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:d.name})}catch(e){}}else docOpen(id)}
+const loadScript=src=>new Promise((res,rej)=>{if(document.querySelector(`script[src="${src}"]`)){res();return}const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=()=>rej(new Error("load"));document.head.appendChild(s)});
+const PDFJS="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js",PDFW="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js",TESS="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+async function ocrImage(img,label){
+ await loadScript(TESS);
+ const r=await Tesseract.recognize(img,"eng",{logger:m=>{if(m.status==="recognizing text")setReading(`${label}: reading text ${Math.round(m.progress*100)}%`);else if(/load/.test(m.status))setReading(`${label}: preparing the text reader (first time only)`)}});
+ return r.data.text||"";
+}
+async function pdfText(blob,label){
+ await loadScript(PDFJS);pdfjsLib.GlobalWorkerOptions.workerSrc=PDFW;
+ const pdf=await pdfjsLib.getDocument({data:await blob.arrayBuffer()}).promise;let out=[];
+ for(let p=1;p<=pdf.numPages;p++){
+  setReading(`${label}: page ${p} of ${pdf.numPages}`);
+  const page=await pdf.getPage(p),tc=await page.getTextContent();
+  const rows=new Map();
+  for(const it of tc.items){if(!it.str||!it.str.trim())continue;const y=Math.round(it.transform[5]/3)*3;if(!rows.has(y))rows.set(y,[]);rows.get(y).push({x:it.transform[4],s:it.str})}
+  let lines=[...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([,a])=>a.sort((u,v)=>u.x-v.x).map(o=>o.s).join("  ").replace(/\s{3,}/g,"  ").trim()).filter(Boolean);
+  if(lines.join("").length<20){ // scanned page: render and read the picture
+   const vp=page.getViewport({scale:2}),c=document.createElement("canvas");c.width=vp.width;c.height=vp.height;
+   await page.render({canvasContext:c.getContext("2d"),viewport:vp}).promise;lines=[await ocrImage(c,`${label}, page ${p}`)];
+  }
+  out.push(lines.join("\n"));
+ }
+ return out.join("\n");
+}
+function setReading(t){S.reading=t;const el=document.getElementById("readmsg");if(el)el.textContent=t}
+async function docText(d){
+ const label=d.name.length>28?d.name.slice(0,26)+"…":d.name;
+ if(/pdf/i.test(d.type)||/\.pdf$/i.test(d.name))return pdfText(d.blob,label);
+ if((d.type||"").startsWith("image/")||/\.(jpe?g|png|heic|webp)$/i.test(d.name))return ocrImage(d.blob,label);
+ return await d.blob.text();
+}
+async function docRead(id){
+ const d=await docGet(id);if(!d)return;
+ S.reading="Starting";render();
+ try{
+  if(d.kind==="bank"&&(/csv/i.test(d.type)||/\.csv$/i.test(d.name))){S.reading="";await importCSV(new File([d.blob],d.name,{type:"text/csv"}));S.tab="payments";render();return}
+  const text=(await docText(d)).trim();S.reading="";
+  if(!text){toast("No text could be read from this document.");render();return}
+  if(d.kind==="clinic"){S.ptext=text;S.pdraft=null;S.tab="patients";render();readClinicAct()}
+  else if(d.kind==="remit"||d.kind==="invoice"){if(d.src)S.rsrc=d.src;S.rtext=text;S.rdraft=null;S.tab="patients";render();readRemitAct()}
+  else{S.ptext=text;S.tab="patients";render();toast("Text copied into the clinic list box. Set the document type to choose where it goes.")}
+  window.scrollTo(0,0);
+ }catch(e){S.reading="";render();toast(navigator.onLine===false?"Reading needs an internet connection the first time, to load the reader.":"Couldn't read this document. Try a clearer photo or a PDF.")}
+}
+async function cameraClinic(file){
+ if(!file)return;
+ const k=await addDocs([new File([file],`Clinic sheet ${iso(today())}.jpg`,{type:file.type||"image/jpeg"})],"clinic","");
+ const d=docsCache&&docsCache[0];if(d)docRead(d.id);
+}
+const kb=b=>b>1048576?(b/1048576).toFixed(1)+" MB":Math.max(1,Math.round(b/1024))+" KB";
+function vFiles(){
+ if(docsCache===null){refreshDocs();return `<div class="pad"><p class="help">Loading…</p></div>`}
+ const f=S.df||"all",list=docsCache.filter(d=>f==="all"||d.kind===f);
+ return `<div class="pad">
+  ${S.reading?`<div class="card" style="margin-bottom:12px"><span id="readmsg">${esc(S.reading)}</span></div>`:""}
+  <div class="card">
+   <p class="help">Clinic sheets, payment sheets, remittances, invoices and bank statements, stored only on this phone.</p>
+   <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <label class="btn filebtn">📷 Photo of clinic sheet<input type="file" accept="image/*" capture="environment" id="camclinic"></label>
+    <label class="btn alt filebtn">Add files<input type="file" multiple accept=".pdf,.csv,image/*,application/pdf,text/csv" id="docfiles"></label>
+   </div>
+  </div>
+  <h2>From your email</h2>
+  <div class="card"><p class="help">Open your email, tap the invoice or remittance attachment, then Share and Save to Files. Come back here and tap Add files.</p>
+   <div style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn alt" href="message://">Open Mail</a><a class="btn alt" href="googlegmail://">Open Gmail</a><a class="btn alt" href="ms-outlook://">Open Outlook</a></div></div>
+  <div class="chips" style="margin-top:16px">${[["all","All"],...DOCKINDS].map(([id,l])=>`<button class="chip ${f===id?"on":""}" data-act="df" data-v="${id}">${l}</button>`).join("")}</div>
+  <div class="card" style="padding:0">${list.length?list.map(d=>`<div class="rl" style="padding:12px 14px">
+    <div class="row"><b style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:70%">${esc(d.name)}</b><span class="muted" style="font-size:13px">${kb(d.size)}</span></div>
+    <div class="muted" style="font-size:13px">Added ${dayLabel(parseISO(d.date))}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">
+     <select class="t" data-doc="${d.id}" data-field="kind" aria-label="Document type">${DOCKINDS.map(([v,l])=>`<option value="${v}" ${d.kind===v?"selected":""}>${l}</option>`).join("")}</select>
+     <select class="t" data-doc="${d.id}" data-field="src" aria-label="From">${DOCSRC.map(([v,l])=>`<option value="${v}" ${d.src===v?"selected":""}>${v?l:"From…"}</option>`).join("")}</select>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;align-items:center">
+     <button class="btn small" data-act="docread" data-id="${d.id}">${d.kind==="bank"?"Import":"Read and match"}</button>
+     <button class="link" data-act="docopen" data-id="${d.id}">Open</button>
+     <button class="link" data-act="docshare" data-id="${d.id}">Share</button>
+     ${S.confirm==="doc:"+d.id?`<button class="link red" data-act="docdel" data-id="${d.id}">Confirm delete</button>`:`<button class="link red" data-act="docask" data-id="${d.id}">Delete</button>`}
+    </div></div>`).join(""):`<div style="padding:16px" class="muted">${docsCache.length?"Nothing of this type yet.":"No documents yet. Take a photo of a clinic sheet or add a PDF."}</div>`}</div>
+  <p class="help" style="margin-top:12px"><b>Read and match</b> reads the text on your phone, then fills in the clinic list or matches the payments on the Patients tab for you to check. Nothing is uploaded: the reader is downloaded once, and your documents never leave this phone. Typed and printed documents read best; handwriting may need correcting.</p>
+  <p class="help">Documents aren't included in the backup file, so keep the originals in your email or Files.</p>
  </div>`;
 }
 
@@ -937,8 +1049,10 @@ function vTariffs(){
   <h2 style="color:${PAL.reporting.c}">CT and MRI reporting</h2>
   <div class="card pcard" style="${pv("reporting")}">${trow("Insured, per scan","tariffs.scans.insured")}${trow("Self-pay, per scan","tariffs.scans.self")}${trow("CAC scoring, per scan","tariffs.scans.cac")}</div>
   <h2>Commission and room charges</h2>
-  <div class="card"><p class="help">Commission is taken from every payment each payer makes. Room charges apply to each clinic you log, except the Friday telephone follow-up clinics, which have none.</p>
+  <div class="card"><p class="help">Commission is taken from consultations and procedures, and from investigations at the rates below. CT, MRI and CAC reporting is paid in full. Room charges apply to each clinic you log, except the Friday telephone follow-up clinics, which have none.</p>
    ${trow("Spire commission (%)","tariffs.costs.commission.spire")}${trow("Nuffield commission (%)","tariffs.costs.commission.nuffield")}${trow("Kings Park commission (%)","tariffs.costs.commission.kp")}${trow("Medserv commission (%)","tariffs.costs.commission.medserv")}
+   <p class="help" style="margin:10px 0 4px">Commission on investigations</p>
+   ${trow("Spire investigations (%)","tariffs.costs.invCommission.spire")}${trow("Nuffield investigations (%)","tariffs.costs.invCommission.nuffield")}${trow("Kings Park investigations (%)","tariffs.costs.invCommission.kp")}
   </div>
   <div class="card pcard" style="${pv("spire")};margin-top:10px"><b style="color:${PAL.spire.c}">Spire room rent</b><p class="help" style="margin:4px 0 6px">Charged for the full clinic, however many patients are seen.</p>
    ${trow("Rate per hour (£)","tariffs.costs.spireRent.rate")}${trow("Clinic length (hours)","tariffs.costs.spireRent.hours.spire")}</div>
@@ -996,6 +1110,12 @@ document.addEventListener("click",e=>{
  }
  else if(a==="backup"){backup();return}
  else if(a==="pread"){readClinicAct();return}
+ else if(a==="df")S.df=b.dataset.v;
+ else if(a==="docread"){docRead(b.dataset.id);return}
+ else if(a==="docopen"){docOpen(b.dataset.id);return}
+ else if(a==="docshare"){docShare(b.dataset.id);return}
+ else if(a==="docask")S.confirm="doc:"+b.dataset.id;
+ else if(a==="docdel"){S.confirm="";docDelete(b.dataset.id).then(()=>toast("Document deleted"));return}
  else if(a==="pclear"){S.ptext="";S.pdraft=null}
  else if(a==="pdrop")S.pdraft.splice(+b.dataset.i,1);
  else if(a==="padd")(S.pdraft=S.pdraft||[]).push({name:"",hno:"",payer:"",kind:"",tests:"",amount:""});
@@ -1037,6 +1157,10 @@ document.addEventListener("change",async e=>{
  if(el.dataset.act==="qsess"){S.qsess=el.value;document.getElementById("qprev").innerHTML=qPreviewHTML();return}
  if(el.dataset.act==="qpayer"){data.settings.qpayer=el.value;persist();document.getElementById("qprev").innerHTML=qPreviewHTML();return}
  if(el.dataset.txn!==undefined){const t=data.txns.find(x=>x.id===el.dataset.txn);if(t){t.payer=el.value;persist();render()}return}
+ if(el.id==="camclinic"&&el.files[0]){const f=el.files[0];el.value="";cameraClinic(f);return}
+ if(el.id==="docfiles"&&el.files.length){const fs=[...el.files];el.value="";const k=await addDocs(fs);toast(`Added ${k} ${k===1?"document":"documents"}. Check the type of each, then tap Read and match.`);return}
+ if(el.id==="remitfile"&&el.files[0]){const f=el.files[0];el.value="";await addDocs([f],"remit",S.rsrc);const d=docsCache&&docsCache[0];if(d)docRead(d.id);return}
+ if(el.dataset.doc){docUpdate(el.dataset.doc,{[el.dataset.field]:el.value});return}
  if(el.id==="csv"&&el.files[0]){const f=el.files[0];el.value="";try{await importCSV(f)}catch(err){toast("Couldn't read that file. Check it's a CSV export from your bank.")}return}
  if(el.id==="restore"&&el.files[0]){const f=el.files[0];el.value="";try{data=deepMerge(clone(DEFAULT),JSON.parse(await f.text()));persist();render();toast("Backup restored")}catch(err){toast("That file isn't a valid backup.")}}
 });
