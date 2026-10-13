@@ -252,7 +252,7 @@ h1{font-size:27px!important;letter-spacing:.005em}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="journal-reader-v1",APPVER="13 Oct 2026 (c)";
+const KEY="journal-reader-v1",APPVER="13 Oct 2026 (d)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -813,7 +813,9 @@ async function fetchText(url,tries=3){for(let i=0;i<tries;i++){try{const r=await
 const cap=l=>l?l.charAt(0).toUpperCase()+l.slice(1).toLowerCase():"";
 function labelOf(l){const x=(l||"").toLowerCase();if(/background|introduc|aim|objective|purpose|rationale|importance|context/.test(x))return"Background";if(/method|design|setting|participant|patients and|intervention|exposure|measure/.test(x))return"Methods";if(/result|finding/.test(x))return"Results";if(/conclusion|interpret|relevance|implication|discussion/.test(x))return"Conclusions";if(/regist|funding|trial reg/.test(x))return"skip";return cap(l)}
 const tmo=(ms)=>{const c=new AbortController();setTimeout(()=>c.abort(),ms);return c.signal};
-async function src(name,diag,fn){try{const v=await fn();diag[name]=v?"ok":"no abstract";return v}catch(e){diag[name]=e&&e.name==="AbortError"?"timed out":"blocked";return null}}
+async function src(name,diag,fn){try{const v=await fn();diag[name]=v?(v.parts&&v.parts.length?"abstract found":"no abstract"):"not found";return v}catch(e){diag[name]=e&&e.name==="AbortError"?"timed out":e&&e.message==="http"?"not found":"blocked";return null}}
+const decodeX=t=>String(t||"").replace(/<[^>]+>/g,"").replace(/&#x([0-9a-f]+);/gi,(m,h)=>String.fromCodePoint(parseInt(h,16))).replace(/&#(\d+);/g,(m,d)=>String.fromCodePoint(+d)).replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&amp;/g,"&").replace(/\s+/g," ").trim();
+function absFromRaw(xml){const block=(xml.match(/<Abstract>([\s\S]*?)<\/Abstract>/)||[])[1]||"";const out=[];const re=/<AbstractText([^>]*)>([\s\S]*?)<\/AbstractText>/g;let m;while((m=re.exec(block))){const lab=(m[1].match(/Label="([^"]*)"/)||[])[1]||"";const t=decodeX(m[2]);if(t)out.push({l:lab,t})}return out}
 const stripHTML=h=>String(h||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
 function splitLabelled(h){
  const t=String(h||"").replace(/<\/?(?:sup|sub|i|em|jats:italic|jats:sup|jats:sub)>/g,"");
@@ -841,7 +843,11 @@ async function paperData(pmid){
    aus:Array.from(x.getElementsByTagName("Author")).map(a=>{const ln=a.getElementsByTagName("LastName")[0],ini=a.getElementsByTagName("Initials")[0],cn=a.getElementsByTagName("CollectiveName")[0];return cn?cn.textContent:ln?(ln.textContent+" "+(ini?ini.textContent:"")).trim():""}).filter(Boolean),
    types:Array.from(x.getElementsByTagName("PublicationType")).map(n=>n.textContent),keywords:Array.from(x.getElementsByTagName("Keyword")).map(n=>n.textContent.trim()).slice(0,8)};
   const ids=Array.from(x.getElementsByTagName("ArticleId"));const doi=ids.find(n=>n.getAttribute("IdType")==="doi"),pmc=ids.find(n=>n.getAttribute("IdType")==="pmc");
-  d.doi=doi?doi.textContent.trim():"";d.pmcid=pmc?pmc.textContent.trim():"";return d.parts.length||d.title?d:null});
+  d.doi=doi?doi.textContent.trim():"";d.pmcid=pmc?pmc.textContent.trim():"";
+  if(!d.parts.length)d.parts=absFromRaw(xml);
+  if(!d.title)d.title=decodeX((xml.match(/<ArticleTitle>([\s\S]*?)<\/ArticleTitle>/)||[])[1]);
+  diag._pubmedAbs=d.parts.length?"with abstract":"record has no abstract";
+  return d.parts.length||d.title?d:null});
  const epmc=src("Europe PMC",diag,async()=>{
   const r=await fetch(`${EPMC}search?query=EXT_ID:${pmid}%20AND%20SRC:MED&resultType=core&format=json`,{signal:tmo(9000)});if(!r.ok)throw new Error("http");
   const e=((await r.json()).resultList||{}).result;const x=e&&e[0];if(!x)return null;
@@ -920,7 +926,7 @@ async function makeSlides(pmid,count){
  const P=await paperData(pmid);
  if(!P.title)P.title=it.title||"Paper";
  if(!P.aus.length&&it.authors)P.aus=it.authors.replace(/, et al\.$/,"").split(", ");
- if(!P.parts.length&&!(S.charts||[]).length){S.slideBusy="";S.modal=null;renderModal();toast("No abstract found. "+Object.entries(P.diag||{}).map(([k,v])=>k+": "+v).join(", ")+".");return}
+ if(!P.parts.length&&!(S.charts||[]).length){S.slideBusy="";S.modal=null;renderModal();const pm=P.diag&&P.diag.PubMed==="no abstract";toast(pm?"PubMed has this paper but no abstract for it yet (common for papers only just published), so there's nothing to build slides from. Try an older paper.":"No abstract found. "+Object.entries(P.diag||{}).filter(([k])=>k[0]!=="_").map(([k,v])=>k+": "+v).join(", ")+".");return}
  let S2=sectionsFrom(P.parts),ftUsed=false;
  if(S.slideFigs&&P.pmcid&&P.oa){S.slideBusy="Reading the open-access full text";renderModal();
   try{const F=await fullTextSections(P.pmcid);
