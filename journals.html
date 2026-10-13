@@ -240,19 +240,32 @@ h1{font-size:27px!important;letter-spacing:.005em}
 .art .acts>a,.art .acts>button{flex:1 1 auto;min-width:0;margin:0!important;padding:7px 5px!important;font-size:12.5px!important;letter-spacing:-.2px;font-weight:600;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip;justify-content:center}
 @media (max-width:420px){.art .acts{gap:4px}.art .acts>a,.art .acts>button{font-size:12px!important;padding:7px 3px!important;letter-spacing:-.3px}}
 @media (max-width:340px){.art .acts{flex-wrap:wrap}.art .acts>a,.art .acts>button{flex:1 1 30%}}
+.tts{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+.tts button{border:1px solid #DCE0F4;background:#EEF0FB;color:#2E3A6B;border-radius:999px;padding:7px 14px;font-weight:700;font-size:14px;font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
+.np{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:40;background:#1C2541;color:#fff;border-radius:16px;padding:10px 12px;display:flex;align-items:center;gap:8px;box-shadow:0 6px 20px rgba(20,25,45,.35)}
+.np .npt{flex:1;min-width:0}.np .npt small{display:block;font-size:12px;color:#B9C1D6}.np .npt span{display:block;font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np button{background:rgba(255,255,255,.14);color:#fff;border:0;border-radius:50%;width:40px;height:40px;font-size:16px;flex:0 0 auto}
+main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
+.ord{display:inline-flex;flex-direction:column;gap:2px;margin-right:10px}
+.ord button{width:30px;height:22px;border:1px solid #DCE0F4;background:#F1F3F9;color:#2E3A6B;border-radius:6px;font-size:11px;line-height:1;padding:0}
+.ord button:disabled{opacity:.3}
+.tabs{overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tabs{gap:0!important}.tabs button{font-size:13.5px!important;padding:9px 3px!important;flex:1 1 auto!important;letter-spacing:-.25px}
+@media (max-width:400px){.tabs button{font-size:12.5px!important;padding:9px 2px!important;letter-spacing:-.3px}}
 </style>
 </head>
 <body>
 <header><div class="hin">
  <div class="top"><h1>Cardiology CPD</h1><span class="newc" id="newc"></span></div>
- <nav class="tabs" aria-label="Sections"><button data-tab="latest">Articles</button><button data-tab="guide">Guidelines</button><button data-tab="scores">Scores</button><button data-tab="saved">Library</button><button data-tab="settings">Settings</button></nav>
+ <nav class="tabs" aria-label="Sections"><button data-tab="latest">Articles</button><button data-tab="guide">Guidelines</button><button data-tab="pods">Podcasts</button><button data-tab="scores">Scores</button><button data-tab="saved">Library</button><button data-tab="settings">Settings</button></nav>
 </div></header>
 <main id="main"></main>
 <div id="modal"></div>
+<div id="np"></div>
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="journal-reader-v1",APPVER="13 Oct 2026 (d)";
+const KEY="journal-reader-v1",APPVER="14 Oct 2026 (k)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -269,22 +282,25 @@ const J=[
  {id:"hrhythm",name:"Heart Rhythm",ta:"Heart Rhythm",c:"#8A93A8"}
 ];
 const JBY=Object.fromEntries(J.map(j=>[j.ta.toLowerCase(),j]));
+const BASEJ=J.slice();
 const CARDIO="(cardi*[tiab] OR heart[tiab] OR coronary[tiab] OR atrial[tiab] OR myocard*[tiab] OR valv*[tiab] OR aortic[tiab] OR arrhythm*[tiab] OR hypertens*[tiab] OR stroke[tiab] OR cardiovascular[tiab] OR lipid*[tiab])";
 const tiab=a=>"("+a.map(w=>/\s/.test(w)?`"${w}"[tiab]`:`${w}[tiab]`).join(" OR ")+")";
 // sections: query words (PubMed) and title pattern (labels)
 const CATS=[
- {id:"ct",c:"#C0504D",name:"Cardiac CT",q:tiab(["computed tomography angiography","CT angiography","coronary CT","cardiac CT","CTCA","CCTA","calcium score","coronary artery calcium","FFRCT","CT-FFR","photon-counting"]),re:/computed tomograph|ct angiograph|\bctca\b|\bccta\b|coronary ct\b|cardiac ct\b|calcium scor|coronary artery calcium|ffr-?ct|ct-?ffr|photon-counting/i},
- {id:"mri",c:"#6D5BA8",name:"Cardiac MRI",q:tiab(["cardiac magnetic resonance","cardiovascular magnetic resonance","magnetic resonance imaging","CMR","cardiac MRI","late gadolinium","T1 mapping","T2 mapping","extracellular volume"]),re:/magnetic resonance|\bcmr\b|cardiac mri|\bmri\b|late gadolinium|\blge\b|t1 mapping|t2 mapping|extracellular volume/i},
- {id:"echo",c:"#2E8B88",name:"Echo",q:tiab(["echocardiography","echocardiographic","echocardiogram","speckle tracking","longitudinal strain","transthoracic","transesophageal","transoesophageal","stress echocardiography"]),re:/echocardiogra|\becho\b|speckle|longitudinal strain|transthoracic|trans-?o?esophageal/i},
- {id:"ep",c:"#C9822B",name:"EP",q:tiab(["electrophysiology","electrophysiological","catheter ablation","arrhythmia","arrhythmias","ventricular tachycardia","supraventricular tachycardia","sudden cardiac death","sudden cardiac arrest","syncope","ventricular fibrillation","premature ventricular","Wolff-Parkinson-White","bradycardia"]),re:/electrophysiolog|ablation|arrhythmi|ventricular tachycardia|supraventricular|sudden cardiac|syncope|ventricular fibrillation|premature ventricular|wolff|bradycardia|\bqt\b|conduction/i},
- {id:"hf",c:"#A84B7B",name:"Heart Failure",q:tiab(["heart failure","HFrEF","HFpEF","HFmrEF","ejection fraction","cardiogenic shock","ventricular dysfunction"]),re:/heart failure|\bhfref\b|\bhfpef\b|\bhfmref\b|ejection fraction|cardiogenic shock|ventricular dysfunction/i},
- {id:"af",c:"#3F6FB5",name:"AF",q:tiab(["atrial fibrillation","atrial flutter"]),re:/atrial fibrillation|atrial flutter|\baf\b/i},
- {id:"pharm",c:"#4E8F5E",name:"Cardiac Pharmacology",q:tiab(["anticoagulant","anticoagulation","antiplatelet","statin","statins","SGLT2","sodium-glucose cotransporter 2","sacubitril","PCSK9","inclisiran","semaglutide","tirzepatide","GLP-1","colchicine","apixaban","rivaroxaban","edoxaban","dabigatran","ticagrelor","clopidogrel","aspirin","mavacamten","aficamten","tafamidis","finerenone","bempedoic acid","lipoprotein(a)","ezetimibe","beta-blocker","beta-blockers","placebo"]),re:/anticoagula|antiplatelet|statin|sglt-?2|gliflozin|sacubitril|neprilysin|beta-?blocker|pcsk9|inclisiran|evolocumab|alirocumab|bempedoic|semaglutide|tirzepatide|glp-1|colchicine|apixaban|rivaroxaban|edoxaban|dabigatran|warfarin|ticagrelor|clopidogrel|prasugrel|aspirin|mavacamten|aficamten|tafamidis|finerenone|spironolactone|mineralocorticoid|lipoprotein\(a\)|olpasiran|pelacarsen|ezetimibe|icosapent|vericiguat|digoxin|amiodarone|placebo|drug|pharmacolog/i},
- {id:"icc",c:"#8E6C3E",name:"Inherited Cardiac Conditions",q:tiab(["hypertrophic cardiomyopathy","dilated cardiomyopathy","arrhythmogenic","Brugada","long QT syndrome","inherited","genetic","familial","amyloidosis","amyloid","Fabry","channelopathy","Marfan","noncompaction","non-compaction","genotype"]),re:/hypertrophic cardiomyopathy|\bhcm\b|arrhythmogenic|\barvc\b|brugada|long qt|inherited|genetic|familial|amyloid|fabry|channelopath|marfan|non-?compaction|dilated cardiomyopathy|genotype|variant/i},
- {id:"dev",c:"#5A6E8C",name:"Cardiac Devices",q:tiab(["pacemaker","pacemakers","cardiac pacing","conduction system pacing","defibrillator","defibrillators","implantable cardioverter","cardiac resynchronization","leadless","loop recorder","left ventricular assist","ventricular assist device","left atrial appendage occlusion","left atrial appendage closure"]),re:/pacemaker|pacing|defibrillat|\bicd\b|\bcrt\b|resynchroni|leadless|loop recorder|\blvad\b|ventricular assist|left atrial appendage|watchman|implantable/i},
- {id:"cad",c:"#9E2B3A",name:"Coronary Artery Disease",q:tiab(["coronary artery disease","coronary heart disease","myocardial infarction","acute coronary syndrome","angina","percutaneous coronary intervention","coronary artery bypass","CABG","stent","revascularization","revascularisation","MINOCA","troponin","atherosclerosis","chronic coronary syndrome"]),re:/coronary artery disease|coronary heart disease|myocardial infarction|\bstemi\b|nstemi|acute coronary|angina|percutaneous coronary|\bpci\b|bypass graft|\bcabg\b|stent|revasculari|minoca|troponin|atherosclero|coronary syndrome/i}
+ {id:"ct",c:"#C0504D",name:"Cardiac CT",w:["computed tomography angiography","CT angiography","coronary CT","cardiac CT","CTCA","CCTA","calcium score","coronary artery calcium","FFRCT","CT-FFR","photon-counting"],re:/computed tomograph|ct angiograph|\bctca\b|\bccta\b|coronary ct\b|cardiac ct\b|calcium scor|coronary artery calcium|ffr-?ct|ct-?ffr|photon-counting/i},
+ {id:"mri",c:"#6D5BA8",name:"Cardiac MRI",w:["cardiac magnetic resonance","cardiovascular magnetic resonance","magnetic resonance imaging","CMR","cardiac MRI","late gadolinium","T1 mapping","T2 mapping","extracellular volume"],re:/magnetic resonance|\bcmr\b|cardiac mri|\bmri\b|late gadolinium|\blge\b|t1 mapping|t2 mapping|extracellular volume/i},
+ {id:"echo",c:"#2E8B88",name:"Echo",w:["echocardiography","echocardiographic","echocardiogram","speckle tracking","longitudinal strain","transthoracic","transesophageal","transoesophageal","stress echocardiography"],re:/echocardiogra|\becho\b|speckle|longitudinal strain|transthoracic|trans-?o?esophageal/i},
+ {id:"ep",c:"#C9822B",name:"EP",w:["electrophysiology","electrophysiological","catheter ablation","arrhythmia","arrhythmias","ventricular tachycardia","supraventricular tachycardia","sudden cardiac death","sudden cardiac arrest","syncope","ventricular fibrillation","premature ventricular","Wolff-Parkinson-White","bradycardia"],re:/electrophysiolog|ablation|arrhythmi|ventricular tachycardia|supraventricular|sudden cardiac|syncope|ventricular fibrillation|premature ventricular|wolff|bradycardia|\bqt\b|conduction/i},
+ {id:"hf",c:"#A84B7B",name:"Heart Failure",w:["heart failure","HFrEF","HFpEF","HFmrEF","ejection fraction","cardiogenic shock","ventricular dysfunction"],re:/heart failure|\bhfref\b|\bhfpef\b|\bhfmref\b|ejection fraction|cardiogenic shock|ventricular dysfunction/i},
+ {id:"af",c:"#3F6FB5",name:"AF",w:["atrial fibrillation","atrial flutter"],re:/atrial fibrillation|atrial flutter|\baf\b/i},
+ {id:"pharm",c:"#4E8F5E",name:"Cardiac Pharmacology",w:["anticoagulant","anticoagulation","antiplatelet","statin","statins","SGLT2","sodium-glucose cotransporter 2","sacubitril","PCSK9","inclisiran","semaglutide","tirzepatide","GLP-1","colchicine","apixaban","rivaroxaban","edoxaban","dabigatran","ticagrelor","clopidogrel","aspirin","mavacamten","aficamten","tafamidis","finerenone","bempedoic acid","lipoprotein(a)","ezetimibe","beta-blocker","beta-blockers","placebo"],re:/anticoagula|antiplatelet|statin|sglt-?2|gliflozin|sacubitril|neprilysin|beta-?blocker|pcsk9|inclisiran|evolocumab|alirocumab|bempedoic|semaglutide|tirzepatide|glp-1|colchicine|apixaban|rivaroxaban|edoxaban|dabigatran|warfarin|ticagrelor|clopidogrel|prasugrel|aspirin|mavacamten|aficamten|tafamidis|finerenone|spironolactone|mineralocorticoid|lipoprotein\(a\)|olpasiran|pelacarsen|ezetimibe|icosapent|vericiguat|digoxin|amiodarone|placebo|drug|pharmacolog/i},
+ {id:"icc",c:"#8E6C3E",name:"Inherited Cardiac Conditions",w:["hypertrophic cardiomyopathy","dilated cardiomyopathy","arrhythmogenic","Brugada","long QT syndrome","inherited","genetic","familial","amyloidosis","amyloid","Fabry","channelopathy","Marfan","noncompaction","non-compaction","genotype"],re:/hypertrophic cardiomyopathy|\bhcm\b|arrhythmogenic|\barvc\b|brugada|long qt|inherited|genetic|familial|amyloid|fabry|channelopath|marfan|non-?compaction|dilated cardiomyopathy|genotype|variant/i},
+ {id:"dev",c:"#5A6E8C",name:"Cardiac Devices",w:["pacemaker","pacemakers","cardiac pacing","conduction system pacing","defibrillator","defibrillators","implantable cardioverter","cardiac resynchronization","leadless","loop recorder","left ventricular assist","ventricular assist device","left atrial appendage occlusion","left atrial appendage closure"],re:/pacemaker|pacing|defibrillat|\bicd\b|\bcrt\b|resynchroni|leadless|loop recorder|\blvad\b|ventricular assist|left atrial appendage|watchman|implantable/i},
+ {id:"cad",c:"#9E2B3A",name:"Coronary Artery Disease",w:["coronary artery disease","coronary heart disease","myocardial infarction","acute coronary syndrome","angina","percutaneous coronary intervention","coronary artery bypass","CABG","stent","revascularization","revascularisation","MINOCA","troponin","atherosclerosis","chronic coronary syndrome"],re:/coronary artery disease|coronary heart disease|myocardial infarction|\bstemi\b|nstemi|acute coronary|angina|percutaneous coronary|\bpci\b|bypass graft|\bcabg\b|stent|revasculari|minoca|troponin|atherosclero|coronary syndrome/i}
 ];
 const OTHERS={id:"oth",name:"Others",c:"#6B7280"};
+for(const c of CATS)c.q=tiab(c.w);
+const DEFCATS=CATS.map(c=>({...c}));
 const CBY=Object.fromEntries(CATS.map(c=>[c.id,c]).concat([["oth",OTHERS]]));
 const EXCL=" NOT (letter[pt] OR comment[pt] OR published erratum[pt] OR retraction of publication[pt] OR news[pt])";
 const PAGE=25;
@@ -316,9 +332,10 @@ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
 if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
 const seen=new Set(st.seen);
 
-const S={tab:"latest",cat:"all",j:"all",q:"",qscope:"mine",qsort:"date",lib:"later",cpdP:"12m",cpdFrom:"",cpdTo:"",modal:null,slideN:6,slideBusy:"",slideFigs:true,charts:[],chartDraft:null,cpdMin:30,cpdDate:"",cpdNote:"",items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,
+const S={tab:"latest",cat:"all",j:"all",q:"",qscope:"mine",qsort:"date",lib:"later",cpdP:"12m",cpdFrom:"",cpdTo:"",modal:null,slideN:6,slideBusy:"",slideFigs:true,charts:[],chartDraft:null,cpdMin:30,cpdDate:"",cpdNote:"",cpdRef:{domains:[]},tEdit:null,jfind:null,jq:"",jgen:false,items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,
  g:"esc",gsub:"esc",gl:{},gerr:{},gload:{},dq:"",dvlaErr:false,dvlaLoading:false};
 const $m=document.getElementById("main");
+applyJournals();applyTopics();
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const clean=s=>String(s||"").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'");
 const catsOf=title=>{const c=CATS.filter(x=>x.re.test(title)).map(x=>x.id);return c.length?c:["oth"]};
@@ -435,6 +452,39 @@ async function loadDVLA(force){
  }catch(e){S.dvlaErr=true}
  S.dvlaLoading=false;render();
 }
+const DVLA_SYNC=[["Appendices","https://www.gov.uk/guidance/appendices-assessing-fitness-to-drive"],["Neurological disorders","https://www.gov.uk/guidance/neurological-disorders-assessing-fitness-to-drive"]];
+function pickTLoC(html){
+ // finds matching headings anywhere in GOV.UK's HTML (it is often wrapped in extra containers) and keeps each with its content
+ const re=/loss of consciousness|syncope|blackout|lost or altered awareness|lost\/altered awareness/i;
+ const d=new DOMParser().parseFromString(`<div id="r">${html}</div>`,"text/html"),out=[],done=new Set();
+ for(const h of d.querySelectorAll("h2,h3,h4")){
+  if(done.has(h)||!re.test(h.textContent))continue;
+  const lvl=+h.tagName[1];out.push(h.outerHTML);done.add(h);
+  for(let n=h.nextSibling;n;n=n.nextSibling){
+   if(n.nodeType===1){const hm=/^H([2-4])$/.exec(n.tagName);if(hm&&+hm[1]<=lvl&&!re.test(n.textContent))break;if(hm)done.add(n);if(n.querySelectorAll)n.querySelectorAll("h2,h3,h4").forEach(x=>done.add(x))}
+   out.push(n.nodeType===1?n.outerHTML:esc(n.textContent));
+  }
+ }
+ return out.join("");
+}
+async function loadDVLASync(force){
+ if(S.dsLoading)return;
+ if(st.dvlaSync&&!force&&Date.now()-st.dvlaSync.at<7*864e5){render();return}
+ S.dsLoading=true;S.dsErr=false;render();
+ try{
+  let html="",upd="";
+  for(const[label,page]of DVLA_SYNC){
+   const r=await fetch(page.replace("https://www.gov.uk/","https://www.gov.uk/api/content/"));if(!r.ok)continue;const j=await r.json();
+   const body=j.details&&(j.details.body||(j.details.parts||[]).map(p=>`<h2>${p.title}</h2>${p.body}`).join(""));if(!body)continue;
+   const part=pickTLoC(body);if(part){html+=`<h2>From the ${label.toLowerCase()} chapter</h2><p class="note"><a href="${page}" target="_blank" rel="noopener">Open on GOV.UK</a></p>`+part}
+   const u=j.public_updated_at||j.updated_at||"";if(u>upd)upd=u;
+  }
+  if(!html)throw new Error();
+  st.dvlaSync={html,updated:upd,at:Date.now()};save();
+ }catch(e){S.dsErr=true}
+ S.dsLoading=false;render();
+}
+let dsSecs=null,dsSrc=null;
 function cleanDoc(html){
  const d=new DOMParser().parseFromString(`<div>${html}</div>`,"text/html");
  d.querySelectorAll("script,style,iframe,object,embed,form,input,button,img").forEach(n=>n.remove());
@@ -462,11 +512,11 @@ function card(it){
   <div class="acts">
    <button data-act="abs" data-id="${it.pmid}">${S.open[it.pmid]?"Hide":"Abstract"}</button>
    ${it.doi?`<a href="${esc(ftURL(it.doi))}" target="_blank" rel="noopener" data-act="ft" data-doi="${esc(it.doi)}">Full text</a>`:""}
-   <button data-act="slides" data-id="${it.pmid}">Slides</button>
+   <button data-act="share" data-id="${it.pmid}">Share</button>
    <button class="${cpdFor(it.pmid)?"arch on":""}" data-act="cpd" data-id="${it.pmid}">${cpdFor(it.pmid)?"CPD ✓":"CPD"}</button>
    <button class="arch ${sv?"on":""}" data-act="star" data-id="${it.pmid}" aria-pressed="${sv}">${sv?"Saved":"Archive"}</button>
   </div>
-  ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")}</div>`:""}
+  ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")+ttsBar(it.pmid)}</div>`:""}
  </article>`;
 }
 function vLatest(){
@@ -482,11 +532,16 @@ function vLatest(){
   ${S.items.map(card).join("")}
   ${S.items.length&&S.items.length<S.count?`<button class="more" data-act="more">${S.loading?`<span class="spin"></span>Loading`:"Show more"}</button>`:""}`;
 }
+const SIGNL=[["SIGN 148","Acute coronary syndrome","2016","acute-coronary-syndrome"],["SIGN 147","Management of chronic heart failure","2016","management-of-chronic-heart-failure"],["SIGN 151","Management of stable angina","2018","management-of-stable-angina"],["SIGN 152","Cardiac arrhythmias in coronary heart disease","2018","cardiac-arrhythmias-in-coronary-heart-disease"],["SIGN 149","Risk estimation and the prevention of cardiovascular disease","2017","risk-estimation-and-the-prevention-of-cardiovascular-disease"],["SIGN 150","Cardiac rehabilitation","2017","cardiac-rehabilitation"],["SIGN 129","Antithrombotics: indications and management","2012","antithrombotics-indications-and-management"],["SIGN 122","Prevention and management of venous thromboembolism","2014","prevention-and-management-of-venous-thromboembolism"],["SIGN 166","National clinical guideline for stroke for the UK and Ireland","2023","national-clinical-guideline-for-stroke-for-the-uk-and-ireland"]];
+function vSIGN(){return `<p class="note">Scottish Intercollegiate Guidelines Network cardiovascular guidelines. Each opens on the SIGN website, with the full guideline and quick reference guide.</p>
+ <div class="gl">${SIGNL.map(([c,tt,y,u])=>`<a class="gi" href="https://www.sign.ac.uk/guidelines/${u}/" target="_blank" rel="noopener"><div class="code">${c}, ${y}</div>${esc(tt)}</a>`).join("")}</div>
+ <p class="note">An update of SIGN 149 (risk estimation) is in progress. <a href="https://www.sign.ac.uk/guidelines/" target="_blank" rel="noopener">See all SIGN guidelines</a>, or use the free SIGN Guidelines app for recommendations on the go.</p>`}
 function vGuide(){
- const top=[["esc","ESC, ACC and NICE"],["dvla","DVLA"],["caa","CAA"]].map(([id,l])=>`<button class="chip ${S.g===id?"on":""}" data-act="g" data-v="${id}">${l}</button>`).join("");
+ const top=[["esc","ESC"],["acc","ACC/AHA"],["nice","NICE"],["sign","SIGN"],["dvla","DVLA"],["caa","CAA"]].map(([id,l])=>`<button class="chip ${S.g===id||(id==="esc"&&S.g==="pocket")?"on":""}" data-act="g" data-v="${id}">${l}</button>`).join("");
  let body="";
- if(S.g==="esc"){
-  const sub=[["esc","ESC"],["pocket","ESC pocket guides"],["acc","ACC/AHA"],["nice","NICE"]].map(([id,l])=>`<button class="chip ${S.gsub===id?"on":""}" data-act="gs" data-v="${id}">${l}</button>`).join("");
+ if(S.g==="sign"){body=vSIGN()}
+ else if(["esc","pocket","acc","nice"].includes(S.g)){
+  S.gsub=S.g;const sub=(S.g==="esc"||S.g==="pocket")?[["esc","Full guidelines"],["pocket","Pocket guides"]].map(([id,l])=>`<button class="chip ${S.g===id?"on":""}" data-act="g" data-v="${id}">${l}</button>`).join(""):"";
   if(S.gsub==="pocket"){
    body=`<div class="sub">${sub}</div>
     <p class="note">The ESC Pocket Guidelines are free but protected by ESC copyright, so they can't be copied into this app. They open in the ESC's own web viewer or app, with a free My ESC account.</p>
@@ -506,17 +561,30 @@ function vGuide(){
     ${list?list.length?list.map(card).join(""):`<div class="msg">No guidelines found.</div>`:""}`;
   }
  }else if(S.g==="dvla"){
+  const dsub=`<div class="sub">${[["cv","Cardiovascular"],["sync","Syncope and blackouts"]].map(([id,l])=>`<button class="chip ${(S.dv||"cv")===id?"on":""}" data-act="dv" data-v="${id}">${l}</button>`).join("")}</div>`;
+  if(S.dv==="sync"){
+   if((!st.dvlaSync||Date.now()-st.dvlaSync.at>7*864e5)&&!S.dsLoading&&!S.dsErr)setTimeout(()=>loadDVLASync());
+   if(st.dvlaSync&&dsSrc!==st.dvlaSync.html){dsSecs=cleanDoc(st.dvlaSync.html);dsSrc=st.dvlaSync.html}
+   const q=S.dq.trim().toLowerCase();
+   body=dsub+`<p class="note">Transient loss of consciousness and syncope, which DVLA now covers in Appendix D of Assessing fitness to drive, loaded from GOV.UK${st.dvlaSync&&st.dvlaSync.updated?`. Last updated by DVLA ${new Date(st.dvlaSync.updated).toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}`:""}.</p>
+    ${S.dsLoading?`<div class="msg"><span class="spin"></span>Loading from GOV.UK</div>`:""}
+    ${S.dsErr?`<div class="msg err">${st.dvlaSync?"Couldn't refresh, so this is the copy saved on your phone.":"Couldn't load the guidance here."} <a href="https://www.gov.uk/guidance/appendices-assessing-fitness-to-drive#appendix-d-transient-loss-of-consciousness-blackouts-and-lost-or-altered-awareness" target="_blank" rel="noopener">Open Appendix D on GOV.UK</a> or <button class="link" data-act="dvsync">try again</button>.</div>`:""}
+    ${dsSecs?`<input class="search" id="dq" type="search" placeholder="Find, such as vasovagal or cough syncope" value="${esc(S.dq)}" autocomplete="off">
+     <div class="doc" style="margin-top:10px">${dsSecs.map((x,i)=>`<section class="sec" ${q&&!x.text.includes(q)&&!x.h.toLowerCase().includes(q)?"hidden":""}>${x.html}</section>`).join("")}</div>
+     <button class="link" style="color:#2D4E8A;margin-top:8px" data-act="dvsync">Check GOV.UK for updates</button>`:""}`;
+  }else{
   if((!st.dvla||Date.now()-st.dvla.at>7*864e5)&&!S.dvlaLoading&&!S.dvlaErr)setTimeout(()=>loadDVLA());
   if(st.dvla&&dvlaSrc!==st.dvla.html){dvlaSecs=cleanDoc(st.dvla.html);dvlaSrc=st.dvla.html}
   const q=S.dq.trim().toLowerCase();
   const heads=dvlaSecs?dvlaSecs.filter(s=>s.h):[];
-  body=`<p class="note">Chapter 2, Cardiovascular disorders, from DVLA's Assessing fitness to drive, loaded from GOV.UK${st.dvla&&st.dvla.updated?`. Last updated by DVLA ${new Date(st.dvla.updated).toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}`:""}. <a href="${DVLA_PAGE}" target="_blank" rel="noopener">Open on GOV.UK</a></p>
+  body=dsub+`<p class="note">Chapter 2, Cardiovascular disorders, from DVLA's Assessing fitness to drive, loaded from GOV.UK${st.dvla&&st.dvla.updated?`. Last updated by DVLA ${new Date(st.dvla.updated).toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}`:""}. <a href="${DVLA_PAGE}" target="_blank" rel="noopener">Open on GOV.UK</a></p>
    ${S.dvlaLoading?`<div class="msg"><span class="spin"></span>Loading from GOV.UK</div>`:""}
    ${S.dvlaErr?`<div class="msg err">${st.dvla?"Couldn't refresh, so this is the copy saved on your phone.":"Couldn't load the guidance here."} <a href="${DVLA_PAGE}" target="_blank" rel="noopener">Open it on GOV.UK</a> or <button class="link" data-act="dvla">try again</button>.</div>`:""}
    ${dvlaSecs?`<input class="search" id="dq" type="search" placeholder="Find a condition, such as ICD or angina" value="${esc(S.dq)}" autocomplete="off">
     ${!q&&heads.length?`<div class="row" style="flex-wrap:wrap;overflow:visible">${heads.filter(s=>s.lvl==="H2").map((s,i)=>`<button class="chip" data-act="jump" data-v="${dvlaSecs.indexOf(s)}">${esc(s.h)}</button>`).join("")}</div>`:""}
     <div class="doc" style="margin-top:10px">${dvlaSecs.map((s,i)=>`<section class="sec" id="dv${i}" ${q&&!s.text.includes(q)&&!s.h.toLowerCase().includes(q)?"hidden":""}>${s.html}</section>`).join("")}</div>
     <button class="link" style="color:#2D4E8A;margin-top:8px" data-act="dvla">Check GOV.UK for updates</button>`:""}`;
+  }
  }else{
   body=`<p class="note">Key points for pilot medicals (Class 1 and Class 2), summarised from UK CAA guidance for aeromedical examiners. Always check the full text and flow charts before advising. <a href="${CAA_PAGE}" target="_blank" rel="noopener">Open CAA cardiology guidance</a></p>
    <div class="gl">${CAA.map(s=>`<div class="kp"><h4>${esc(s.t)}</h4><ul>${s.p.map(p=>`<li>${esc(p)}</li>`).join("")}</ul>
@@ -529,15 +597,22 @@ function vSaved(){
  const sub=`<div class="row">${[["later","Read later"],["cpd","CPD log"]].map(([id,l])=>`<button class="chip ${S.lib===id?"on":""}" data-act="lib" data-v="${id}">${l}</button>`).join("")}</div>`;
  if(S.lib==="cpd")return sub+vCPD();
  const items=Object.values(st.saved).sort((a,b)=>(b.at||0)-(a.at||0));
- return sub+(items.length?`<p class="help">${items.length} archived ${items.length===1?"article":"articles"} to read later, newest first. Tap Saved to remove one.</p>${items.map(card).join("")}`:`<div class="msg">Nothing archived yet. Tap Archive on any article or guideline to keep it here to read later.</div>`);
+ return sub+(items.length?`<div class="pk" style="margin-top:4px"><a href="#" data-act="listenall">▶ Listen to all ${items.length}</a></div><p class="note" style="margin-top:0">Reads each title and abstract in turn. Keep the app open with the screen on, as iPhone stops reading when it locks.</p><p class="help">${items.length} archived ${items.length===1?"article":"articles"} to read later, newest first. Tap Saved to remove one.</p>${items.map(card).join("")}`:`<div class="msg">Nothing archived yet. Tap Archive on any article or guideline to keep it here to read later.</div>`);
 }
 function vSettings(){
  return `<h3>What to show</h3><div class="card">
   <label class="set"><span>Period</span><select id="days">${[14,30,60,90,180].map(d=>`<option value="${d}" ${st.days===d?"selected":""}>Last ${d} days</option>`).join("")}</select></label>
   <label class="set"><span>Research and reviews only<br><small class="au">Hides letters, comments and corrections</small></span><input type="checkbox" id="research" ${st.research?"checked":""}></label>
  </div>
- <h3>Journals</h3><p class="help">NEJM, Lancet and JAMA show cardiovascular articles only.</p>
- <div class="card">${J.map(j=>`<label class="set"><span><span class="chip" style="border:0;padding:0;background:none"><i style="background:${j.c}"></i></span>${j.name}</span><input type="checkbox" data-jt="${j.id}" ${st.off[j.id]?"":"checked"}></label>`).join("")}</div>
+ ${vTopicSettings()}
+ ${vJournalSettings()}
+ <h3>Reading aloud</h3><div class="card">
+  <p class="help" style="margin-top:8px">Open an abstract and tap Listen. Abbreviations such as HR and 95% CI are read in full.</p>
+  ${TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
+  <label class="set"><span>Speed</span><select id="ratesel">${[["0.85","Slower"],["1","Normal"],["1.15","A bit faster"],["1.3","Faster"],["1.5","Fastest"]].map(([v,l])=>`<option value="${v}" ${String(st.rate||"1")===v?"selected":""}>${l}</option>`).join("")}</select></label>
+  <div class="pk"><a href="#" data-act="ttstest">Test voice</a></div>
+  <p class="note"><b>For the most natural sound</b>, download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>
+ </div>
  <h3>Full-text access</h3><div class="card">
   <p class="help" style="margin-top:8px">How the Full text button opens papers. Sign in once through your library and the following papers open without logging in again.</p>
   <label class="set"><span>Open papers through</span><select id="ftmode">${FTMODES.map(([v,l])=>`<option value="${v}" ${(st.ft||{}).mode===v?"selected":""}>${l}</option>`).join("")}</select></label>
@@ -1014,19 +1089,19 @@ function vCPD(){
    ${L.length?`<div class="pk" style="margin-top:12px"><a href="#" data-act="cpdcsv">Export for appraisal</a><a href="#" class="alt" data-act="cpdcopy">Copy summary</a></div>`:""}</div>
   ${L.length?`<div class="gl" style="margin-top:12px">${L.map(c=>`<div class="kp"><div style="display:flex;justify-content:space-between"><b style="font-size:14px">${fmtD(c.date)}</b><b style="font-size:14px">${hrs(c.minutes)}</b></div>
    <div style="font-family:'Iowan Old Style',Charter,Georgia,serif;font-size:16px;margin:2px 0">${esc(c.title)}</div><div class="au">${esc(c.src||"")}</div>
-   ${c.note?`<div class="au" style="margin-top:4px;font-style:italic">${esc(c.note)}</div>`:""}
+   ${c.ref?[["Learning",c.ref.learn],["Change to practice",c.ref.change],["Further learning",c.ref.further]].filter(x=>x[1]).map(([k,v])=>`<div class="au" style="margin-top:4px"><b>${k}:</b> ${esc(v)}</div>`).join("")+((c.ref.domains||[]).length?`<div class="tags">${c.ref.domains.map(d=>`<span class="tag" style="--tc:#5A6E8C">${esc(d)}</span>`).join("")}</div>`:""):c.note?`<div class="au" style="margin-top:4px;font-style:italic">${esc(c.note)}</div>`:""}
    <div class="lk">${S.confirm==="cpd:"+c.id?`<button class="link" data-act="cpddel" data-v="${c.id}">Confirm delete</button>`:`<button class="link" data-act="cpdask" data-v="${c.id}">Delete</button>`}</div></div>`).join("")}</div>`:`<div class="msg" style="margin-top:12px">No CPD logged in this period. Tap CPD on any article after reading it.</div>`}
   <p class="note">Your CPD log stays on this phone. Export it regularly for your appraisal folder.</p>`;
 }
 function cpdCSV(){
  const L=cpdList(),q=v=>`"${String(v||"").replace(/"/g,'""')}"`;
- const rows=[["Date","Minutes","Title","Journal","PMID","DOI","Reflection"].join(",")].concat(L.map(c=>[c.date,c.minutes,q(c.title),q(c.src),c.pmid,q(c.doi),q(c.note)].join(",")));
+ const rows=[["Date","Minutes","Title","Source","PMID","DOI","Key learning","Change to practice","Further learning","GMP domains"].join(",")].concat(L.map(c=>{const r=c.ref||{};return [c.date,c.minutes,q(c.title),q(c.src),String(c.pmid).startsWith("pod:")?"":c.pmid,q(c.doi),q(r.learn||c.note||""),q(r.change),q(r.further),q((r.domains||[]).join("; "))].join(",")}));
  rows.push(`Total,${L.reduce((a,c)=>a+c.minutes,0)},${q((L.reduce((a,c)=>a+c.minutes,0)/60).toFixed(1)+" hours")}`);
  const f=new File([rows.join("\r\n")],`cpd-reading-${isoD(new Date())}.csv`,{type:"text/csv"});
  if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:"CPD log"}).catch(()=>{});return}
  const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
 }
-function cpdSummary(){const L=cpdList(),tot=L.reduce((a,c)=>a+c.minutes,0);return `CPD from journal reading: ${(tot/60).toFixed(1)} hours (${L.length} papers)\n\n`+L.map(c=>`${c.date} (${c.minutes} min): ${c.title}. ${c.src||""}${c.note?" Reflection: "+c.note:""}`).join("\n")}
+function cpdSummary(){const L=cpdList(),tot=L.reduce((a,c)=>a+c.minutes,0);return `CPD from journal reading: ${(tot/60).toFixed(1)} hours (${L.length} papers)\n\n`+L.map(c=>`${c.date} (${c.minutes} min): ${c.title}. ${c.src||""}${reflText(c)?" "+reflText(c):""}`).join("\n")}
 // ---------- bottom sheet ----------
 function chartForm(){const d=S.chartDraft,bar=d.type==="bar";
  return `<div class="card" style="padding:10px 12px">
@@ -1039,7 +1114,7 @@ function chartForm(){const d=S.chartDraft,bar=d.type==="bar";
 function renderModal(){
  const el=document.getElementById("modal");if(!el)return;
  const m=S.modal;if(!m){el.innerHTML="";el.className="";return}
- const it=findItem(m.pmid)||st.saved[m.pmid]||{title:""};
+ const it=findItem(m.pmid)||st.saved[m.pmid]||{title:m.title||""};
  el.className="ov";
  if(m.type==="slides")el.innerHTML=`<div class="sheet" role="dialog" aria-label="Make slides"><h3>Make slides</h3><p class="note" style="margin:0 0 6px">Version ${APPVER}</p><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
   ${S.slideBusy?`<div class="msg"><span class="spin"></span>${esc(S.slideBusy)}</div>`:`<label class="set"><span>Number of slides</span><select id="slidecount">${[3,4,5,6,7,8,10,12].map(n=>`<option value="${n}" ${+S.slideN===n?"selected":""}>${n}</option>`).join("")}</select></label>
@@ -1054,16 +1129,198 @@ function renderModal(){
   <div class="row" style="flex-wrap:wrap;overflow:visible">${[10,15,20,30,45,60].map(n=>`<button class="chip ${+S.cpdMin===n?"on":""}" data-act="cpdmin" data-v="${n}">${n} min</button>`).join("")}</div>
   <label class="set"><span>Minutes</span><input class="search" style="width:110px" type="number" inputmode="numeric" min="1" id="cpdmins" value="${S.cpdMin||""}"></label>
   <label class="set"><span>Date</span><input class="search" style="width:170px" type="date" id="cpddate" value="${S.cpdDate||isoD(new Date())}"></label>
-  <label class="au" style="display:block;margin-top:6px">Reflection (optional)<textarea class="search" id="cpdnote" rows="3" placeholder="What did you learn, and will it change your practice?">${esc(S.cpdNote||"")}</textarea></label>
+  <div style="margin-top:8px"><b style="font-size:15px">Reflection for appraisal</b> <span class="au" style="font-size:13px">(optional)</span>
+   <label class="au" style="display:block;margin-top:6px">What did you learn?<textarea class="search" id="cpdlearn" rows="2" placeholder="Key messages from this paper">${esc(S.cpdRef.learn||"")}</textarea></label>
+   <label class="au" style="display:block;margin-top:6px">How will it change your practice?<textarea class="search" id="cpdchange" rows="2" placeholder="For example, I'll discuss anticoagulation earlier in device-detected AF">${esc(S.cpdRef.change||"")}</textarea></label>
+   <label class="au" style="display:block;margin-top:6px">Any further learning needed?<textarea class="search" id="cpdfurther" rows="2" placeholder="For example, read the ESC AF guideline section on this">${esc(S.cpdRef.further||"")}</textarea></label>
+   <div class="au" style="margin-top:8px">Good Medical Practice domains</div>
+   <div class="row" style="flex-wrap:wrap;overflow:visible">${GMP.map(d=>`<button class="chip ${(S.cpdRef.domains||[]).includes(d)?"on":""}" data-act="cpddom" data-v="${esc(d)}">${esc(d)}</button>`).join("")}</div></div>
   <div class="pk"><a href="#" data-act="cpdsave">Save to CPD log</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`}
+}
+
+// ---------- podcasts ----------
+const aps=n=>`https://podcasts.apple.com/gb/search?term=${encodeURIComponent(n)}`,sps=n=>`https://open.spotify.com/search/${encodeURIComponent(n)}/podcasts`;
+const PODS=[
+ {g:"Journal summaries",items:[
+  {id:"cotr",n:"Circulation on the Run",by:"American Heart Association",d:"Weekly 15-minute summary of each Circulation issue, then an author and editor discussing a featured paper.",apple:"https://podcasts.apple.com/podcast/id1108662449"},
+  {id:"jacc",n:"JACC Podcast",q:"JACC Podcast Valentin Fuster",by:"American College of Cardiology",d:"Valentin Fuster's weekly overview of the JACC issue, with a short summary of each paper."},
+  {id:"jamac",n:"JAMA Cardiology Author Interviews",by:"JAMA Network",d:"Authors explain their JAMA Cardiology papers."},
+  {id:"heart",n:"Heart Podcast",q:"Heart podcast BMJ",by:"BMJ (Heart journal)",d:"UK-based interviews with authors of papers published in Heart.",web:"https://heart.bmj.com/pages/heart-podcast"}]},
+ {g:"News, trials and opinion",items:[
+  {id:"twic",n:"This Week in Cardiology",q:"This Week in Cardiology Mandrola",by:"Medscape, John Mandrola",d:"Weekly, sceptical take on the week's top trials and news."},
+  {id:"eagle",n:"Eagle's Eye View",by:"American College of Cardiology",d:"Kim Eagle's weekly cardiovascular update from ACC.org."},
+  {id:"bob",n:"The Bob Harrington Show",by:"Medscape",d:"Long-form conversations with leading cardiologists about research and practice."},
+  {id:"parallax",n:"Parallax by Ankur Kalra",by:"Radcliffe Cardiology",d:"Interviews with leading cardiologists and reviews of late-breaking trials from major congresses."}]},
+ {g:"European and UK",items:[
+  {id:"esc",n:"ESC Cardio Talk",by:"European Society of Cardiology",d:"ESC experts on advances relevant to daily practice. Also see EHRA Cardio Talk and HFA Cardio Talk below."},
+  {id:"ehra",n:"EHRA Cardio Talk",by:"European Heart Rhythm Association",d:"Arrhythmias, AF, pacing and devices."},
+  {id:"hfa",n:"HFA Cardio Talk",by:"Heart Failure Association of the ESC",d:"Monthly 15-minute conversations on heart failure."},
+  {id:"radcliffe",n:"Radcliffe Cardiology Podcast",by:"Radcliffe Cardiology",d:"Key takeaways from major cardiology conferences and recent papers.",web:"https://www.radcliffecardiology.com/podcasts"}]},
+ {g:"Teaching and case-based",items:[
+  {id:"cnerds",n:"CardioNerds",q:"CardioNerds",by:"CardioNerds",d:"Case reports, deep dives and series on every area of cardiology, popular with trainees and teachers.",web:"https://www.cardionerds.com"},
+  {id:"apc",n:"AP Cardiology",by:"AP Cardiology",d:"Common cardiology questions and recent research, aimed at internists and residents: useful for GP teaching."}]}
+];
+function vPods(){
+ return `<p class="note">Tap a podcast to open it in Apple Podcasts or Spotify. After listening, tap CPD to log the time.</p>
+ ${PODS.map(s=>`<h3>${s.g}</h3><div class="gl">${s.items.map(p=>`<div class="kp"><h4>${esc(p.n)}</h4><div class="au">${esc(p.by)}</div><p style="font-size:15px;margin-top:4px">${esc(p.d)}</p>
+  <div class="lk"><a href="${p.apple||aps(p.q||p.n)}" target="_blank" rel="noopener">Apple Podcasts</a><a href="${sps(p.q||p.n)}" target="_blank" rel="noopener">Spotify</a>${p.web?`<a href="${p.web}" target="_blank" rel="noopener">Website</a>`:""}<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:600;padding:0" data-act="podcpd" data-id="pod:${p.id}" data-n="${esc(p.n)}">${cpdFor("pod:"+p.id)?"CPD ✓":"CPD"}</button></div></div>`).join("")}</div>`).join("")}`;
+}
+// ---------- reading aloud with the phone's own voices ----------
+const TTS={voices:[],playing:false,paused:false,q:[],pmid:""};
+function loadVoices(){const v=(window.speechSynthesis&&speechSynthesis.getVoices())||[];
+ const rank=x=>(/premium/i.test(x.name)?0:/enhanced|neural|natural/i.test(x.name)?1:2)+(/en-GB/i.test(x.lang)?0:/en-(IE|AU|NZ|ZA)/i.test(x.lang)?0.3:/en/i.test(x.lang)?0.5:5);
+ TTS.voices=v.filter(x=>/^en/i.test(x.lang)&&!/(Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Wobble|Zarvox|Trinoids|Whisper|Albert|Fred|Junior|Ralph|Kathy|Jester|Organ|Superstar|Grandma|Grandpa|Rocko|Shelley|Flo|Eddy|Reed|Sandy|Good News)/.test(x.name)).sort((a,b)=>rank(a)-rank(b)||a.name.localeCompare(b.name))}
+if(window.speechSynthesis){loadVoices();speechSynthesis.onvoiceschanged=()=>{loadVoices();if(S.tab==="settings")render()}}
+function speakable(t){return String(t)
+ // keep statistics simple when read aloud: drop confidence intervals, tidy the ratio
+ .replace(/\s*\(\s*(?:95|90|99)\s*%\s*(?:CI|confidence intervals?|credible interval)[^)]*\)/gi,"")
+ .replace(/[;,]?\s*(?:95|90|99)\s*%\s*(?:CI|confidence intervals?|credible interval)(?:\s*\[[^\]]*\])?\s*[,:=]?\s*-?\d+(?:\.\d+)?\s*(?:to|-|–|—|,)\s*-?\d+(?:\.\d+)?/gi,"")
+ .replace(/[;,]?\s*\bCI\s*[,:=]?\s*-?\d+(?:\.\d+)?\s*(?:to|-|–|—)\s*-?\d+(?:\.\d+)?/g,"")
+ .replace(/\b(hazard ratio|odds ratio|relative risk|risk ratio|HR|OR|RR)\s*[,:=]\s*/gi,"$1 ")
+ .replace(/\(\s*[;,]?\s*\)/g,"").replace(/\s+([;,)])/g,"$1").replace(/\(\s*/g,"(")
+ .replace(/\s*\(\s*±\s*SD\s*\)/gi,"").replace(/\s*\[(?:CI|95% CI|confidence interval)\]/gi,"").replace(/CHA2DS2-VASc|CHA₂DS₂-VASc/gi,"chads vasc").replace(/CHA2DS2-VA\b/gi,"chads V A").replace(/HAS-BLED/gi,"has bled").replace(/\bNT-proBNP\b/gi,"N T pro B N P").replace(/\bSGLT2\b/gi,"S G L T 2")
+ .replace(/\b95%\s*(?:CI|confidence interval)\b/gi,"95 percent confidence interval").replace(/\bCI\b/g,"confidence interval")
+ .replace(/\bHR\b/g,"hazard ratio").replace(/\bOR\b(?=\s*[\d,(])/g,"odds ratio").replace(/\bRR\b/g,"relative risk").replace(/\bvs\.?\b/gi,"versus")
+ .replace(/(\d)\s*[–-]\s*(\d)/g,"$1 to $2").replace(/±/g," plus or minus ").replace(/≥/g," at least ").replace(/≤/g," at most ").replace(/</g," less than ").replace(/>/g," more than ")
+ .replace(/\bP\s*=\s*/g,"P equals ").replace(/(\d)\s*%/g,"$1 percent").replace(/\bLVEF\b/g,"L V ejection fraction").replace(/\bet al\.?/g,"and colleagues").replace(/\s+/g," ").trim()}
+function ttsStop(){if(window.speechSynthesis)speechSynthesis.cancel();TTS.playing=false;TTS.paused=false;TTS.q=[];TTS.pmid="";render()}
+function ttsVoice(){return TTS.voices.find(v=>v.voiceURI===st.voice)||TTS.voices[0]||null}
+function ttsSay(chunks,pmid){
+ if(!window.speechSynthesis){toast("This phone's browser can't read aloud.");return}
+ speechSynthesis.cancel();TTS.q=chunks.slice();TTS.playing=true;TTS.paused=false;TTS.pmid=pmid;
+ const v=ttsVoice(),next=()=>{if(!TTS.q.length){TTS.playing=false;TTS.pmid="";render();return}
+  const u=new SpeechSynthesisUtterance(TTS.q.shift());if(v){u.voice=v;u.lang=v.lang}u.rate=+st.rate||1;u.onend=()=>{if(TTS.playing)next()};u.onerror=()=>{if(TTS.playing)next()};speechSynthesis.speak(u)};
+ next();render();
+}
+function ttsArticle(pmid){
+ const it=findItem(pmid)||st.saved[pmid]||{},ab=S.abs[pmid];
+ if(!Array.isArray(ab)){toast("Open the abstract first, then tap Listen.");return}
+ const out=[speakable(it.title||"")];
+ for(const p of ab){if(/regist|funding/i.test(p.l))continue;const lab=p.l?p.l.charAt(0)+p.l.slice(1).toLowerCase()+". ":"";const ss=sentences(speakable(p.t));ss.forEach((s,i)=>out.push((i===0?lab:"")+s))}
+ ttsSay(out.filter(Boolean),pmid);
+}
+function ttsBar(pmid){
+ const on=TTS.pmid===pmid&&TTS.playing;
+ return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}<span class="au" style="font-size:13px">${esc((ttsVoice()||{}).name||"")}${st.rate&&+st.rate!==1?`, ${st.rate}×`:""}</span></div>`;
+}
+
+// ---------- share ----------
+async function shareArticle(pmid){
+ const it=findItem(pmid)||st.saved[pmid]||{},url=it.doi?`https://doi.org/${it.doi}`:`https://pubmed.ncbi.nlm.nih.gov/${pmid}/`,j=(jOf(it).name||it.src||"");
+ const text=`${it.title||""}\n${it.authors||""}${j?". "+j:""}${it.date?", "+it.date:""}`;
+ if(navigator.share){try{await navigator.share({title:it.title||"Article",text,url})}catch(e){}return}
+ try{await navigator.clipboard.writeText(text+"\n"+url);toast("Copied, ready to paste")}catch(e){toast("Sharing isn't available on this device.")}
+}
+// ---------- continuous listening (Read later list) ----------
+TTS.list=[];TTS.idx=-1;TTS.mode="";TTS.gen=0;TTS.title="";
+function speakNext(){
+ const g=TTS.gen;
+ if(!TTS.q.length){if(TTS.mode==="list"&&TTS.playing){playNext();return}TTS.playing=false;TTS.pmid="";TTS.mode="";render();return}
+ const v=ttsVoice(),u=new SpeechSynthesisUtterance(TTS.q.shift());if(v){u.voice=v;u.lang=v.lang}u.rate=+st.rate||1;
+ u.onend=()=>{if(TTS.playing&&g===TTS.gen)speakNext()};u.onerror=()=>{if(TTS.playing&&g===TTS.gen)speakNext()};speechSynthesis.speak(u);
+}
+ttsSay=function(chunks,pmid){
+ if(!window.speechSynthesis){toast("This phone's browser can't read aloud.");return}
+ TTS.gen++;speechSynthesis.cancel();TTS.q=chunks.slice();TTS.playing=true;TTS.paused=false;TTS.pmid=pmid;if(pmid!=="list")TTS.mode="";
+ speakNext();render();
+};
+ttsStop=function(){TTS.gen++;if(window.speechSynthesis)speechSynthesis.cancel();TTS.playing=false;TTS.paused=false;TTS.q=[];TTS.pmid="";TTS.mode="";TTS.list=[];TTS.idx=-1;render()};
+function articleChunks(pmid,n,total){
+ const it=findItem(pmid)||st.saved[pmid]||{},ab=S.abs[pmid],out=[`Article ${n} of ${total}. ${speakable(it.title||"")}`];
+ if(Array.isArray(ab)){for(const p of ab){if(/regist|funding/i.test(p.l))continue;const lab=p.l?p.l.charAt(0)+p.l.slice(1).toLowerCase()+". ":"";sentences(speakable(p.t)).forEach((s,i)=>out.push((i===0?lab:"")+s))}}
+ else out.push("There's no abstract available for this one.");
+ return out;
+}
+async function ensureAbs(pmid){if(Array.isArray(S.abs[pmid])||S.abs[pmid]==="none")return;try{const P=await paperData(pmid);S.abs[pmid]=P.parts.length?P.parts:"none"}catch(e){S.abs[pmid]="none"}}
+async function playNext(){
+ TTS.idx++;const g=TTS.gen;
+ if(TTS.idx>=TTS.list.length){TTS.q=["That's the end of your saved articles."];TTS.mode="";speakNext();return}
+ const pmid=TTS.list[TTS.idx];TTS.title=(st.saved[pmid]||{}).title||"";renderNP();
+ await ensureAbs(pmid);if(g!==TTS.gen||!TTS.playing)return;
+ TTS.q=articleChunks(pmid,TTS.idx+1,TTS.list.length);speakNext();
+ const nx=TTS.list[TTS.idx+1];if(nx)ensureAbs(nx);
+}
+function listenAll(){
+ const items=Object.values(st.saved).sort((a,b)=>(b.at||0)-(a.at||0));if(!items.length)return;
+ TTS.list=items.map(i=>i.pmid);TTS.idx=-1;TTS.mode="list";
+ ttsSay([`Playing ${items.length} saved ${items.length===1?"article":"articles"}.`],"list");TTS.mode="list";
+ ensureAbs(TTS.list[0]);
+}
+function skipNext(){if(TTS.mode!=="list")return;TTS.gen++;speechSynthesis.cancel();TTS.q=[];TTS.playing=true;TTS.paused=false;playNext()}
+function renderNP(){
+ const el=document.getElementById("np");if(!el)return;
+ if(!(TTS.playing&&TTS.mode==="list")){el.innerHTML="";el.className="";return}
+ el.className="np";
+ el.innerHTML=`<div class="npt"><small>${TTS.idx>=0?`Article ${TTS.idx+1} of ${TTS.list.length}`:"Starting"}</small><span>${esc(TTS.title||"Saved articles")}</span></div>
+  <button data-act="nppause" aria-label="${TTS.paused?"Resume":"Pause"}">${TTS.paused?"▶":"⏸"}</button><button data-act="npnext" aria-label="Next article">⏭</button><button data-act="ttsstop" aria-label="Stop">■</button>`;
+}
+// ---------- reflection for appraisal (GMC Good Medical Practice 2024 domains) ----------
+const GMP=["Knowledge, skills and development","Patients, partnership and communication","Colleagues, culture and safety","Trust and professionalism"];
+function reflText(c){if(!c.ref)return c.note||"";const r=c.ref;return [r.learn&&`Key learning: ${r.learn}`,r.change&&`Change to practice: ${r.change}`,r.further&&`Further learning: ${r.further}`,r.domains&&r.domains.length&&`GMP domains: ${r.domains.join("; ")}`].filter(Boolean).join(" | ")}
+// ---------- settings: topics ----------
+function wordsRe(w){return new RegExp(w.map(x=>x.toLowerCase().replace(/[.+?^${}()|[\]\\]/g,"\\$&").replace(/\*/g,"\\w*")).join("|"),"i")}
+function byOrder(arr,order){if(!order||!order.length)return arr;const pos=new Map(order.map((id,i)=>[id,i]));return arr.map((x,i)=>[x,pos.has(x.id)?pos.get(x.id):1000+i]).sort((a,b)=>a[1]-b[1]).map(x=>x[0])}
+function moveIn(list,id,dir){const ids=list.map(x=>x.id),i=ids.indexOf(id),j=i+dir;if(i<0||j<0||j>=ids.length)return null;[ids[i],ids[j]]=[ids[j],ids[i]];return ids}
+function applyTopics(){
+ const ov=st.topicEdits||{},custom=st.customTopics||[];CATS.length=0;
+ for(const d of DEFCATS){const e=ov[d.id]||{};if(e.hidden)continue;const c={...d};if(e.name)c.name=e.name;if(e.c)c.c=e.c;if(e.w&&e.w.length){c.w=e.w;c.q=tiab(e.w);c.re=wordsRe(e.w)}CATS.push(c)}
+ for(const t of custom){if(t.hidden||!(t.w||[]).length)continue;CATS.push({id:t.id,name:t.name,c:t.c,w:t.w,q:tiab(t.w),re:wordsRe(t.w),custom:1})}
+ const sorted=byOrder(CATS.slice(),st.topicOrder);CATS.length=0;CATS.push(...sorted);
+ for(const k of Object.keys(CBY))delete CBY[k];for(const c of CATS)CBY[c.id]=c;CBY.oth=OTHERS;
+ if(S.cat&&!["all","top","oth"].includes(S.cat)&&!CBY[S.cat])S.cat="all";
+}
+function applyJournals(){J.length=0;J.push(...byOrder([...BASEJ,...(st.customJ||[]).map(j=>({...j,c:"#8A93A8"}))],st.jOrder));for(const k of Object.keys(JBY))delete JBY[k];for(const j of J)JBY[j.ta.toLowerCase()]=j}
+const PALETTE=["#C0504D","#6D5BA8","#2E8B88","#C9822B","#A84B7B","#3F6FB5","#4E8F5E","#8E6C3E","#5A6E8C","#9E2B3A","#1F7A8C","#B5552B"];
+function allTopicRows(){const ov=st.topicEdits||{};return DEFCATS.map(d=>{const e=ov[d.id]||{};return{id:d.id,name:e.name||d.name,c:e.c||d.c,w:e.w&&e.w.length?e.w:d.w,hidden:!!e.hidden,custom:false,edited:!!(e.name||e.c||(e.w&&e.w.length))}}).concat((st.customTopics||[]).map(t=>({...t,custom:true})))}
+function topicRowsOrdered(){return byOrder(allTopicRows(),st.topicOrder)}
+const arrows=(kind,id,i,n)=>`<span class="ord"><button data-act="${kind}up" data-v="${id}" aria-label="Move up" ${i===0?"disabled":""}>▲</button><button data-act="${kind}down" data-v="${id}" aria-label="Move down" ${i===n-1?"disabled":""}>▼</button></span>`;
+function topicEditor(){const t=S.tEdit;return `<div class="card" style="padding:10px 12px;margin:8px 0;border:2px solid ${t.c||"#3F6FB5"}">
+  <label class="au" style="display:block">Topic name<input class="search" id="tname" value="${esc(t.name||"")}" placeholder="For example, Cardio-oncology"></label>
+  <label class="au" style="display:block;margin-top:6px">Search words, separated by commas<textarea class="search" id="twords" rows="4" placeholder="cardio-oncology, cardiotoxicity, anthracycline, trastuzumab">${esc(t.words||"")}</textarea></label>
+  <p class="note" style="margin:4px 0">Articles with any of these words in the title or abstract appear in this topic. Use * for word endings, such as cardiotox*.</p>
+  <div class="row" style="flex-wrap:wrap;overflow:visible">${PALETTE.map(c=>`<button class="chip" style="padding:0;width:30px;height:30px;border-radius:50%;background:${c};border:${(t.c||"")===c?"3px solid #1C2541":"1px solid #fff"}" data-act="tcol" data-v="${c}" aria-label="Colour"></button>`).join("")}</div>
+  <div class="pk"><a href="#" data-act="tsave">Save topic</a><a href="#" class="alt" data-act="tcancel">Cancel</a></div>
+  ${t.id&&!t.custom&&t.edited?`<button class="link" data-act="treset" data-v="${t.id}">Reset to the original words</button>`:""}${t.id&&t.custom?`<button class="link" data-act="tdel" data-v="${t.id}">Delete this topic</button>`:""}</div>`}
+function vTopicSettings(){
+ return `<h3>Topics</h3><p class="help">Rename, edit, hide or reorder the sections on the Articles tab, or add your own. Use ▲ ▼ to change the order.</p>
+ <div class="card">${topicRowsOrdered().map((t,i,a)=>S.tEdit&&S.tEdit.id===t.id?topicEditor():`<div class="set">${arrows("t",t.id,i,a.length)}<span style="flex:1"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${t.c};margin-right:8px"></span>${esc(t.name)}<br><small class="au">${t.w.length} search words${t.custom?", your topic":t.edited?", edited":""}</small></span>
+  <span style="display:flex;gap:12px;align-items:center"><button class="link" style="color:#2E4A86" data-act="tedit" data-v="${t.id}">Edit</button><input type="checkbox" aria-label="Show ${esc(t.name)}" data-th="${t.id}" ${t.hidden?"":"checked"}></span></div>`).join("")}
+  ${S.tEdit&&!S.tEdit.id?topicEditor():`<div class="set"><button class="link" style="color:#2E4A86;text-decoration:none;font-weight:700" data-act="tadd">+ Add a topic</button></div>`}</div>`;
+}
+// ---------- settings: journals ----------
+async function findJournal(q){
+ S.jfind={q,loading:true,res:[]};render();
+ try{const sr=await getJSON(`${E}esearch.fcgi?db=nlmcatalog&retmode=json&retmax=10&tool=cardioreader&term=${encodeURIComponent(`${q}[Title] AND ncbijournals[filter]`)}`);
+  const ids=(sr.esearchresult&&sr.esearchresult.idlist)||[];let res=[];
+  if(ids.length){const sm=await getJSON(`${E}esummary.fcgi?db=nlmcatalog&retmode=json&tool=cardioreader&id=${ids.join(",")}`);
+   res=((sm.result&&sm.result.uids)||[]).map(u=>{const r=sm.result[u]||{};const ta=r.medlineta||r.isoabbreviation||"";const t=(r.titlemainlist&&r.titlemainlist[0]&&r.titlemainlist[0].title)||(r.titlemain&&r.titlemain.title)||ta;return{ta:String(ta).trim(),title:String(t).replace(/[.\s]+$/,"")}}).filter(r=>r.ta)}
+  S.jfind={q,loading:false,res}}catch(e){S.jfind={q,loading:false,res:[],err:1}}
+ render();
+}
+function addJournal(ta,title,gen){
+ ta=String(ta||"").trim();if(!ta)return;
+ if(J.some(j=>j.ta.toLowerCase()===ta.toLowerCase())){toast("That journal is already in your list.");return}
+ const short=title&&title.length<=26?title:ta;
+ (st.customJ=st.customJ||[]).push({id:"cj"+Date.now().toString(36),name:short,ta,gen:gen?1:0});save();applyJournals();S.jfind=null;S.jq="";render();load();toast(`Added ${short}`);
+}
+function vJournalSettings(){
+ const f=S.jfind;
+ return `<h3>Journals</h3><p class="help">Switch journals on or off, reorder them with ▲ ▼, or add any journal indexed in PubMed. General journals such as NEJM show cardiovascular articles only.</p>
+ <div class="card">${J.map((j,i,a)=>`<label class="set">${arrows("j",j.id,i,a.length)}<span style="flex:1">${esc(j.name)}${j.id.startsWith("cj")?`<br><small class="au">${esc(j.ta)}${j.gen?", cardiovascular articles only":""}</small>`:""}</span><span style="display:flex;gap:12px;align-items:center">${j.id.startsWith("cj")?`<button class="link" data-act="jdel" data-v="${j.id}">Remove</button>`:""}<input type="checkbox" data-jt="${j.id}" ${st.off[j.id]?"":"checked"}></span></label>`).join("")}
+  <div style="padding:10px 0"><b style="font-size:15px">Add a journal</b>
+   <div style="display:flex;gap:8px;margin-top:6px"><input class="search" id="jq" value="${esc(S.jq||"")}" placeholder="Journal name, such as Hypertension" autocomplete="off"><button class="more" style="width:auto;margin:0;padding:10px 14px" data-act="jfind">Find</button></div>
+   <label class="set" style="padding:8px 0 0"><span>Only cardiovascular articles<br><small class="au">For general journals such as BMJ or Nature Medicine</small></span><input type="checkbox" id="jgen" ${S.jgen?"checked":""}></label>
+   ${f?f.loading?`<div class="msg" style="margin-top:8px"><span class="spin"></span>Searching PubMed's journal list</div>`:f.res.length?`<div class="gl" style="margin-top:8px">${f.res.map(r=>`<div class="kp" style="display:flex;justify-content:space-between;gap:10px;align-items:center"><span><b style="font-size:15px">${esc(r.title)}</b><br><small class="au">${esc(r.ta)}</small></span><button class="more" style="width:auto;margin:0;padding:8px 12px" data-act="jadd" data-ta="${esc(r.ta)}" data-t="${esc(r.title)}">Add</button></div>`).join("")}</div>`:`<div class="msg" style="margin-top:8px">${f.err?"Couldn't search just now.":"No journals found."} You can type the PubMed abbreviation below instead.</div>`:""}
+   <div style="display:flex;gap:8px;margin-top:8px"><input class="search" id="jta" placeholder="Or PubMed abbreviation, such as Am J Cardiol" autocomplete="off" autocapitalize="off"><button class="more" style="width:auto;margin:0;padding:10px 14px" data-act="jaddta">Add</button></div>
+  </div></div>`;
 }
 
 function render(){
  document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
  const n=S.newIds.size;document.getElementById("newc").textContent=n?`${n} new`:"";
  const fid=document.activeElement&&["q","dq"].includes(document.activeElement.id)?document.activeElement.id:"";
- $m.innerHTML=S.tab==="latest"?vLatest():S.tab==="guide"?vGuide():S.tab==="scores"?vScores():S.tab==="saved"?vSaved():vSettings();
- renderModal();
+ $m.innerHTML=S.tab==="latest"?vLatest():S.tab==="guide"?vGuide():S.tab==="pods"?vPods():S.tab==="scores"?vScores():S.tab==="saved"?vSaved():vSettings();
+ renderModal();renderNP();
  if(popKey&&Date.now()-popAt<450){popEl(document.querySelector(popKey))}
  if(fid){const q=document.getElementById(fid);if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
 }
@@ -1089,18 +1346,47 @@ document.addEventListener("click",e=>{
  else if(a==="qscope"){S.qscope=b.dataset.v;load()}
  else if(a==="qsort"){S.qsort=b.dataset.v;load()}
  else if(a==="lib"){S.lib=b.dataset.v;S.confirm="";render()}
- else if(a==="slides"){if(!S.modal||S.modal.pmid!==b.dataset.id){S.charts=[];S.chartDraft=null}S.modal={type:"slides",pmid:b.dataset.id};S.slideBusy="";renderModal()}
+ else if(false&&a==="slides"){if(!S.modal||S.modal.pmid!==b.dataset.id){S.charts=[];S.chartDraft=null}S.modal={type:"slides",pmid:b.dataset.id};S.slideBusy="";renderModal()}
  else if(a==="chadd"){S.chartDraft={type:"forest"};renderModal()}
  else if(a==="chcancel"){e.preventDefault();S.chartDraft=null;renderModal()}
  else if(a==="chsave"){e.preventDefault();const d=S.chartDraft;if(!parseRows(d.data,d.type==="bar"?2:4).length){toast(d.type==="bar"?"Add at least one line: label, value":"Add at least one line: label, HR, lower CI, upper CI");return}(S.charts=S.charts||[]).push(d);S.chartDraft=null;renderModal()}
  else if(a==="chdel"){S.charts.splice(+b.dataset.v,1);renderModal()}
  else if(a==="ft"){e.preventDefault();openFullText(b.dataset.doi)}
+ else if(a==="podcpd"){S.modal={type:"cpd",pmid:b.dataset.id,title:b.dataset.n};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
+ else if(a==="tts"){const id=b.dataset.id;if(TTS.pmid===id&&TTS.playing){if(TTS.paused){speechSynthesis.resume();TTS.paused=false}else{speechSynthesis.pause();TTS.paused=true}render()}else ttsArticle(id)}
+ else if(a==="ttsstop")ttsStop();
+ else if(a==="ttstest"){ttsSay([speakable("This is how articles will sound. In the ARTESIA trial, apixaban reduced stroke, HR 0.63, 95% CI 0.45–0.88.")],"test")}
+ else if(a==="share")shareArticle(b.dataset.id);
+ else if(a==="listenall"){e.preventDefault();listenAll()}
+ else if(a==="nppause"){if(TTS.paused){speechSynthesis.resume();TTS.paused=false}else{speechSynthesis.pause();TTS.paused=true}renderNP()}
+ else if(a==="npnext")skipNext();
+ else if(a==="cpddom"){const d=b.dataset.v,L=S.cpdRef.domains=S.cpdRef.domains||[];const i=L.indexOf(d);if(i>=0)L.splice(i,1);else L.push(d);b.classList.toggle("on")}
+ else if(a==="tedit"){const r=allTopicRows().find(x=>x.id===b.dataset.v);S.tEdit={id:r.id,name:r.name,words:r.w.join(", "),c:r.c,custom:r.custom,edited:r.edited};render()}
+ else if(a==="tadd"){S.tEdit={id:null,name:"",words:"",c:PALETTE[(st.customTopics||[]).length%PALETTE.length],custom:true};render()}
+ else if(a==="tcol"){S.tEdit.c=b.dataset.v;render()}
+ else if(a==="tcancel"){e.preventDefault();S.tEdit=null;render()}
+ else if(a==="tsave"){e.preventDefault();const T=S.tEdit,w=String(T.words||"").split(/[,\n;]+/).map(x=>x.trim()).filter(x=>x.length>1);
+  if(!T.name.trim()||!w.length){toast("Add a name and at least one search word.");return}
+  if(T.id&&!T.custom){st.topicEdits=st.topicEdits||{};st.topicEdits[T.id]={...(st.topicEdits[T.id]||{}),name:T.name.trim(),w,c:T.c}}
+  else if(T.id){const x=(st.customTopics||[]).find(y=>y.id===T.id);Object.assign(x,{name:T.name.trim(),w,c:T.c})}
+  else (st.customTopics=st.customTopics||[]).push({id:"ct"+Date.now().toString(36),name:T.name.trim(),w,c:T.c});
+  save();applyTopics();S.tEdit=null;render();toast("Topic saved")}
+ else if(a==="treset"){const ov=st.topicEdits||{};const h=ov[b.dataset.v]&&ov[b.dataset.v].hidden;ov[b.dataset.v]=h?{hidden:true}:{};save();applyTopics();S.tEdit=null;render()}
+ else if(a==="tdel"){st.customTopics=(st.customTopics||[]).filter(x=>x.id!==b.dataset.v);save();applyTopics();S.tEdit=null;render()}
+ else if(a==="jfind"){const q=(S.jq||"").trim();if(q.length<2){toast("Type part of the journal name.");return}findJournal(q)}
+ else if(a==="jadd")addJournal(b.dataset.ta,b.dataset.t,S.jgen);
+ else if(a==="jaddta"){const v=(document.getElementById("jta")||{}).value||"";addJournal(v,v,S.jgen)}
+ else if(a==="jdel"){st.customJ=(st.customJ||[]).filter(x=>x.id!==b.dataset.v);delete st.off[b.dataset.v];if(S.j===b.dataset.v)S.j="all";save();applyJournals();render();load()}
+ else if(a==="tup"||a==="tdown"){e.preventDefault();const ids=moveIn(topicRowsOrdered(),b.dataset.v,a==="tup"?-1:1);if(ids){st.topicOrder=ids;save();applyTopics();render()}}
+ else if(a==="jup"||a==="jdown"){e.preventDefault();const ids=moveIn(J,b.dataset.v,a==="jup"?-1:1);if(ids){st.jOrder=ids;save();applyJournals();render()}}
+ else if(a==="dv"){S.dv=b.dataset.v;S.dq="";render()}
+ else if(a==="dvsync"){S.dsErr=false;loadDVLASync(true)}
  else if(a==="backup"){e.preventDefault();backupNow()}
- else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;makeSlides(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
- else if(a==="cpd"){S.modal={type:"cpd",pmid:b.dataset.id};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";renderModal()}
+ else if(false&&a==="slidego"){e.preventDefault();const id=S.modal.pmid;makeSlides(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
+ else if(a==="cpd"){S.modal={type:"cpd",pmid:b.dataset.id};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
  else if(a==="cpdmin"){S.cpdMin=+b.dataset.v;renderModal()}
- else if(a==="cpdsave"){e.preventDefault();const mins=Math.round(+S.cpdMin);if(!(mins>0)){toast("Enter the minutes spent.");return}const it=findItem(S.modal.pmid)||{};
-  st.cpd.push({id:"c"+Date.now().toString(36),pmid:S.modal.pmid,title:it.title||"",src:jOf(it).name||it.src||"",doi:it.doi||"",date:S.cpdDate||isoD(new Date()),minutes:mins,note:(S.cpdNote||"").trim(),at:Date.now()});
+ else if(a==="cpdsave"){e.preventDefault();const mins=Math.round(+S.cpdMin);if(!(mins>0)){toast("Enter the minutes spent.");return}const it=findItem(S.modal.pmid)||(S.modal.title?{title:"Podcast: "+S.modal.title,src:"Podcast"}:{});
+  st.cpd.push({id:"c"+Date.now().toString(36),pmid:S.modal.pmid,title:it.title||"",src:it.src==="Podcast"?"Podcast":(jOf(it).name||it.src||""),doi:it.doi||"",date:S.cpdDate||isoD(new Date()),minutes:mins,ref:{learn:(S.cpdRef.learn||"").trim(),change:(S.cpdRef.change||"").trim(),further:(S.cpdRef.further||"").trim(),domains:(S.cpdRef.domains||[]).slice()},note:"",at:Date.now()});
   save();S.modal=null;render();toast(`Logged ${mins} minutes of CPD`)}
  else if(a==="mclose"){e.preventDefault();S.modal=null;S.slideBusy="";renderModal()}
  else if(a==="cpdp"){S.cpdP=b.dataset.v;render()}
@@ -1120,6 +1406,10 @@ document.addEventListener("input",e=>{
  if(e.target.id==="q"){S.q=e.target.value;clearTimeout(qTimer);qTimer=setTimeout(()=>load(),700)}
  else if(["ftezp","ftoa","ftemail"].includes(e.target.id)){st.ft={...(st.ft||{}),[e.target.id.slice(2)]:e.target.value.trim()};save()}
  else if(e.target.id==="cpdmins"){S.cpdMin=e.target.value}
+ else if(["cpdlearn","cpdchange","cpdfurther"].includes(e.target.id)){S.cpdRef[e.target.id.slice(3)]=e.target.value}
+ else if(e.target.id==="tname"&&S.tEdit){S.tEdit.name=e.target.value}
+ else if(e.target.id==="twords"&&S.tEdit){S.tEdit.words=e.target.value}
+ else if(e.target.id==="jq"){S.jq=e.target.value}
  else if(S.chartDraft&&/^ch(title|s1|s2|unit|data)$/.test(e.target.id)){S.chartDraft[e.target.id.slice(2)]=e.target.value}
  else if(e.target.id==="cpdnote"){S.cpdNote=e.target.value}
  else if(e.target.id==="cpddate"){S.cpdDate=e.target.value}
@@ -1135,6 +1425,10 @@ document.addEventListener("change",e=>{
  if(el.id==="cpdfrom"){S.cpdFrom=el.value;render();return}
  if(el.id==="cpdto"){S.cpdTo=el.value;render();return}
  if(el.id==="cpddate"){S.cpdDate=el.value;return}
+ if(el.dataset&&el.dataset.th){st.topicEdits=st.topicEdits||{};const id=el.dataset.th;if(id.startsWith("ct")){const x=(st.customTopics||[]).find(y=>y.id===id);if(x)x.hidden=!el.checked}else st.topicEdits[id]={...(st.topicEdits[id]||{}),hidden:!el.checked};save();applyTopics();render();return}
+ if(el.id==="jgen"){S.jgen=el.checked;return}
+ if(el.id==="voicesel"){st.voice=el.value;save();return}
+ if(el.id==="ratesel"){st.rate=el.value;save();return}
  if(el.id==="ftmode"){st.ft={...(st.ft||{}),mode:el.value};save();render();return}
  if(el.id==="ftunpay"){st.ft={...(st.ft||{}),unpay:el.checked};save();render();return}
  if(el.id==="days"){st.days=+el.value;save();load()}
