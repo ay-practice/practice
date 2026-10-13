@@ -252,7 +252,7 @@ h1{font-size:27px!important;letter-spacing:.005em}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="journal-reader-v1";
+const KEY="journal-reader-v1",APPVER="13 Oct 2026 (b)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -422,7 +422,7 @@ async function loadAbs(pmid){
  S.open[pmid]=true;S.abs[pmid]="loading";render();
  try{
   const r=await fetch(`${E}efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&tool=cardioreader&id=${pmid}`);
-  const x=new DOMParser().parseFromString(await r.text(),"text/xml");
+  const x=new DOMParser().parseFromString((await r.text()).replace(/<!DOCTYPE[^>]*>/i,""),"text/xml");
   const parts=[...x.getElementsByTagName("AbstractText")].map(n=>({l:n.getAttribute("Label")||"",t:n.textContent.trim()})).filter(p=>p.t);
   S.abs[pmid]=parts.length?parts:"none";
  }catch(e){S.abs[pmid]="error"}
@@ -554,7 +554,7 @@ function vSettings(){
  </div>
  <h3>Backup</h3><div class="card"><p class="help" style="margin-top:8px">Saves your Library (read later and CPD log) and settings. Do this before deleting or re-adding the app.</p>
   <div class="pk"><a href="#" data-act="backup">Save backup</a><label class="alt" style="flex:1 1 140px;text-align:center;padding:12px;border-radius:10px;font-weight:600;border:1px solid #2E3A6B;color:#2E3A6B;cursor:pointer">Restore backup<input type="file" id="restorefile" accept=".json,application/json" style="display:none"></label></div></div>
- <h3>About</h3><p class="help">Articles and guidelines come from PubMed, and DVLA guidance from GOV.UK, each time you open them. Sections are matched on title and abstract words, so some articles appear in more than one. Archived articles and settings stay on this phone.</p>
+ <h3>About</h3><p class="help"><b>Version ${APPVER}</b>. If you don't see this version after an update, close the app fully and reopen it.</p><p class="help">Articles and guidelines come from PubMed, and DVLA guidance from GOV.UK, each time you open them. Sections are matched on title and abstract words, so some articles appear in more than one. Archived articles and settings stay on this phone.</p>
  ${Object.keys(st.saved).length?`<button class="link" data-act="clearsaved">Remove all archived articles</button>`:""}`;
 }
 function qrisk3(v){ // v: female(bool), age, bmi, rati, sbp, sbps5, town, ethrisk(1-9), smoke(1-5), booleans; port of QRISK3-2017 (ClinRisk, LGPL) via CRAN QRISK3
@@ -748,7 +748,7 @@ async function blobToData(b){return new Promise((res,rej)=>{const fr=new FileRea
 async function imgSize(src){return new Promise(res=>{const i=new Image();i.onload=()=>res({w:i.naturalWidth,h:i.naturalHeight});i.onerror=()=>res({w:4,h:3});i.src=src})}
 async function oaFigures(pmcid,max){
  const r=await fetch(`${EPMC}${pmcid}/fullTextXML`);if(!r.ok)return[];
- const x=new DOMParser().parseFromString(await r.text(),"text/xml"),out=[];
+ const x=new DOMParser().parseFromString((await r.text()).replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),out=[];
  for(const f of [...x.getElementsByTagName("fig")].slice(0,max)){
   const label=(f.getElementsByTagName("label")[0]||{}).textContent||"Figure";
   const cap=((f.getElementsByTagName("caption")[0]||{}).textContent||"").replace(/\s+/g," ").trim();
@@ -821,7 +821,7 @@ async function paperData(pmid){
  const P={pmid,title:"",journal:"",iso:"",year:"",vol:"",iss:"",pages:"",aus:[],doi:"",parts:[],types:[],pmcid:"",oa:false,license:"",keywords:[]};
  const xml=await fetchText(`${E}efetch.fcgi?db=pubmed&retmode=xml&rettype=abstract&tool=cardioreader&id=${pmid}`);
  if(xml&&/<PubmedArticle/.test(xml)){
-  const x=new DOMParser().parseFromString(xml,"text/xml"),g=t=>{const n=x.getElementsByTagName(t)[0];return n?n.textContent.trim():""};
+  const x=new DOMParser().parseFromString(xml.replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),g=t=>{const n=x.getElementsByTagName(t)[0];return n?n.textContent.trim():""};
   P.title=g("ArticleTitle");P.journal=g("Title");P.iso=g("ISOAbbreviation");P.vol=g("Volume");P.iss=g("Issue");P.pages=g("MedlinePgn");
   P.year=((x.getElementsByTagName("PubDate")[0]||{}).textContent||"").match(/\d{4}/)?.[0]||((x.getElementsByTagName("ArticleDate")[0]||{}).textContent||"").match(/\d{4}/)?.[0]||"";
   const ab=x.getElementsByTagName("Abstract")[0];
@@ -846,7 +846,7 @@ async function paperData(pmid){
 }
 async function fullTextSections(pmcid){
  const r=await fetch(`${EPMC}${pmcid}/fullTextXML`);if(!r.ok)return{};
- const x=new DOMParser().parseFromString(await r.text(),"text/xml"),out={};
+ const x=new DOMParser().parseFromString((await r.text()).replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),out={};
  const body=x.getElementsByTagName("body")[0];if(!body)return out;
  for(const sec of [...body.children].filter(n=>n.tagName==="sec")){
   const t=(sec.getElementsByTagName("title")[0]||{}).textContent||"",lab=labelOf(t);if(!["Background","Methods","Results","Conclusions"].includes(lab))continue;
@@ -900,6 +900,7 @@ async function makeSlides(pmid,count){
  const P=await paperData(pmid);
  if(!P.title)P.title=it.title||"Paper";
  if(!P.aus.length&&it.authors)P.aus=it.authors.replace(/, et al\.$/,"").split(", ");
+ if(!P.parts.length&&!(S.charts||[]).length){S.slideBusy="";S.modal=null;renderModal();toast("Couldn't get this paper's abstract just now (PubMed may be busy, or the paper has no abstract). Try again in a minute.");return}
  let S2=sectionsFrom(P.parts),ftUsed=false;
  if(S.slideFigs&&P.pmcid&&P.oa){S.slideBusy="Reading the open-access full text";renderModal();
   try{const F=await fullTextSections(P.pmcid);
@@ -1013,7 +1014,7 @@ function renderModal(){
  const m=S.modal;if(!m){el.innerHTML="";el.className="";return}
  const it=findItem(m.pmid)||st.saved[m.pmid]||{title:""};
  el.className="ov";
- if(m.type==="slides")el.innerHTML=`<div class="sheet" role="dialog" aria-label="Make slides"><h3>Make slides</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
+ if(m.type==="slides")el.innerHTML=`<div class="sheet" role="dialog" aria-label="Make slides"><h3>Make slides</h3><p class="note" style="margin:0 0 6px">Version ${APPVER}</p><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
   ${S.slideBusy?`<div class="msg"><span class="spin"></span>${esc(S.slideBusy)}</div>`:`<label class="set"><span>Number of slides</span><select id="slidecount">${[3,4,5,6,7,8,10,12].map(n=>`<option value="${n}" ${+S.slideN===n?"selected":""}>${n}</option>`).join("")}</select></label>
   <p class="note">Title, study at a glance, background, methods, results, key numbers and take-home message, chosen to fit the number of slides, then a reference slide. Speaker notes hold the full text of each slide.</p>
   <label class="set"><span>Use the full paper and its figures<br><small class="au">Free open-access papers only</small></span><input type="checkbox" id="slidefigs" ${S.slideFigs?"checked":""}></label>
