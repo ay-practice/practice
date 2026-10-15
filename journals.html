@@ -252,6 +252,10 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 .tabs{overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
 .tabs{gap:0!important}.tabs button{font-size:13.5px!important;padding:9px 3px!important;flex:1 1 auto!important;letter-spacing:-.25px}
 @media (max-width:400px){.tabs button{font-size:12.5px!important;padding:9px 2px!important;letter-spacing:-.3px}}
+.aibox{margin:4px 0 12px;padding:12px 14px;border-radius:12px;background:#F4F1FB;border:1px solid #E2DAF7;font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
+.aibox p{font-size:15px;margin:6px 0}.aibox ul{padding-left:20px;font-size:15px}.aibox li{margin:3px 0}
+.aih{font-weight:700;color:#4B3C8F;font-size:14px;display:flex;justify-content:space-between;gap:8px}.aih span{font-weight:500;color:#7A6FA8;font-size:12px}
+.aibl{font-family:"Iowan Old Style","Charter",Georgia,serif;font-size:17px!important;color:#1C2541;font-weight:600}
 </style>
 </head>
 <body>
@@ -265,7 +269,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="journal-reader-v1",APPVER="14 Oct 2026 (k)";
+const KEY="journal-reader-v1",APPVER="15 Oct 2026 (o)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -332,10 +336,10 @@ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
 if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
 const seen=new Set(st.seen);
 
-const S={tab:"latest",cat:"all",j:"all",q:"",qscope:"mine",qsort:"date",lib:"later",cpdP:"12m",cpdFrom:"",cpdTo:"",modal:null,slideN:6,slideBusy:"",slideFigs:true,charts:[],chartDraft:null,cpdMin:30,cpdDate:"",cpdNote:"",cpdRef:{domains:[]},tEdit:null,jfind:null,jq:"",jgen:false,items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,
+const S={tab:"latest",cat:"all",j:"all",q:"",qscope:"mine",qsort:"date",lib:"later",cpdP:"12m",cpdFrom:"",cpdTo:"",modal:null,slideN:6,slideBusy:"",slideFigs:true,charts:[],chartDraft:null,cpdMin:30,cpdDate:"",cpdNote:"",aiOpen:{},aiBusy:{},aiTest:"",slideAI:true,cpdRef:{domains:[]},tEdit:null,jfind:null,jq:"",jgen:false,items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,
  g:"esc",gsub:"esc",gl:{},gerr:{},gload:{},dq:"",dvlaErr:false,dvlaLoading:false};
 const $m=document.getElementById("main");
-applyJournals();applyTopics();
+applyJournals();applyTopics();if(!st.engine)st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const clean=s=>String(s||"").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'");
 const catsOf=title=>{const c=CATS.filter(x=>x.re.test(title)).map(x=>x.id);return c.length?c:["oth"]};
@@ -516,7 +520,7 @@ function card(it){
    <button class="${cpdFor(it.pmid)?"arch on":""}" data-act="cpd" data-id="${it.pmid}">${cpdFor(it.pmid)?"CPD ✓":"CPD"}</button>
    <button class="arch ${sv?"on":""}" data-act="star" data-id="${it.pmid}" aria-pressed="${sv}">${sv?"Saved":"Archive"}</button>
   </div>
-  ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")+ttsBar(it.pmid)}</div>`:""}
+  ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:aiBox(it.pmid)+ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")+ttsBar(it.pmid)}</div>`:""}
  </article>`;
 }
 function vLatest(){
@@ -594,8 +598,9 @@ function vGuide(){
  return `<div class="row">${top}</div>${body}`;
 }
 function vSaved(){
- const sub=`<div class="row">${[["later","Read later"],["cpd","CPD log"]].map(([id,l])=>`<button class="chip ${S.lib===id?"on":""}" data-act="lib" data-v="${id}">${l}</button>`).join("")}</div>`;
+ const sub=`<div class="row">${[["later","Read later"],["cpd","CPD log"],["events","Conferences"]].map(([id,l])=>`<button class="chip ${S.lib===id?"on":""}" data-act="lib" data-v="${id}">${l}</button>`).join("")}</div>`;
  if(S.lib==="cpd")return sub+vCPD();
+ if(S.lib==="events")return sub+vEvents();
  const items=Object.values(st.saved).sort((a,b)=>(b.at||0)-(a.at||0));
  return sub+(items.length?`<div class="pk" style="margin-top:4px"><a href="#" data-act="listenall">▶ Listen to all ${items.length}</a></div><p class="note" style="margin-top:0">Reads each title and abstract in turn. Keep the app open with the screen on, as iPhone stops reading when it locks.</p><p class="help">${items.length} archived ${items.length===1?"article":"articles"} to read later, newest first. Tap Saved to remove one.</p>${items.map(card).join("")}`:`<div class="msg">Nothing archived yet. Tap Archive on any article or guideline to keep it here to read later.</div>`);
 }
@@ -607,11 +612,21 @@ function vSettings(){
  ${vTopicSettings()}
  ${vJournalSettings()}
  <h3>Reading aloud</h3><div class="card">
-  <p class="help" style="margin-top:8px">Open an abstract and tap Listen. Abbreviations such as HR and 95% CI are read in full.</p>
-  ${TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
+  <p class="help" style="margin-top:8px">Open an abstract and tap Listen. Hazard ratios are read simply and confidence intervals are skipped.</p>
+  <label class="set"><span>Voice type</span><select id="enginesel"><option value="natural" ${st.engine==="natural"?"selected":""}>Natural voice (recommended)</option><option value="system" ${st.engine!=="natural"?"selected":""}>Phone's built-in voice</option></select></label>
+  ${st.engine==="natural"?`<label class="set"><span>Natural voice</span><select id="nvvoice">${Object.entries(NV.voices).map(([k,v])=>`<option value="${k}" ${(st.nvVoice||"jenny")===k?"selected":""}>${v[0]}</option>`).join("")}</select></label>
+   ${S.nvHave?`<p class="note">Downloaded and ready. It works offline. <button class="link" data-act="nvrm">Remove it</button></p>`:`<div class="pk"><a href="#" data-act="nvdl">${NV.busy?"Downloading…":"Download this voice (about 60 MB, once)"}</a></div><p class="note"><span id="nvprog">${esc(NV.prog||"")}</span> Free, natural-sounding and private: it runs on your phone, with nothing sent anywhere. Best downloaded on Wi-Fi.</p>`}`:""}
+  ${st.engine==="natural"?"":TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
   <label class="set"><span>Speed</span><select id="ratesel">${[["0.85","Slower"],["1","Normal"],["1.15","A bit faster"],["1.3","Faster"],["1.5","Fastest"]].map(([v,l])=>`<option value="${v}" ${String(st.rate||"1")===v?"selected":""}>${l}</option>`).join("")}</select></label>
   <div class="pk"><a href="#" data-act="ttstest">Test voice</a></div>
-  <p class="note"><b>For the most natural sound</b>, download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>
+  ${st.engine==="natural"?"":`<p class="note"><b>For the most natural sound</b>, choose Natural voice above, or download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>`}
+ </div>
+ <h3>AI features</h3><div class="card">
+  <p class="help" style="margin-top:8px">Free AI summaries and AI-written slides, from each paper's abstract. Only public abstracts are sent, never anything personal. ${aiURL()===String(AI_DEFAULT_URL).replace(/\/+$/,"")&&aiURL()?"Already set up for you.":""}</p>
+  <label class="au" style="display:block;padding-bottom:6px">AI service address<input class="search" id="aiurl" value="${esc(st.aiUrl||(/^__AI_URL__$/.test(AI_DEFAULT_URL)?"":AI_DEFAULT_URL))}" placeholder="https://cardio-ai.yourname.workers.dev" autocomplete="off" autocapitalize="off"></label>
+  <div class="pk" style="margin-top:4px"><a href="#" data-act="aitest">Test connection</a></div>
+  ${S.aiTest?`<p class="note">${esc(S.aiTest)}</p>`:""}
+  <p class="note">The service has a free daily allowance shared by everyone using the app. If it runs out, AI features pause until the next day, and summaries you've already made stay saved.</p>
  </div>
  <h3>Full-text access</h3><div class="card">
   <p class="help" style="margin-top:8px">How the Full text button opens papers. Sign in once through your library and the following papers open without logging in again.</p>
@@ -1015,8 +1030,8 @@ async function makeSlides(pmid,count){
  const cite=`${P.aus.slice(0,6).join(", ")}${P.aus.length>6?", et al":""}. ${P.title} ${P.iso||P.journal}. ${P.year}${P.vol?";"+P.vol:""}${P.iss?"("+P.iss+")":""}${P.pages?":"+P.pages:""}.${P.doi?" doi:"+P.doi:""}`;
  const frame=(title,col)=>{const s=pptx.addSlide();s.background={color:"FFFFFF"};s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:0.18,h:7.5,fill:{color:col||ACC}});s.addText(title,{x:0.6,y:0.35,w:12.1,h:0.85,fontFace:FONT,fontSize:30,bold:true,color:NAVY,fit:"shrink"});s.addText(short,{x:0.7,y:6.95,w:11.9,h:0.35,fontFace:FONT,fontSize:11,color:GREY});return s};
  const runs=t=>{const r=[],re=/(\b(?:HR|OR|RR|hazard ratio|odds ratio)\s*[\d.]+|95%\s*(?:CI|confidence interval)[^;,)]*|\d+(?:\.\d+)?\s?%|[Pp]\s?[<=]\s?[\d.]+)/g;let i=0,m;while((m=re.exec(t))){if(m.index>i)r.push({text:t.slice(i,m.index)});r.push({text:m[0],options:{bold:true,color:NAVY}});i=m.index+m[0].length}if(i<t.length)r.push({text:t.slice(i)});return r};
- const bullets=(s,list,y)=>{const len=list.join(" ").length,fs=len>560?16:len>420?18:20;
-  s.addText(list.flatMap((b,k)=>runs(b).map((r,j,a)=>({text:r.text,options:j===0?{...(r.options||{}),bullet:{indent:18},paraSpaceAfter:10}:{...(r.options||{})}}))),{x:0.7,y:y||1.4,w:11.9,h:5.4-(y?y-1.4:0),fontFace:FONT,fontSize:fs,color:"222222",valign:"top",fit:"shrink"});s.addNotes(list.join("\n"))};
+ const bullets=(s,list,y,notes)=>{const len=list.join(" ").length,fs=len>560?16:len>420?18:20;
+  s.addText(list.flatMap((b,k)=>runs(b).map((r,j,a)=>({text:r.text,options:j===0?{...(r.options||{}),bullet:{indent:18},paraSpaceAfter:10}:{...(r.options||{})}}))),{x:0.7,y:y||1.4,w:11.9,h:5.4-(y?y-1.4:0),fontFace:FONT,fontSize:fs,color:"222222",valign:"top",fit:"shrink"});s.addNotes(notes||list.join("\n"))};
  // title slide
  let s=pptx.addSlide();s.background={color:"FFFFFF"};
  s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:13.33,h:0.35,fill:{color:NAVY}});
@@ -1034,7 +1049,16 @@ async function makeSlides(pmid,count){
  if(S2.Results.length>5)C.push({p:7,k:"results2",f:()=>bullets(frame("Results (continued)",RED),S2.Results.slice(5,10))});
  if(P.keywords.length)C.push({p:8,k:"kw",f:()=>{const s=frame("Keywords");s.addText(P.keywords.join("   •   "),{x:0.7,y:2.5,w:11.9,h:2,fontFace:FONT,fontSize:22,color:ACC,align:"center",valign:"middle",fit:"shrink"})}});
  const order=["glance","bg","methods","results","results2","nums","concl","kw"];
- const chosen=C.sort((a,b)=>a.p-b.p).slice(0,Math.max(1,count-2)).sort((a,b)=>order.indexOf(a.k)-order.indexOf(b.k));
+ let chosen=C.sort((a,b)=>a.p-b.p).slice(0,Math.max(1,count-2)).sort((a,b)=>order.indexOf(a.k)-order.indexOf(b.k)),aiUsed=false;
+ if(S.slideAI&&aiURL()&&P.parts.length){
+  S.slideBusy="The AI is writing your slides";renderModal();
+  try{const nAI=Math.max(1,count-(count>3?3:2)),j=await aiCall("slides",{title:P.title,abstract:absText(P.parts),n:nAI}),d=j.data;
+   const sl=(d.slides||[]).filter(x=>x&&x.title&&Array.isArray(x.bullets)&&x.bullets.length).slice(0,nAI);
+   if(sl.length){aiUsed=true;
+    chosen=sl.map(x=>({f:()=>bullets(frame(String(x.title).slice(0,80)),x.bullets.map(String).slice(0,6),undefined,x.notes||"")}));
+    if(count>3&&d.takehome)chosen.push({f:()=>{const s=frame("Take-home message","4E8F5E");s.addShape(pptx.ShapeType.roundRect,{x:0.7,y:1.5,w:11.9,h:4.9,fill:{color:"EEF6F0"},line:{color:"EEF6F0"},rectRadius:0.1});s.addText(String(d.takehome),{x:1.1,y:1.8,w:11.1,h:4.3,fontFace:FONT,fontSize:26,color:"1D3B2A",valign:"middle",fit:"shrink"})}});
+   }}catch(e){toast(aiErr(e.code)+" Using the built-in slide writer instead.");S.slideBusy="Building slides";renderModal()}
+ }
  if(!chosen.length){s=frame("Summary");s.addText("PubMed and Europe PMC have no abstract for this paper (often the case for editorials, letters and news items). Add key points from the full text.",{x:0.7,y:1.6,w:11.9,h:2,fontFace:FONT,fontSize:20,color:"222222"})}
  for(const c of chosen)c.f();
  for(const ch of (S.charts||[]))addChartSlide(pptx,ch,short,NAVY,ACC,GREY,FONT);
@@ -1060,10 +1084,12 @@ async function makeSlides(pmid,count){
  const blob=await pptx.write({outputType:"blob"});
  const name=`${short.replace(/[^\w ]+/g,"").replace(/\s+/g,"-").slice(0,60)||"paper"}-slides.pptx`;
  const file=new File([blob],name,{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"});
- S.slideBusy="";S.modal=null;renderModal();
- toast([`Made ${n} slides${P.parts.length?"":" (no abstract available)"}.`,chosen.length+2<count&&P.parts.length?"The abstract only had enough for that many.":"",figNote].filter(Boolean).join(" "));
- if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],title:name})}catch(e){}return}
- const a=document.createElement("a");a.href=URL.createObjectURL(file);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
+ S.slideBusy="";S.slideFile=file;S.slideMsg=[`${n} slides ready${aiUsed?", written by AI from the abstract. Check them before presenting.":"."}`,!aiUsed&&chosen.length+2<count&&P.parts.length?"The abstract only had enough content for that many.":"",figNote].filter(Boolean).join(" ");renderModal();
+}
+async function slideShare(){
+ const f=S.slideFile;if(!f)return;
+ if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:f.name});return}catch(e){if(e&&e.name==="AbortError")return}}
+ const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;a.target="_blank";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);
 }
 
 // ---------- CPD log ----------
@@ -1084,25 +1110,150 @@ function vCPD(){
  const fmtD=d=>new Date(d+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
  return `<div class="row" style="flex-wrap:wrap;overflow:visible">${[["12m","Last 12 months"],["year","This year"],["all","All time"],["custom","Choose dates"]].map(([id,l])=>`<button class="chip ${S.cpdP===id?"on":""}" data-act="cpdp" data-v="${id}">${l}</button>`).join("")}</div>
   ${S.cpdP==="custom"?`<div class="card" style="display:flex;gap:10px;padding:10px 14px"><label class="au" style="flex:1">From<input class="search" type="date" id="cpdfrom" value="${S.cpdFrom||""}"></label><label class="au" style="flex:1">To<input class="search" type="date" id="cpdto" value="${S.cpdTo||isoD(new Date())}"></label></div>`:""}
-  <div class="calc" style="--cc:#2E3A6B;margin-top:8px"><div class="au">CPD from reading${S.cpdP==="all"?"":`, ${fmtD(a)} to ${fmtD(b)}`}</div>
-   <div class="res low" style="margin-top:6px"><div class="big">${(tot/60).toFixed(1)} hours</div><p>${L.length} ${L.length===1?"paper":"papers"}, ${hrs(tot)} in total</p></div>
+  <div class="calc" style="--cc:#2E3A6B;margin-top:8px"><div class="au">Total CPD${S.cpdP==="all"?"":`, ${fmtD(a)} to ${fmtD(b)}`}</div>
+   <div class="res low" style="margin-top:6px"><div class="big">${(tot/60).toFixed(1)} hours</div><p>${(()=>{const k=c=>c.kind||(String(c.pmid).startsWith("pod:")?"podcast":"reading"),g={reading:["Journal reading",0,0],podcast:["Podcasts",0,0],event:["Conferences and courses",0,0],online:["Online learning",0,0]};L.forEach(c=>{const x=g[k(c)]||g.reading;x[1]+=c.minutes;x[2]++});return Object.values(g).filter(x=>x[2]).map(x=>`${x[0]}: ${(x[1]/60).toFixed(1)} h (${x[2]})`).join("<br>")||"Nothing logged yet"})()}</p></div>
+   <div class="pk" style="margin-top:8px"><a href="#" data-act="cpdevents">+ Log a course, conference or webinar</a></div>
    ${L.length?`<div class="pk" style="margin-top:12px"><a href="#" data-act="cpdcsv">Export for appraisal</a><a href="#" class="alt" data-act="cpdcopy">Copy summary</a></div>`:""}</div>
-  ${L.length?`<div class="gl" style="margin-top:12px">${L.map(c=>`<div class="kp"><div style="display:flex;justify-content:space-between"><b style="font-size:14px">${fmtD(c.date)}</b><b style="font-size:14px">${hrs(c.minutes)}</b></div>
-   <div style="font-family:'Iowan Old Style',Charter,Georgia,serif;font-size:16px;margin:2px 0">${esc(c.title)}</div><div class="au">${esc(c.src||"")}</div>
+  ${L.length?`<div class="gl" style="margin-top:12px">${L.map(c=>`<div class="kp"><div style="display:flex;justify-content:space-between"><b style="font-size:14px">${c.end&&c.end!==c.date?fmtRange(c.date,c.end):fmtD(c.date)}</b><b style="font-size:14px">${c.credits!=null?`${c.credits} ${c.credits===1?"credit":"credits"}`:hrs(c.minutes)}</b></div>
+   <div style="font-family:'Iowan Old Style',Charter,Georgia,serif;font-size:16px;margin:2px 0">${esc(c.title)}</div><div class="au">${esc(c.src||"")}${c.venue?` · ${esc(c.venue)}`:""}</div>${c.sessions?`<div class="au" style="margin-top:4px"><b>Sessions:</b> ${esc(c.sessions)}</div>`:""}
    ${c.ref?[["Learning",c.ref.learn],["Change to practice",c.ref.change],["Further learning",c.ref.further]].filter(x=>x[1]).map(([k,v])=>`<div class="au" style="margin-top:4px"><b>${k}:</b> ${esc(v)}</div>`).join("")+((c.ref.domains||[]).length?`<div class="tags">${c.ref.domains.map(d=>`<span class="tag" style="--tc:#5A6E8C">${esc(d)}</span>`).join("")}</div>`:""):c.note?`<div class="au" style="margin-top:4px;font-style:italic">${esc(c.note)}</div>`:""}
-   <div class="lk">${S.confirm==="cpd:"+c.id?`<button class="link" data-act="cpddel" data-v="${c.id}">Confirm delete</button>`:`<button class="link" data-act="cpdask" data-v="${c.id}">Delete</button>`}</div></div>`).join("")}</div>`:`<div class="msg" style="margin-top:12px">No CPD logged in this period. Tap CPD on any article after reading it.</div>`}
+   <div class="lk">${S.confirm==="cpd:"+c.id?`<button class="link" data-act="cpddel" data-v="${c.id}">Confirm delete</button>`:`<button class="link" data-act="cpdask" data-v="${c.id}">Delete</button>`}</div></div>`).join("")}</div>`:`<div class="msg" style="margin-top:12px">No CPD logged in this period. Tap CPD on any article or podcast, or log a course or conference.</div>`}
   <p class="note">Your CPD log stays on this phone. Export it regularly for your appraisal folder.</p>`;
 }
 function cpdCSV(){
  const L=cpdList(),q=v=>`"${String(v||"").replace(/"/g,'""')}"`;
- const rows=[["Date","Minutes","Title","Source","PMID","DOI","Key learning","Change to practice","Further learning","GMP domains"].join(",")].concat(L.map(c=>{const r=c.ref||{};return [c.date,c.minutes,q(c.title),q(c.src),String(c.pmid).startsWith("pod:")?"":c.pmid,q(c.doi),q(r.learn||c.note||""),q(r.change),q(r.further),q((r.domains||[]).join("; "))].join(",")}));
- rows.push(`Total,${L.reduce((a,c)=>a+c.minutes,0)},${q((L.reduce((a,c)=>a+c.minutes,0)/60).toFixed(1)+" hours")}`);
+ const kind=c=>({event:"Conference or course",online:"Online learning",podcast:"Podcast"})[c.kind||(String(c.pmid).startsWith("pod:")?"podcast":"")]||"Journal reading";
+ const rows=[["Date","End date","Type","Title","Organiser or journal","Venue","CPD hours or credits","Sessions","PMID","DOI","Key learning","Change to practice","Further learning","GMP domains"].join(",")].concat(L.map(c=>{const r=c.ref||{};return [c.date,c.end||c.date,q(kind(c)),q(c.title),q(c.src),q(c.venue),c.credits!=null?c.credits:(c.minutes/60).toFixed(2),q(c.sessions),/^\d+$/.test(String(c.pmid))?c.pmid:"",q(c.doi),q(r.learn||c.note||""),q(r.change),q(r.further),q((r.domains||[]).join("; "))].join(",")}));
+ rows.push(`Total,,,,,,${(L.reduce((a,c)=>a+c.minutes,0)/60).toFixed(1)}`);
  const f=new File([rows.join("\r\n")],`cpd-reading-${isoD(new Date())}.csv`,{type:"text/csv"});
  if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:"CPD log"}).catch(()=>{});return}
  const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
 }
-function cpdSummary(){const L=cpdList(),tot=L.reduce((a,c)=>a+c.minutes,0);return `CPD from journal reading: ${(tot/60).toFixed(1)} hours (${L.length} papers)\n\n`+L.map(c=>`${c.date} (${c.minutes} min): ${c.title}. ${c.src||""}${reflText(c)?" "+reflText(c):""}`).join("\n")}
+function cpdSummary(){const L=cpdList(),tot=L.reduce((a,c)=>a+c.minutes,0);return `Total CPD: ${(tot/60).toFixed(1)} hours (${L.length} activities)\n\n`+L.map(c=>`${c.date}${c.end&&c.end!==c.date?" to "+c.end:""} (${c.credits!=null?c.credits+" credits":c.minutes+" min"}): ${c.title}. ${c.src||""}${c.venue?", "+c.venue:""}${c.sessions?". Sessions: "+c.sessions:""}${reflText(c)?" "+reflText(c):""}`).join("\n")}
 // ---------- bottom sheet ----------
+// ---------- conferences, courses and online learning (dates checked 15 Oct 2026) ----------
+// cr: credits awarded (number) with crNote; null means "use the figure on your certificate"
+let EVENTS=[
+ {id:"acc26",n:"ACC.26 Annual Scientific Session",org:"American College of Cardiology",t:"conf",r:"usa",s:"2026-03-28",e:"2026-03-30",v:"New Orleans, USA",url:"https://accscientificsession.acc.org"},
+ {id:"ehra26",n:"EHRA 2026",org:"European Heart Rhythm Association (ESC)",t:"conf",r:"eu",s:"2026-04-12",e:"2026-04-14",v:"Paris, France",url:"https://www.escardio.org/events/congresses/ehra-congress/"},
+ {id:"hf26",n:"Heart Failure 2026",org:"Heart Failure Association (ESC)",t:"conf",r:"eu",s:"2026-05-09",e:"2026-05-12",v:"Barcelona, Spain",cr:22.5,crNote:"European CME credits",url:"https://www.escardio.org/Congresses-&-Events/Heart-Failure"},
+ {id:"pcr26",n:"EuroPCR 2026",org:"PCR and EAPCI",t:"conf",r:"eu",s:"2026-05-19",e:"2026-05-22",v:"Palais des Congrès, Paris, France",url:"https://www.pcronline.com"},
+ {id:"bcs26",n:"BCS Annual Conference 2026",org:"British Cardiovascular Society",t:"conf",r:"uk",s:"2026-06-01",e:"2026-06-03",v:"Manchester Central, UK",cr:18,crNote:"RCP CPD credits (6 a day in past years)",url:"https://britishcardiovascularsociety.org.uk/annual-conference-v2/"},
+ {id:"onco26",n:"ESC Cardio-Oncology 2026",org:"European Society of Cardiology",t:"conf",r:"eu",s:"2026-06-19",e:"2026-06-20",v:"Vienna, Austria",cr:13.5,crNote:"European CME credits",url:"https://www.escardio.org/events/congresses/esc-cardio-oncology/"},
+ {id:"scct26",n:"SCCT2026 Annual Scientific Meeting",org:"Society of Cardiovascular Computed Tomography",t:"conf",r:"usa",s:"2026-07-09",e:"2026-07-12",v:"Chula Vista, San Diego, USA",url:"https://scct.org/page/AnnSciMeet"},
+ {id:"esc26",n:"ESC Congress 2026",org:"European Society of Cardiology",t:"conf",r:"eu",s:"2026-08-28",e:"2026-08-31",v:"Messe München, Munich, Germany",cr:29,crNote:"European CME credits (maximum)",url:"https://www.escardio.org/congresses-events/esc-congress/"},
+ {id:"scs26",n:"Scottish Cardiac Society 35th Annual Meeting",org:"Scottish Cardiac Society",t:"conf",r:"uk",s:"2026-10-01",e:"2026-10-02",v:"Scotland",url:"https://www.rcpe.ac.uk/events/scottish-cardiac-society-35th-annual-general-meeting-2026"},
+ {id:"bacpr26",n:"BACPR Annual Conference 2026",org:"British Association for Cardiovascular Prevention and Rehabilitation",t:"conf",r:"uk",s:"2026-10-08",e:"2026-10-09",v:"The Eastside Rooms, Birmingham, UK",url:"https://bacpr-conference.org/"},
+ {id:"hrc26",n:"Heart Rhythm Congress 2026",org:"Arrhythmia Alliance with BHRS",t:"conf",r:"uk",s:"2026-10-11",e:"2026-10-13",v:"ICC Birmingham, UK",url:"https://www.heartrhythmcongress.org"},
+ {id:"bse26",n:"BSEcho 2026",org:"British Society of Echocardiography",t:"conf",r:"uk",s:"2026-10-16",e:"2026-10-17",v:"Manchester Central, UK, and on demand",url:"https://www.bsecho.org/BSEcho2026"},
+ {id:"tct26",n:"TCT 2026",org:"Cardiovascular Research Foundation",t:"conf",r:"usa",s:"2026-10-31",e:"2026-11-03",v:"San Diego Convention Center, USA",url:"https://www.crf.org/tct"},
+ {id:"aha26",n:"AHA Scientific Sessions 2026",org:"American Heart Association",t:"conf",r:"usa",s:"2026-11-06",e:"2026-11-09",v:"McCormick Place, Chicago, USA",url:"https://professional.heart.org/en/meetings/scientific-sessions"},
+ {id:"sharp26",n:"SHARP and Scottish Lipid Forum Annual Meeting",org:"SHARP and Scottish Lipid Forum",t:"conf",r:"uk",s:"2026-11-12",e:"2026-11-13",v:"Crieff Hydro, Scotland",url:"https://www.nhsresearchscotland.org.uk/calendar/sharp-and-scottish-lipid-forum-annual-meeting-2026"},
+ {id:"pcrlv26",n:"PCR London Valves 2026",org:"PCR",t:"conf",r:"uk",s:"2026-11-22",e:"2026-11-24",v:"ExCeL London, UK",url:"https://pcronline.com/Courses/PCR-London-Valves"},
+ {id:"eacvi26",n:"EACVI 2026 (EuroEcho, EuroCMR and ICNC-CT)",org:"European Association of Cardiovascular Imaging",t:"conf",r:"eu",s:"2026-12-03",e:"2026-12-05",v:"Milan, Italy",url:"https://www.escardio.org/events/congresses/eacvi-congress/"},
+ {id:"aci27",n:"BCIS Advanced Cardiovascular Intervention (ACI) 2027",org:"British Cardiovascular Intervention Society",t:"conf",r:"uk",s:"",e:"",when:"Usually late January",v:"Hilton London Metropole, UK, and online",url:"https://www.bcis.org.uk"},
+ {id:"acvc27",n:"ESC Acute CardioVascular Care 2027",org:"ESC Association for Acute CardioVascular Care",t:"conf",r:"eu",s:"2027-03-19",e:"2027-03-20",v:"Fibes, Seville, Spain",cr:12,crNote:"European CME credits in 2026",url:"https://www.escardio.org/events/congresses/acute-cardiovascular-care/"},
+ {id:"acc27",n:"ACC.27, with the World Congress of Cardiology",org:"American College of Cardiology",t:"conf",r:"usa",s:"2027-04-10",e:"2027-04-12",v:"George R. Brown Convention Center, Houston, USA",url:"https://accscientificsession.acc.org"},
+ {id:"ehra27",n:"EHRA 2027",org:"European Heart Rhythm Association (ESC)",t:"conf",r:"eu",s:"2027-04-11",e:"2027-04-13",v:"Helsinki, Finland",url:"https://www.escardio.org/events/congresses/ehra-congress/"},
+ {id:"prev27",n:"ESC Preventive Cardiology 2027",org:"European Association of Preventive Cardiology",t:"conf",r:"eu",s:"2027-04-15",e:"2027-04-17",v:"Lisbon, Portugal",cr:11,crNote:"European CME credits in 2026",url:"https://www.escardio.org/events/congresses/esc-preventive-cardiology/"},
+ {id:"hrs27",n:"Heart Rhythm 2027",org:"Heart Rhythm Society",t:"conf",r:"usa",s:"2027-05-13",e:"2027-05-16",v:"Moscone Center, San Francisco, USA, and online",url:"https://www.heartrhythm.com"},
+ {id:"pcr27",n:"EuroPCR 2027",org:"PCR and EAPCI",t:"conf",r:"eu",s:"2027-05-18",e:"2027-05-21",v:"Palais des Congrès, Paris, France",url:"https://www.pcronline.com"},
+ {id:"hf27",n:"Heart Failure 2027",org:"Heart Failure Association (ESC)",t:"conf",r:"uk",s:"2027-05-22",e:"2027-05-25",v:"London, UK, and online",cr:22.5,crNote:"European CME credits in 2026",url:"https://www.escardio.org/Congresses-&-Events/Heart-Failure"},
+ {id:"bcs27",n:"BCS Annual Conference 2027",org:"British Cardiovascular Society",t:"conf",r:"uk",s:"2027-06-07",e:"2027-06-09",v:"Manchester Central, UK",cr:18,crNote:"RCP CPD credits (6 a day in past years)",url:"https://britishcardiovascularsociety.org.uk/annual-conference-v2/"},
+ {id:"scct27",n:"SCCT2027 Annual Scientific Meeting",org:"Society of Cardiovascular Computed Tomography",t:"conf",r:"usa",s:"2027-07-08",e:"2027-07-11",v:"Washington DC, USA",url:"https://scct.org/page/SCCT2027"},
+ {id:"esc27",n:"ESC Congress 2027",org:"European Society of Cardiology",t:"conf",r:"eu",s:"2027-08-27",e:"2027-08-30",v:"Milan, Italy",cr:29,crNote:"European CME credits in 2026",url:"https://www.escardio.org/events/congresses/esc-congress/future-destinations/"},
+ // online learning and webinars (any time)
+ {id:"o-esc",n:"ESC 365 and ESC webinars",org:"European Society of Cardiology, including EACVI, EHRA and HFA",t:"online",r:"online",v:"Online",d:"Congress recordings, webinars and e-learning, many with European CME credits.",url:"https://www.escardio.org/communities/associations/eacvi/events/"},
+ {id:"o-acc",n:"ACC Anywhere and ACC education",org:"American College of Cardiology",t:"online",r:"online",v:"Online",d:"On-demand sessions, journal CME and self-assessment programmes.",url:"https://www.acc.org"},
+ {id:"o-hrs",n:"Heart Rhythm on demand and HRS webinars",org:"Heart Rhythm Society",t:"online",r:"online",v:"Online",d:"Recorded Heart Rhythm sessions and EP education.",url:"https://www.hrsonline.org/education/meetings"},
+ {id:"o-bcs",n:"BCS webinars and conference recordings",org:"British Cardiovascular Society",t:"online",r:"online",v:"Online",d:"Webinar series and Annual Conference recordings for members.",url:"https://britishcardiovascularsociety.org.uk"},
+ {id:"o-bse",n:"BSE webinars and courses",org:"British Society of Echocardiography",t:"online",r:"online",v:"Online and in person",d:"Echo webinars, accreditation courses and exam preparation.",url:"https://bsecho.org/iCore/Events/Events_List.aspx"},
+ {id:"o-pcr",n:"PCR Online webinars",org:"PCR",t:"online",r:"online",v:"Online",d:"Interventional and structural webinars, live cases and course recordings.",url:"https://www.pcronline.com"},
+ {id:"o-rad",n:"Radcliffe Cardiology",org:"Radcliffe Cardiology",t:"online",r:"online",v:"Online",d:"Free videos, congress highlights and accredited online learning.",url:"https://www.radcliffecardiology.com"},
+ {id:"o-rcpe",n:"RCPE symposia and webinars",org:"Royal College of Physicians of Edinburgh",t:"online",r:"online",v:"Edinburgh and online",d:"Medical symposia and webinars, including cardiology, with CPD.",url:"https://www.rcpe.ac.uk/events"},
+ {id:"o-bmj",n:"BMJ Learning",org:"BMJ",t:"online",r:"online",v:"Online",d:"Short accredited modules, including cardiology topics.",url:"https://learning.bmj.com"},
+ {id:"o-med",n:"Medscape Cardiology CME",org:"Medscape",t:"online",r:"online",v:"Online",d:"Free short CME activities on recent trials and guidelines.",url:"https://www.medscape.org/cardiology"}
+];
+const EV_BUILTIN="2026-10-15";
+const EVBY=Object.fromEntries(EVENTS.map(e=>[e.id,e]));
+function evApply(list){if(!Array.isArray(list)||!list.length)return;EVENTS=list.filter(x=>x&&x.id&&x.n);for(const k of Object.keys(EVBY))delete EVBY[k];for(const x of EVENTS)EVBY[x.id]=x}
+async function evRefresh(force){
+ const c=st.evCache;
+ if(c&&c.list&&(!force&&Date.now()-c.at<7*864e5)){evApply(c.list);return}
+ try{const r=await fetch("cpd-events.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const j=await r.json();
+  if(Array.isArray(j.events)&&j.events.length){st.evCache={updated:j.updated||"",list:j.events,at:Date.now()};save();evApply(j.events);if(S.tab==="saved"&&S.lib==="events")render();if(force)toast(`Conference list updated (${j.updated||"latest"})`)}}
+ catch(e){if(c&&c.list)evApply(c.list);if(force)toast("Couldn't check for an updated list just now.")}
+}
+const evUpdated=()=>(st.evCache&&st.evCache.updated)||EV_BUILTIN;
+const fmtRange=(s,e)=>{if(!s)return "";const a=new Date(s+"T12:00"),b=new Date((e||s)+"T12:00"),o={day:"numeric",month:"short",year:"numeric"};
+ if(s===e||!e)return a.toLocaleDateString("en-GB",o);
+ if(a.getMonth()===b.getMonth()&&a.getFullYear()===b.getFullYear())return `${a.getDate()}–${b.toLocaleDateString("en-GB",o)}`;
+ return `${a.toLocaleDateString("en-GB",{day:"numeric",month:"short"})} – ${b.toLocaleDateString("en-GB",o)}`};
+const evDays=(s,e)=>s?Math.round((new Date((e||s)+"T12:00")-new Date(s+"T12:00"))/864e5)+1:0;
+const evLogged=id=>st.cpd.filter(c=>c.pmid==="ev:"+id);
+function evCard(x){
+ const today=isoD(new Date()),past=x.e&&x.e<today,logged=evLogged(x.id),cr=x.cr?`Up to ${x.cr} ${x.crNote||"CPD credits"}`:x.t==="online"?"Credits: usually 1 per hour of learning":"Credits: as on your certificate";
+ return `<div class="kp"><div class="row" style="justify-content:space-between;gap:8px;overflow:visible"><span class="au" style="font-weight:700;color:${x.r==="uk"?"#2E5E9E":x.r==="eu"?"#2E3A6B":x.r==="usa"?"#9E2B3A":"#4E8F5E"}">${{uk:"UK",eu:"Europe",usa:"USA",online:"Online"}[x.r]}${x.t==="online"?"":past?" · past":" · upcoming"}</span>${logged.length?`<span class="au" style="color:#2F7A55;font-weight:700">Logged ✓</span>`:""}</div>
+  <h4 style="margin:2px 0">${esc(x.n)}</h4><div class="au">${esc(x.org)}</div>
+  ${x.s?`<div style="font-size:15px;margin-top:4px"><b>${fmtRange(x.s,x.e)}</b> · ${esc(x.v)}</div>`:`<div style="font-size:15px;margin-top:4px">${x.when?`<b>${esc(x.when)}</b> · `:""}${esc(x.v)}</div>`}
+  ${x.d?`<p style="font-size:14px;margin:4px 0">${esc(x.d)}</p>`:""}
+  <div class="au" style="margin-top:2px">${cr}</div>
+  <div class="lk"><a href="${x.url}" target="_blank" rel="noopener">Website</a>${x.s&&!past?`<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:600;padding:0" data-act="evics" data-v="${x.id}">Add to calendar</button>`:""}<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:700;padding:0" data-act="evlog" data-v="${x.id}">Log CPD</button></div></div>`;
+}
+function vEvents(){
+ const f=S.evf||"upcoming",reg=S.evr||"all",today=isoD(new Date()),yago=isoD(new Date(Date.now()-365*864e5));
+ let L=EVENTS.filter(x=>f==="online"?x.t==="online":x.t!=="online"&&(f==="upcoming"?(!x.e||x.e>=today):(x.e&&x.e<today&&x.e>=yago)));
+ if(f!=="online"&&reg!=="all")L=L.filter(x=>x.r===reg);
+ L.sort((a,b)=>(f==="past"?-1:1)*((a.s||"9999").localeCompare(b.s||"9999")));
+ return `<div class="row" style="flex-wrap:wrap;overflow:visible">${[["upcoming","Upcoming"],["past","Past 12 months"],["online","Online and webinars"]].map(([id,l])=>`<button class="chip ${f===id?"on":""}" data-act="evf" data-v="${id}">${l}</button>`).join("")}</div>
+  ${f!=="online"?`<div class="row" style="flex-wrap:wrap;overflow:visible">${[["all","All"],["uk","UK"],["eu","Europe"],["usa","USA"]].map(([id,l])=>`<button class="chip ${reg===id?"on":""}" data-act="evr" data-v="${id}">${l}</button>`).join("")}</div>`:""}
+  <div class="pk" style="margin-top:4px"><a href="#" data-act="evadd">+ Add a course, meeting or webinar</a></div>
+  <div class="gl" style="margin-top:10px">${L.length?L.map(evCard).join(""):`<div class="msg">Nothing here. Use + Add to log your own.</div>`}</div>
+  ${(Date.now()-new Date(evUpdated()+"T12:00"))>45*864e5?`<div class="msg err" style="margin-top:10px">This list was last updated over six weeks ago, so some dates may be out of date.</div>`:""}
+  <p class="note">List last updated ${new Date(evUpdated()+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"})}. The app checks for a newer list every week. <button class="link" data-act="evcheck">Check now</button></p>
+  <p class="note">Dates, venues and credits can change, so confirm on the organiser's website. Credits marked "in 2026" are last year's figure as a guide. Your CPD record uses the number you enter from your certificate.</p>`;
+}
+function evICS(id){
+ const x=EVBY[id];if(!x||!x.s)return;const d=s=>s.replace(/-/g,""),end=new Date((x.e||x.s)+"T12:00");end.setDate(end.getDate()+1);
+ const ics=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Cardiology CPD//EN","BEGIN:VEVENT",`UID:${id}@cardiology-cpd`,`DTSTAMP:${new Date().toISOString().replace(/[-:]/g,"").slice(0,15)}Z`,`DTSTART;VALUE=DATE:${d(x.s)}`,`DTEND;VALUE=DATE:${isoD(end).replace(/-/g,"")}`,`SUMMARY:${x.n}`,`LOCATION:${x.v}`,`URL:${x.url}`,`DESCRIPTION:${x.org}. ${x.url}`,"END:VEVENT","END:VCALENDAR"].join("\r\n");
+ const f=new File([ics],`${x.n.replace(/[^\w ]+/g,"").replace(/\s+/g,"-")}.ics`,{type:"text/calendar"});
+ if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:x.n}).catch(()=>{});return}
+ const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
+}
+function evOpen(id){
+ const x=id?EVBY[id]:null;
+ S.ev=x?{id:x.id,n:x.n,org:x.org,t:x.t,s:x.s||"",e:x.e||"",v:x.v,cr:x.cr!=null?String(x.cr):"",url:x.url,sessions:""}:{id:"",n:"",org:"",t:"course",s:isoD(new Date()),e:isoD(new Date()),v:"",cr:"",url:"",sessions:""};
+ S.cpdRef={domains:[]};S.modal={type:"event"};renderModal();
+}
+function evSheet(){
+ const E=S.ev,man=!E.id,typ={conf:"Conference",course:"Course",online:"Online learning or webinar",webinar:"Webinar"};
+ return `<div class="sheet" role="dialog" aria-label="Log CPD for a course or conference"><h3>${man?"Add a course, meeting or webinar":"Log CPD"}</h3>
+  ${man?`<label class="au" style="display:block">Name<input class="search" id="evn" value="${esc(E.n)}" placeholder="For example, Edinburgh echo update"></label>
+   <label class="au" style="display:block;margin-top:6px">Organiser<input class="search" id="evorg" value="${esc(E.org)}" placeholder="Society, hospital or provider"></label>
+   <label class="set"><span>Type</span><select id="evt">${Object.entries(typ).map(([k,l])=>`<option value="${k}" ${E.t===k?"selected":""}>${l}</option>`).join("")}</select></label>`
+  :`<p style="margin:0 0 4px;font-weight:700">${esc(E.n)}</p><p class="au" style="margin:0 0 8px">${esc(E.org)}</p>`}
+  <div style="display:flex;gap:8px"><label class="au" style="flex:1">From<input class="search" type="date" id="evs" value="${esc(E.s)}"></label><label class="au" style="flex:1">To<input class="search" type="date" id="eve" value="${esc(E.e)}"></label></div>
+  <label class="au" style="display:block;margin-top:6px">Venue<input class="search" id="evv" value="${esc(E.v)}" placeholder="City, venue or Online"></label>
+  <label class="set"><span>CPD credits (hours)<br><small class="au">From your certificate${E.cr&&!man?"; prefilled with the maximum":""}</small></span><input class="search" style="width:100px" type="number" inputmode="decimal" min="0" step="0.5" id="evcr" value="${esc(E.cr)}"></label>
+  <label class="au" style="display:block">Sessions or topics attended (optional)<textarea class="search" id="evses" rows="2" placeholder="For example, AF guideline update, TAVI versus surgery debate">${esc(E.sessions||"")}</textarea></label>
+  <div style="margin-top:8px"><b style="font-size:15px">Reflection for appraisal</b> <span class="au" style="font-size:13px">(optional)</span>
+   <label class="au" style="display:block;margin-top:6px">What did you learn?<textarea class="search" id="cpdlearn" rows="2">${esc(S.cpdRef.learn||"")}</textarea></label>
+   <label class="au" style="display:block;margin-top:6px">How will it change your practice?<textarea class="search" id="cpdchange" rows="2">${esc(S.cpdRef.change||"")}</textarea></label>
+   <label class="au" style="display:block;margin-top:6px">Any further learning needed?<textarea class="search" id="cpdfurther" rows="2">${esc(S.cpdRef.further||"")}</textarea></label>
+   <div class="au" style="margin-top:8px">Good Medical Practice domains</div>
+   <div class="row" style="flex-wrap:wrap;overflow:visible">${GMP.map(d=>`<button class="chip ${(S.cpdRef.domains||[]).includes(d)?"on":""}" data-act="cpddom" data-v="${esc(d)}">${esc(d)}</button>`).join("")}</div></div>
+  <div class="pk"><a href="#" data-act="evsave">Save to CPD log</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`;
+}
+function evSave(){
+ const E=S.ev,cr=parseFloat(E.cr);
+ if(!E.n.trim()){toast("Add the name of the course or meeting.");return}
+ if(!(cr>0)){toast("Enter the CPD credits or hours.");return}
+ if(!E.s){toast("Add the date.");return}
+ st.cpd.push({id:"c"+Date.now().toString(36),pmid:E.id?"ev:"+E.id:"man:"+Date.now().toString(36),kind:E.t==="online"||E.t==="webinar"?"online":"event",title:E.n.trim(),src:E.org.trim(),date:E.s,end:E.e||E.s,venue:E.v.trim(),credits:cr,minutes:Math.round(cr*60),sessions:(E.sessions||"").trim(),url:E.url||"",
+  ref:{learn:(S.cpdRef.learn||"").trim(),change:(S.cpdRef.change||"").trim(),further:(S.cpdRef.further||"").trim(),domains:(S.cpdRef.domains||[]).slice()},note:"",at:Date.now()});
+ save();S.modal=null;S.ev=null;render();toast(`Logged ${cr} CPD ${cr===1?"credit":"credits"}`);
+}
+
 function chartForm(){const d=S.chartDraft,bar=d.type==="bar";
  return `<div class="card" style="padding:10px 12px">
   <label class="set"><span>Type</span><select id="chtype"><option value="bar" ${bar?"selected":""}>Bar chart</option><option value="forest" ${!bar?"selected":""}>Forest plot</option></select></label>
@@ -1116,14 +1267,17 @@ function renderModal(){
  const m=S.modal;if(!m){el.innerHTML="";el.className="";return}
  const it=findItem(m.pmid)||st.saved[m.pmid]||{title:m.title||""};
  el.className="ov";
- if(m.type==="slides")el.innerHTML=`<div class="sheet" role="dialog" aria-label="Make slides"><h3>Make slides</h3><p class="note" style="margin:0 0 6px">Version ${APPVER}</p><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
+ if(m.type==="slides"&&S.slideFile)el.innerHTML=`<div class="sheet" role="dialog" aria-label="Slides ready"><h3>Your slides are ready</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p><div class="res low"><p>${esc(S.slideMsg||"")}</p></div><p class="note">Tap Save or share, then choose Save to Files, PowerPoint, Keynote, Mail or WhatsApp.</p><div class="pk"><a href="#" data-act="slideshare">Save or share</a><a href="#" class="alt" data-act="mclose">Done</a></div></div>`;
+ else if(m.type==="slides")el.innerHTML=`<div class="sheet" role="dialog" aria-label="Make slides"><h3>Make slides</h3><p class="note" style="margin:0 0 6px">Version ${APPVER}</p><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
   ${S.slideBusy?`<div class="msg"><span class="spin"></span>${esc(S.slideBusy)}</div>`:`<label class="set"><span>Number of slides</span><select id="slidecount">${[3,4,5,6,7,8,10,12].map(n=>`<option value="${n}" ${+S.slideN===n?"selected":""}>${n}</option>`).join("")}</select></label>
+  ${aiURL()?`<label class="set"><span>Write the slides with AI<br><small class="au">Free, from the abstract</small></span><input type="checkbox" id="slideai" ${S.slideAI?"checked":""}></label>`:""}
   <p class="note">Title, study at a glance, background, methods, results, key numbers and take-home message, chosen to fit the number of slides, then a reference slide. Speaker notes hold the full text of each slide.</p>
   <label class="set"><span>Use the full paper and its figures<br><small class="au">Free open-access papers only</small></span><input type="checkbox" id="slidefigs" ${S.slideFigs?"checked":""}></label>
   <div style="margin:8px 0"><b style="font-size:15px">Chart slides</b><p class="note" style="margin:2px 0 6px">Redraw key results as an editable bar chart or a forest plot.</p>
    ${(S.charts||[]).map((c,i)=>`<div class="kp" style="padding:8px 0;display:flex;justify-content:space-between;gap:8px"><span>${c.type==="bar"?"Bar chart":"Forest plot"}: ${esc(c.title||"Untitled")}</span><button class="link" data-act="chdel" data-v="${i}">Remove</button></div>`).join("")}
    ${S.chartDraft?chartForm():`<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:600" data-act="chadd">+ Add a chart</button>`}</div>
   <div class="pk"><a href="#" data-act="slidego">Make slides</a><a href="#" class="alt" data-act="mclose">Cancel</a></div>`}</div>`;
+ else if(m.type==="event"&&S.ev){el.innerHTML=evSheet()}
  else if(m.type==="cpd"){const done=cpdFor(m.pmid);el.innerHTML=`<div class="sheet" role="dialog" aria-label="Log CPD"><h3>Log CPD</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
   ${done?`<p class="note">Already logged for this paper: ${hrs(done)}.</p>`:""}
   <div class="row" style="flex-wrap:wrap;overflow:visible">${[10,15,20,30,45,60].map(n=>`<button class="chip ${+S.cpdMin===n?"on":""}" data-act="cpdmin" data-v="${n}">${n} min</button>`).join("")}</div>
@@ -1201,7 +1355,7 @@ function ttsArticle(pmid){
 }
 function ttsBar(pmid){
  const on=TTS.pmid===pmid&&TTS.playing;
- return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}<span class="au" style="font-size:13px">${esc((ttsVoice()||{}).name||"")}${st.rate&&+st.rate!==1?`, ${st.rate}×`:""}</span></div>`;
+ return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"AI summary"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${!S.nvHave&&!on?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#2E4A86" data-act="nvdl">Try the natural voice</button>`:""}<span class="au" style="font-size:13px">${esc((ttsVoice()||{}).name||"")}${st.rate&&+st.rate!==1?`, ${st.rate}×`:""}</span></div>`;
 }
 
 // ---------- share ----------
@@ -1221,10 +1375,10 @@ function speakNext(){
 }
 ttsSay=function(chunks,pmid){
  if(!window.speechSynthesis){toast("This phone's browser can't read aloud.");return}
- TTS.gen++;speechSynthesis.cancel();TTS.q=chunks.slice();TTS.playing=true;TTS.paused=false;TTS.pmid=pmid;if(pmid!=="list")TTS.mode="";
- speakNext();render();
+ TTS.gen++;speechSynthesis.cancel();if(NV.src)try{NV.src.stop()}catch(e){}TTS.q=chunks.slice();TTS.pre=null;TTS.playing=true;TTS.paused=false;TTS.pmid=pmid;if(pmid!=="list")TTS.mode="";
+ if(useNV())nvCtx();ttsNext();render();
 };
-ttsStop=function(){TTS.gen++;if(window.speechSynthesis)speechSynthesis.cancel();TTS.playing=false;TTS.paused=false;TTS.q=[];TTS.pmid="";TTS.mode="";TTS.list=[];TTS.idx=-1;render()};
+ttsStop=function(){TTS.gen++;if(window.speechSynthesis)speechSynthesis.cancel();if(NV.src)try{NV.src.stop()}catch(e){};if(NV.ctx&&NV.ctx.state==="suspended")NV.ctx.resume();TTS.playing=false;TTS.paused=false;TTS.q=[];TTS.pmid="";TTS.mode="";TTS.list=[];TTS.idx=-1;render()};
 function articleChunks(pmid,n,total){
  const it=findItem(pmid)||st.saved[pmid]||{},ab=S.abs[pmid],out=[`Article ${n} of ${total}. ${speakable(it.title||"")}`];
  if(Array.isArray(ab)){for(const p of ab){if(/regist|funding/i.test(p.l))continue;const lab=p.l?p.l.charAt(0)+p.l.slice(1).toLowerCase()+". ":"";sentences(speakable(p.t)).forEach((s,i)=>out.push((i===0?lab:"")+s))}}
@@ -1234,10 +1388,10 @@ function articleChunks(pmid,n,total){
 async function ensureAbs(pmid){if(Array.isArray(S.abs[pmid])||S.abs[pmid]==="none")return;try{const P=await paperData(pmid);S.abs[pmid]=P.parts.length?P.parts:"none"}catch(e){S.abs[pmid]="none"}}
 async function playNext(){
  TTS.idx++;const g=TTS.gen;
- if(TTS.idx>=TTS.list.length){TTS.q=["That's the end of your saved articles."];TTS.mode="";speakNext();return}
+ if(TTS.idx>=TTS.list.length){TTS.q=["That's the end of your saved articles."];TTS.mode="";ttsNext();return}
  const pmid=TTS.list[TTS.idx];TTS.title=(st.saved[pmid]||{}).title||"";renderNP();
  await ensureAbs(pmid);if(g!==TTS.gen||!TTS.playing)return;
- TTS.q=articleChunks(pmid,TTS.idx+1,TTS.list.length);speakNext();
+ TTS.q=articleChunks(pmid,TTS.idx+1,TTS.list.length);TTS.pre=null;ttsNext();
  const nx=TTS.list[TTS.idx+1];if(nx)ensureAbs(nx);
 }
 function listenAll(){
@@ -1246,7 +1400,7 @@ function listenAll(){
  ttsSay([`Playing ${items.length} saved ${items.length===1?"article":"articles"}.`],"list");TTS.mode="list";
  ensureAbs(TTS.list[0]);
 }
-function skipNext(){if(TTS.mode!=="list")return;TTS.gen++;speechSynthesis.cancel();TTS.q=[];TTS.playing=true;TTS.paused=false;playNext()}
+function skipNext(){if(TTS.mode!=="list")return;TTS.gen++;speechSynthesis.cancel();if(NV.src)try{NV.src.stop()}catch(e){};TTS.q=[];TTS.playing=true;TTS.paused=false;playNext()}
 function renderNP(){
  const el=document.getElementById("np");if(!el)return;
  if(!(TTS.playing&&TTS.mode==="list")){el.innerHTML="";el.className="";return}
@@ -1315,6 +1469,121 @@ function vJournalSettings(){
   </div></div>`;
 }
 
+// ---------- natural voice: free neural voices (Piper) that run on the phone after a one-off download ----------
+const NV={base:"https://huggingface.co/diffusionstudio/piper-voices/resolve/main",ort:"https://cdnjs.cloudflare.com/ajax/libs/onnxruntime-web/1.18.0/",
+ ph:"https://cdn.jsdelivr.net/npm/@diffusionstudio/piper-wasm@1.0.0/build/piper_phonemize",phjs:"https://cdn.jsdelivr.net/npm/@diffusionstudio/vits-web@1.0.3/dist/piper-DeOu3H9E.js",
+ voices:{jenny:["Jenny, British female","en/en_GB/jenny_dioco/medium/en_GB-jenny_dioco-medium.onnx"],alan:["Alan, British male","en/en_GB/alan/medium/en_GB-alan-medium.onnx"],
+  cori:["Cori, British female","en/en_GB/cori/medium/en_GB-cori-medium.onnx"],north:["Northern English male","en/en_GB/northern_english_male/medium/en_GB-northern_english_male-medium.onnx"]},
+ sess:null,cfg:null,key:"",create:null,ctx:null,src:null,busy:false,prog:"",failed:false};
+const nvUrl=k=>`${NV.base}/${NV.voices[k][1]}`;
+async function nvCachedBlob(url,onp){
+ const c=await caches.open("cardio-cpd-voices");const hit=await c.match(url);if(hit)return hit.blob();
+ const r=await fetch(url);if(!r.ok)throw new Error("download");const total=+r.headers.get("Content-Length")||0,rd=r.body.getReader(),parts=[];let got=0;
+ for(;;){const{done,value}=await rd.read();if(done)break;parts.push(value);got+=value.length;if(onp&&total)onp(got/total)}
+ const b=new Blob(parts);await c.put(url,new Response(b));return b;
+}
+async function nvIsDownloaded(k){try{const c=await caches.open("cardio-cpd-voices");return !!(await c.match(nvUrl(k)))&&!!(await c.match(nvUrl(k)+".json"))}catch(e){return false}}
+async function nvLoad(k,onp){
+ if(NV.sess&&NV.key===k)return;
+ if(!window.ort)await loadJS(NV.ort+"ort.min.js");
+ ort.env.wasm.wasmPaths=NV.ort;ort.env.wasm.numThreads=1;
+ if(!NV.create)NV.create=(await import(NV.phjs)).createPiperPhonemize;
+ NV.cfg=JSON.parse(await (await nvCachedBlob(nvUrl(k)+".json")).text());
+ const model=await nvCachedBlob(nvUrl(k),onp);
+ NV.sess=await ort.InferenceSession.create(await model.arrayBuffer(),{executionProviders:["wasm"]});NV.key=k;
+}
+function nvPhonemes(text){return new Promise((res,rej)=>{let done=false;
+ NV.create({print:l=>{if(!done){done=true;try{res(JSON.parse(l).phoneme_ids)}catch(e){rej(e)}}},printErr:()=>{},
+  locateFile:f=>f.endsWith(".wasm")?NV.ph+".wasm":f.endsWith(".data")?NV.ph+".data":f})
+ .then(m=>m.callMain(["-l",NV.cfg.espeak.voice,"--input",JSON.stringify([{text}]),"--espeak_data","/espeak-ng-data"])).catch(rej);
+ setTimeout(()=>{if(!done)rej(new Error("phonemes"))},15000)})}
+function nvSplit(t){if(t.length<=170)return[t];const out=[];let cur="";for(const part of t.split(/(?<=[,;:])\s+/)){if(cur&&(cur+" "+part).length>170){out.push(cur);cur=part}else cur=cur?cur+" "+part:part}if(cur)out.push(cur);return out}
+NV.slow=[];
+async function nvSynth(text){const t0=performance.now();const b=await nvSynth0(text);NV.slow.push((performance.now()-t0)/1000/Math.max(.5,b.duration));if(NV.slow.length>6)NV.slow.shift();return b}
+async function nvSynth0(text){
+ const ids=await nvPhonemes(text),inf=NV.cfg.inference||{},rate=+st.rate||1;
+ const feeds={input:new ort.Tensor("int64",BigInt64Array.from(ids.map(BigInt)),[1,ids.length]),input_lengths:new ort.Tensor("int64",BigInt64Array.from([BigInt(ids.length)]),[1]),
+  scales:new ort.Tensor("float32",Float32Array.from([inf.noise_scale??0.667,(inf.length_scale??1)/rate,inf.noise_w??0.8]),[3])};
+ if(NV.cfg.num_speakers>1)feeds.sid=new ort.Tensor("int64",BigInt64Array.from([0n]),[1]);
+ const out=await NV.sess.run(feeds),pcm=out.output.data,sr=(NV.cfg.audio&&NV.cfg.audio.sample_rate)||22050;
+ const buf=NV.ctx.createBuffer(1,pcm.length,sr);buf.getChannelData(0).set(pcm);return buf;
+}
+function nvCtx(){if(!NV.ctx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;NV.ctx=new AC()}if(NV.ctx.state==="suspended")NV.ctx.resume();return NV.ctx}
+function nvPlayBuf(buf,g){return new Promise(res=>{const s=NV.ctx.createBufferSource();s.buffer=buf;s.connect(NV.ctx.destination);s.onended=()=>res();NV.src=s;s.start();if(g!==TTS.gen){try{s.stop()}catch(e){}res()}})}
+const useNV=()=>st.engine==="natural"&&NV.sess&&!NV.failed;
+async function nvSpeakNext(){
+ const g=TTS.gen;
+ if(!TTS.q.length){if(TTS.mode==="list"&&TTS.playing){playNext();return}TTS.playing=false;TTS.pmid="";TTS.mode="";render();return}
+ let text=TTS.q.shift();const parts=nvSplit(text);if(parts.length>1){text=parts[0];TTS.q.unshift(...parts.slice(1))}
+ try{
+  const buf=TTS.pre&&TTS.pre.text===text?await TTS.pre.p:await nvSynth(text);if(g!==TTS.gen)return;
+  if(NV.slow.length>=3&&NV.slow.reduce((a,x)=>a+x,0)/NV.slow.length>1.4){NV.failed=true;toast("This phone is a little slow for the natural voice, so its built-in voice will read for now.");TTS.q.unshift(text);speakNext();return}
+  TTS.pre=TTS.q.length?{text:TTS.q[0],p:nvSynth(TTS.q[0])}:null;
+  await nvPlayBuf(buf,g);if(g===TTS.gen&&TTS.playing)nvSpeakNext();
+ }catch(e){NV.failed=true;toast("The natural voice couldn't play, so the phone's voice is reading instead.");TTS.q.unshift(text);speakNext()}
+}
+async function nvDownload(){
+ const k=st.nvVoice||"jenny";if(NV.busy)return;NV.busy=true;NV.prog="Starting download";render();
+ try{await nvLoad(k,p=>{NV.prog=`Downloading ${Math.round(p*100)}%`;const el=document.getElementById("nvprog");if(el)el.textContent=NV.prog});
+  st.engine="natural";save();NV.failed=false;NV.prog="";S.nvHave=true;toast("Natural voice ready. It works offline from now on.")}
+ catch(e){NV.prog="";toast(navigator.onLine===false?"You're offline. Connect to Wi-Fi to download the voice.":"Couldn't download the voice. Try again on Wi-Fi.")}
+ NV.busy=false;S.nvHave=await nvIsDownloaded(k);render();
+}
+async function nvRemove(){try{const c=await caches.open("cardio-cpd-voices");for(const k of Object.keys(NV.voices)){await c.delete(nvUrl(k));await c.delete(nvUrl(k)+".json")}}catch(e){}NV.sess=null;NV.key="";st.engine="system";save();S.nvHave=false;render();toast("Natural voice removed from this phone")}
+async function nvBoot(){S.nvHave=await nvIsDownloaded(st.nvVoice||"jenny");if(st.engine==="natural"&&S.nvHave)nvLoad(st.nvVoice||"jenny").catch(()=>{NV.failed=true});if(S.tab==="settings")render()}
+
+// ---------- AI summaries and slide text (free Cloudflare Workers AI, set up once by the app owner) ----------
+const AI_DEFAULT_URL="__AI_URL__";
+const aiURL=()=>String(st.aiUrl||AI_DEFAULT_URL||"").replace(/\/+$/,"").replace(/^__AI_URL__$/,"");
+const absText=parts=>(parts||[]).filter(p=>!/regist|funding/i.test(p.l)).map(p=>(p.l?p.l+": ":"")+p.t).join("\n");
+async function aiCall(task,payload){
+ const u=aiURL();if(!u)throw Object.assign(new Error("setup"),{code:"setup"});
+ const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),45000);
+ let r;try{r=await fetch(`${u}/${task}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:ctl.signal})}
+ catch(e){clearTimeout(tm);throw Object.assign(new Error("net"),{code:e.name==="AbortError"?"slow":"net"})}
+ clearTimeout(tm);let j={};try{j=await r.json()}catch(e){}
+ if(!r.ok||!j.ok)throw Object.assign(new Error(j.error||"ai"),{code:j.error||"ai"});
+ return j;
+}
+const aiErr=c=>c==="quota"?"Today's free AI allowance has been used up. It resets tomorrow.":c==="setup"?"AI isn't set up yet. See Settings › AI features.":c==="slow"?"The AI took too long. Try again.":c==="no abstract"?"This paper has no abstract for the AI to work from.":c==="net"?"Couldn't reach the AI service. Check your connection.":"The AI couldn't answer just now. Try again in a moment.";
+async function aiSummary(pmid){
+ if(!st.aiSum)st.aiSum={};
+ if(st.aiSum[pmid]){S.aiOpen[pmid]=!S.aiOpen[pmid];render();return}
+ if(!Array.isArray(S.abs[pmid])){toast("Open the abstract first.");return}
+ const it=findItem(pmid)||st.saved[pmid]||{};
+ S.aiBusy[pmid]=true;S.aiOpen[pmid]=true;render();
+ try{const j=await aiCall("summary",{title:it.title||"",abstract:absText(S.abs[pmid])});
+  st.aiSum[pmid]={...j.data,model:j.model,at:Date.now()};
+  const keys=Object.keys(st.aiSum);if(keys.length>300){keys.sort((a,b)=>st.aiSum[a].at-st.aiSum[b].at).slice(0,keys.length-300).forEach(k=>delete st.aiSum[k])}
+  save()}
+ catch(e){S.aiOpen[pmid]=false;toast(aiErr(e.code))}
+ S.aiBusy[pmid]=false;render();
+}
+function aiBox(pmid){
+ const has=!!aiURL(),s=(st.aiSum||{})[pmid];
+ if(!has&&!s)return "";
+ if(S.aiBusy[pmid])return `<div class="aibox"><span class="spin"></span>Writing an AI summary…</div>`;
+ if(!s||!S.aiOpen[pmid])return "";
+ const li=a=>(Array.isArray(a)?a:[]).filter(Boolean).map(x=>`<li>${esc(x)}</li>`).join("");
+ return `<div class="aibox"><div class="aih">✨ AI summary <span>Check against the abstract</span></div>
+  ${s.bottomline?`<p class="aibl">${esc(s.bottomline)}</p>`:""}
+  ${s.question?`<p><b>Question</b> ${esc(s.question)}</p>`:""}${s.design?`<p><b>Design</b> ${esc(s.design)}</p>`:""}
+  ${li(s.results)?`<p><b>Key results</b></p><ul>${li(s.results)}</ul>`:""}${s.practice?`<p><b>For practice</b> ${esc(s.practice)}</p>`:""}
+  ${li(s.limitations)?`<p><b>Limitations</b></p><ul>${li(s.limitations)}</ul>`:""}
+  <div class="tts" style="border-top:0;padding-top:0"><button data-act="aisay" data-id="${pmid}">▶ Listen to summary</button></div></div>`;
+}
+function aiSay(pmid){const s=(st.aiSum||{})[pmid];if(!s)return;const it=findItem(pmid)||st.saved[pmid]||{};
+ const parts=[speakable(it.title||""),s.bottomline&&"In short. "+speakable(s.bottomline),s.question&&"The question. "+speakable(s.question),s.design&&"Design. "+speakable(s.design),...(s.results||[]).map((r,i)=>(i===0?"Key results. ":"")+speakable(r)),s.practice&&"For practice. "+speakable(s.practice)].filter(Boolean);
+ ttsSay(parts.flatMap(p=>sentences(p)),pmid)}
+async function aiTest(){
+ const u=aiURL();if(!u){toast("Add the AI address first.");return}
+ S.aiTest="Testing…";render();
+ try{const r=await fetch(u);const j=await r.json();S.aiTest=j.ok?"Connected. AI features are working.":"The address answered, but not as expected."}
+ catch(e){S.aiTest="Couldn't connect. Check the address."}
+ render();
+}
+
+function ttsNext(){useNV()?nvSpeakNext():speakNext()}
 function render(){
  document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
  const n=S.newIds.size;document.getElementById("newc").textContent=n?`${n} new`:"";
@@ -1346,19 +1615,19 @@ document.addEventListener("click",e=>{
  else if(a==="qscope"){S.qscope=b.dataset.v;load()}
  else if(a==="qsort"){S.qsort=b.dataset.v;load()}
  else if(a==="lib"){S.lib=b.dataset.v;S.confirm="";render()}
- else if(false&&a==="slides"){if(!S.modal||S.modal.pmid!==b.dataset.id){S.charts=[];S.chartDraft=null}S.modal={type:"slides",pmid:b.dataset.id};S.slideBusy="";renderModal()}
+ else if(a==="slides"){S.slideFile=null;if(!S.modal||S.modal.pmid!==b.dataset.id){S.charts=[];S.chartDraft=null}S.modal={type:"slides",pmid:b.dataset.id};S.slideBusy="";renderModal()}
  else if(a==="chadd"){S.chartDraft={type:"forest"};renderModal()}
  else if(a==="chcancel"){e.preventDefault();S.chartDraft=null;renderModal()}
  else if(a==="chsave"){e.preventDefault();const d=S.chartDraft;if(!parseRows(d.data,d.type==="bar"?2:4).length){toast(d.type==="bar"?"Add at least one line: label, value":"Add at least one line: label, HR, lower CI, upper CI");return}(S.charts=S.charts||[]).push(d);S.chartDraft=null;renderModal()}
  else if(a==="chdel"){S.charts.splice(+b.dataset.v,1);renderModal()}
  else if(a==="ft"){e.preventDefault();openFullText(b.dataset.doi)}
  else if(a==="podcpd"){S.modal={type:"cpd",pmid:b.dataset.id,title:b.dataset.n};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
- else if(a==="tts"){const id=b.dataset.id;if(TTS.pmid===id&&TTS.playing){if(TTS.paused){speechSynthesis.resume();TTS.paused=false}else{speechSynthesis.pause();TTS.paused=true}render()}else ttsArticle(id)}
+ else if(a==="tts"){const id=b.dataset.id;if(TTS.pmid===id&&TTS.playing){if(TTS.paused){useNV()?NV.ctx.resume():speechSynthesis.resume();TTS.paused=false}else{useNV()?NV.ctx.suspend():speechSynthesis.pause();TTS.paused=true}render()}else ttsArticle(id)}
  else if(a==="ttsstop")ttsStop();
  else if(a==="ttstest"){ttsSay([speakable("This is how articles will sound. In the ARTESIA trial, apixaban reduced stroke, HR 0.63, 95% CI 0.45–0.88.")],"test")}
  else if(a==="share")shareArticle(b.dataset.id);
  else if(a==="listenall"){e.preventDefault();listenAll()}
- else if(a==="nppause"){if(TTS.paused){speechSynthesis.resume();TTS.paused=false}else{speechSynthesis.pause();TTS.paused=true}renderNP()}
+ else if(a==="nppause"){if(TTS.paused){useNV()?NV.ctx.resume():speechSynthesis.resume();TTS.paused=false}else{useNV()?NV.ctx.suspend():speechSynthesis.pause();TTS.paused=true}renderNP()}
  else if(a==="npnext")skipNext();
  else if(a==="cpddom"){const d=b.dataset.v,L=S.cpdRef.domains=S.cpdRef.domains||[];const i=L.indexOf(d);if(i>=0)L.splice(i,1);else L.push(d);b.classList.toggle("on")}
  else if(a==="tedit"){const r=allTopicRows().find(x=>x.id===b.dataset.v);S.tEdit={id:r.id,name:r.name,words:r.w.join(", "),c:r.c,custom:r.custom,edited:r.edited};render()}
@@ -1381,14 +1650,28 @@ document.addEventListener("click",e=>{
  else if(a==="jup"||a==="jdown"){e.preventDefault();const ids=moveIn(J,b.dataset.v,a==="jup"?-1:1);if(ids){st.jOrder=ids;save();applyJournals();render()}}
  else if(a==="dv"){S.dv=b.dataset.v;S.dq="";render()}
  else if(a==="dvsync"){S.dsErr=false;loadDVLASync(true)}
+ else if(a==="nvdl"){e.preventDefault();nvCtx();nvDownload()}
+ else if(a==="nvrm"){e.preventDefault();nvRemove()}
+ else if(a==="aisum")aiSummary(b.dataset.id);
+ else if(a==="aisay")aiSay(b.dataset.id);
+ else if(a==="aitest"){e.preventDefault();aiTest()}
+ else if(a==="evcheck"){evRefresh(true)}
+ else if(a==="evf"){S.evf=b.dataset.v;render()}
+ else if(a==="evr"){S.evr=b.dataset.v;render()}
+ else if(a==="evadd"){e.preventDefault();evOpen("")}
+ else if(a==="evlog")evOpen(b.dataset.v);
+ else if(a==="evics")evICS(b.dataset.v);
+ else if(a==="evsave"){e.preventDefault();evSave()}
+ else if(a==="cpdevents"){e.preventDefault();S.lib="events";render();window.scrollTo(0,0)}
  else if(a==="backup"){e.preventDefault();backupNow()}
- else if(false&&a==="slidego"){e.preventDefault();const id=S.modal.pmid;makeSlides(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
+ else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;makeSlides(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
  else if(a==="cpd"){S.modal={type:"cpd",pmid:b.dataset.id};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
  else if(a==="cpdmin"){S.cpdMin=+b.dataset.v;renderModal()}
  else if(a==="cpdsave"){e.preventDefault();const mins=Math.round(+S.cpdMin);if(!(mins>0)){toast("Enter the minutes spent.");return}const it=findItem(S.modal.pmid)||(S.modal.title?{title:"Podcast: "+S.modal.title,src:"Podcast"}:{});
   st.cpd.push({id:"c"+Date.now().toString(36),pmid:S.modal.pmid,title:it.title||"",src:it.src==="Podcast"?"Podcast":(jOf(it).name||it.src||""),doi:it.doi||"",date:S.cpdDate||isoD(new Date()),minutes:mins,ref:{learn:(S.cpdRef.learn||"").trim(),change:(S.cpdRef.change||"").trim(),further:(S.cpdRef.further||"").trim(),domains:(S.cpdRef.domains||[]).slice()},note:"",at:Date.now()});
   save();S.modal=null;render();toast(`Logged ${mins} minutes of CPD`)}
- else if(a==="mclose"){e.preventDefault();S.modal=null;S.slideBusy="";renderModal()}
+ else if(a==="mclose"){e.preventDefault();S.modal=null;S.slideBusy="";S.slideFile=null;renderModal()}
+ else if(a==="slideshare"){e.preventDefault();slideShare()}
  else if(a==="cpdp"){S.cpdP=b.dataset.v;render()}
  else if(a==="cpdask"){S.confirm="cpd:"+b.dataset.v;render()}
  else if(a==="cpddel"){st.cpd=st.cpd.filter(c=>c.id!==b.dataset.v);save();S.confirm="";render()}
@@ -1404,8 +1687,10 @@ function cvSet(el){
 document.addEventListener("input",e=>{
  if(e.target.dataset&&e.target.dataset.cv){cvSet(e.target);return}
  if(e.target.id==="q"){S.q=e.target.value;clearTimeout(qTimer);qTimer=setTimeout(()=>load(),700)}
+ else if(e.target.id==="aiurl"){st.aiUrl=e.target.value.trim();save()}
  else if(["ftezp","ftoa","ftemail"].includes(e.target.id)){st.ft={...(st.ft||{}),[e.target.id.slice(2)]:e.target.value.trim()};save()}
  else if(e.target.id==="cpdmins"){S.cpdMin=e.target.value}
+ else if(S.ev&&/^ev(n|org|s|e|v|cr|ses)$/.test(e.target.id)){const k={evn:"n",evorg:"org",evs:"s",eve:"e",evv:"v",evcr:"cr",evses:"sessions"}[e.target.id];S.ev[k]=e.target.value;if(k==="s"&&(!S.ev.e||S.ev.e<S.ev.s)){S.ev.e=S.ev.s;const x=document.getElementById("eve");if(x)x.value=S.ev.s}}
  else if(["cpdlearn","cpdchange","cpdfurther"].includes(e.target.id)){S.cpdRef[e.target.id.slice(3)]=e.target.value}
  else if(e.target.id==="tname"&&S.tEdit){S.tEdit.name=e.target.value}
  else if(e.target.id==="twords"&&S.tEdit){S.tEdit.words=e.target.value}
@@ -1419,7 +1704,10 @@ document.addEventListener("change",e=>{
  const el=e.target;
  if(el.dataset&&el.dataset.cv){cvSet(el);return}
  if(el.id==="slidecount"){S.slideN=+el.value;return}
+ if(el.id==="evt"&&S.ev){S.ev.t=el.value;return}
+ if((el.id==="evs"||el.id==="eve")&&S.ev){S.ev[el.id==="evs"?"s":"e"]=el.value;return}
  if(el.id==="slidefigs"){S.slideFigs=el.checked;return}
+ if(el.id==="slideai"){S.slideAI=el.checked;return}
  if(el.id==="chtype"&&S.chartDraft){S.chartDraft.type=el.value;renderModal();return}
  if(el.id==="restorefile"&&el.files[0]){const f=el.files[0];el.value="";restoreFrom(f);return}
  if(el.id==="cpdfrom"){S.cpdFrom=el.value;render();return}
@@ -1427,6 +1715,8 @@ document.addEventListener("change",e=>{
  if(el.id==="cpddate"){S.cpdDate=el.value;return}
  if(el.dataset&&el.dataset.th){st.topicEdits=st.topicEdits||{};const id=el.dataset.th;if(id.startsWith("ct")){const x=(st.customTopics||[]).find(y=>y.id===id);if(x)x.hidden=!el.checked}else st.topicEdits[id]={...(st.topicEdits[id]||{}),hidden:!el.checked};save();applyTopics();render();return}
  if(el.id==="jgen"){S.jgen=el.checked;return}
+ if(el.id==="enginesel"){st.engine=el.value;save();if(el.value==="natural"&&S.nvHave)nvLoad(st.nvVoice||"jenny").catch(()=>{NV.failed=true});render();return}
+ if(el.id==="nvvoice"){st.nvVoice=el.value;save();NV.sess=null;NV.key="";nvIsDownloaded(el.value).then(h=>{S.nvHave=h;if(h&&st.engine==="natural")nvLoad(el.value).catch(()=>{});render()});return}
  if(el.id==="voicesel"){st.voice=el.value;save();return}
  if(el.id==="ratesel"){st.rate=el.value;save();return}
  if(el.id==="ftmode"){st.ft={...(st.ft||{}),mode:el.value};save();render();return}
