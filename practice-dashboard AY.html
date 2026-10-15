@@ -209,7 +209,7 @@ const DEFAULT={
   scans:{self:200,insured:150,cac:50},
   costs:{commission:{spire:5,nuffield:5,kp:5,medserv:3.5},invCommission:{spire:0,nuffield:5,kp:0},spireRent:{rate:27.5,hours:{spire:5}},nuffieldRent:{rate:25,hours:{nuffield:2}},kpRoom:{block:7.5,newBlocks:2,fuBlocks:1},rentMode:"deducted"}
  },
- settings:{overdueDays:45,keywords:{spire:"spire",nuffield:"nuffield",kp:"kings park, kingspark, circle",medserv:"medserv"},opening:{spire:0,nuffield:0,kp:0,medserv:0}},
+ settings:{overdueDays:45,monthTarget:0,keywords:{spire:"spire",nuffield:"nuffield",kp:"kings park, kingspark, circle",medserv:"medserv"},opening:{spire:0,nuffield:0,kp:0,medserv:0}},
  weeks:{},txns:[],patients:[],remits:[]
 };
 
@@ -447,6 +447,81 @@ function render(){
 }
 
 // ---------- overview ----------
+// ---------- period views, investigation breakdown, income by hospital ----------
+const asDate=x=>typeof x==="string"?parseISO(x.slice(0,10)):x;
+const PKF={week:d=>iso(mondayOf(asDate(d))),month:d=>monthKey(asDate(d)),quarter:d=>{d=asDate(d);return `${d.getFullYear()}-Q${Math.floor(d.getMonth()/3)+1}`},year:d=>String(asDate(d).getFullYear())};
+function perLabel(k,per,short){
+ if(per==="week"){const d=parseISO(k);return (short?"":"Week of ")+d.toLocaleDateString("en-GB",{day:"numeric",month:"short",...(short?{}:{year:"numeric"})})}
+ if(per==="month")return monthLabel(k,short);
+ if(per==="quarter"){const[y,q]=k.split("-Q");const mm=["Jan–Mar","Apr–Jun","Jul–Sep","Oct–Dec"][+q-1];return short?`Q${q} ${String(y).slice(2)}`:`${mm} ${y}`}
+ return k;
+}
+function pStep(k,per,i){
+ if(per==="week")return iso(addDays(parseISO(k),-7*i));
+ if(per==="month")return prevMonth(k,i);
+ if(per==="quarter"){let[y,q]=k.split("-Q").map(Number);q-=i;while(q<1){q+=4;y--}return `${y}-Q${q}`}
+ return String(+k-i);
+}
+const HOSPS=[["kp","Kings Park"],["spire","Spire"],["nuffield","Nuffield"]];
+const hcol=h=>(PAYERS.find(p=>p.id===h)||{}).color||PAL[h].c;
+const siteHosp=site=>(SMAP[site]&&SMAP[site].hosp)||site;
+function hospIncome(lines,per,key){const o={kp:0,spire:0,nuffield:0};for(const l of lines){if(PKF[per](l.date)!==key)continue;const h=siteHosp(l.site);if(h in o)o[h]+=l.amount}return o}
+function hospBar(lines,per,key,hero){
+ const inc=hospIncome(lines,per,key),tot=HOSPS.reduce((a,[h])=>a+Math.max(0,inc[h]),0),target=hero?n(data.settings.monthTarget):0;
+ if(!tot&&!target)return "";
+ const base=Math.max(tot,target||0)||1;
+ return `<div class="hbar"><div class="lbl" style="margin-top:14px">${hero?`Income this month by hospital${target?`: ${fmt(tot)} of ${fmt(target)} target (${Math.round(100*tot/target)}%)`:`: ${fmt(tot)}`}`:`Income by hospital: ${fmt(tot)}`}</div>
+  <div class="split">${HOSPS.filter(([h])=>inc[h]>0).map(([h])=>`<i style="width:${100*inc[h]/base}%;background:${hcol(h)}"></i>`).join("")}</div>
+  <div class="keys">${HOSPS.map(([h,nm])=>`<span><span class="dot" style="background:${hcol(h)}"></span>${nm} ${fmt(inc[h])}</span>`).join("")}</div></div>`;
+}
+const INVORDER=["ecg","ett","echo","synexus","zio","h24","h48","h72","bp24","toe","dccv","ct","mri","cac"];
+const INVLABEL={ecg:"ECGs",ett:"Exercise treadmill tests",echo:"Echocardiograms",synexus:"Synexus echos",zio:"ZIO patches",h24:"24-hour ECG monitors",h48:"48-hour ECG monitors",h72:"72-hour ECG monitors",bp24:"24-hour BP monitors",toe:"TOEs",dccv:"DC cardioversions",ct:"CT scans reported",mri:"MRI scans reported",cac:"CAC scores"};
+function invBreakdown(per,key){
+ const q={},byH={};const add=(k,c,h)=>{if(!c)return;q[k]=(q[k]||0)+c;byH[k]=byH[k]||{};byH[k][h]=(byH[k][h]||0)+c};
+ for(const w0 of Object.values(data.weeks)){const w=deepMerge(emptyWeek(w0.start),w0),mon=parseISO(w.start);
+  for(const s of CLINICS){if(PKF[per](addDays(mon,s.off))!==key)continue;const site=w[s.id]||{};
+   for(const[k]of HOSP[s.hosp].inv)add(k,n((site.inv||{})[k]),s.hosp);
+   if(s.procs)for(const k of ["toe","dccv"]){const p=(site.procs||{})[k]||{};add(k,n(p.self)+n(p.bupa)+n(p.ins),s.hosp)}}
+  if(PKF[per](addDays(mon,3))===key){const r=w.reporting||{};add("ct",n((r.ct||{}).self)+n((r.ct||{}).ins),"spire");add("mri",n((r.mri||{}).self)+n((r.mri||{}).ins),"spire");add("cac",n(r.cac),"spire")}}
+ return INVORDER.filter(k=>q[k]).map(k=>({k,label:INVLABEL[k],q:q[k],byH:byH[k]}));
+}
+function periodSection(lines,paid){
+ const t=today(),per=S.period||"month";
+ const keys=new Set([PKF[per](t)]);lines.forEach(l=>keys.add(PKF[per](l.date)));data.txns.forEach(x=>keys.add(PKF[per](x.date)));
+ const opts=[...keys].sort().reverse();if(!opts.includes(S.pk))S.pk=opts[0];const key=S.pk;
+ const acts=Object.values(data.weeks).flatMap(w=>Object.values(activity(deepMerge(emptyWeek(w.start),w)))).filter(a=>PKF[per](a.date)===key);
+ const sum=f=>acts.reduce((a,x)=>a+x[f],0);
+ const inP=l=>PKF[per](l.date)===key;
+ const earned=p=>lines.filter(l=>l.payer===p&&inP(l)).reduce((a,l)=>a+l.amount,0);
+ const got=p=>paid.filter(x=>x.payer===p&&PKF[per](x.date)===key).reduce((a,x)=>a+x.amount,0);
+ const inv=invBreakdown(per,key),ml=lines.filter(inP),g=ml.filter(l=>!l.cost).reduce((a,l)=>a+l.amount,0),cm=-ml.filter(l=>l.cost==="commission").reduce((a,l)=>a+l.amount,0),rn=-ml.filter(l=>l.cost==="rent").reduce((a,l)=>a+l.amount,0);
+ const chart=[5,4,3,2,1,0].map(i=>{const k=pStep(key,per,i);return{m:perLabel(k,per,1),e:lines.filter(l=>PKF[per](l.date)===k&&PNAME[l.payer]).reduce((a,l)=>a+l.amount,0),r:paid.filter(x=>PKF[per](x.date)===k).reduce((a,x)=>a+x.amount,0)}});
+ const max=Math.max(1,...chart.flatMap(c=>[c.e,c.r])),nm=perLabel(key,per),sh=perLabel(key,per,1);
+ return `<div style="margin:30px 0 10px"><div class="row"><h2 style="margin:0">${{week:"Week",month:"Month",quarter:"Quarter",year:"Year"}[per]} view</h2>
+   <select class="t" style="width:auto" data-act="pkey" aria-label="Choose period">${opts.map(k=>`<option value="${k}" ${k===key?"selected":""}>${perLabel(k,per)}</option>`).join("")}</select></div>
+   <div class="chips" style="margin-top:8px">${[["week","Week"],["month","Month"],["quarter","Quarter"],["year","Year"]].map(([id,l])=>`<button class="chip ${per===id?"on":""}" data-act="period" data-v="${id}">${l}</button>`).join("")}</div></div>
+  <div class="stats">
+   <div><b>${sum("newc")+sum("fu")}</b>Patients seen</div><div><b>${sum("newc")}</b>New consultations</div>
+   <div><b>${sum("fu")}</b>Follow-ups</div><div><b>${sum("scans")}</b>Scans reported</div>
+  </div>
+  <div class="card tbl" style="margin-top:12px"><table>
+   <thead><tr><th>Investigations and procedures</th><th style="text-align:right">Number</th></tr></thead>
+   <tbody>${inv.length?inv.map(r=>`<tr><td>${r.label}${Object.keys(r.byH).length>1?`<div class="muted" style="font-size:13px">${HOSPS.filter(([h])=>r.byH[h]).map(([h,nm2])=>`${nm2} ${r.byH[h]}`).join(", ")}</div>`:""}</td><td style="text-align:right"><b>${r.q}</b></td></tr>`).join("")+`<tr class="tot"><td>Total</td><td style="text-align:right">${inv.reduce((a,r)=>a+r.q,0)}</td></tr>`:`<tr><td colspan="2" class="muted">No investigations logged in ${nm}.</td></tr>`}</tbody>
+  </table></div>
+  <div class="card" style="margin-top:12px">${hospBar(lines,per,key,false)||`<p class="muted">No income logged in ${nm}.</p>`}</div>
+  <div class="card tbl" style="margin-top:12px"><table>
+   <thead><tr><th>Payer</th><th>Earned in ${sh}</th><th>Paid in ${sh}</th></tr></thead>
+   <tbody>${PAYERS.map(p=>`<tr><td><span class="dot" style="background:${p.color}"></span>${p.name}</td><td>${fmt(earned(p.id))}</td><td>${fmt(got(p.id))}</td></tr>`).join("")}
+   <tr class="tot"><td>Total</td><td>${fmt(PAYERS.reduce((a,p)=>a+earned(p.id),0))}</td><td>${fmt(PAYERS.reduce((a,p)=>a+got(p.id),0))}</td></tr></tbody>
+  </table></div>
+  ${g?`<div class="card" style="margin-top:10px;font-size:15px"><div class="row"><span>Gross fees</span><b>${fmt(g)}</b></div><div class="row"><span>Collection commission</span><span>−${fmt(cm)}</span></div><div class="row"><span>Room charges</span><span>−${fmt(rn)}</span></div><div class="row" style="border-top:1px solid var(--line);margin-top:6px;padding-top:6px"><b>Net earned</b><b>${fmt(g-cm-rn)}</b></div></div>`:""}
+  <p class="help" style="margin-top:8px">Earned is after commission and room charges, for work done in the period. Paid is money that arrived in the period, usually for earlier work because of payment lags.</p>
+  <h2>Last six ${{week:"weeks",month:"months",quarter:"quarters",year:"years"}[per]}</h2>
+  <div class="card">
+   <div class="chart">${chart.map(c=>`<div class="col" title="${c.m}: earned ${fmt(c.e)}, received ${fmt(c.r)}"><div class="bars"><i class="e" style="height:${100*c.e/max}%"></i><i class="r" style="height:${100*c.r/max}%"></i></div><span>${c.m}</span></div>`).join("")}</div>
+   <div class="leg"><span><i class="e"></i>Earned</span><span><i class="r"></i>Received</span></div>
+  </div>`;
+}
 function vOverview(){
  const t=today(),lines=allLines();
  const paid=data.txns.filter(x=>PNAME[x.payer]);
@@ -483,6 +558,7 @@ function vOverview(){
   <div class="lbl">${hasData?`still to come from ${fmt(totExp)} of logged work`:"Log your first clinic to start tracking what you're owed."}</div>
   ${pos.length?`<div class="split">${pos.map(s=>`<i style="width:${100*s.out/totOut}%;background:${s.color}"></i>`).join("")}</div>
   <div class="keys">${pos.map(s=>`<span><span class="dot" style="background:${s.color}"></span>${s.name} ${fmt(s.out)}</span>`).join("")}</div>`:""}
+  ${hospBar(lines,"month",monthKey(t),true)}
   <div class="wbars" role="img" aria-label="Earnings for the last six weeks">${weeks.map((w,i)=>`<div class="col ${i===5?"now":""}"><div class="b"><i style="height:${100*wvals[i]/Math.max(1,...wvals)}%"></i></div><small><b>${fmt(wvals[i])}</b>${i===5?"This wk":parseISO(w).getDate()+"/"+(parseISO(w).getMonth()+1)}</small></div>`).join("")}</div>
   <div style="margin-top:14px"><button class="btn" data-act="quickgo">Quick add a clinic</button></div>
  </section>
@@ -502,24 +578,7 @@ function vOverview(){
      <div class="muted">${s.last?(d=>d===0?"Last payment today":d===1?"Last payment yesterday":`Last payment ${d} days ago`)(daysBetween(parseISO(s.last),t)):"No payments recorded yet"}</div>
     </div>
    </div>`}).join("")}</div>
-  <div class="row" style="margin:30px 0 10px"><h2 style="margin:0">Month view</h2>
-   <select class="t" style="width:auto" data-act="month" aria-label="Choose month">${months.map(m=>`<option value="${m}" ${m===S.month?"selected":""}>${monthLabel(m)}</option>`).join("")}</select></div>
-  <div class="stats">
-   <div><b>${sum("newc")+sum("fu")}</b>Patients seen</div><div><b>${sum("newc")}</b>New consultations</div>
-   <div><b>${sum("inv")}</b>Investigations and procedures</div><div><b>${sum("scans")}</b>Scans reported</div>
-  </div>
-  <div class="card tbl" style="margin-top:12px"><table>
-   <thead><tr><th>Payer</th><th>Earned in ${monthLabel(S.month,1)}</th><th>Paid in ${monthLabel(S.month,1)}</th></tr></thead>
-   <tbody>${PAYERS.map(p=>`<tr><td><span class="dot" style="background:${p.color}"></span>${p.name}</td><td>${fmt(earned(p.id,S.month))}</td><td>${fmt(got(p.id,S.month))}</td></tr>`).join("")}
-   <tr class="tot"><td>Total</td><td>${fmt(PAYERS.reduce((a,p)=>a+earned(p.id,S.month),0))}</td><td>${fmt(PAYERS.reduce((a,p)=>a+got(p.id,S.month),0))}</td></tr></tbody>
-  </table></div>
-  ${(()=>{const ml=lines.filter(l=>monthKey(l.date)===S.month),g=ml.filter(l=>!l.cost).reduce((a,l)=>a+l.amount,0),cm=-ml.filter(l=>l.cost==="commission").reduce((a,l)=>a+l.amount,0),rn=-ml.filter(l=>l.cost==="rent").reduce((a,l)=>a+l.amount,0);return g?`<div class="card" style="margin-top:10px;font-size:15px"><div class="row"><span>Gross fees</span><b>${fmt(g)}</b></div><div class="row"><span>Collection commission</span><span>−${fmt(cm)}</span></div><div class="row"><span>Room charges</span><span>−${fmt(rn)}</span></div><div class="row" style="border-top:1px solid var(--line);margin-top:6px;padding-top:6px"><b>Net earned</b><b>${fmt(g-cm-rn)}</b></div></div>`:""})()}
-  <p class="help" style="margin-top:8px">Earned is after commission and room charges. It's work done that month. Paid is money that arrived that month, usually for earlier work because of payment lags.</p>
-  <h2>Last six months</h2>
-  <div class="card">
-   <div class="chart">${chart.map(c=>`<div class="col" title="${c.m}: earned ${fmt(c.e)}, received ${fmt(c.r)}"><div class="bars"><i class="e" style="height:${100*c.e/max}%"></i><i class="r" style="height:${100*c.r/max}%"></i></div><span>${c.m}</span></div>`).join("")}</div>
-   <div class="leg"><span><i class="e"></i>Earned</span><span><i class="r"></i>Received</span></div>
-  </div>
+  ${periodSection(lines,paid)}
  </div>`;
 }
 
@@ -636,24 +695,60 @@ function readTokens(raw){
  const cand=nums.filter(x=>!used.has(x.i)&&x.v>=20&&x.v<=9999);
  return{items,payer,kind,name:titleCase(name.slice(0,4).join(" ")),amount:cand.length?cand[cand.length-1].v:null};
 }
-function readClinic(text){
- const rows=[];
- const mergeInto=(a,r)=>{if(r.name&&!a.name)a.name=r.name;if(r.hno&&!a.hno)a.hno=r.hno;if(r.payer&&!a.payer)a.payer=r.payer;if(r.kind&&!a.kind)a.kind=r.kind;for(const[k,q]of Object.entries(r.items))a.items[k]=(a.items[k]||0)+q;if(r.amount!=null&&a.amount==null)a.amount=r.amount};
- for(const raw of text.split(/\r?\n/)){
-  if(!raw.trim())continue;
-  let s=stripPersonal(raw);
-  const a=findAmounts(s);s=a.s;
+const HDR_RE=/\b(?:name|surname|forename|first name|dob|d\.o\.b|date of birth|hosp(?:ital)?\s*(?:no|number)|mrn|chi|tel|phone|mobile|tests?|investigations?|amount|fee|insurer|payer|patient|appointment|time)\b/gi;
+const DOB_RE=/\b\d{1,2}\s*[\/.\-]\s*\d{1,2}\s*[\/.\-]\s*\d{2,4}\b|\b\d{1,2}(?:st|nd|rd|th)?\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?,?\s+\d{2,4}\b/i;
+function clinicLines(text){
+ return text.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(line=>{
+  const hdr=(line.match(HDR_RE)||[]).length;
+  let s=stripPersonal(line);const am=findAmounts(s);s=am.s;
   let hno="";const m=s.match(HNO_RE);if(m){hno=m[0].toUpperCase();s=s.replace(m[0]," ")}
-  const t=readTokens(s);
-  const r={name:t.name,hno,payer:t.payer,kind:t.kind,items:t.items,amount:a.am.length?a.am[a.am.length-1]:t.amount};
-  const info=Object.keys(r.items).length||r.payer||r.kind||r.amount!=null;
-  const last=rows[rows.length-1];
-  if(!r.name&&!r.hno){if(last&&info)mergeInto(last,r);continue}
-  if(!r.name&&last&&!last.hno){mergeInto(last,r);continue}
-  if(r.name&&!r.hno&&!info&&last&&!last.name){last.name=r.name;continue}
-  rows.push(r);
+  const t=readTokens(s),amount=am.am.length?am.am[am.am.length-1]:t.amount;
+  const info=!!(Object.keys(t.items).length||t.payer||t.kind||amount!=null);
+  const noise=!hno&&!info&&!/[A-Z]/.test(line); // names are capitalised; all-lowercase text is usually stray words
+  return{dob:DOB_RE.test(line),hno,name:noise?"":t.name,payer:t.payer,kind:t.kind,items:t.items,amount,info,header:hdr>=2&&!hno&&!info};
+ }).filter(x=>!x.header&&(x.name||x.hno||x.info||x.dob));
+}
+const newRec=()=>({name:"",hno:"",payer:"",kind:"",items:{},amount:null});
+function addTo(r,x){if(x.name)r.name=r.name?r.name+" "+x.name:x.name;if(x.hno&&!r.hno)r.hno=x.hno;if(x.payer&&!r.payer)r.payer=x.payer;if(x.kind&&!r.kind)r.kind=x.kind;for(const[k,q]of Object.entries(x.items||{}))r.items[k]=(r.items[k]||0)+q;if(x.amount!=null&&r.amount==null)r.amount=x.amount}
+function byRows(L){
+ // a patient starts with a name, after the previous patient has a number, date of birth or clinical details
+ const out=[];let cur=null,seen=false;
+ for(const x of L){
+  const startsNew=!cur||(x.name&&(cur.hno||seen||Object.keys(cur.items).length||cur.payer||cur.amount!=null))||(x.hno&&cur.hno);
+  if(startsNew){if(cur)out.push(cur);cur=newRec();seen=false}
+  addTo(cur,x);if(x.dob)seen=true;
  }
- return rows.map(r=>({name:r.name,hno:r.hno,payer:r.payer,kind:r.kind,tests:Object.entries(r.items).map(([k,q])=>(q>1?q+" ":"")+ITEMNAME[k]).join(", "),amount:r.amount!=null?String(r.amount):""}));
+ if(cur)out.push(cur);return out;
+}
+function byColumns(L){
+ const H=L.filter(x=>x.hno).length;if(H<2)return null;
+ const idx=L.map((x,i)=>x.hno?i:-1).filter(i=>i>=0),adj=idx.filter((i,k)=>idx.includes(i-1)||idx.includes(i+1)).length;
+ if(adj/H<0.6||L.filter(x=>x.hno&&x.name).length>H/2)return null; // numbers aren't in a block, so it's not column layout
+ const N=H,recs=Array.from({length:N},newRec);
+ L.filter(x=>x.hno).forEach((x,i)=>recs[i].hno=x.hno);
+ const nameIdx=L.map((x,i)=>x.name&&!x.hno&&!x.info?i:-1).filter(i=>i>=0),names=nameIdx.map(i=>L[i].name);
+ if(names.length===N)names.forEach((v,i)=>recs[i].name=v);
+ else if(names.length===2*N){names.slice(0,N).forEach((v,i)=>recs[i].name=`${v} ${names[N+i]}`)} // first-name column, then surname column
+ else if(names.length>N){const k=names.length/N;for(let i=0;i<N;i++)recs[i].name=names.slice(Math.round(i*k),Math.round((i+1)*k)).join(" ")}
+ else names.forEach((v,i)=>recs[i].name=v);
+ const infos=L.filter(x=>x.info&&!x.hno);
+ if(infos.length===N)infos.forEach((x,i)=>addTo(recs[i],{...x,name:""}));
+ else for(const f of ["payer","kind","amount"]){const v=infos.filter(x=>x[f]!=null&&x[f]!=="");if(v.length===N)v.forEach((x,i)=>{if(f==="amount")recs[i].amount=x.amount;else recs[i][f]=x[f]})}
+ const tl=infos.filter(x=>Object.keys(x.items).length);if(infos.length!==N&&tl.length===N)tl.forEach((x,i)=>{for(const[k,q]of Object.entries(x.items))recs[i].items[k]=(recs[i].items[k]||0)+q});
+ return recs;
+}
+function fitTo(recs,N){
+ // merge the thinnest rows into their neighbours until the count matches the sheet
+ const score=r=>(r.name?2:0)+(r.hno?3:0)+(Object.keys(r.items).length?1:0)+(r.payer?1:0)+(r.amount!=null?1:0);
+ while(recs.length>N){let w=0;recs.forEach((r,i)=>{if(score(r)<score(recs[w]))w=i});const r=recs.splice(w,1)[0],tgt=recs[Math.max(0,w-1)]||recs[0];if(tgt)addTo(tgt,{...r,name:tgt.name?(r.name&&!tgt.hno?r.name:""):r.name})}
+ return recs;
+}
+function readClinic(text,expectN){
+ const L=clinicLines(text);
+ let recs=byColumns(L)||byRows(L);
+ recs=recs.filter(r=>r.name||r.hno);
+ if(expectN>0&&recs.length>expectN)recs=fitTo(recs,expectN);
+ return recs.map(r=>({name:titleCase(String(r.name).toLowerCase().split(/\s+/).filter(Boolean).slice(-4).join(" ")).slice(0,60),hno:r.hno,payer:r.payer,kind:r.kind,tests:Object.entries(r.items).map(([k,q])=>(q>1?q+" ":"")+ITEMNAME[k]).join(", "),amount:r.amount!=null?String(r.amount):""}));
 }
 function estAmount(hosp,payer,kind,items){
  const T=data.tariffs;let a=0;
@@ -677,9 +772,10 @@ function pSources(p){
  if(p.hosp==="spire")return p.payer==="bupa"||!p.payer?["spire","medserv"]:["spire"];
  return p.payer==="self"?["nuffield"]:["nuffield","medserv"];
 }
-function readClinicAct(){
- if(!S.ptext.trim()){toast("Paste the text from your clinic sheet first.");return}
- const rows=readClinic(S.ptext);
+function readClinicAct(again){
+ if(!again&&!S.ptext.trim()){toast("Paste the text from your clinic sheet first.");return}
+ if(!again)S.plast=S.ptext;
+ const rows=readClinic(S.plast||S.ptext,parseInt(S.pexpect,10)||0);
  S.pdraft=rows.length?rows:[{name:"",hno:"",payer:"",kind:"",tests:"",amount:""}];
  S.ptext="";render();
  toast(rows.length?`Found ${rows.length} ${rows.length===1?"patient":"patients"}. Check them, then save.`:"No patients recognised. Add them by hand below.");
@@ -759,6 +855,7 @@ function draftHTML(){
  const insOpts=v=>`<option value="">Not stated</option>${INS.map(i=>`<option value="${i.id}" ${v===i.id?"selected":""}>${i.name}</option>`).join("")}`;
  const kindOpts=v=>`<option value="">Not stated</option><option value="new" ${v==="new"?"selected":""}>New</option><option value="fu" ${v==="fu"?"selected":""}>Follow-up</option>`;
  return `<div style="margin-top:16px"><b>${S.pdraft.length} ${S.pdraft.length===1?"patient":"patients"} to check</b>
+  ${S.plast?`<div class="card" style="margin-top:8px;padding:10px 12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span style="font-size:15px">Wrong number of patients? The sheet has</span><input class="t" style="width:70px" type="number" inputmode="numeric" min="1" id="pexpect" value="${esc(S.pexpect||"")}" placeholder="8"><span style="font-size:15px">patients.</span><button class="btn small" data-act="preread">Read again</button></div>`:""}
   ${S.pdraft.map((r,i)=>`<div class="drow">
    <label class="full">Name<input data-pd="${i}.name" value="${esc(r.name)}" autocomplete="off"></label>
    <label>Hospital no.<input data-pd="${i}.hno" value="${esc(r.hno)}" autocomplete="off"></label>
@@ -766,7 +863,7 @@ function draftHTML(){
    <label>Payer<select data-pd="${i}.payer">${insOpts(r.payer)}</select></label>
    <label>Visit<select data-pd="${i}.kind">${kindOpts(r.kind)}</select></label>
    <label class="full">Tests<input data-pd="${i}.tests" value="${esc(r.tests)}" placeholder="echo, ECG" autocomplete="off"></label>
-   <button class="link red" data-act="pdrop" data-i="${i}" style="justify-self:start">Remove</button>
+   <div style="display:flex;gap:16px;grid-column:1/-1">${i>0?`<button class="link" data-act="pmerge" data-i="${i}">Merge into row above</button>`:""}<button class="link red" data-act="pdrop" data-i="${i}">Remove</button></div>
   </div>`).join("")}
   <p class="help" style="margin-top:8px">A blank amount is worked out from your tariffs using the payer, visit and tests.</p>
   <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="psave">Save ${S.pdraft.length} ${S.pdraft.length===1?"patient":"patients"}</button><button class="btn alt" data-act="padd">Add a row</button><button class="link" data-act="pclear">Cancel</button></div>
@@ -1048,6 +1145,8 @@ function vTariffs(){
   <div class="card pcard" style="${pv("spire")}">${trow("TOE, self-pay","tariffs.procs.toe.self")}${trow("TOE, insured","tariffs.procs.toe.insured","Provisional average. Update when insurer rates are confirmed.")}${trow("DC cardioversion, self-pay","tariffs.procs.dccv.self")}${trow("DC cardioversion, insured","tariffs.procs.dccv.insured")}</div>
   <h2 style="color:${PAL.reporting.c}">CT and MRI reporting</h2>
   <div class="card pcard" style="${pv("reporting")}">${trow("Insured, per scan","tariffs.scans.insured")}${trow("Self-pay, per scan","tariffs.scans.self")}${trow("CAC scoring, per scan","tariffs.scans.cac")}</div>
+  <h2>Income target</h2>
+  <div class="card"><p class="help">Optional. Shows progress towards a monthly income target in the bar at the top of Overview.</p>${trow("Monthly target, after costs (£)","settings.monthTarget")}</div>
   <h2>Commission and room charges</h2>
   <div class="card"><p class="help">Commission is taken from consultations and procedures, and from investigations at the rates below. CT, MRI and CAC reporting is paid in full. Room charges apply to each clinic you log, except the Friday telephone follow-up clinics, which have none.</p>
    ${trow("Spire commission (%)","tariffs.costs.commission.spire")}${trow("Nuffield commission (%)","tariffs.costs.commission.nuffield")}${trow("Kings Park commission (%)","tariffs.costs.commission.kp")}${trow("Medserv commission (%)","tariffs.costs.commission.medserv")}
@@ -1117,7 +1216,10 @@ document.addEventListener("click",e=>{
  else if(a==="docask")S.confirm="doc:"+b.dataset.id;
  else if(a==="docdel"){S.confirm="";docDelete(b.dataset.id).then(()=>toast("Document deleted"));return}
  else if(a==="pclear"){S.ptext="";S.pdraft=null}
+ else if(a==="period"){S.period=b.dataset.v;S.pk="";}
  else if(a==="pdrop")S.pdraft.splice(+b.dataset.i,1);
+ else if(a==="pmerge"){const i=+b.dataset.i,a0=S.pdraft[i-1],r=S.pdraft[i];a0.name=[a0.name,r.name].filter(Boolean).join(" ").trim();for(const f of ["hno","payer","kind","amount"])if(!a0[f]&&r[f])a0[f]=r[f];a0.tests=[a0.tests,r.tests].filter(Boolean).join(", ");S.pdraft.splice(i,1)}
+ else if(a==="preread"){readClinicAct(true);return}
  else if(a==="padd")(S.pdraft=S.pdraft||[]).push({name:"",hno:"",payer:"",kind:"",tests:"",amount:""});
  else if(a==="psave"){savePatients();return}
  else if(a==="rread"){readRemitAct();return}
@@ -1137,6 +1239,7 @@ document.addEventListener("click",e=>{
 document.addEventListener("input",e=>{
  const el=e.target;
  if(el.id==="ptext"){S.ptext=el.value;return}
+ if(el.id==="pexpect"){S.pexpect=el.value;return}
  if(el.id==="rtext"){S.rtext=el.value;return}
  if(el.dataset.pd){const[i,f]=el.dataset.pd.split(".");if(S.pdraft&&S.pdraft[+i])S.pdraft[+i][f]=el.value;return}
  if(el.id==="pq"){S.pq=el.value;render();const q=document.getElementById("pq");if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}return}
@@ -1148,6 +1251,7 @@ document.addEventListener("input",e=>{
 document.addEventListener("change",async e=>{
  const el=e.target;
  if(el.dataset.act==="month"){S.month=el.value;render();return}
+ if(el.dataset.act==="pkey"){S.pk=el.value;render();return}
  if(el.id==="psess"){S.psess=el.value;return}
  if(el.id==="pdate"){S.pdate=el.value||iso(today());return}
  if(el.id==="rsrc"){S.rsrc=el.value;if(S.rdraft)readRemitAct();return}
