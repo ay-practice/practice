@@ -1,6 +1,6 @@
 {
  "updated": "2026-10-15",
- "note": "Cardiology CPD conference list. Dates, venues and credits checked on the date above.",
+ "note": "Cardiology CPD conference list. Dates, venues and credits checked on the date above. Optional \"book\" is the registration page; otherwise the website is used.",
  "events": [
   {
    "id": "acc26",
@@ -162,7 +162,8 @@
    "s": "2026-11-06",
    "e": "2026-11-09",
    "v": "McCormick Place, Chicago, USA",
-   "url": "https://professional.heart.org/en/meetings/scientific-sessions"
+   "url": "https://professional.heart.org/en/meetings/scientific-sessions",
+   "book": "https://professionalmember.heart.org/ConferenceIntegration/ConferenceConfirmation?confId=AHSS1126"
   },
   {
    "id": "sharp26",
@@ -195,7 +196,8 @@
    "s": "2026-12-03",
    "e": "2026-12-05",
    "v": "Milan, Italy",
-   "url": "https://www.escardio.org/events/congresses/eacvi-congress/"
+   "url": "https://www.escardio.org/events/congresses/eacvi-congress/",
+   "book": "https://www.escardio.org/events/congresses/eacvi-congress/registration/"
   },
   {
    "id": "aci27",
@@ -266,7 +268,8 @@
    "s": "2027-05-13",
    "e": "2027-05-16",
    "v": "Moscone Center, San Francisco, USA, and online",
-   "url": "https://www.heartrhythm.com"
+   "url": "https://www.heartrhythm.com",
+   "book": "https://www.heartrhythm.com/attend"
   },
   {
    "id": "pcr27",

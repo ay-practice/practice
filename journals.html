@@ -256,6 +256,10 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 .aibox p{font-size:15px;margin:6px 0}.aibox ul{padding-left:20px;font-size:15px}.aibox li{margin:3px 0}
 .aih{font-weight:700;color:#4B3C8F;font-size:14px;display:flex;justify-content:space-between;gap:8px}.aih span{font-weight:500;color:#7A6FA8;font-size:12px}
 .aibl{font-family:"Iowan Old Style","Charter",Georgia,serif;font-size:17px!important;color:#1C2541;font-weight:600}
+.tawrap{position:relative;display:block}.tawrap textarea{padding-right:46px}
+.mic{position:absolute;right:6px;bottom:8px;width:36px;height:36px;border-radius:50%;border:1px solid #DCE0F4;background:#EEF0FB;font-size:17px;line-height:1;padding:0}
+.mic.on{background:#C0504D;border-color:#C0504D;animation:micp 1.2s infinite}
+@keyframes micp{0%,100%{box-shadow:0 0 0 0 rgba(192,80,77,.5)}50%{box-shadow:0 0 0 8px rgba(192,80,77,0)}}
 </style>
 </head>
 <body>
@@ -269,7 +273,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="journal-reader-v1",APPVER="15 Oct 2026 (o)";
+const KEY="journal-reader-v1",APPVER="17 Oct 2026 (p)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -520,6 +524,7 @@ function card(it){
    <button class="${cpdFor(it.pmid)?"arch on":""}" data-act="cpd" data-id="${it.pmid}">${cpdFor(it.pmid)?"CPD ✓":"CPD"}</button>
    <button class="arch ${sv?"on":""}" data-act="star" data-id="${it.pmid}" aria-pressed="${sv}">${sv?"Saved":"Archive"}</button>
   </div>
+  ${S.tab==="saved"&&sv&&!S.open[it.pmid]&&(aiURL()||(st.aiSum||{})[it.pmid])?`<div style="margin-top:8px">${aiBox(it.pmid)||`<button class="link" style="color:#4B3C8F;text-decoration:none;font-weight:700;padding:0" data-act="aisum" data-id="${it.pmid}">✨ AI summary${(st.aiSum||{})[it.pmid]?"":" (uses the full text when it's free)"}</button>`}${(st.aiSum||{})[it.pmid]&&S.aiOpen[it.pmid]?`<button class="link" style="padding:0;margin-top:4px" data-act="aisum" data-id="${it.pmid}">Hide summary</button>`:""}</div>`:""}
   ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:aiBox(it.pmid)+ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")+ttsBar(it.pmid)}</div>`:""}
  </article>`;
 }
@@ -1147,16 +1152,16 @@ let EVENTS=[
  {id:"hrc26",n:"Heart Rhythm Congress 2026",org:"Arrhythmia Alliance with BHRS",t:"conf",r:"uk",s:"2026-10-11",e:"2026-10-13",v:"ICC Birmingham, UK",url:"https://www.heartrhythmcongress.org"},
  {id:"bse26",n:"BSEcho 2026",org:"British Society of Echocardiography",t:"conf",r:"uk",s:"2026-10-16",e:"2026-10-17",v:"Manchester Central, UK, and on demand",url:"https://www.bsecho.org/BSEcho2026"},
  {id:"tct26",n:"TCT 2026",org:"Cardiovascular Research Foundation",t:"conf",r:"usa",s:"2026-10-31",e:"2026-11-03",v:"San Diego Convention Center, USA",url:"https://www.crf.org/tct"},
- {id:"aha26",n:"AHA Scientific Sessions 2026",org:"American Heart Association",t:"conf",r:"usa",s:"2026-11-06",e:"2026-11-09",v:"McCormick Place, Chicago, USA",url:"https://professional.heart.org/en/meetings/scientific-sessions"},
+ {id:"aha26",book:"https://professionalmember.heart.org/ConferenceIntegration/ConferenceConfirmation?confId=AHSS1126",n:"AHA Scientific Sessions 2026",org:"American Heart Association",t:"conf",r:"usa",s:"2026-11-06",e:"2026-11-09",v:"McCormick Place, Chicago, USA",url:"https://professional.heart.org/en/meetings/scientific-sessions"},
  {id:"sharp26",n:"SHARP and Scottish Lipid Forum Annual Meeting",org:"SHARP and Scottish Lipid Forum",t:"conf",r:"uk",s:"2026-11-12",e:"2026-11-13",v:"Crieff Hydro, Scotland",url:"https://www.nhsresearchscotland.org.uk/calendar/sharp-and-scottish-lipid-forum-annual-meeting-2026"},
  {id:"pcrlv26",n:"PCR London Valves 2026",org:"PCR",t:"conf",r:"uk",s:"2026-11-22",e:"2026-11-24",v:"ExCeL London, UK",url:"https://pcronline.com/Courses/PCR-London-Valves"},
- {id:"eacvi26",n:"EACVI 2026 (EuroEcho, EuroCMR and ICNC-CT)",org:"European Association of Cardiovascular Imaging",t:"conf",r:"eu",s:"2026-12-03",e:"2026-12-05",v:"Milan, Italy",url:"https://www.escardio.org/events/congresses/eacvi-congress/"},
+ {id:"eacvi26",book:"https://www.escardio.org/events/congresses/eacvi-congress/registration/",n:"EACVI 2026 (EuroEcho, EuroCMR and ICNC-CT)",org:"European Association of Cardiovascular Imaging",t:"conf",r:"eu",s:"2026-12-03",e:"2026-12-05",v:"Milan, Italy",url:"https://www.escardio.org/events/congresses/eacvi-congress/"},
  {id:"aci27",n:"BCIS Advanced Cardiovascular Intervention (ACI) 2027",org:"British Cardiovascular Intervention Society",t:"conf",r:"uk",s:"",e:"",when:"Usually late January",v:"Hilton London Metropole, UK, and online",url:"https://www.bcis.org.uk"},
  {id:"acvc27",n:"ESC Acute CardioVascular Care 2027",org:"ESC Association for Acute CardioVascular Care",t:"conf",r:"eu",s:"2027-03-19",e:"2027-03-20",v:"Fibes, Seville, Spain",cr:12,crNote:"European CME credits in 2026",url:"https://www.escardio.org/events/congresses/acute-cardiovascular-care/"},
  {id:"acc27",n:"ACC.27, with the World Congress of Cardiology",org:"American College of Cardiology",t:"conf",r:"usa",s:"2027-04-10",e:"2027-04-12",v:"George R. Brown Convention Center, Houston, USA",url:"https://accscientificsession.acc.org"},
  {id:"ehra27",n:"EHRA 2027",org:"European Heart Rhythm Association (ESC)",t:"conf",r:"eu",s:"2027-04-11",e:"2027-04-13",v:"Helsinki, Finland",url:"https://www.escardio.org/events/congresses/ehra-congress/"},
  {id:"prev27",n:"ESC Preventive Cardiology 2027",org:"European Association of Preventive Cardiology",t:"conf",r:"eu",s:"2027-04-15",e:"2027-04-17",v:"Lisbon, Portugal",cr:11,crNote:"European CME credits in 2026",url:"https://www.escardio.org/events/congresses/esc-preventive-cardiology/"},
- {id:"hrs27",n:"Heart Rhythm 2027",org:"Heart Rhythm Society",t:"conf",r:"usa",s:"2027-05-13",e:"2027-05-16",v:"Moscone Center, San Francisco, USA, and online",url:"https://www.heartrhythm.com"},
+ {id:"hrs27",book:"https://www.heartrhythm.com/attend",n:"Heart Rhythm 2027",org:"Heart Rhythm Society",t:"conf",r:"usa",s:"2027-05-13",e:"2027-05-16",v:"Moscone Center, San Francisco, USA, and online",url:"https://www.heartrhythm.com"},
  {id:"pcr27",n:"EuroPCR 2027",org:"PCR and EAPCI",t:"conf",r:"eu",s:"2027-05-18",e:"2027-05-21",v:"Palais des Congrès, Paris, France",url:"https://www.pcronline.com"},
  {id:"hf27",n:"Heart Failure 2027",org:"Heart Failure Association (ESC)",t:"conf",r:"uk",s:"2027-05-22",e:"2027-05-25",v:"London, UK, and online",cr:22.5,crNote:"European CME credits in 2026",url:"https://www.escardio.org/Congresses-&-Events/Heart-Failure"},
  {id:"bcs27",n:"BCS Annual Conference 2027",org:"British Cardiovascular Society",t:"conf",r:"uk",s:"2027-06-07",e:"2027-06-09",v:"Manchester Central, UK",cr:18,crNote:"RCP CPD credits (6 a day in past years)",url:"https://britishcardiovascularsociety.org.uk/annual-conference-v2/"},
@@ -1198,7 +1203,7 @@ function evCard(x){
   ${x.s?`<div style="font-size:15px;margin-top:4px"><b>${fmtRange(x.s,x.e)}</b> · ${esc(x.v)}</div>`:`<div style="font-size:15px;margin-top:4px">${x.when?`<b>${esc(x.when)}</b> · `:""}${esc(x.v)}</div>`}
   ${x.d?`<p style="font-size:14px;margin:4px 0">${esc(x.d)}</p>`:""}
   <div class="au" style="margin-top:2px">${cr}</div>
-  <div class="lk"><a href="${x.url}" target="_blank" rel="noopener">Website</a>${x.s&&!past?`<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:600;padding:0" data-act="evics" data-v="${x.id}">Add to calendar</button>`:""}<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:700;padding:0" data-act="evlog" data-v="${x.id}">Log CPD</button></div></div>`;
+  <div class="lk">${x.t!=="online"&&!past?`<a href="${x.book||x.url}" target="_blank" rel="noopener" style="font-weight:800">Book a place</a>`:""}<a href="${x.url}" target="_blank" rel="noopener">Website</a>${x.s&&!past?`<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:600;padding:0" data-act="evics" data-v="${x.id}">Add to calendar</button>`:""}<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:700;padding:0" data-act="evlog" data-v="${x.id}">Log CPD</button></div></div>`;
 }
 function vEvents(){
  const f=S.evf||"upcoming",reg=S.evr||"all",today=isoD(new Date()),yago=isoD(new Date(Date.now()-365*864e5));
@@ -1235,11 +1240,11 @@ function evSheet(){
   <div style="display:flex;gap:8px"><label class="au" style="flex:1">From<input class="search" type="date" id="evs" value="${esc(E.s)}"></label><label class="au" style="flex:1">To<input class="search" type="date" id="eve" value="${esc(E.e)}"></label></div>
   <label class="au" style="display:block;margin-top:6px">Venue<input class="search" id="evv" value="${esc(E.v)}" placeholder="City, venue or Online"></label>
   <label class="set"><span>CPD credits (hours)<br><small class="au">From your certificate${E.cr&&!man?"; prefilled with the maximum":""}</small></span><input class="search" style="width:100px" type="number" inputmode="decimal" min="0" step="0.5" id="evcr" value="${esc(E.cr)}"></label>
-  <label class="au" style="display:block">Sessions or topics attended (optional)<textarea class="search" id="evses" rows="2" placeholder="For example, AF guideline update, TAVI versus surgery debate">${esc(E.sessions||"")}</textarea></label>
+  <label class="au" style="display:block">Sessions or topics attended (optional)<span class="tawrap"><textarea class="search" id="evses" rows="2" placeholder="For example, AF guideline update, TAVI versus surgery debate">${esc(E.sessions||"")}</textarea>${micBtn("evses")}</span></label>
   <div style="margin-top:8px"><b style="font-size:15px">Reflection for appraisal</b> <span class="au" style="font-size:13px">(optional)</span>
-   <label class="au" style="display:block;margin-top:6px">What did you learn?<textarea class="search" id="cpdlearn" rows="2">${esc(S.cpdRef.learn||"")}</textarea></label>
-   <label class="au" style="display:block;margin-top:6px">How will it change your practice?<textarea class="search" id="cpdchange" rows="2">${esc(S.cpdRef.change||"")}</textarea></label>
-   <label class="au" style="display:block;margin-top:6px">Any further learning needed?<textarea class="search" id="cpdfurther" rows="2">${esc(S.cpdRef.further||"")}</textarea></label>
+   <label class="au" style="display:block;margin-top:6px">What did you learn?<span class="tawrap"><textarea class="search" id="cpdlearn" rows="2">${esc(S.cpdRef.learn||"")}</textarea>${micBtn("cpdlearn")}</span></label>
+   <label class="au" style="display:block;margin-top:6px">How will it change your practice?<span class="tawrap"><textarea class="search" id="cpdchange" rows="2">${esc(S.cpdRef.change||"")}</textarea>${micBtn("cpdchange")}</span></label>
+   <label class="au" style="display:block;margin-top:6px">Any further learning needed?<span class="tawrap"><textarea class="search" id="cpdfurther" rows="2">${esc(S.cpdRef.further||"")}</textarea>${micBtn("cpdfurther")}</span></label>
    <div class="au" style="margin-top:8px">Good Medical Practice domains</div>
    <div class="row" style="flex-wrap:wrap;overflow:visible">${GMP.map(d=>`<button class="chip ${(S.cpdRef.domains||[]).includes(d)?"on":""}" data-act="cpddom" data-v="${esc(d)}">${esc(d)}</button>`).join("")}</div></div>
   <div class="pk"><a href="#" data-act="evsave">Save to CPD log</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`;
@@ -1262,6 +1267,22 @@ function chartForm(){const d=S.chartDraft,bar=d.type==="bar";
   ${bar?`<label class="au" style="display:block;margin-top:6px">Unit (optional)<input class="search" id="chunit" value="${esc(d.unit||"")}" placeholder="% of patients"></label>`:""}
   <label class="au" style="display:block;margin-top:6px">${bar?"One line per bar: label, first group, second group":"One line per row: label, HR, lower CI, upper CI"}<textarea class="search" id="chdata" rows="4" placeholder="${bar?"Stroke, 1.0, 1.4&#10;Major bleeding, 1.5, 1.1":"Overall, 0.63, 0.45, 0.88&#10;Age 75 or over, 0.58, 0.37, 0.91"}">${esc(d.data||"")}</textarea></label>
   <div class="pk"><a href="#" data-act="chsave">Add chart</a><a href="#" class="alt" data-act="chcancel">Cancel</a></div></div>`}
+function topicSheet(){const t=S.tEdit;return `<div class="sheet" role="dialog" aria-label="${t.id?"Edit topic":"Add a topic"}"><h3>${t.id?"Edit topic":"Add a topic"}</h3>${topicEditor()}</div>`}
+// ---------- dictation for reflections ----------
+const SRec=window.SpeechRecognition||window.webkitSpeechRecognition;let dict=null;
+const micBtn=id=>`<button type="button" class="mic" data-act="mic" data-v="${id}" aria-label="Dictate">🎤</button>`;
+function dictate(id){
+ const ta=document.getElementById(id);if(!ta)return;
+ if(dict){const same=dict._id===id;try{dict.stop()}catch(e){}dict=null;document.querySelectorAll(".mic").forEach(b=>b.classList.remove("on"));if(same)return}
+ if(!SRec){ta.focus();toast("Tap the microphone on your iPhone keyboard to dictate.");return}
+ const r=new SRec();r.lang="en-GB";r.continuous=true;r.interimResults=true;r._id=id;
+ const base=ta.value?ta.value.replace(/\s*$/," "):"";let fin="";
+ r.onresult=e=>{let tmp="";for(let i=e.resultIndex;i<e.results.length;i++){const x=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=x.trim()+" ";else tmp+=x}
+  let v=(base+fin+tmp).replace(/\s+/g," ").trimStart();v=v.charAt(0).toUpperCase()+v.slice(1);ta.value=v;ta.dispatchEvent(new Event("input",{bubbles:true}))};
+ r.onend=()=>{if(dict===r)dict=null;document.querySelectorAll(".mic").forEach(b=>b.classList.remove("on"))};
+ r.onerror=e=>{if(e.error==="not-allowed"||e.error==="service-not-allowed")toast("Allow microphone access, or use the microphone on your keyboard.")};
+ try{r.start();dict=r;const b=document.querySelector(`.mic[data-v="${id}"]`);if(b)b.classList.add("on");toast("Listening… tap 🎤 again to stop")}catch(e){ta.focus();toast("Tap the microphone on your keyboard to dictate.")}
+}
 function renderModal(){
  const el=document.getElementById("modal");if(!el)return;
  const m=S.modal;if(!m){el.innerHTML="";el.className="";return}
@@ -1278,15 +1299,16 @@ function renderModal(){
    ${S.chartDraft?chartForm():`<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:600" data-act="chadd">+ Add a chart</button>`}</div>
   <div class="pk"><a href="#" data-act="slidego">Make slides</a><a href="#" class="alt" data-act="mclose">Cancel</a></div>`}</div>`;
  else if(m.type==="event"&&S.ev){el.innerHTML=evSheet()}
+ else if(m.type==="topic"&&S.tEdit){el.innerHTML=topicSheet()}
  else if(m.type==="cpd"){const done=cpdFor(m.pmid);el.innerHTML=`<div class="sheet" role="dialog" aria-label="Log CPD"><h3>Log CPD</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
   ${done?`<p class="note">Already logged for this paper: ${hrs(done)}.</p>`:""}
   <div class="row" style="flex-wrap:wrap;overflow:visible">${[10,15,20,30,45,60].map(n=>`<button class="chip ${+S.cpdMin===n?"on":""}" data-act="cpdmin" data-v="${n}">${n} min</button>`).join("")}</div>
   <label class="set"><span>Minutes</span><input class="search" style="width:110px" type="number" inputmode="numeric" min="1" id="cpdmins" value="${S.cpdMin||""}"></label>
   <label class="set"><span>Date</span><input class="search" style="width:170px" type="date" id="cpddate" value="${S.cpdDate||isoD(new Date())}"></label>
   <div style="margin-top:8px"><b style="font-size:15px">Reflection for appraisal</b> <span class="au" style="font-size:13px">(optional)</span>
-   <label class="au" style="display:block;margin-top:6px">What did you learn?<textarea class="search" id="cpdlearn" rows="2" placeholder="Key messages from this paper">${esc(S.cpdRef.learn||"")}</textarea></label>
-   <label class="au" style="display:block;margin-top:6px">How will it change your practice?<textarea class="search" id="cpdchange" rows="2" placeholder="For example, I'll discuss anticoagulation earlier in device-detected AF">${esc(S.cpdRef.change||"")}</textarea></label>
-   <label class="au" style="display:block;margin-top:6px">Any further learning needed?<textarea class="search" id="cpdfurther" rows="2" placeholder="For example, read the ESC AF guideline section on this">${esc(S.cpdRef.further||"")}</textarea></label>
+   <label class="au" style="display:block;margin-top:6px">What did you learn?<span class="tawrap"><textarea class="search" id="cpdlearn" rows="2" placeholder="Key messages from this paper">${esc(S.cpdRef.learn||"")}</textarea>${micBtn("cpdlearn")}</span></label>
+   <label class="au" style="display:block;margin-top:6px">How will it change your practice?<span class="tawrap"><textarea class="search" id="cpdchange" rows="2" placeholder="For example, I'll discuss anticoagulation earlier in device-detected AF">${esc(S.cpdRef.change||"")}</textarea>${micBtn("cpdchange")}</span></label>
+   <label class="au" style="display:block;margin-top:6px">Any further learning needed?<span class="tawrap"><textarea class="search" id="cpdfurther" rows="2" placeholder="For example, read the ESC AF guideline section on this">${esc(S.cpdRef.further||"")}</textarea>${micBtn("cpdfurther")}</span></label>
    <div class="au" style="margin-top:8px">Good Medical Practice domains</div>
    <div class="row" style="flex-wrap:wrap;overflow:visible">${GMP.map(d=>`<button class="chip ${(S.cpdRef.domains||[]).includes(d)?"on":""}" data-act="cpddom" data-v="${esc(d)}">${esc(d)}</button>`).join("")}</div></div>
   <div class="pk"><a href="#" data-act="cpdsave">Save to CPD log</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`}
@@ -1428,7 +1450,7 @@ const PALETTE=["#C0504D","#6D5BA8","#2E8B88","#C9822B","#A84B7B","#3F6FB5","#4E8
 function allTopicRows(){const ov=st.topicEdits||{};return DEFCATS.map(d=>{const e=ov[d.id]||{};return{id:d.id,name:e.name||d.name,c:e.c||d.c,w:e.w&&e.w.length?e.w:d.w,hidden:!!e.hidden,custom:false,edited:!!(e.name||e.c||(e.w&&e.w.length))}}).concat((st.customTopics||[]).map(t=>({...t,custom:true})))}
 function topicRowsOrdered(){return byOrder(allTopicRows(),st.topicOrder)}
 const arrows=(kind,id,i,n)=>`<span class="ord"><button data-act="${kind}up" data-v="${id}" aria-label="Move up" ${i===0?"disabled":""}>▲</button><button data-act="${kind}down" data-v="${id}" aria-label="Move down" ${i===n-1?"disabled":""}>▼</button></span>`;
-function topicEditor(){const t=S.tEdit;return `<div class="card" style="padding:10px 12px;margin:8px 0;border:2px solid ${t.c||"#3F6FB5"}">
+function topicEditor(){const t=S.tEdit;return `<div style="padding:4px 0;border-left:6px solid ${t.c||"#3F6FB5"};padding-left:10px">
   <label class="au" style="display:block">Topic name<input class="search" id="tname" value="${esc(t.name||"")}" placeholder="For example, Cardio-oncology"></label>
   <label class="au" style="display:block;margin-top:6px">Search words, separated by commas<textarea class="search" id="twords" rows="4" placeholder="cardio-oncology, cardiotoxicity, anthracycline, trastuzumab">${esc(t.words||"")}</textarea></label>
   <p class="note" style="margin:4px 0">Articles with any of these words in the title or abstract appear in this topic. Use * for word endings, such as cardiotox*.</p>
@@ -1437,9 +1459,10 @@ function topicEditor(){const t=S.tEdit;return `<div class="card" style="padding:
   ${t.id&&!t.custom&&t.edited?`<button class="link" data-act="treset" data-v="${t.id}">Reset to the original words</button>`:""}${t.id&&t.custom?`<button class="link" data-act="tdel" data-v="${t.id}">Delete this topic</button>`:""}</div>`}
 function vTopicSettings(){
  return `<h3>Topics</h3><p class="help">Rename, edit, hide or reorder the sections on the Articles tab, or add your own. Use ▲ ▼ to change the order.</p>
- <div class="card">${topicRowsOrdered().map((t,i,a)=>S.tEdit&&S.tEdit.id===t.id?topicEditor():`<div class="set">${arrows("t",t.id,i,a.length)}<span style="flex:1"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${t.c};margin-right:8px"></span>${esc(t.name)}<br><small class="au">${t.w.length} search words${t.custom?", your topic":t.edited?", edited":""}</small></span>
+ <div class="pk" style="margin:0 0 8px"><a href="#" data-act="tadd">+ Add a topic</a></div>
+ <div class="card">${topicRowsOrdered().map((t,i,a)=>`<div class="set">${arrows("t",t.id,i,a.length)}<span style="flex:1"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${t.c};margin-right:8px"></span>${esc(t.name)}<br><small class="au">${t.w.length} search words${t.custom?", your topic":t.edited?", edited":""}</small></span>
   <span style="display:flex;gap:12px;align-items:center"><button class="link" style="color:#2E4A86" data-act="tedit" data-v="${t.id}">Edit</button><input type="checkbox" aria-label="Show ${esc(t.name)}" data-th="${t.id}" ${t.hidden?"":"checked"}></span></div>`).join("")}
-  ${S.tEdit&&!S.tEdit.id?topicEditor():`<div class="set"><button class="link" style="color:#2E4A86;text-decoration:none;font-weight:700" data-act="tadd">+ Add a topic</button></div>`}</div>`;
+  <div class="pk" style="margin:10px 0 6px"><a href="#" data-act="tadd">+ Add a topic</a></div></div>`;
 }
 // ---------- settings: journals ----------
 async function findJournal(q){
@@ -1546,26 +1569,39 @@ async function aiCall(task,payload){
  return j;
 }
 const aiErr=c=>c==="quota"?"Today's free AI allowance has been used up. It resets tomorrow.":c==="setup"?"AI isn't set up yet. See Settings › AI features.":c==="slow"?"The AI took too long. Try again.":c==="no abstract"?"This paper has no abstract for the AI to work from.":c==="net"?"Couldn't reach the AI service. Check your connection.":"The AI couldn't answer just now. Try again in a moment.";
+async function fullTextForAI(pmcid){
+ const r=await fetch(`${EPMC}${pmcid}/fullTextXML`);if(!r.ok)return "";
+ const x=new DOMParser().parseFromString((await r.text()).replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),body=x.getElementsByTagName("body")[0];if(!body)return "";
+ const secs={};
+ for(const sec of [...body.children].filter(n=>n.tagName==="sec")){const t=((sec.getElementsByTagName("title")[0]||{}).textContent||"").trim(),lab=labelOf(t);
+  const txt=[...sec.getElementsByTagName("p")].map(p=>p.textContent.replace(/\s+/g," ").trim()).join(" ");if(txt.length<80)continue;(secs[lab]=secs[lab]||[]).push(`${t.toUpperCase()}: ${txt}`)}
+ const take=(k,n)=>(secs[k]||[]).join("\n").slice(0,n);
+ return [take("Results",6000),take("Conclusions",4000),take("Methods",2500),take("Background",1500)].filter(Boolean).join("\n\n").slice(0,14000);
+}
 async function aiSummary(pmid){
  if(!st.aiSum)st.aiSum={};
  if(st.aiSum[pmid]){S.aiOpen[pmid]=!S.aiOpen[pmid];render();return}
- if(!Array.isArray(S.abs[pmid])){toast("Open the abstract first.");return}
- const it=findItem(pmid)||st.saved[pmid]||{};
+ const it=findItem(pmid)||st.saved[pmid]||{},archived=!!st.saved[pmid];
  S.aiBusy[pmid]=true;S.aiOpen[pmid]=true;render();
- try{const j=await aiCall("summary",{title:it.title||"",abstract:absText(S.abs[pmid])});
-  st.aiSum[pmid]={...j.data,model:j.model,at:Date.now()};
+ try{
+  let parts=Array.isArray(S.abs[pmid])?S.abs[pmid]:null,P=null,full="";
+  if(!parts||archived){P=await paperData(pmid);if(!parts&&P.parts.length){parts=P.parts;S.abs[pmid]=parts}}
+  if(archived&&P&&P.pmcid&&P.oa){S.aiBusyMsg="Reading the full text";render();try{full=await fullTextForAI(P.pmcid)}catch(e){}}
+  if(!parts&&!full){throw Object.assign(new Error("no abstract"),{code:"no abstract"})}
+  const j=await aiCall("summary",{title:it.title||(P&&P.title)||"",abstract:absText(parts||[]),fulltext:full});
+  st.aiSum[pmid]={...j.data,model:j.model,src:full&&j.used==="full"?"full":"abstract",at:Date.now()};
   const keys=Object.keys(st.aiSum);if(keys.length>300){keys.sort((a,b)=>st.aiSum[a].at-st.aiSum[b].at).slice(0,keys.length-300).forEach(k=>delete st.aiSum[k])}
   save()}
  catch(e){S.aiOpen[pmid]=false;toast(aiErr(e.code))}
- S.aiBusy[pmid]=false;render();
+ S.aiBusy[pmid]=false;S.aiBusyMsg="";render();
 }
 function aiBox(pmid){
  const has=!!aiURL(),s=(st.aiSum||{})[pmid];
  if(!has&&!s)return "";
- if(S.aiBusy[pmid])return `<div class="aibox"><span class="spin"></span>Writing an AI summary…</div>`;
+ if(S.aiBusy[pmid])return `<div class="aibox"><span class="spin"></span>${esc(S.aiBusyMsg||"Writing an AI summary")}…</div>`;
  if(!s||!S.aiOpen[pmid])return "";
  const li=a=>(Array.isArray(a)?a:[]).filter(Boolean).map(x=>`<li>${esc(x)}</li>`).join("");
- return `<div class="aibox"><div class="aih">✨ AI summary <span>Check against the abstract</span></div>
+ return `<div class="aibox"><div class="aih">✨ AI summary${s.src==="full"?" of the full text":""} <span>Check against the ${s.src==="full"?"paper":"abstract"}</span></div>
   ${s.bottomline?`<p class="aibl">${esc(s.bottomline)}</p>`:""}
   ${s.question?`<p><b>Question</b> ${esc(s.question)}</p>`:""}${s.design?`<p><b>Design</b> ${esc(s.design)}</p>`:""}
   ${li(s.results)?`<p><b>Key results</b></p><ul>${li(s.results)}</ul>`:""}${s.practice?`<p><b>For practice</b> ${esc(s.practice)}</p>`:""}
@@ -1630,18 +1666,18 @@ document.addEventListener("click",e=>{
  else if(a==="nppause"){if(TTS.paused){useNV()?NV.ctx.resume():speechSynthesis.resume();TTS.paused=false}else{useNV()?NV.ctx.suspend():speechSynthesis.pause();TTS.paused=true}renderNP()}
  else if(a==="npnext")skipNext();
  else if(a==="cpddom"){const d=b.dataset.v,L=S.cpdRef.domains=S.cpdRef.domains||[];const i=L.indexOf(d);if(i>=0)L.splice(i,1);else L.push(d);b.classList.toggle("on")}
- else if(a==="tedit"){const r=allTopicRows().find(x=>x.id===b.dataset.v);S.tEdit={id:r.id,name:r.name,words:r.w.join(", "),c:r.c,custom:r.custom,edited:r.edited};render()}
- else if(a==="tadd"){S.tEdit={id:null,name:"",words:"",c:PALETTE[(st.customTopics||[]).length%PALETTE.length],custom:true};render()}
- else if(a==="tcol"){S.tEdit.c=b.dataset.v;render()}
- else if(a==="tcancel"){e.preventDefault();S.tEdit=null;render()}
+ else if(a==="tedit"){const r=allTopicRows().find(x=>x.id===b.dataset.v);S.tEdit={id:r.id,name:r.name,words:r.w.join(", "),c:r.c,custom:r.custom,edited:r.edited};S.modal={type:"topic"};renderModal()}
+ else if(a==="tadd"){e.preventDefault();S.tEdit={id:null,name:"",words:"",c:PALETTE[(st.customTopics||[]).length%PALETTE.length],custom:true};S.modal={type:"topic"};renderModal();setTimeout(()=>{const x=document.getElementById("tname");if(x)x.focus()},150)}
+ else if(a==="tcol"){S.tEdit.c=b.dataset.v;renderModal()}
+ else if(a==="tcancel"){e.preventDefault();S.tEdit=null;S.modal=null;renderModal()}
  else if(a==="tsave"){e.preventDefault();const T=S.tEdit,w=String(T.words||"").split(/[,\n;]+/).map(x=>x.trim()).filter(x=>x.length>1);
   if(!T.name.trim()||!w.length){toast("Add a name and at least one search word.");return}
   if(T.id&&!T.custom){st.topicEdits=st.topicEdits||{};st.topicEdits[T.id]={...(st.topicEdits[T.id]||{}),name:T.name.trim(),w,c:T.c}}
   else if(T.id){const x=(st.customTopics||[]).find(y=>y.id===T.id);Object.assign(x,{name:T.name.trim(),w,c:T.c})}
-  else (st.customTopics=st.customTopics||[]).push({id:"ct"+Date.now().toString(36),name:T.name.trim(),w,c:T.c});
-  save();applyTopics();S.tEdit=null;render();toast("Topic saved")}
- else if(a==="treset"){const ov=st.topicEdits||{};const h=ov[b.dataset.v]&&ov[b.dataset.v].hidden;ov[b.dataset.v]=h?{hidden:true}:{};save();applyTopics();S.tEdit=null;render()}
- else if(a==="tdel"){st.customTopics=(st.customTopics||[]).filter(x=>x.id!==b.dataset.v);save();applyTopics();S.tEdit=null;render()}
+  else{const id="ct"+Date.now().toString(36);(st.customTopics=st.customTopics||[]).push({id,name:T.name.trim(),w,c:T.c});st.topicOrder=[id,...(st.topicOrder&&st.topicOrder.length?st.topicOrder:allTopicRows().map(x=>x.id)).filter(x=>x!==id)]}
+  save();applyTopics();const nm=T.name.trim(),isNew=!T.id;S.tEdit=null;S.modal=null;renderModal();render();toast(isNew?`${nm} added. It's now first in the sections on the Articles tab.`:"Topic saved")}
+ else if(a==="treset"){const ov=st.topicEdits||{};const h=ov[b.dataset.v]&&ov[b.dataset.v].hidden;ov[b.dataset.v]=h?{hidden:true}:{};save();applyTopics();S.tEdit=null;S.modal=null;renderModal();render()}
+ else if(a==="tdel"){st.customTopics=(st.customTopics||[]).filter(x=>x.id!==b.dataset.v);save();applyTopics();S.tEdit=null;S.modal=null;renderModal();render()}
  else if(a==="jfind"){const q=(S.jq||"").trim();if(q.length<2){toast("Type part of the journal name.");return}findJournal(q)}
  else if(a==="jadd")addJournal(b.dataset.ta,b.dataset.t,S.jgen);
  else if(a==="jaddta"){const v=(document.getElementById("jta")||{}).value||"";addJournal(v,v,S.jgen)}
@@ -1663,6 +1699,7 @@ document.addEventListener("click",e=>{
  else if(a==="evics")evICS(b.dataset.v);
  else if(a==="evsave"){e.preventDefault();evSave()}
  else if(a==="cpdevents"){e.preventDefault();S.lib="events";render();window.scrollTo(0,0)}
+ else if(a==="mic"){e.preventDefault();dictate(b.dataset.v)}
  else if(a==="backup"){e.preventDefault();backupNow()}
  else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;makeSlides(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
  else if(a==="cpd"){S.modal={type:"cpd",pmid:b.dataset.id};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
@@ -1670,7 +1707,7 @@ document.addEventListener("click",e=>{
  else if(a==="cpdsave"){e.preventDefault();const mins=Math.round(+S.cpdMin);if(!(mins>0)){toast("Enter the minutes spent.");return}const it=findItem(S.modal.pmid)||(S.modal.title?{title:"Podcast: "+S.modal.title,src:"Podcast"}:{});
   st.cpd.push({id:"c"+Date.now().toString(36),pmid:S.modal.pmid,title:it.title||"",src:it.src==="Podcast"?"Podcast":(jOf(it).name||it.src||""),doi:it.doi||"",date:S.cpdDate||isoD(new Date()),minutes:mins,ref:{learn:(S.cpdRef.learn||"").trim(),change:(S.cpdRef.change||"").trim(),further:(S.cpdRef.further||"").trim(),domains:(S.cpdRef.domains||[]).slice()},note:"",at:Date.now()});
   save();S.modal=null;render();toast(`Logged ${mins} minutes of CPD`)}
- else if(a==="mclose"){e.preventDefault();S.modal=null;S.slideBusy="";S.slideFile=null;renderModal()}
+ else if(a==="mclose"){e.preventDefault();if(dict){try{dict.stop()}catch(x){}dict=null}S.modal=null;S.slideBusy="";S.slideFile=null;renderModal()}
  else if(a==="slideshare"){e.preventDefault();slideShare()}
  else if(a==="cpdp"){S.cpdP=b.dataset.v;render()}
  else if(a==="cpdask"){S.confirm="cpd:"+b.dataset.v;render()}
