@@ -1,0 +1,24 @@
+{
+ "id": "copd.html",
+ "name": "Respiratory CPD",
+ "short_name": "Respiratory CPD",
+ "start_url": "copd.html",
+ "scope": "copd.html",
+ "display": "standalone",
+ "background_color": "#F4F5F9",
+ "theme_color": "#0F3D49",
+ "icons": [
+  {
+   "src": "copd-icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "copd-icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}

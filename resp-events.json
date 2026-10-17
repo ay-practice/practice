@@ -1,0 +1,329 @@
+{
+ "updated": "2026-10-17",
+ "note": "Respiratory CPD conference list. Dates, venues and credits checked on the date above. Optional \"book\" is the registration page; otherwise the website is used.",
+ "events": [
+  {
+   "id": "btsw25",
+   "n": "BTS Winter Meeting 2025",
+   "org": "British Thoracic Society",
+   "t": "conf",
+   "r": "uk",
+   "s": "2025-11-26",
+   "e": "2025-11-28",
+   "v": "QEII Centre, London, UK",
+   "url": "https://www.brit-thoracic.org.uk/education-and-events/winter-meeting/"
+  },
+  {
+   "id": "acprc26",
+   "n": "ACPRC Conference 2026",
+   "org": "Association of Chartered Physiotherapists in Respiratory Care",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-04-25",
+   "e": "2026-04-26",
+   "v": "Edinburgh, UK",
+   "url": "https://www.acprc.org.uk"
+  },
+  {
+   "id": "arns26",
+   "n": "ARNS Annual Conference 2026",
+   "org": "Association of Respiratory Nurses",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-05-14",
+   "e": "2026-05-15",
+   "v": "Lincoln, UK",
+   "url": "https://www.arns.co.uk"
+  },
+  {
+   "id": "ats26",
+   "n": "ATS 2026 International Conference",
+   "org": "American Thoracic Society",
+   "t": "conf",
+   "r": "usa",
+   "s": "2026-05-15",
+   "e": "2026-05-20",
+   "v": "Orlando, USA",
+   "url": "https://conference.thoracic.org"
+  },
+  {
+   "id": "artp26",
+   "n": "ARTP Annual Conference 2026",
+   "org": "Association for Respiratory Technology and Physiology",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-05-21",
+   "e": "2026-05-22",
+   "v": "Belfast, UK",
+   "url": "https://www.artp.org.uk"
+  },
+  {
+   "id": "sleep26",
+   "n": "SLEEP 2026",
+   "org": "Associated Professional Sleep Societies",
+   "t": "conf",
+   "r": "usa",
+   "s": "2026-06-14",
+   "e": "2026-06-17",
+   "v": "Baltimore Convention Center, USA",
+   "url": "https://sleepmeeting.org"
+  },
+  {
+   "id": "btss26",
+   "n": "BTS Summer Meeting 2026",
+   "org": "British Thoracic Society",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-07-09",
+   "e": "2026-07-10",
+   "v": "UK",
+   "url": "https://www.brit-thoracic.org.uk/education-and-events/"
+  },
+  {
+   "id": "cough26",
+   "n": "ERS Cough Conference 2026",
+   "org": "European Respiratory Society",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-07-15",
+   "e": "2026-07-17",
+   "v": "London, UK",
+   "url": "https://www.ersnet.org/congress-and-events/"
+  },
+  {
+   "id": "ers26",
+   "n": "ERS Congress 2026",
+   "org": "European Respiratory Society",
+   "t": "conf",
+   "r": "eu",
+   "s": "2026-09-05",
+   "e": "2026-09-09",
+   "v": "Fira Barcelona Gran Via, Barcelona, Spain",
+   "url": "https://www.ersnet.org/congress-and-events/congress"
+  },
+  {
+   "id": "pcrs26",
+   "n": "PCRS Respiratory Conference 2026",
+   "org": "Primary Care Respiratory Society",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-09-24",
+   "e": "2026-09-26",
+   "v": "Telford International Centre, UK",
+   "url": "https://www.pcrs-uk.org/event/pcrs-respiratory-conference-2026"
+  },
+  {
+   "id": "nacfc26",
+   "n": "North American Cystic Fibrosis Conference 2026",
+   "org": "Cystic Fibrosis Foundation",
+   "t": "conf",
+   "r": "usa",
+   "s": "2026-10-07",
+   "e": "2026-10-10",
+   "v": "Atlanta, USA",
+   "url": "https://www.cff.org"
+  },
+  {
+   "id": "chest26",
+   "n": "CHEST 2026",
+   "org": "American College of Chest Physicians",
+   "t": "conf",
+   "r": "usa",
+   "s": "2026-10-18",
+   "e": "2026-10-21",
+   "v": "Phoenix Convention Center, USA",
+   "url": "https://www.chestnet.org/learning-and-events/events/chest-annual-meeting"
+  },
+  {
+   "id": "aarc26",
+   "n": "AARC Congress 2026",
+   "org": "American Association for Respiratory Care",
+   "t": "conf",
+   "r": "usa",
+   "s": "2026-11-14",
+   "e": "2026-11-17",
+   "v": "New Orleans, USA",
+   "url": "https://www.aarc.org"
+  },
+  {
+   "id": "btsw26",
+   "n": "BTS Winter Meeting 2026",
+   "org": "British Thoracic Society",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-11-25",
+   "e": "2026-11-27",
+   "v": "QEII Centre, London, UK",
+   "url": "https://www.brit-thoracic.org.uk/education-and-events/winter-meeting-2026"
+  },
+  {
+   "id": "ats27",
+   "n": "ATS 2027 International Conference",
+   "org": "American Thoracic Society",
+   "t": "conf",
+   "r": "usa",
+   "s": "2027-05-14",
+   "e": "2027-05-19",
+   "v": "New Orleans Convention Center, USA",
+   "url": "https://conference.thoracic.org"
+  },
+  {
+   "id": "btss27",
+   "n": "BTS Summer Meeting 2027",
+   "org": "British Thoracic Society",
+   "t": "conf",
+   "r": "uk",
+   "s": "",
+   "e": "",
+   "when": "Usually early July",
+   "v": "UK",
+   "url": "https://www.brit-thoracic.org.uk/education-and-events/"
+  },
+  {
+   "id": "ers27",
+   "n": "ERS Congress 2027",
+   "org": "European Respiratory Society",
+   "t": "conf",
+   "r": "eu",
+   "s": "2027-09-11",
+   "e": "2027-09-14",
+   "v": "Allianz MiCo, Milan, Italy",
+   "url": "https://www.ersnet.org/congress-and-events/congress"
+  },
+  {
+   "id": "pcrs27",
+   "n": "PCRS Respiratory Conference 2027",
+   "org": "Primary Care Respiratory Society",
+   "t": "conf",
+   "r": "uk",
+   "s": "",
+   "e": "",
+   "when": "Usually late September",
+   "v": "UK",
+   "url": "https://www.pcrs-uk.org"
+  },
+  {
+   "id": "chest27",
+   "n": "CHEST 2027",
+   "org": "American College of Chest Physicians",
+   "t": "conf",
+   "r": "usa",
+   "s": "2027-10-24",
+   "e": "2027-10-27",
+   "v": "Vancouver, Canada",
+   "url": "https://www.chestnet.org/learning-and-events/events/chest-annual-meeting"
+  },
+  {
+   "id": "btsw27",
+   "n": "BTS Winter Meeting 2027",
+   "org": "British Thoracic Society",
+   "t": "conf",
+   "r": "uk",
+   "s": "",
+   "e": "",
+   "when": "Usually late November",
+   "v": "London, UK",
+   "url": "https://www.brit-thoracic.org.uk/education-and-events/"
+  },
+  {
+   "id": "o-ers",
+   "n": "ERS e-learning and Respiratory Channel",
+   "org": "European Respiratory Society",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Congress recordings, webinars, courses and e-learning, many with CME credits.",
+   "url": "https://www.ersnet.org"
+  },
+  {
+   "id": "o-ats",
+   "n": "ATS online learning and webinars",
+   "org": "American Thoracic Society",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Webinars, conference recordings and self-assessment.",
+   "url": "https://www.thoracic.org"
+  },
+  {
+   "id": "o-bts",
+   "n": "BTS courses and learning",
+   "org": "British Thoracic Society",
+   "t": "online",
+   "r": "online",
+   "v": "Online and in person",
+   "d": "Short courses, webinars and the BTS learning hub.",
+   "url": "https://www.brit-thoracic.org.uk/education-and-events/"
+  },
+  {
+   "id": "o-pcrs",
+   "n": "PCRS webinars and resources",
+   "org": "Primary Care Respiratory Society",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Primary and community respiratory webinars and learning resources.",
+   "url": "https://www.pcrs-uk.org"
+  },
+  {
+   "id": "o-alu",
+   "n": "Asthma + Lung UK for professionals",
+   "org": "Asthma + Lung UK",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Professional resources, training and patient information to share.",
+   "url": "https://www.asthmaandlung.org.uk"
+  },
+  {
+   "id": "o-chest",
+   "n": "CHEST e-learning",
+   "org": "American College of Chest Physicians",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Courses, board review and on-demand education in pulmonary, critical care and sleep medicine.",
+   "url": "https://www.chestnet.org"
+  },
+  {
+   "id": "o-rf",
+   "n": "Respiratory Futures",
+   "org": "British Thoracic Society",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "UK respiratory service development, policy and shared learning.",
+   "url": "https://www.respiratoryfutures.org.uk"
+  },
+  {
+   "id": "o-rcpe",
+   "n": "RCPE symposia and webinars",
+   "org": "Royal College of Physicians of Edinburgh",
+   "t": "online",
+   "r": "online",
+   "v": "Edinburgh and online",
+   "d": "Medical symposia and webinars, including respiratory medicine, with CPD.",
+   "url": "https://www.rcpe.ac.uk/events"
+  },
+  {
+   "id": "o-bmj",
+   "n": "BMJ Learning",
+   "org": "BMJ",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Short accredited modules, including respiratory topics.",
+   "url": "https://learning.bmj.com"
+  },
+  {
+   "id": "o-med",
+   "n": "Medscape CME",
+   "org": "Medscape",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Free short CME activities, including pulmonary medicine.",
+   "url": "https://www.medscape.org"
+  }
+ ]
+}
