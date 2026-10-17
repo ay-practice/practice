@@ -273,7 +273,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="copd-reader-v1",APPVER="17 Oct 2026 (r2)";
+const KEY="copd-reader-v1",APPVER="17 Oct 2026 (r3)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"lrm",name:"Lancet Respir Med",ta:"Lancet Respir Med",c:"#8A93A8"},
@@ -302,7 +302,7 @@ const J=[
 ];
 const JBY=Object.fromEntries(J.map(j=>[j.ta.toLowerCase(),j]));
 const BASEJ=J.slice();
-const CARDIO="(\"Respiratory Tract Diseases\"[mh] OR lung[tiab] OR lungs[tiab] OR respiratory[tiab] OR pulmonary[tiab] OR asthma[tiab] OR COPD[tiab] OR bronchiectasis[tiab] OR pneumonia[tiab] OR airway[tiab] OR airways[tiab] OR breathlessness[tiab] OR dyspnoea[tiab] OR dyspnea[tiab] OR pleural[tiab] OR emphysema[tiab] OR tuberculosis[tiab] OR \"sleep apnoea\"[tiab] OR \"sleep apnea\"[tiab] OR spirometry[tiab] OR inhaler[tiab] OR inhalers[tiab] OR \"mechanical ventilation\"[tiab])";
+const CARDIO="(lung[tiab] OR lungs[tiab] OR respiratory[tiab] OR pulmonary[tiab] OR asthma[tiab] OR COPD[tiab] OR bronchiectasis[tiab] OR pneumonia[tiab] OR airway[tiab] OR airways[tiab] OR breathlessness[tiab] OR dyspnoea[tiab] OR dyspnea[tiab] OR pleural[tiab] OR emphysema[tiab] OR tuberculosis[tiab] OR \"sleep apnoea\"[tiab] OR \"sleep apnea\"[tiab] OR spirometry[tiab] OR inhaler[tiab] OR inhalers[tiab] OR \"mechanical ventilation\"[tiab])";
 const BROADQ=`(${CARDIO} OR "chronic respiratory"[tiab] OR "long-term condition"[tiab] OR "long term condition"[tiab] OR "long-term conditions"[tiab] OR "chronic illness"[tiab] OR "chronic disease"[tiab] OR "chronic conditions"[tiab] OR multimorbidity[tiab])`;
 const tiab=a=>"("+a.map(w=>/\s/.test(w)?`"${w}"[tiab]`:`${w}[tiab]`).join(" OR ")+")";
 // sections: query words (PubMed) and title pattern (labels)
@@ -392,7 +392,7 @@ async function getJSON(url,tries=3){
    if(r.status===429){await new Promise(z=>setTimeout(z,900*(i+1)));continue}
    if(!r.ok)throw new Error("HTTP "+r.status);
    return await r.json();
-  }catch(e){if(i===tries-1)throw e;await new Promise(z=>setTimeout(z,700))}
+  }catch(e){if(i===tries-1){e.why=e.name==="AbortError"?"timed out":(e.message||"network error");throw e}await new Promise(z=>setTimeout(z,700))}
  }
  throw new Error("busy");
 }
@@ -415,22 +415,33 @@ async function search(t,start,n,extra,sort){
 async function load(more){
  if(S.cat==="top"){const jt=allJournals();if(!jt){S.items=[];S.count=0;S.err="Every journal is switched off. Turn some on in Settings.";render();return}
   const id=++S.reqId;S.loading=true;S.err="";S.items=[];S.count=0;render();
-  try{const r=await search(jt+" AND "+BIG+EXCL,0,5,"&datetype=edat&reldate=30");if(id!==S.reqId)return;S.items=r.items;S.count=r.items.length}
-  catch(e){if(id!==S.reqId)return;S.err="PubMed didn't respond. Tap Try again in a moment."}
+  S.partial=false;try{let r;try{r=await search(jt+" AND "+BIG+EXCL,0,5,"&datetype=edat&reldate=30")}
+   catch(e1){S.partial=true;r=await search(jGroup(J.filter(j=>!j.gen&&!st.off[j.id]))+" AND "+BIG2+EXCL,0,5,"&datetype=edat&reldate=30")}
+   if(id!==S.reqId)return;S.items=r.items;S.count=r.items.length}
+  catch(e){if(id!==S.reqId)return;S.err=`PubMed didn't respond (${e.why||"error"}). Tap Try again in a moment.`}
   S.loading=false;render();return}
  const t=term();
  if(!t){S.items=[];S.count=0;S.err="Every journal is switched off. Turn some on in Settings.";render();return}
  const id=++S.reqId;
  S.loading=true;S.err="";if(!more){S.items=[];S.count=0}render();
  try{
-  const r=await search(t,more?S.items.length:0,PAGE,wideSearch()?"":`&datetype=edat&reldate=${st.days}`,S.q.trim()&&S.qsort==="rel"?"relevance":"pub_date");
+  let r;S.partial=false;
+  try{r=await search(t,more?S.items.length:0,PAGE,wideSearch()?"":`&datetype=edat&reldate=${st.days}`,S.q.trim()&&S.qsort==="rel"?"relevance":"pub_date")}
+  catch(e1){
+   if(S.j!=="all"||wideSearch()||(CBY[S.cat]&&CBY[S.cat].broad))throw e1;
+   const sp=jGroup(J.filter(j=>!j.gen&&!st.off[j.id]));if(!sp)throw e1;
+   let t2=sp;if(S.cat==="oth")t2+=" NOT ("+CATS.map(c=>c.q).join(" OR ")+")";else if(CBY[S.cat]&&CBY[S.cat].q)t2+=" AND "+CBY[S.cat].q;
+   const words=S.q.replace(/[()"\[\]]/g," ").split(/\s+/).filter(w=>w.length>1);if(words.length)t2+=" AND ("+words.map(w=>w+"[tiab]").join(" AND ")+")";
+   if(st.research)t2+=EXCL;
+   r=await search(t2,more?S.items.length:0,PAGE,`&datetype=edat&reldate=${st.days}`,"pub_date");S.partial=true;
+  }
   if(id!==S.reqId)return;
   for(const it of r.items){if(st.last&&!seen.has(it.pmid))S.newIds.add(it.pmid);seen.add(it.pmid)}
   st.seen=[...seen].slice(-4000);st.last=Date.now();save();
   S.count=r.count;S.items=more?S.items.concat(r.items):r.items;
  }catch(e){
   if(id!==S.reqId)return;
-  S.err=navigator.onLine===false?"You're offline. Connect to the internet and tap Try again.":"PubMed didn't respond. Tap Try again in a moment.";
+  S.err=navigator.onLine===false?"You're offline. Connect to the internet and tap Try again.":`PubMed didn't respond (${e.why||"error"}). Tap Try again in a moment.`;
  }
  S.loading=false;render();
 }
@@ -439,6 +450,7 @@ const GQ={
  bts:`("Thorax"[ta] OR "BMJ Open Respir Res"[ta]) AND ("British Thoracic Society"[tiab] OR BTS[ti]) AND (guideline[ti] OR guidelines[ti] OR statement[ti] OR "quality standard"[ti] OR "quality standards"[ti] OR "clinical statement"[ti]) NOT (comment[pt] OR letter[pt] OR published erratum[pt] OR correction[ti] OR erratum[ti])`
 };
 function allJournals(){return jGroup(J.filter(j=>!st.off[j.id]))}
+const BIG2=`((randomized controlled trial[pt] AND multicenter study[pt]) OR guideline[pt] OR practice guideline[pt])`;
 const BIG=`((randomized controlled trial[pt] AND multicenter study[pt]) OR ((randomized[ti] OR randomised[ti] OR trial[ti]) AND (multicenter[tiab] OR multicentre[tiab] OR multinational[tiab] OR international[tiab])) OR guideline[pt] OR practice guideline[pt] OR "ERS/ATS"[ti] OR "ATS/ERS"[ti] OR ("British Thoracic Society"[ti] AND guideline[ti]) OR "Global Strategy"[ti])`;
 async function loadHL(){
  const jt=allJournals();if(!jt){S.hl=[];return}
@@ -558,6 +570,7 @@ function vLatest(){
   <div class="row" aria-label="Journal">${jChips}</div>
   <div class="meta"><span>${(()=>{const sc=S.cat==="all"?null:S.cat==="top"?{name:"Top 5",c:"#A87A12"}:CBY[S.cat];return sc?`<b class="sect" style="--cc:${sc.c}">${esc(sc.name)}</b> `:""})()}${S.loading&&!S.items.length?`<span class="spin"></span>Loading from PubMed`:S.count?(S.cat==="top"?"Latest major multicentre trials and guidelines, last 30 days":wideSearch()?`${S.count.toLocaleString("en-GB")} articles in all of PubMed`:`${S.count.toLocaleString("en-GB")} articles, last ${st.days} days`):""}</span>${S.items.length?`<button class="link" style="color:#1D6A7A;padding:0" data-act="refresh">Refresh</button>`:""}</div>
   ${S.err?`<div class="msg err">${esc(S.err)} <button class="link" data-act="refresh">Try again</button></div>`:""}
+  ${S.partial&&!S.err?`<div class="msg" style="font-size:14px">Showing the respiratory journals. NEJM, Lancet, JAMA, BMJ and the other general journals didn't load this time. <button class="link" data-act="refresh">Try again</button></div>`:""}
   ${!S.loading&&!S.err&&!S.items.length?`<div class="msg">No articles in this section. Try another section, a longer period in Settings, or fewer search words.</div>`:""}
   ${S.items.map(card).join("")}
   ${S.items.length&&S.items.length<S.count?`<button class="more" data-act="more">${S.loading?`<span class="spin"></span>Loading`:"Show more"}</button>`:""}`;
