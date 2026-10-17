@@ -273,7 +273,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="journal-reader-v1",APPVER="17 Oct 2026 (p)";
+const KEY="journal-reader-v1",APPVER="17 Oct 2026 (q)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -642,6 +642,9 @@ function vSettings(){
   <label class="set"><span>Try a free legal copy first<br><small class="au">Uses Unpaywall to find open-access versions</small></span><input type="checkbox" id="ftunpay" ${(st.ft||{}).unpay?"checked":""}></label>
   ${(st.ft||{}).unpay?`<label class="au" style="display:block;padding-bottom:10px">Your email (Unpaywall asks for one; it isn't shared with anyone else)<input class="search" id="ftemail" type="email" value="${esc((st.ft||{}).email||"")}" placeholder="name@example.com" autocomplete="email"></label>`:""}
  </div>
+ <h3>Your details for CPD exports</h3><div class="card">
+  <label class="au" style="display:block;padding-top:8px">Your name<input class="search" id="myname" value="${esc(st.myName||"")}" placeholder="Shown at the top of your SOAR export" autocomplete="name"></label>
+  <label class="au" style="display:block;padding:6px 0 10px">GMC number (optional)<input class="search" id="mygmc" value="${esc(st.myGMC||"")}" inputmode="numeric" autocomplete="off"></label></div>
  <h3>Backup</h3><div class="card"><p class="help" style="margin-top:8px">Saves your Library (read later and CPD log) and settings. Do this before deleting or re-adding the app.</p>
   <div class="pk"><a href="#" data-act="backup">Save backup</a><label class="alt" style="flex:1 1 140px;text-align:center;padding:12px;border-radius:10px;font-weight:600;border:1px solid #2E3A6B;color:#2E3A6B;cursor:pointer">Restore backup<input type="file" id="restorefile" accept=".json,application/json" style="display:none"></label></div></div>
  <h3>About</h3><p class="help"><b>Version ${APPVER}</b>. If you don't see this version after an update, close the app fully and reopen it.</p><p class="help">Articles and guidelines come from PubMed, and DVLA guidance from GOV.UK, each time you open them. Sections are matched on title and abstract words, so some articles appear in more than one. Archived articles and settings stay on this phone.</p>
@@ -1118,11 +1121,11 @@ function vCPD(){
   <div class="calc" style="--cc:#2E3A6B;margin-top:8px"><div class="au">Total CPD${S.cpdP==="all"?"":`, ${fmtD(a)} to ${fmtD(b)}`}</div>
    <div class="res low" style="margin-top:6px"><div class="big">${(tot/60).toFixed(1)} hours</div><p>${(()=>{const k=c=>c.kind||(String(c.pmid).startsWith("pod:")?"podcast":"reading"),g={reading:["Journal reading",0,0],podcast:["Podcasts",0,0],event:["Conferences and courses",0,0],online:["Online learning",0,0]};L.forEach(c=>{const x=g[k(c)]||g.reading;x[1]+=c.minutes;x[2]++});return Object.values(g).filter(x=>x[2]).map(x=>`${x[0]}: ${(x[1]/60).toFixed(1)} h (${x[2]})`).join("<br>")||"Nothing logged yet"})()}</p></div>
    <div class="pk" style="margin-top:8px"><a href="#" data-act="cpdevents">+ Log a course, conference or webinar</a></div>
-   ${L.length?`<div class="pk" style="margin-top:12px"><a href="#" data-act="cpdcsv">Export for appraisal</a><a href="#" class="alt" data-act="cpdcopy">Copy summary</a></div>`:""}</div>
+   ${L.length?`<div class="pk" style="margin-top:12px"><a href="#" data-act="soarpdf">Export for SOAR (PDF)</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="cpdcsv">Spreadsheet</a><a href="#" class="alt" data-act="cpdcopy">Copy summary</a></div>`:""}</div>
   ${L.length?`<div class="gl" style="margin-top:12px">${L.map(c=>`<div class="kp"><div style="display:flex;justify-content:space-between"><b style="font-size:14px">${c.end&&c.end!==c.date?fmtRange(c.date,c.end):fmtD(c.date)}</b><b style="font-size:14px">${c.credits!=null?`${c.credits} ${c.credits===1?"credit":"credits"}`:hrs(c.minutes)}</b></div>
    <div style="font-family:'Iowan Old Style',Charter,Georgia,serif;font-size:16px;margin:2px 0">${esc(c.title)}</div><div class="au">${esc(c.src||"")}${c.venue?` · ${esc(c.venue)}`:""}</div>${c.sessions?`<div class="au" style="margin-top:4px"><b>Sessions:</b> ${esc(c.sessions)}</div>`:""}
    ${c.ref?[["Learning",c.ref.learn],["Change to practice",c.ref.change],["Further learning",c.ref.further]].filter(x=>x[1]).map(([k,v])=>`<div class="au" style="margin-top:4px"><b>${k}:</b> ${esc(v)}</div>`).join("")+((c.ref.domains||[]).length?`<div class="tags">${c.ref.domains.map(d=>`<span class="tag" style="--tc:#5A6E8C">${esc(d)}</span>`).join("")}</div>`:""):c.note?`<div class="au" style="margin-top:4px;font-style:italic">${esc(c.note)}</div>`:""}
-   <div class="lk">${S.confirm==="cpd:"+c.id?`<button class="link" data-act="cpddel" data-v="${c.id}">Confirm delete</button>`:`<button class="link" data-act="cpdask" data-v="${c.id}">Delete</button>`}</div></div>`).join("")}</div>`:`<div class="msg" style="margin-top:12px">No CPD logged in this period. Tap CPD on any article or podcast, or log a course or conference.</div>`}
+   <div class="lk"><button class="link" style="color:#2E4A86;text-decoration:none;font-weight:700" data-act="soarcopy" data-v="${c.id}">Copy for SOAR</button>${S.confirm==="cpd:"+c.id?`<button class="link" data-act="cpddel" data-v="${c.id}">Confirm delete</button>`:`<button class="link" data-act="cpdask" data-v="${c.id}">Delete</button>`}</div></div>`).join("")}</div>`:`<div class="msg" style="margin-top:12px">No CPD logged in this period. Tap CPD on any article or podcast, or log a course or conference.</div>`}
   <p class="note">Your CPD log stays on this phone. Export it regularly for your appraisal folder.</p>`;
 }
 function cpdCSV(){
@@ -1283,6 +1286,83 @@ function dictate(id){
  r.onerror=e=>{if(e.error==="not-allowed"||e.error==="service-not-allowed")toast("Allow microphone access, or use the microphone on your keyboard.")};
  try{r.start();dict=r;const b=document.querySelector(`.mic[data-v="${id}"]`);if(b)b.classList.add("on");toast("Listening… tap 🎤 again to stop")}catch(e){ta.focus();toast("Tap the microphone on your keyboard to dictate.")}
 }
+// ---------- SOAR: printable PDF of the CPD log, and per-entry copy ----------
+const JSPDF="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+const cpdKind=c=>c.kind||(String(c.pmid).startsWith("pod:")?"podcast":"reading");
+const KINDNAME={event:"Conferences and courses",online:"Online learning and webinars",reading:"Journal reading",podcast:"Podcasts"};
+const KINDONE={event:"Conference or course",online:"Online learning or webinar",reading:"Journal reading",podcast:"Podcast"};
+const ukDate=d=>d?new Date(d+"T12:00").toLocaleDateString("en-GB"):"";
+const cHours=c=>c.credits!=null?+c.credits:Math.round(c.minutes/6)/10;
+function soarText(c){
+ const r=c.ref||{},refl=[r.learn&&`What I learned: ${r.learn}`,r.change&&`How it will change my practice: ${r.change}`,r.further&&`Further learning needed: ${r.further}`].filter(Boolean).join("\n")||c.note||"";
+ return [`Title: ${c.title}`,`Date: ${ukDate(c.date)}${c.end&&c.end!==c.date?` to ${ukDate(c.end)}`:""}`,`Type of activity: ${KINDONE[cpdKind(c)]}`,`CPD credits/hours: ${cHours(c)}`,
+  c.src&&`Organiser or source: ${c.src}`,c.venue&&`Venue: ${c.venue}`,c.sessions&&`Sessions attended: ${c.sessions}`,c.doi&&`DOI: ${c.doi}`,
+  refl&&`Reflection:\n${refl}`,(r.domains||[]).length&&`Good Medical Practice domains: ${r.domains.join("; ")}`].filter(Boolean).join("\n");
+}
+async function soarCopy(id){
+ const c=st.cpd.find(x=>x.id===id);if(!c)return;const t=soarText(c);
+ try{await navigator.clipboard.writeText(t);toast("Copied. In SOAR, tap Add CPD entry and paste.")}
+ catch(e){S.copyText=t;S.modal={type:"copy"};renderModal()}
+}
+async function soarPDF(){
+ const L=cpdList().slice().sort((a,b)=>a.date.localeCompare(b.date));if(!L.length){toast("Nothing logged in this period.");return}
+ S.readyMsg="Making your PDF";S.modal={type:"ready"};S.readyFile=null;renderModal();
+ try{
+  if(!window.jspdf)await loadJS(JSPDF);
+  const {jsPDF}=window.jspdf,doc=new jsPDF({unit:"mm",format:"a4"}),W=210,M=16,CW=W-2*M,NAVY=[28,37,65],GREY=[92,99,117];
+  let y=M;
+  const need=h=>{if(y+h>287-M){doc.addPage();y=M}};
+  const text=(t,size,opt={})=>{doc.setFont("helvetica",opt.bold?"bold":"normal");doc.setFontSize(size);doc.setTextColor(...(opt.col||[34,34,34]));
+   const lines=doc.splitTextToSize(String(t),opt.w||CW),lh=size*0.42;for(const ln of lines){need(lh);doc.text(ln,(opt.x||M),y+lh*0.8);y+=lh}y+=opt.after||1.5};
+  const [a,b]=cpdRange(),tot=L.reduce((s,c)=>s+cHours(c),0),nm=(st.myName||"").trim();
+  // header
+  doc.setFillColor(...NAVY);doc.rect(0,0,W,12,"F");
+  text("Continuing professional development log",18,{bold:true,col:NAVY,after:1});
+  text(`${nm?nm+"  ·  ":""}${st.myGMC?`GMC ${st.myGMC}  ·  `:""}${S.cpdP==="all"?"All recorded CPD":`${ukDate(a)} to ${ukDate(b)}`}`,11,{col:GREY,after:1});
+  text(`Exported from the Cardiology CPD app on ${new Date().toLocaleDateString("en-GB")}. No patient-identifiable information.`,9,{col:GREY,after:5});
+  // summary
+  text("Summary",13,{bold:true,col:NAVY,after:2});
+  const byK={},byD={};for(const c of L){const k=cpdKind(c);byK[k]=(byK[k]||{n:0,h:0});byK[k].n++;byK[k].h+=cHours(c);for(const d of (c.ref&&c.ref.domains)||[]){byD[d]=(byD[d]||{n:0,h:0});byD[d].n++;byD[d].h+=cHours(c)}}
+  const row=(l,r,bold)=>{need(6);doc.setFont("helvetica",bold?"bold":"normal");doc.setFontSize(10.5);doc.setTextColor(34,34,34);doc.text(l,M,y+4);doc.text(r,W-M,y+4,{align:"right"});y+=6};
+  for(const k of ["event","online","reading","podcast"])if(byK[k])row(`${KINDNAME[k]} (${byK[k].n})`,`${byK[k].h.toFixed(1)} hours`);
+  doc.setDrawColor(200,204,214);doc.line(M,y+1,W-M,y+1);y+=2;row(`Total (${L.length} activities)`,`${tot.toFixed(1)} hours`,true);y+=3;
+  if(Object.keys(byD).length){text("By Good Medical Practice domain",11,{bold:true,col:NAVY,after:1.5});for(const d of GMP)if(byD[d])row(`${d} (${byD[d].n})`,`${byD[d].h.toFixed(1)} hours`);y+=3}
+  // entries by type
+  for(const k of ["event","online","reading","podcast"]){
+   const E=L.filter(c=>cpdKind(c)===k);if(!E.length)continue;
+   need(16);y+=2;doc.setFillColor(241,243,249);doc.rect(M-2,y,CW+4,8,"F");text(KINDNAME[k],12,{bold:true,col:NAVY,after:3,x:M});
+   for(const c of E){
+    need(18);const r=c.ref||{};
+    doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(...GREY);doc.text(`${ukDate(c.date)}${c.end&&c.end!==c.date?` – ${ukDate(c.end)}`:""}`,M,y+3.5);
+    doc.text(`${cHours(c)} ${c.credits!=null?"credits":"hours"}`,W-M,y+3.5,{align:"right"});y+=5;
+    text(c.title,11,{bold:true,after:0.8});
+    const meta=[c.src,c.venue].filter(Boolean).join(" · ");if(meta)text(meta,9.5,{col:GREY,after:1});
+    if(c.sessions)text(`Sessions: ${c.sessions}`,9.5,{after:1});
+    if(r.learn)text(`What I learned: ${r.learn}`,9.5,{after:0.8});
+    if(r.change)text(`Change to practice: ${r.change}`,9.5,{after:0.8});
+    if(r.further)text(`Further learning: ${r.further}`,9.5,{after:0.8});
+    if(!c.ref&&c.note)text(`Reflection: ${c.note}`,9.5,{after:0.8});
+    if((r.domains||[]).length)text(`GMP domains: ${r.domains.join("; ")}`,9,{col:GREY,after:0.8});
+    y+=1.5;doc.setDrawColor(226,228,236);doc.line(M,y,W-M,y);y+=3;
+   }
+  }
+  const pages=doc.getNumberOfPages();for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(8.5);doc.setTextColor(...GREY);doc.text(`Page ${i} of ${pages}`,W-M,292,{align:"right"});doc.text("CPD log for appraisal (SOAR, Form 3, Domain 1, supporting documents)",M,292)}
+  const name=`CPD-log-${S.cpdP==="all"?"all":a+"-to-"+b}.pdf`;
+  S.readyFile=new File([doc.output("blob")],name,{type:"application/pdf"});
+  S.readyMsg=`Your CPD log is ready: ${L.length} activities, ${tot.toFixed(1)} hours.`;renderModal();
+ }catch(e){S.modal=null;renderModal();toast(navigator.onLine===false?"Making the PDF needs a connection the first time.":"Couldn't make the PDF. Try again.")}
+}
+async function readyShare(){
+ const f=S.readyFile;if(!f)return;
+ if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:f.name});return}catch(e){if(e&&e.name==="AbortError")return}}
+ const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;a.target="_blank";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);
+}
+function readySheet(){return S.readyFile?`<div class="sheet" role="dialog" aria-label="Export ready"><h3>Ready for SOAR</h3><div class="res low"><p>${esc(S.readyMsg||"")}</p></div>
+ <p class="note">Tap Save or share, then Save to Files. In SOAR, go to Form 3 › Domain 1 › CPD, open Supporting documents, and upload it. Add your overall reflection in Collective reflection.</p>
+ <div class="pk"><a href="#" data-act="readyshare">Save or share</a><a href="#" class="alt" data-act="mclose">Done</a></div></div>`
+ :`<div class="sheet"><div class="msg"><span class="spin"></span>${esc(S.readyMsg||"Working")}</div></div>`}
+function copySheet(){return `<div class="sheet" role="dialog" aria-label="Copy for SOAR"><h3>Copy for SOAR</h3><p class="note">Select all and copy, then paste into SOAR's Add CPD entry form.</p><textarea class="search" rows="12" readonly onclick="this.select()">${esc(S.copyText||"")}</textarea><div class="pk"><a href="#" class="alt" data-act="mclose">Done</a></div></div>`}
+
 function renderModal(){
  const el=document.getElementById("modal");if(!el)return;
  const m=S.modal;if(!m){el.innerHTML="";el.className="";return}
@@ -1299,6 +1379,8 @@ function renderModal(){
    ${S.chartDraft?chartForm():`<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:600" data-act="chadd">+ Add a chart</button>`}</div>
   <div class="pk"><a href="#" data-act="slidego">Make slides</a><a href="#" class="alt" data-act="mclose">Cancel</a></div>`}</div>`;
  else if(m.type==="event"&&S.ev){el.innerHTML=evSheet()}
+ else if(m.type==="ready"){el.innerHTML=readySheet()}
+ else if(m.type==="copy"){el.innerHTML=copySheet()}
  else if(m.type==="topic"&&S.tEdit){el.innerHTML=topicSheet()}
  else if(m.type==="cpd"){const done=cpdFor(m.pmid);el.innerHTML=`<div class="sheet" role="dialog" aria-label="Log CPD"><h3>Log CPD</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
   ${done?`<p class="note">Already logged for this paper: ${hrs(done)}.</p>`:""}
@@ -1700,6 +1782,9 @@ document.addEventListener("click",e=>{
  else if(a==="evsave"){e.preventDefault();evSave()}
  else if(a==="cpdevents"){e.preventDefault();S.lib="events";render();window.scrollTo(0,0)}
  else if(a==="mic"){e.preventDefault();dictate(b.dataset.v)}
+ else if(a==="soarpdf"){e.preventDefault();soarPDF()}
+ else if(a==="readyshare"){e.preventDefault();readyShare()}
+ else if(a==="soarcopy"){soarCopy(b.dataset.v)}
  else if(a==="backup"){e.preventDefault();backupNow()}
  else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;makeSlides(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
  else if(a==="cpd"){S.modal={type:"cpd",pmid:b.dataset.id};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
@@ -1707,7 +1792,7 @@ document.addEventListener("click",e=>{
  else if(a==="cpdsave"){e.preventDefault();const mins=Math.round(+S.cpdMin);if(!(mins>0)){toast("Enter the minutes spent.");return}const it=findItem(S.modal.pmid)||(S.modal.title?{title:"Podcast: "+S.modal.title,src:"Podcast"}:{});
   st.cpd.push({id:"c"+Date.now().toString(36),pmid:S.modal.pmid,title:it.title||"",src:it.src==="Podcast"?"Podcast":(jOf(it).name||it.src||""),doi:it.doi||"",date:S.cpdDate||isoD(new Date()),minutes:mins,ref:{learn:(S.cpdRef.learn||"").trim(),change:(S.cpdRef.change||"").trim(),further:(S.cpdRef.further||"").trim(),domains:(S.cpdRef.domains||[]).slice()},note:"",at:Date.now()});
   save();S.modal=null;render();toast(`Logged ${mins} minutes of CPD`)}
- else if(a==="mclose"){e.preventDefault();if(dict){try{dict.stop()}catch(x){}dict=null}S.modal=null;S.slideBusy="";S.slideFile=null;renderModal()}
+ else if(a==="mclose"){e.preventDefault();S.readyFile=null;if(dict){try{dict.stop()}catch(x){}dict=null}S.modal=null;S.slideBusy="";S.slideFile=null;renderModal()}
  else if(a==="slideshare"){e.preventDefault();slideShare()}
  else if(a==="cpdp"){S.cpdP=b.dataset.v;render()}
  else if(a==="cpdask"){S.confirm="cpd:"+b.dataset.v;render()}
@@ -1724,6 +1809,8 @@ function cvSet(el){
 document.addEventListener("input",e=>{
  if(e.target.dataset&&e.target.dataset.cv){cvSet(e.target);return}
  if(e.target.id==="q"){S.q=e.target.value;clearTimeout(qTimer);qTimer=setTimeout(()=>load(),700)}
+ else if(e.target.id==="myname"){st.myName=e.target.value;save()}
+ else if(e.target.id==="mygmc"){st.myGMC=e.target.value.trim();save()}
  else if(e.target.id==="aiurl"){st.aiUrl=e.target.value.trim();save()}
  else if(["ftezp","ftoa","ftemail"].includes(e.target.id)){st.ft={...(st.ft||{}),[e.target.id.slice(2)]:e.target.value.trim()};save()}
  else if(e.target.id==="cpdmins"){S.cpdMin=e.target.value}
