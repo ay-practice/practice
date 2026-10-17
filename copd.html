@@ -273,7 +273,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="copd-reader-v1",APPVER="17 Oct 2026 (r1)";
+const KEY="copd-reader-v1",APPVER="17 Oct 2026 (r2)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"lrm",name:"Lancet Respir Med",ta:"Lancet Respir Med",c:"#8A93A8"},
@@ -302,7 +302,7 @@ const J=[
 ];
 const JBY=Object.fromEntries(J.map(j=>[j.ta.toLowerCase(),j]));
 const BASEJ=J.slice();
-const CARDIO="(lung*[tiab] OR respirat*[tiab] OR pulmonar*[tiab] OR asthma[tiab] OR COPD[tiab] OR bronch*[tiab] OR pneumon*[tiab] OR airway*[tiab] OR breathless*[tiab] OR thorac*[tiab] OR pleura*[tiab] OR emphysema[tiab] OR tuberculosis[tiab] OR \"sleep apnoea\"[tiab] OR \"sleep apnea\"[tiab] OR spirometr*[tiab] OR inhaler*[tiab] OR ventilat*[tiab])";
+const CARDIO="(\"Respiratory Tract Diseases\"[mh] OR lung[tiab] OR lungs[tiab] OR respiratory[tiab] OR pulmonary[tiab] OR asthma[tiab] OR COPD[tiab] OR bronchiectasis[tiab] OR pneumonia[tiab] OR airway[tiab] OR airways[tiab] OR breathlessness[tiab] OR dyspnoea[tiab] OR dyspnea[tiab] OR pleural[tiab] OR emphysema[tiab] OR tuberculosis[tiab] OR \"sleep apnoea\"[tiab] OR \"sleep apnea\"[tiab] OR spirometry[tiab] OR inhaler[tiab] OR inhalers[tiab] OR \"mechanical ventilation\"[tiab])";
 const BROADQ=`(${CARDIO} OR "chronic respiratory"[tiab] OR "long-term condition"[tiab] OR "long term condition"[tiab] OR "long-term conditions"[tiab] OR "chronic illness"[tiab] OR "chronic disease"[tiab] OR "chronic conditions"[tiab] OR multimorbidity[tiab])`;
 const tiab=a=>"("+a.map(w=>/\s/.test(w)?`"${w}"[tiab]`:`${w}[tiab]`).join(" OR ")+")";
 // sections: query words (PubMed) and title pattern (labels)
@@ -365,10 +365,14 @@ const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;"
 const clean=s=>String(s||"").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'");
 const catsOf=title=>{const c=CATS.filter(x=>x.re.test(title)).map(x=>x.id);return c.length?c:["oth"]};
 
+function jGroup(js){
+ const sp=js.filter(j=>!j.gen),gn=js.filter(j=>j.gen),q=l=>l.map(j=>`"${j.ta}"[ta]`).join(" OR ");
+ const parts=[];if(sp.length)parts.push(`(${q(sp)})`);if(gn.length)parts.push(`((${q(gn)}) AND ${CARDIO})`);
+ return parts.length?"("+parts.join(" OR ")+")":"";
+}
 function journalsTerm(){
  const js=S.j==="all"?J.filter(j=>!st.off[j.id]):J.filter(j=>j.id===S.j);
- if(!js.length)return "";
- return "("+js.map(j=>`("${j.ta}"[ta]${j.gen?" AND "+CARDIO:""})`).join(" OR ")+")";
+ return js.length?jGroup(js):"";
 }
 const wideSearch=()=>!!S.q.trim()&&S.qscope==="all";
 function term(){
@@ -383,7 +387,7 @@ function term(){
 }
 async function getJSON(url,tries=3){
  for(let i=0;i<tries;i++){
-  try{const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),15000);
+  try{const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),25000);
    const r=await fetch(url,{signal:ctl.signal});clearTimeout(tm);
    if(r.status===429){await new Promise(z=>setTimeout(z,900*(i+1)));continue}
    if(!r.ok)throw new Error("HTTP "+r.status);
@@ -434,7 +438,7 @@ const GQ={
  ers:`("Eur Respir J"[ta] OR "Am J Respir Crit Care Med"[ta] OR "Eur Respir Rev"[ta] OR "ERJ Open Res"[ta] OR "Ann Am Thorac Soc"[ta]) AND (guideline[ti] OR guidelines[ti] OR "official ATS"[ti] OR "ERS statement"[ti] OR "ERS/ATS"[ti] OR "ATS/ERS"[ti] OR "task force report"[ti] OR "clinical practice guideline"[ti] OR practice guideline[pt]) NOT (comment[pt] OR letter[pt] OR published erratum[pt] OR correction[ti] OR corrigendum[ti] OR erratum[ti])`,
  bts:`("Thorax"[ta] OR "BMJ Open Respir Res"[ta]) AND ("British Thoracic Society"[tiab] OR BTS[ti]) AND (guideline[ti] OR guidelines[ti] OR statement[ti] OR "quality standard"[ti] OR "quality standards"[ti] OR "clinical statement"[ti]) NOT (comment[pt] OR letter[pt] OR published erratum[pt] OR correction[ti] OR erratum[ti])`
 };
-function allJournals(){const js=J.filter(j=>!st.off[j.id]);return js.length?"("+js.map(j=>`("${j.ta}"[ta]${j.gen?" AND "+CARDIO:""})`).join(" OR ")+")":""}
+function allJournals(){return jGroup(J.filter(j=>!st.off[j.id]))}
 const BIG=`((randomized controlled trial[pt] AND multicenter study[pt]) OR ((randomized[ti] OR randomised[ti] OR trial[ti]) AND (multicenter[tiab] OR multicentre[tiab] OR multinational[tiab] OR international[tiab])) OR guideline[pt] OR practice guideline[pt] OR "ERS/ATS"[ti] OR "ATS/ERS"[ti] OR ("British Thoracic Society"[ti] AND guideline[ti]) OR "Global Strategy"[ti])`;
 async function loadHL(){
  const jt=allJournals();if(!jt){S.hl=[];return}
