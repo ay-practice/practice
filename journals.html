@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-O9a/DovDURxdN+qunuRwWXIUPGThp0b2WWMv3anS8wM=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -260,6 +262,18 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 .mic{position:absolute;right:6px;bottom:8px;width:36px;height:36px;border-radius:50%;border:1px solid #DCE0F4;background:#EEF0FB;font-size:17px;line-height:1;padding:0}
 .mic.on{background:#C0504D;border-color:#C0504D;animation:micp 1.2s infinite}
 @keyframes micp{0%,100%{box-shadow:0 0 0 0 rgba(192,80,77,.5)}50%{box-shadow:0 0 0 8px rgba(192,80,77,0)}}
+.mic{position:absolute;right:6px;bottom:8px;width:36px;height:36px;border-radius:50%;border:1px solid #DCE0F4;background:#fff;color:var(--accent);padding:0;display:flex;align-items:center;justify-content:center}
+.mic.on{background:var(--accent);color:#fff;border-color:var(--accent);animation:micp 1.2s infinite}
+.tx{position:absolute;right:6px;top:6px;width:30px;height:30px;border-radius:8px;border:1px solid #DCE0F4;background:#fff;color:var(--accent);padding:0;display:flex;align-items:center;justify-content:center}
+.tawrap textarea{padding-right:46px;min-height:72px;resize:none;overflow-y:auto}
+.tidy{display:inline-block;margin-top:4px;background:none;border:0;padding:2px 0;color:#4B3C8F;font-weight:700;font-size:14px}
+.sheet.big{height:92vh;display:flex;flex-direction:column}.sheet.big .tawrap{flex:1;display:flex}.sheet.big #bigta{flex:1;height:auto;min-height:50vh;font-size:18px;line-height:1.5}
+.vbtn{border:1px dashed var(--accent)!important;background:#fff!important;font-weight:600!important}
+.np .vbtn{background:rgba(255,255,255,.14)!important;color:#fff;border:1px solid rgba(255,255,255,.4)!important;border-radius:999px!important;width:auto!important;height:40px;padding:0 10px;font-size:12px}
+.certs{margin-top:6px;font-size:14px}.cert{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.cert span{font-weight:600}.certadd{cursor:pointer;color:var(--accent);font-weight:700}
+.prow{display:flex;gap:6px;align-items:center;margin-bottom:6px}.prow input{padding:8px 10px;font-size:15px}.prow input:first-child{flex:0 0 32%}.prow .au{flex:0 0 auto}
+.pbtn{flex:0 0 34px;height:34px;border-radius:8px;border:1px solid #DCE0F4;background:#fff;color:var(--accent);padding:0}
+.pdfbtn{display:inline-flex;align-items:center;border:1px solid #DCE0F4;background:#fff;color:var(--accent);border-radius:999px;padding:7px 14px;font-weight:700;font-size:14px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -273,7 +287,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="journal-reader-v1",APPVER="17 Oct 2026 (q)";
+const KEY="journal-reader-v1",APPVER="19 Oct 2026 (y)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -343,7 +357,7 @@ const seen=new Set(st.seen);
 const S={tab:"latest",cat:"all",j:"all",q:"",qscope:"mine",qsort:"date",lib:"later",cpdP:"12m",cpdFrom:"",cpdTo:"",modal:null,slideN:6,slideBusy:"",slideFigs:true,charts:[],chartDraft:null,cpdMin:30,cpdDate:"",cpdNote:"",aiOpen:{},aiBusy:{},aiTest:"",slideAI:true,cpdRef:{domains:[]},tEdit:null,jfind:null,jq:"",jgen:false,items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,
  g:"esc",gsub:"esc",gl:{},gerr:{},gload:{},dq:"",dvlaErr:false,dvlaLoading:false};
 const $m=document.getElementById("main");
-applyJournals();applyTopics();if(!st.engine)st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
+applyJournals();applyTopics();if(!st.engine)st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}try{kkBoot()}catch(e){}try{for(const k of ["cpd-usage-cardiology","cpd-usage-cardiology-sent","cpd-usage-respiratory","cpd-usage-respiratory-sent","cpd-stats-off","cpd-stats-noticed"])localStorage.removeItem(k)}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const clean=s=>String(s||"").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'");
 const catsOf=title=>{const c=CATS.filter(x=>x.re.test(title)).map(x=>x.id);return c.length?c:["oth"]};
@@ -524,7 +538,7 @@ function card(it){
    <button class="${cpdFor(it.pmid)?"arch on":""}" data-act="cpd" data-id="${it.pmid}">${cpdFor(it.pmid)?"CPD ✓":"CPD"}</button>
    <button class="arch ${sv?"on":""}" data-act="star" data-id="${it.pmid}" aria-pressed="${sv}">${sv?"Saved":"Archive"}</button>
   </div>
-  ${S.tab==="saved"&&sv&&!S.open[it.pmid]&&(aiURL()||(st.aiSum||{})[it.pmid])?`<div style="margin-top:8px">${aiBox(it.pmid)||`<button class="link" style="color:#4B3C8F;text-decoration:none;font-weight:700;padding:0" data-act="aisum" data-id="${it.pmid}">✨ AI summary${(st.aiSum||{})[it.pmid]?"":" (uses the full text when it's free)"}</button>`}${(st.aiSum||{})[it.pmid]&&S.aiOpen[it.pmid]?`<button class="link" style="padding:0;margin-top:4px" data-act="aisum" data-id="${it.pmid}">Hide summary</button>`:""}</div>`:""}
+  ${S.tab==="saved"&&sv&&!S.open[it.pmid]&&(aiURL()||(st.aiSum||{})[it.pmid])?`<div style="margin-top:8px">${aiBox(it.pmid)||`<button class="link" style="color:#4B3C8F;text-decoration:none;font-weight:700;padding:0" data-act="aisum" data-id="${it.pmid}">✨ AI summary${(st.aiSum||{})[it.pmid]?"":" (uses the full text when it's free)"}</button> ${pdfBtn(it.pmid)}`}${(st.aiSum||{})[it.pmid]&&S.aiOpen[it.pmid]?`<button class="link" style="padding:0;margin-top:4px" data-act="aisum" data-id="${it.pmid}">Hide summary</button>`:""}</div>`:""}
   ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:aiBox(it.pmid)+ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")+ttsBar(it.pmid)}</div>`:""}
  </article>`;
 }
@@ -618,14 +632,16 @@ function vSettings(){
  ${vJournalSettings()}
  <h3>Reading aloud</h3><div class="card">
   <p class="help" style="margin-top:8px">Open an abstract and tap Listen. Hazard ratios are read simply and confidence intervals are skipped.</p>
-  <label class="set"><span>Voice type</span><select id="enginesel"><option value="natural" ${st.engine==="natural"?"selected":""}>Natural voice (recommended)</option><option value="system" ${st.engine!=="natural"?"selected":""}>Phone's built-in voice</option></select></label>
+  <label class="set"><span>Voice type</span><select id="enginesel"><option value="natural" ${st.engine==="natural"?"selected":""}>Natural voice (recommended)</option><option value="kokoro" ${st.engine==="kokoro"?"selected":""}>Kokoro, most natural (larger download)</option><option value="system" ${st.engine!=="natural"&&st.engine!=="kokoro"?"selected":""}>Phone's built-in voice</option></select></label>
   ${st.engine==="natural"?`<label class="set"><span>Natural voice</span><select id="nvvoice">${Object.entries(NV.voices).map(([k,v])=>`<option value="${k}" ${(st.nvVoice||"jenny")===k?"selected":""}>${v[0]}</option>`).join("")}</select></label>
    ${S.nvHave?`<p class="note">Downloaded and ready. It works offline. <button class="link" data-act="nvrm">Remove it</button></p>`:`<div class="pk"><a href="#" data-act="nvdl">${NV.busy?"Downloading…":"Download this voice (about 60 MB, once)"}</a></div><p class="note"><span id="nvprog">${esc(NV.prog||"")}</span> Free, natural-sounding and private: it runs on your phone, with nothing sent anywhere. Best downloaded on Wi-Fi.</p>`}`:""}
-  ${st.engine==="natural"?"":TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
+  ${st.engine==="kokoro"?`<label class="set"><span>Kokoro voice</span><select id="kkvoice">${Object.entries(KK.voices).map(([k,v])=>`<option value="${k}" ${(st.kkVoice||"bf_emma")===k?"selected":""}>${v}</option>`).join("")}</select></label>
+   ${st.kkHave?`<p class="note">Downloaded${KK.tts?" and ready":", loading"}. Works offline. All five Kokoro voices are included. <button class="link" data-act="kkrm">Remove it</button></p>`:`<div class="pk"><a href="#" data-act="kkdl">${KK.busy?"Downloading…":"Download Kokoro (about 90 MB, once)"}</a></div><p class="note"><span id="kkprog">${esc(KK.prog||"")}</span> The most natural free voice. It runs on your phone with nothing sent anywhere, but needs a recent phone: on older ones it may pause between sentences, and if it is too slow the app switches to the Piper natural voice (if downloaded) or the phone's voice. Best downloaded on Wi-Fi.</p>`}`:""}${st.engine==="natural"||st.engine==="kokoro"?"":TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
   <label class="set"><span>Speed</span><select id="ratesel">${[["0.85","Slower"],["1","Normal"],["1.15","A bit faster"],["1.3","Faster"],["1.5","Fastest"]].map(([v,l])=>`<option value="${v}" ${String(st.rate||"1")===v?"selected":""}>${l}</option>`).join("")}</select></label>
-  <div class="pk"><a href="#" data-act="ttstest">Test voice</a></div>
-  ${st.engine==="natural"?"":`<p class="note"><b>For the most natural sound</b>, choose Natural voice above, or download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>`}
+  <div class="pk"><a href="#" data-act="ttstest">Test voice</a><a href="#" class="alt" data-act="pronopen">Pronunciation list (${pronList().length})</a></div>
+  ${st.engine==="natural"||st.engine==="kokoro"?"":`<p class="note"><b>For the most natural sound</b>, choose Natural voice above, or download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>`}
  </div>
+ <h3>Pronunciation</h3><div class="card"><p class="help" style="margin-top:8px">How abbreviations are read aloud. Units, symbols and statistics are handled automatically; edit, add or remove abbreviations here.</p><div class="pk" style="margin-bottom:10px"><a href="#" data-act="pronopen">Edit pronunciation list (${pronList().length} words)</a></div></div>
  <h3>AI features</h3><div class="card">
   <p class="help" style="margin-top:8px">Free AI summaries and AI-written slides, from each paper's abstract. Only public abstracts are sent, never anything personal. ${aiURL()===String(AI_DEFAULT_URL).replace(/\/+$/,"")&&aiURL()?"Already set up for you.":""}</p>
   <label class="au" style="display:block;padding-bottom:6px">AI service address<input class="search" id="aiurl" value="${esc(st.aiUrl||(/^__AI_URL__$/.test(AI_DEFAULT_URL)?"":AI_DEFAULT_URL))}" placeholder="https://cardio-ai.yourname.workers.dev" autocomplete="off" autocapitalize="off"></label>
@@ -645,6 +661,7 @@ function vSettings(){
  <h3>Your details for CPD exports</h3><div class="card">
   <label class="au" style="display:block;padding-top:8px">Your name<input class="search" id="myname" value="${esc(st.myName||"")}" placeholder="Shown at the top of your SOAR export" autocomplete="name"></label>
   <label class="au" style="display:block;padding:6px 0 10px">GMC number (optional)<input class="search" id="mygmc" value="${esc(st.myGMC||"")}" inputmode="numeric" autocomplete="off"></label></div>
+ <h3>Privacy</h3><div class="card"><p class="help" style="margin-top:8px">This app doesn't collect usage statistics. Your library, CPD log, certificates and PDFs stay on this phone. Only the paper text you ask the AI to work on is sent to the AI service, which doesn't store it.</p></div>
  <h3>Backup</h3><div class="card"><p class="help" style="margin-top:8px">Saves your Library (read later and CPD log) and settings. Do this before deleting or re-adding the app.</p>
   <div class="pk"><a href="#" data-act="backup">Save backup</a><label class="alt" style="flex:1 1 140px;text-align:center;padding:12px;border-radius:10px;font-weight:600;border:1px solid #2E3A6B;color:#2E3A6B;cursor:pointer">Restore backup<input type="file" id="restorefile" accept=".json,application/json" style="display:none"></label></div></div>
  <h3>About</h3><p class="help"><b>Version ${APPVER}</b>. If you don't see this version after an update, close the app fully and reopen it.</p><p class="help">Articles and guidelines come from PubMed, and DVLA guidance from GOV.UK, each time you open them. Sections are matched on title and abstract words, so some articles appear in more than one. Archived articles and settings stay on this phone.</p>
@@ -904,7 +921,40 @@ async function restoreFrom(file){
 
 // ---------- slides from a paper (made on this phone) ----------
 const PPTX_SRC="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js";
-function loadJS(src){return new Promise((res,rej)=>{if(document.querySelector(`script[src="${src}"]`)){res();return}const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=()=>rej(new Error("load"));document.head.appendChild(s)})}
+// ---------- security: outside libraries pinned to exact versions and checked against known hashes ----------
+const LIBSRI={
+ "https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js":"sha384-Cck14aA9cifjYolcnjebXRfWGkz5ltHMBiG4px/j8GS+xQcb7OhNQWZYyWjQ+UwQ",
+ "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js":"sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk",
+ "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js":"sha384-/1qUCSGwTur9vjf/z9lmu/eCUYbpOTgSjmpbMQZ1/CtX2v/WcAIKqRv+U1DUCG6e",
+ "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js":"sha384-SnzOobpRMLXZ52iJvZm/C0fYw0OQemTXzTjIsdsfMcrCtCEe9qgzxTd3RSklO5x2",
+ "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/ort.min.js":"sha384-+sDrjb5Otytk3e52a47vPhUx98dLh5PCPk8NHBLoekdIAC8urCZbpRWfw/mMXYQv",
+ "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/ort-wasm-simd.wasm":"sha384-fRaLGPIzvF2phGW4iOtonTas/h/+gi5pnuRbYIFDHMAY6wl8PjBiOd42lVUpDaNd",
+ "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/ort-wasm.wasm":"sha384-knZ5sDiuTisFgxBlwY3twQEH8QlgshupTIFY2Ssx2fz41zpiv8Z4aKFrd93WosAw",
+ "https://cdn.jsdelivr.net/npm/@diffusionstudio/vits-web@1.0.3/dist/piper-DeOu3H9E.js":"sha384-IAKEenfXR3k8BObbH1ht8DF4cm8YFIf/Cpe1SV0pIhaYsJqjtdkQLaVodLGFcrI8",
+ "https://cdn.jsdelivr.net/npm/@diffusionstudio/piper-wasm@1.0.0/build/piper_phonemize.wasm":"sha384-p7p53pHMdJ/Czq5r8i0cXWVgLA+CeXEeki1NGyNN0BKfNFLIdxeg0R0+5SzNSop3",
+ "https://cdn.jsdelivr.net/npm/@diffusionstudio/piper-wasm@1.0.0/build/piper_phonemize.data":"sha384-6Xh3BfiH+X7e4My11k66vDp7WUWQmn5Ifmsx4ZB1wg8vA9+lmOUucunqJpNsNUuf"
+};
+const vURL={};
+// fetch a pinned file, let the browser check it against the known hash, and hand back a local blob: address
+async function verifiedURL(url,type){
+ if(vURL[url])return vURL[url];const sri=LIBSRI[url];if(!sri)throw new Error("unpinned library");
+ const r=await fetch(url,{integrity:sri,mode:"cors",credentials:"omit"});if(!r.ok)throw new Error("lib "+r.status);
+ const b=await r.blob();return(vURL[url]=URL.createObjectURL(type?new Blob([b],{type}):b));
+}
+// ---------- security: AI output is treated as plain text only ----------
+function plainAI(v,depth=0){
+ if(depth>6)return null;
+ if(typeof v==="string")return v.replace(/<[^>]*>/g,"").replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g,"").replace(/javascript:/gi,"").slice(0,4000);
+ if(typeof v==="number")return isFinite(v)?v:null;
+ if(typeof v==="boolean")return v;
+ if(Array.isArray(v))return v.slice(0,40).map(x=>plainAI(x,depth+1));
+ if(v&&typeof v==="object"){const o={};for(const[k,x]of Object.entries(v).slice(0,40))if(/^[A-Za-z_]{1,24}$/.test(k))o[k]=plainAI(x,depth+1);return o}
+ return null;
+}
+// ---------- a random ID for this phone, so the AI service can limit use per device ----------
+function deviceId(){let d="";try{d=localStorage.getItem("cpd-device-id")||"";if(!/^[a-f0-9-]{36}$/.test(d)){d=(crypto.randomUUID?crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx".replace(/x/g,()=>(Math.random()*16|0).toString(16)));localStorage.setItem("cpd-device-id",d)}}catch(e){}return d}
+
+function loadJS(src){return new Promise((res,rej)=>{if(document.querySelector(`script[src="${src}"]`)){res();return}if(!LIBSRI[src]){rej(new Error("unpinned library"));return}const s=document.createElement("script");s.src=src;s.integrity=LIBSRI[src];s.crossOrigin="anonymous";s.referrerPolicy="no-referrer";s.onload=res;s.onerror=()=>rej(new Error("load"));document.head.appendChild(s)})}
 // ---------- paper content from PubMed, with Europe PMC as a fallback ----------
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 async function fetchText(url,tries=3){for(let i=0;i<tries;i++){try{const r=await fetch(url);if(r.status===429){await wait(800*(i+1));continue}if(r.ok)return await r.text()}catch(e){}await wait(500)}return ""}
@@ -950,16 +1000,10 @@ async function paperData(pmid){
   const r=await fetch(`${EPMC}search?query=EXT_ID:${pmid}%20AND%20SRC:MED&resultType=core&format=json`,{signal:tmo(9000)});if(!r.ok)throw new Error("http");
   const e=((await r.json()).resultList||{}).result;const x=e&&e[0];if(!x)return null;
   return{title:x.title||"",journal:(x.journalInfo&&x.journalInfo.journal&&x.journalInfo.journal.title)||"",iso:(x.journalInfo&&x.journalInfo.journal&&x.journalInfo.journal.isoabbreviation)||"",year:x.pubYear||"",doi:x.doi||"",pmcid:x.pmcid||"",oa:x.isOpenAccess==="Y",license:(x.license||"").toUpperCase(),aus:x.authorString?x.authorString.replace(/\.$/,"").split(/,\s*/):[],parts:splitLabelled(x.abstractText)}});
- const openalex=src("OpenAlex",diag,async()=>{
-  const r=await fetch(`https://api.openalex.org/works/pmid:${pmid}`,{signal:tmo(9000)});if(!r.ok)throw new Error("http");const w=await r.json();
-  let parts=[];if(w.abstract_inverted_index){const pos=[];for(const[word,ix]of Object.entries(w.abstract_inverted_index))for(const i of ix)pos[i]=word;parts=splitLabelled(pos.filter(Boolean).join(" "))}
-  return{title:w.title||"",year:String(w.publication_year||""),doi:(w.doi||"").replace(/^https?:\/\/doi\.org\//,""),journal:(w.primary_location&&w.primary_location.source&&w.primary_location.source.display_name)||"",aus:(w.authorships||[]).map(a=>a.author&&a.author.display_name).filter(Boolean),parts,oa:!!(w.open_access&&w.open_access.is_oa)}});
- const s2=src("Semantic Scholar",diag,async()=>{
-  const r=await fetch(`https://api.semanticscholar.org/graph/v1/paper/PMID:${pmid}?fields=title,abstract,year,venue,authors,externalIds,tldr`,{signal:tmo(9000)});if(!r.ok)throw new Error("http");const w=await r.json();
-  return{title:w.title||"",year:String(w.year||""),journal:w.venue||"",doi:(w.externalIds&&w.externalIds.DOI)||"",aus:(w.authors||[]).map(a=>a.name),parts:w.abstract?splitLabelled(w.abstract):[],tldr:w.tldr&&w.tldr.text||""}});
+ const openalex=Promise.resolve(null),s2=Promise.resolve(null);
  const [A,B,C,D]=await Promise.all([pubmed,epmc,openalex,s2]);
  let Cr=null;const doi=(A&&A.doi)||(B&&B.doi)||(C&&C.doi)||(D&&D.doi)||P.doi;
- if(doi&&![A,B,C,D].some(v=>v&&v.parts&&v.parts.length))Cr=await src("Crossref",diag,async()=>{const r=await fetch(`https://api.crossref.org/works/${encodeURIComponent(doi)}`,{signal:tmo(9000)});if(!r.ok)throw new Error("http");const m=(await r.json()).message||{};return{title:(m.title||[])[0]||"",parts:splitLabelled(m.abstract||""),year:String(((m.issued||{})["date-parts"]||[[""]])[0][0]||"")}});
+
  // merge: prefer PubMed, then Europe PMC (labelled), then the rest
  for(const v of [A,B,C,D,Cr].filter(Boolean)){for(const k of ["title","journal","iso","year","vol","iss","pages","doi","pmcid","license"])if(!P[k]&&v[k])P[k]=v[k];
   if(!P.aus.length&&v.aus&&v.aus.length)P.aus=v.aus;if(!P.types.length&&v.types)P.types=v.types;if(!P.keywords.length&&v.keywords)P.keywords=v.keywords;if(v.oa)P.oa=true;
@@ -1094,6 +1138,184 @@ async function makeSlides(pmid,count){
  const file=new File([blob],name,{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"});
  S.slideBusy="";S.slideFile=file;S.slideMsg=[`${n} slides ready${aiUsed?", written by AI from the abstract. Check them before presenting.":"."}`,!aiUsed&&chosen.length+2<count&&P.parts.length?"The abstract only had enough content for that many.":"",figNote].filter(Boolean).join(" ");renderModal();
 }
+// ---------- AI-designed slides: full paper when open access, key figures, chosen layouts, themed template ----------
+const DECK={dark:"1C2541",mid:"2E3A6B",acc:"C0504D",acc2:"3E6EA8",soft:"F1F3F9",soft2:"FBECEC",light:"F2A3AE",text:"222222",grey:"5C6375",app:"Cardiology CPD"};
+async function oaFull(pmcid){
+ const r=await fetch(`${EPMC}${pmcid}/fullTextXML`);if(!r.ok)return{text:"",figs:[]};
+ const x=new DOMParser().parseFromString((await r.text()).replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),body=x.getElementsByTagName("body")[0],secs={};
+ if(body)for(const sec of [...body.children].filter(n=>n.tagName==="sec")){const t=((sec.getElementsByTagName("title")[0]||{}).textContent||"").trim(),lab=labelOf(t);
+  const txt=[...sec.getElementsByTagName("p")].map(p=>p.textContent.replace(/\s+/g," ").trim()).join(" ");if(txt.length<80)continue;(secs[lab]=secs[lab]||[]).push(`${t.toUpperCase()}: ${txt}`)}
+ const take=(k,n)=>(secs[k]||[]).join("\n").slice(0,n);
+ const text=[take("Results",6000),take("Conclusions",3500),take("Methods",3000),take("Background",1500)].filter(Boolean).join("\n\n").slice(0,14000);
+ const figs=[...x.getElementsByTagName("fig")].slice(0,10).map(f=>{const g=f.getElementsByTagName("graphic")[0];
+  return{label:(((f.getElementsByTagName("label")[0]||{}).textContent)||"Figure").trim(),cap:(((f.getElementsByTagName("caption")[0]||{}).textContent)||"").replace(/\s+/g," ").trim(),
+   href:g?(g.getAttribute("xlink:href")||g.getAttributeNS("http://www.w3.org/1999/xlink","href")||""):""}});
+ return{text,figs};
+}
+async function figImage(pmcid,href){
+ if(!href)return null;const base=href.replace(/\.(jpe?g|png|gif|tif)$/i,"");
+ for(const u of [`https://europepmc.org/articles/${pmcid}/bin/${base}.jpg`,`https://www.ncbi.nlm.nih.gov/pmc/articles/${pmcid}/bin/${base}.jpg`]){
+  try{const r=await fetch(u);if(r.ok&&/image/.test(r.headers.get("content-type")||"image")){const data=await blobToData(await r.blob()),z=await imgSize(data);return{data,w:z.w,h:z.h}}}catch(e){}}
+ return null;
+}
+// ---------- Use my PDF: the reader's own copy of a paywalled paper, read on the phone ----------
+const myPdf={};
+async function pdfTextOf(file){
+ if(!window.pdfjsLib)await loadJS(PDFJS_URL);pdfjsLib.GlobalWorkerOptions.workerSrc=await verifiedURL(PDFJS_W,"text/javascript");
+ const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise,out=[];
+ for(let p=1;p<=Math.min(pdf.numPages,40);p++){
+  S.pdfBusy=`Reading page ${p} of ${pdf.numPages} on your phone`;const el=document.getElementById("pdfmsg");if(el)el.textContent=S.pdfBusy;
+  const page=await pdf.getPage(p),tc=await page.getTextContent(),rows=new Map();
+  for(const it of tc.items){if(!it.str||!it.str.trim())continue;const y=Math.round(it.transform[5]/3)*3;if(!rows.has(y))rows.set(y,[]);rows.get(y).push({x:it.transform[4],s:it.str})}
+  out.push([...rows.entries()].sort((a,b)=>b[0]-a[0]).map(([,a])=>a.sort((u,v)=>u.x-v.x).map(o=>o.s).join(" ").replace(/\s{2,}/g," ").trim()).filter(Boolean).join("\n"));
+ }
+ return{text:out.join("\n"),pages:pdf.numPages};
+}
+function pdfSections(t){
+ t=t.replace(/-\n(?=[a-z])/g,"").replace(/[ \t]+/g," ");
+ const cut=t.search(/\n\s*(references|bibliography|literature cited)\s*\n/i);if(cut>2000)t=t.slice(0,cut);
+ const re=/\n\s*(?:\d+\.?\s*)?(abstract|introduction|background|methods?|patients and methods|study design|results?|discussion|conclusions?)\s*\n/gi,marks=[];let m;
+ while((m=re.exec(t)))marks.push({i:m.index,lab:labelOf(m[1])});
+ if(marks.length<2)return t.slice(0,14000);
+ const secs={};marks.forEach((k,j)=>{const end=j+1<marks.length?marks[j+1].i:t.length;secs[k.lab]=(secs[k.lab]||"")+t.slice(k.i,end)+"\n"});
+ const take=(k,n)=>(secs[k]||"").slice(0,n);
+ return [take("Results",6000),take("Conclusions",3500),take("Methods",3000),take("Background",1500)].filter(Boolean).join("\n\n").slice(0,14000)||t.slice(0,14000);
+}
+async function myPdfLoad(pmid,file){
+ S.pdfFor=pmid;S.pdfBusy="Opening your PDF";S.modal={type:"mypdf",pmid};renderModal();
+ try{const r=await pdfTextOf(file),txt=pdfSections(r.text);
+  if(txt.replace(/\s/g,"").length<300)throw Object.assign(new Error("scan"),{code:"scan"});
+  myPdf[pmid]={text:txt,pages:r.pages,name:file.name||"PDF"};S.pdfBusy="";renderModal();render()}
+ catch(e){S.modal=null;S.pdfBusy="";renderModal();toast(e.code==="scan"?"This PDF has no readable text (it may be a scan), so it can't be used.":navigator.onLine===false?"Reading a PDF needs a connection the first time.":"Couldn't read this PDF. Try another copy.")}
+}
+function myPdfSheet(m){const P=myPdf[m.pmid];return `<div class="sheet" role="dialog" aria-label="Use my PDF"><h3>📄 Use my PDF</h3>
+ ${S.pdfBusy||!P?`<div class="msg"><span class="spin"></span><span id="pdfmsg">${esc(S.pdfBusy||"Reading")}</span></div>`:`<div class="res low"><p>Read ${P.pages} ${P.pages===1?"page":"pages"} of <b>${esc(P.name)}</b> on your phone.</p></div>
+ <p class="note">The PDF itself stays on your phone and isn't kept after you close the app. Only the extracted text is sent to the AI service to write your summary or slides, and the service doesn't store it. Original figures aren't copied: the AI redraws key results as charts instead.</p>
+ <div class="pk"><a href="#" data-act="mypdfsum">✨ AI summary from the PDF</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="mypdfslides">Make slides from the PDF</a><a href="#" class="alt" data-act="mclose">Done</a></div>`}</div>`}
+const pdfBtn=pmid=>`<label class="pdfbtn">${myPdf[pmid]?"📄 PDF loaded ✓":"📄 Use my PDF"}<input type="file" accept="application/pdf,.pdf" data-mypdf="${pmid}" style="display:none"></label>`;
+function deckForest(pptx,s,x,T,F){
+ const rows=(x.rows||[]).map(r=>({l:String(r.label||""),e:parseFloat(r.value),lo:parseFloat(r.lo),hi:parseFloat(r.hi)})).filter(r=>r.l&&r.e>0&&r.lo>0&&r.hi>0).slice(0,10);
+ if(!rows.length)return false;
+ const lg=Math.log10,mn=Math.min(...rows.map(r=>r.lo),1),mx=Math.max(...rows.map(r=>r.hi),1),a=lg(mn)-0.05,b=lg(mx)+0.05,X0=4.9,W=5.4,px=v=>X0+(lg(v)-a)/(b-a)*W,top=1.75,rh=Math.min(0.62,4.3/rows.length);
+ s.addText(`${x.measure||"Ratio"} (95% CI)`,{x:10.5,y:top-0.55,w:2.6,h:0.4,fontFace:F,fontSize:12,bold:true,color:T.grey});
+ rows.forEach((r,i)=>{const y=top+i*rh+rh/2,fs=rows.length>7?12:15;
+  if(i%2===0)s.addShape(pptx.ShapeType.rect,{x:0.6,y:y-rh/2,w:12.1,h:rh,fill:{color:T.soft},line:{color:T.soft}});
+  s.addText(r.l,{x:0.7,y:y-rh/2,w:4.1,h:rh,fontFace:F,fontSize:fs,color:T.text,valign:"middle",fit:"shrink"});
+  s.addShape(pptx.ShapeType.line,{x:px(r.lo),y,w:Math.max(0.01,px(r.hi)-px(r.lo)),h:0,line:{color:T.acc2,width:2}});
+  s.addShape(pptx.ShapeType.rect,{x:px(r.e)-0.08,y:y-0.08,w:0.16,h:0.16,fill:{color:T.acc},line:{color:T.acc}});
+  s.addText(`${r.e.toFixed(2)} (${r.lo.toFixed(2)}–${r.hi.toFixed(2)})`,{x:10.5,y:y-rh/2,w:2.6,h:rh,fontFace:F,fontSize:fs-1,color:T.text,valign:"middle"})});
+ const yb=top+rows.length*rh;
+ s.addShape(pptx.ShapeType.line,{x:px(1),y:top-0.1,w:0,h:rows.length*rh+0.2,line:{color:T.grey,width:1,dashType:"dash"}});
+ s.addShape(pptx.ShapeType.line,{x:X0,y:yb+0.15,w:W,h:0,line:{color:T.grey,width:1}});
+ for(const t of [0.1,0.2,0.25,0.5,0.75,1,1.5,2,3,4,5,10].filter(t=>lg(t)>=a&&lg(t)<=b))s.addText(String(t),{x:px(t)-0.35,y:yb+0.2,w:0.7,h:0.3,fontFace:F,fontSize:11,color:T.grey,align:"center"});
+ if(x.left||x.right){s.addText(`← ${x.left||"Favours treatment"}`,{x:X0,y:yb+0.55,w:W/2,h:0.35,fontFace:F,fontSize:12,color:T.grey});s.addText(`${x.right||"Favours control"} →`,{x:X0+W/2,y:yb+0.55,w:W/2,h:0.35,fontFace:F,fontSize:12,color:T.grey,align:"right"})}
+ return true;
+}
+
+const LAYOUTS=["bullets","bignumber","comparison","bar","flow","takehome","figure","forest"];
+async function makeDeck(pmid,count){
+ const it=findItem(pmid)||st.saved[pmid]||{};
+ S.slideBusy="Fetching the paper";renderModal();
+ const P=await paperData(pmid);if(!P.title)P.title=it.title||"Paper";
+ if(!P.aus.length&&it.authors)P.aus=it.authors.replace(/, et al\.$/,"").split(", ");
+ let full={text:"",figs:[]};const mine=myPdf[pmid];
+ if(mine)full={text:mine.text,figs:[]};
+ else if(P.pmcid&&P.oa){S.slideBusy="Reading the open-access full paper";renderModal();try{full=await oaFull(P.pmcid)}catch(e){}}
+ if(!P.parts.length&&!full.text)return makeSlides(pmid,count);
+ const useFigs=!!(S.slideFigs&&full.figs.length),nAI=Math.max(2,count-2);
+ S.slideBusy="The AI is designing your slides";renderModal();
+ let d;
+ try{const j=await aiCall("slides",{title:P.title,abstract:absText(P.parts),fulltext:full.text,redraw:!!mine||!useFigs&&!!full.text,n:nAI,figures:useFigs?full.figs.map(f=>({label:f.label,caption:f.cap.slice(0,300)})):[]});d=j.data}
+ catch(e){toast(aiErr(e.code)+" Using the built-in slide writer instead.");return makeSlides(pmid,count)}
+ let slides=(d.slides||[]).filter(x=>x&&typeof x==="object").map(x=>({...x,layout:LAYOUTS.includes(x.layout)?x.layout:"bullets"}));
+ if(!useFigs)slides=slides.filter(x=>x.layout!=="figure");
+ if(useFigs&&!slides.some(x=>x.layout==="figure")){const pick=(d.figures||[]).concat(full.figs.map(f=>f.label)).filter((v,i,a)=>a.indexOf(v)===i).slice(0,1);
+  const at=Math.max(1,slides.findIndex(x=>x.layout==="takehome"));pick.forEach(l=>slides.splice(at<0?slides.length:at,0,{layout:"figure",figure:l,title:l}))}
+ if(!slides.length){toast("The AI didn't return slides. Using the built-in slide writer instead.");return makeSlides(pmid,count)}
+ S.slideBusy=useFigs?"Adding the paper's figures":"Building slides";renderModal();
+ await loadJS(PPTX_SRC);
+ const pptx=new PptxGenJS();pptx.layout="LAYOUT_WIDE";const T=DECK,F="Calibri",W=13.333;
+ const surname=n=>{n=String(n||"").trim();return /^[A-Za-z'\-]+(?:\s[A-Za-z'\-]+)*\s[A-Z]{1,3}$/.test(n)?n.replace(/\s[A-Z]{1,3}$/,""):n.split(/\s+/).pop()};
+ const short=`${surname(P.aus[0])}${P.aus.length>1?" et al":""}, ${P.iso||P.journal} ${P.year}`.replace(/^, /,"");
+ const cc=/^CC/.test(P.license||""),lic=cc?P.license.replace(/^CC[ -]?/,"CC ").replace(/-/g," ")+" licence":"";
+ let num=1;
+ const frame=(title,col)=>{const s=pptx.addSlide();num++;s.background={color:"FFFFFF"};
+  s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:W,h:0.12,fill:{color:col||T.acc},line:{color:col||T.acc}});
+  s.addText(String(title||"").slice(0,90),{x:0.6,y:0.32,w:12.1,h:0.85,fontFace:F,fontSize:30,bold:true,color:T.dark,fit:"shrink"});
+  s.addShape(pptx.ShapeType.line,{x:0.62,y:1.2,w:1.2,h:0,line:{color:col||T.acc,width:3}});
+  s.addText(short,{x:0.6,y:7.0,w:9.5,h:0.3,fontFace:F,fontSize:10,color:T.grey});
+  s.addText(`${num}`,{x:12.2,y:7.0,w:0.6,h:0.3,fontFace:F,fontSize:10,color:T.grey,align:"right"});return s};
+ const notes=(s,x)=>{if(x&&x.notes)s.addNotes(String(x.notes))};
+ const bulletBox=(s,list,o)=>{const L=(list||[]).map(String).filter(Boolean).slice(0,6);if(!L.length)return;const len=L.join(" ").length;
+  s.addText(L.map(b=>({text:b,options:{bullet:{indent:20},paraSpaceAfter:12}})),{x:o.x,y:o.y,w:o.w,h:o.h,fontFace:F,fontSize:o.fs||(len>480?17:len>330?19:22),color:T.text,valign:"top",fit:"shrink"})};
+ // title slide
+ let s=pptx.addSlide();s.background={color:T.dark};
+ s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:0.28,h:7.5,fill:{color:T.acc},line:{color:T.acc}});
+ s.addShape(pptx.ShapeType.ellipse,{x:10.6,y:-1.4,w:4.2,h:4.2,fill:{color:T.mid,transparency:35},line:{color:T.mid,transparency:100}});
+ s.addText(P.title,{x:0.9,y:1.5,w:11.2,h:2.9,fontFace:F,fontSize:P.title.length>140?28:36,bold:true,color:"FFFFFF",valign:"top",fit:"shrink"});
+ s.addText(P.aus.slice(0,8).join(", ")+(P.aus.length>8?", et al":""),{x:0.9,y:4.6,w:11.2,h:0.7,fontFace:F,fontSize:16,color:"D5DCEB",fit:"shrink"});
+ s.addText(`${P.iso||P.journal}${P.year?", "+P.year:""}`,{x:0.9,y:5.3,w:11.2,h:0.5,fontFace:F,fontSize:16,italic:true,color:T.light});
+ s.addText(`Journal club · ${T.app}`,{x:0.9,y:6.75,w:8,h:0.35,fontFace:F,fontSize:11,color:"AEB8CC"});
+ let nFig=0,figNote="";
+ for(const x of slides){
+  const L=x.layout;
+  if(L==="bignumber"){const N=(x.numbers||[]).filter(n=>n&&n.value!=null).slice(0,3);if(!N.length){x.layout="bullets"}else{
+   s=frame(x.title,T.acc);const w=12.1/N.length;
+   N.forEach((n,i)=>{const X=0.6+i*w;s.addShape(pptx.ShapeType.roundRect,{x:X+0.1,y:1.7,w:w-0.2,h:4.4,fill:{color:T.soft2},line:{color:T.soft2},rectRadius:0.15});
+    s.addText(String(n.value),{x:X+0.2,y:2.0,w:w-0.4,h:1.6,fontFace:F,fontSize:N.length>2?48:60,bold:true,color:T.acc,align:"center",fit:"shrink"});
+    s.addText(String(n.label||""),{x:X+0.3,y:3.65,w:w-0.6,h:1.0,fontFace:F,fontSize:18,bold:true,color:T.dark,align:"center",valign:"top",fit:"shrink"});
+    if(n.context)s.addText(String(n.context),{x:X+0.3,y:4.7,w:w-0.6,h:1.2,fontFace:F,fontSize:14,color:T.grey,align:"center",valign:"top",fit:"shrink"})});
+   notes(s,x);continue}}
+  if(x.layout==="comparison"&&x.left&&x.right){
+   s=frame(x.title,T.acc2);[[x.left,0.6,T.acc2],[x.right,6.85,T.acc]].forEach(([c,X,col])=>{
+    s.addShape(pptx.ShapeType.roundRect,{x:X,y:1.55,w:5.85,h:5.2,fill:{color:"FFFFFF"},line:{color:col,width:1.5},rectRadius:0.12});
+    s.addShape(pptx.ShapeType.rect,{x:X,y:1.55,w:5.85,h:0.75,fill:{color:col},line:{color:col}});
+    s.addText(String(c.heading||""),{x:X+0.2,y:1.58,w:5.45,h:0.7,fontFace:F,fontSize:20,bold:true,color:"FFFFFF",valign:"middle",fit:"shrink"});
+    bulletBox(s,c.points,{x:X+0.2,y:2.5,w:5.45,h:4.1,fs:17})});notes(s,x);continue}
+  if(x.layout==="bar"){const g=(x.groups||[]).map(String).slice(0,3),cats=(x.categories||[]).filter(c=>c&&Array.isArray(c.values)&&c.values.every(v=>isFinite(parseFloat(v))));
+   if(g.length&&cats.length){s=frame(x.title,T.acc2);
+    s.addChart(pptx.ChartType.bar,g.map((nm,i)=>({name:nm,labels:cats.map(c=>String(c.label)),values:cats.map(c=>parseFloat(c.values[i])||0)})),{x:0.7,y:1.5,w:11.9,h:5.3,barDir:"col",barGrouping:"clustered",chartColors:[T.acc2,T.acc,T.grey],showLegend:g.length>1,legendPos:"b",legendFontSize:13,showValue:true,dataLabelFontSize:13,dataLabelFormatCode:"General",catAxisLabelFontSize:14,valAxisLabelFontSize:12,valAxisTitle:x.unit||"",showValAxisTitle:!!x.unit,valGridLine:{color:"E5E7EF",size:1}});
+    notes(s,x);continue}x.layout="bullets"}
+  if(x.layout==="flow"){const st2=(x.steps||[]).filter(z=>z&&z.label).slice(0,5);if(st2.length>=2){
+   s=frame(x.title||"Study design",T.acc2);const n=st2.length,gap=0.35,w=(12.1-gap*(n-1))/n;
+   st2.forEach((z,i)=>{const X=0.6+i*(w+gap);
+    s.addShape(pptx.ShapeType.roundRect,{x:X,y:2.2,w,h:3.6,fill:{color:i===n-1?T.soft2:T.soft},line:{color:i===n-1?T.acc:T.acc2,width:1.5},rectRadius:0.12});
+    s.addShape(pptx.ShapeType.ellipse,{x:X+w/2-0.32,y:1.85,w:0.64,h:0.64,fill:{color:i===n-1?T.acc:T.acc2},line:{color:"FFFFFF",width:2}});
+    s.addText(String(i+1),{x:X+w/2-0.32,y:1.85,w:0.64,h:0.64,fontFace:F,fontSize:16,bold:true,color:"FFFFFF",align:"center",valign:"middle"});
+    s.addText(String(z.label),{x:X+0.12,y:2.6,w:w-0.24,h:0.8,fontFace:F,fontSize:n>4?15:17,bold:true,color:T.dark,align:"center",valign:"middle",fit:"shrink"});
+    s.addText(String(z.detail||""),{x:X+0.15,y:3.4,w:w-0.3,h:2.3,fontFace:F,fontSize:n>4?12:14,color:T.text,align:"center",valign:"top",fit:"shrink"});
+    if(i<n-1)s.addShape(pptx.ShapeType.line,{x:X+w+0.03,y:4.0,w:gap-0.06,h:0,line:{color:T.grey,width:2,endArrowType:"triangle"}})});
+   notes(s,x);continue}x.layout="bullets"}
+  if(x.layout==="forest"){s=frame(x.title,T.acc2);if(deckForest(pptx,s,x,T,F)){notes(s,x);continue}s.addText((x.rows||[]).map(r=>`${r.label}: ${r.value}`).join("\n")||"",{x:0.7,y:1.5,w:11.9,h:5,fontFace:F,fontSize:18,color:T.text,valign:"top"});notes(s,x);continue}
+  if(x.layout==="takehome"){s=frame(x.title||"Take-home message",T.acc);
+   s.addShape(pptx.ShapeType.roundRect,{x:0.6,y:1.55,w:12.1,h:5.1,fill:{color:T.soft},line:{color:T.soft},rectRadius:0.15});
+   s.addText("“",{x:0.9,y:1.5,w:1.2,h:1.4,fontFace:"Georgia",fontSize:96,color:T.acc});
+   s.addText(String(x.message||(x.bullets||[]).join(" ")),{x:1.6,y:2.0,w:10.6,h:4.3,fontFace:F,fontSize:28,color:T.dark,valign:"middle",fit:"shrink"});notes(s,x);continue}
+  if(x.layout==="figure"){
+   const f=full.figs.find(z=>z.label.toLowerCase()===String(x.figure||"").toLowerCase())||full.figs.find(z=>String(x.figure||"").toLowerCase().includes(z.label.toLowerCase()));if(!f)continue;
+   s=frame(x.title||f.label,T.acc2);const credit=`${f.label} reproduced from ${short}${lic?". "+lic:""}. Source: Europe PMC ${P.pmcid}.`;
+   const img=cc?await figImage(P.pmcid,f.href):null;
+   if(img){const bw=12.1,bh=4.75,r=Math.min(bw/img.w,bh/img.h),w=img.w*r,h=img.h*r;s.addImage({data:img.data,x:0.6+(bw-w)/2,y:1.4+(bh-h)/2,w,h});
+    s.addText(f.cap,{x:0.6,y:6.2,w:12.1,h:0.5,fontFace:F,fontSize:10,color:T.grey,valign:"top",fit:"shrink"})}
+   else{s.addText(f.cap||"See this figure in the full paper.",{x:0.7,y:1.5,w:11.9,h:4.2,fontFace:F,fontSize:17,color:T.text,valign:"top",fit:"shrink"});
+    s.addText({text:"Open the figure in the full paper",options:{hyperlink:{url:`https://europepmc.org/article/PMC/${P.pmcid.replace(/^PMC/,"")}`}}},{x:0.7,y:5.8,w:11.9,h:0.4,fontFace:F,fontSize:14,color:T.acc2})}
+   s.addText(credit,{x:0.6,y:6.68,w:12.1,h:0.3,fontFace:F,fontSize:9,italic:true,color:T.grey});notes(s,x);nFig++;continue}
+  // bullets (default)
+  s=frame(x.title,T.acc2);bulletBox(s,x.bullets||x.points||[],{x:0.7,y:1.5,w:11.9,h:5.3});notes(s,x);
+ }
+ for(const ch of (S.charts||[]))addChartSlide(pptx,ch,short,T.dark,T.acc2,T.grey,F);
+ if(useFigs)figNote=nFig?(cc?`${nFig} key ${nFig===1?"figure":"figures"} included, with credit lines.`:"Figures added as captions with links, because the licence doesn't allow copying the images."):"";
+ else if(S.slideFigs&&!mine)figNote=P.pmcid&&P.oa?"No figures found in the full paper.":"Not open access, so the paper's figures can't be included.";
+ // reference slide
+ s=frame("Reference",T.grey);
+ s.addText(`${P.aus.slice(0,6).join(", ")}${P.aus.length>6?", et al":""}. ${P.title} ${P.iso||P.journal}. ${P.year}${P.vol?";"+P.vol:""}${P.iss?"("+P.iss+")":""}${P.pages?":"+P.pages:""}.${P.doi?" doi:"+P.doi:""}`,{x:0.7,y:1.5,w:11.9,h:2.2,fontFace:F,fontSize:18,color:T.text,valign:"top",fit:"shrink"});
+ s.addText(`PubMed ${pmid}${P.pmcid?", "+P.pmcid:""}. Slides written by AI from ${mine?"the reader's own copy of the paper; charts redrawn from the reported numbers":full.text?"the open-access full paper":"the abstract"}${nFig?"; figures reproduced under the paper's open-access licence":""}. Check against the paper before presenting.`,{x:0.7,y:4.1,w:11.9,h:1,fontFace:F,fontSize:13,color:T.grey});
+ const blob=await pptx.write({outputType:"blob"});
+ const name=`${short.replace(/[^\w ]+/g,"").replace(/\s+/g,"-").slice(0,60)||"paper"}-slides.pptx`;
+ S.slideBusy="";S.slideFile=new File([blob],name,{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"});
+ S.slideMsg=[`${num} slides ready, designed by AI from ${mine?"your PDF, with charts redrawn from its numbers":full.text?"the full paper":"the abstract"}. Check them before presenting.`,figNote].filter(Boolean).join(" ");renderModal();
+}
+
 async function slideShare(){
  const f=S.slideFile;if(!f)return;
  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:f.name});return}catch(e){if(e&&e.name==="AbortError")return}}
@@ -1114,6 +1336,7 @@ function cpdRange(){
 function cpdList(){const[a,b]=cpdRange();return st.cpd.filter(c=>c.date>=a&&c.date<=b).sort((x,y)=>y.date.localeCompare(x.date)||y.at-x.at)}
 const hrs=m=>{const h=Math.floor(m/60),r=m%60;return h?`${h} h${r?` ${r} min`:""}`:`${r} min`};
 function vCPD(){
+ if(certMeta===null)certRefresh();
  const L=cpdList(),tot=L.reduce((a,c)=>a+c.minutes,0),[a,b]=cpdRange();
  const fmtD=d=>new Date(d+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
  return `<div class="row" style="flex-wrap:wrap;overflow:visible">${[["12m","Last 12 months"],["year","This year"],["all","All time"],["custom","Choose dates"]].map(([id,l])=>`<button class="chip ${S.cpdP===id?"on":""}" data-act="cpdp" data-v="${id}">${l}</button>`).join("")}</div>
@@ -1121,11 +1344,12 @@ function vCPD(){
   <div class="calc" style="--cc:#2E3A6B;margin-top:8px"><div class="au">Total CPD${S.cpdP==="all"?"":`, ${fmtD(a)} to ${fmtD(b)}`}</div>
    <div class="res low" style="margin-top:6px"><div class="big">${(tot/60).toFixed(1)} hours</div><p>${(()=>{const k=c=>c.kind||(String(c.pmid).startsWith("pod:")?"podcast":"reading"),g={reading:["Journal reading",0,0],podcast:["Podcasts",0,0],event:["Conferences and courses",0,0],online:["Online learning",0,0]};L.forEach(c=>{const x=g[k(c)]||g.reading;x[1]+=c.minutes;x[2]++});return Object.values(g).filter(x=>x[2]).map(x=>`${x[0]}: ${(x[1]/60).toFixed(1)} h (${x[2]})`).join("<br>")||"Nothing logged yet"})()}</p></div>
    <div class="pk" style="margin-top:8px"><a href="#" data-act="cpdevents">+ Log a course, conference or webinar</a></div>
-   ${L.length?`<div class="pk" style="margin-top:12px"><a href="#" data-act="soarpdf">Export for SOAR (PDF)</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="cpdcsv">Spreadsheet</a><a href="#" class="alt" data-act="cpdcopy">Copy summary</a></div>`:""}</div>
+   ${L.length?`<div class="card" style="margin-top:12px;padding:8px 12px;background:rgba(255,255,255,.7)"><div style="display:flex;gap:8px"><label class="au" style="flex:1.4">Your name<input class="search" id="cpdname" value="${esc(st.myName||"")}" placeholder="Name for SOAR" autocomplete="name"></label><label class="au" style="flex:1">GMC number<input class="search" id="cpdgmc" value="${esc(st.myGMC||"")}" inputmode="numeric" autocomplete="off"></label></div></div><div class="pk" style="margin-top:8px"><a href="#" data-act="soarpdf">Export for SOAR (PDF)</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="cpdcsv">Spreadsheet</a><a href="#" class="alt" data-act="cpdcopy">Copy summary</a></div>`:""}</div>
   ${L.length?`<div class="gl" style="margin-top:12px">${L.map(c=>`<div class="kp"><div style="display:flex;justify-content:space-between"><b style="font-size:14px">${c.end&&c.end!==c.date?fmtRange(c.date,c.end):fmtD(c.date)}</b><b style="font-size:14px">${c.credits!=null?`${c.credits} ${c.credits===1?"credit":"credits"}`:hrs(c.minutes)}</b></div>
    <div style="font-family:'Iowan Old Style',Charter,Georgia,serif;font-size:16px;margin:2px 0">${esc(c.title)}</div><div class="au">${esc(c.src||"")}${c.venue?` · ${esc(c.venue)}`:""}</div>${c.sessions?`<div class="au" style="margin-top:4px"><b>Sessions:</b> ${esc(c.sessions)}</div>`:""}
    ${c.ref?[["Learning",c.ref.learn],["Change to practice",c.ref.change],["Further learning",c.ref.further]].filter(x=>x[1]).map(([k,v])=>`<div class="au" style="margin-top:4px"><b>${k}:</b> ${esc(v)}</div>`).join("")+((c.ref.domains||[]).length?`<div class="tags">${c.ref.domains.map(d=>`<span class="tag" style="--tc:#5A6E8C">${esc(d)}</span>`).join("")}</div>`:""):c.note?`<div class="au" style="margin-top:4px;font-style:italic">${esc(c.note)}</div>`:""}
-   <div class="lk"><button class="link" style="color:#2E4A86;text-decoration:none;font-weight:700" data-act="soarcopy" data-v="${c.id}">Copy for SOAR</button>${S.confirm==="cpd:"+c.id?`<button class="link" data-act="cpddel" data-v="${c.id}">Confirm delete</button>`:`<button class="link" data-act="cpdask" data-v="${c.id}">Delete</button>`}</div></div>`).join("")}</div>`:`<div class="msg" style="margin-top:12px">No CPD logged in this period. Tap CPD on any article or podcast, or log a course or conference.</div>`}
+   ${(c.kind==="event"||c.kind==="online"||c.credits!=null)?certRow(c):""}
+   <div class="lk"><button class="link" style="color:#2E4A86;text-decoration:none;font-weight:700" data-act="soarcopy" data-v="${c.id}">Copy for SOAR</button><button class="link" style="color:inherit;text-decoration:none;font-weight:700" data-act="cpdedit" data-v="${c.id}">Edit</button>${S.confirm==="cpd:"+c.id?`<button class="link" data-act="cpddel" data-v="${c.id}">Confirm delete</button>`:`<button class="link" data-act="cpdask" data-v="${c.id}">Delete</button>`}</div></div>`).join("")}</div>`:`<div class="msg" style="margin-top:12px">No CPD logged in this period. Tap CPD on any article or podcast, or log a course or conference.</div>`}
   <p class="note">Your CPD log stays on this phone. Export it regularly for your appraisal folder.</p>`;
 }
 function cpdCSV(){
@@ -1234,8 +1458,8 @@ function evOpen(id){
  S.cpdRef={domains:[]};S.modal={type:"event"};renderModal();
 }
 function evSheet(){
- const E=S.ev,man=!E.id,typ={conf:"Conference",course:"Course",online:"Online learning or webinar",webinar:"Webinar"};
- return `<div class="sheet" role="dialog" aria-label="Log CPD for a course or conference"><h3>${man?"Add a course, meeting or webinar":"Log CPD"}</h3>
+ const E=S.ev,man=!E.id||!!E.edit,typ={conf:"Conference",course:"Course",online:"Online learning or webinar",webinar:"Webinar"};
+ return `<div class="sheet" role="dialog" aria-label="Log CPD for a course or conference"><h3>${E.edit?"Edit CPD entry":man?"Add a course, meeting or webinar":"Log CPD"}</h3>
   ${man?`<label class="au" style="display:block">Name<input class="search" id="evn" value="${esc(E.n)}" placeholder="For example, Edinburgh echo update"></label>
    <label class="au" style="display:block;margin-top:6px">Organiser<input class="search" id="evorg" value="${esc(E.org)}" placeholder="Society, hospital or provider"></label>
    <label class="set"><span>Type</span><select id="evt">${Object.entries(typ).map(([k,l])=>`<option value="${k}" ${E.t===k?"selected":""}>${l}</option>`).join("")}</select></label>`
@@ -1243,20 +1467,21 @@ function evSheet(){
   <div style="display:flex;gap:8px"><label class="au" style="flex:1">From<input class="search" type="date" id="evs" value="${esc(E.s)}"></label><label class="au" style="flex:1">To<input class="search" type="date" id="eve" value="${esc(E.e)}"></label></div>
   <label class="au" style="display:block;margin-top:6px">Venue<input class="search" id="evv" value="${esc(E.v)}" placeholder="City, venue or Online"></label>
   <label class="set"><span>CPD credits (hours)<br><small class="au">From your certificate${E.cr&&!man?"; prefilled with the maximum":""}</small></span><input class="search" style="width:100px" type="number" inputmode="decimal" min="0" step="0.5" id="evcr" value="${esc(E.cr)}"></label>
-  <label class="au" style="display:block">Sessions or topics attended (optional)<span class="tawrap"><textarea class="search" id="evses" rows="2" placeholder="For example, AF guideline update, TAVI versus surgery debate">${esc(E.sessions||"")}</textarea>${micBtn("evses")}</span></label>
+  <label class="au" style="display:block">Sessions or topics attended (optional)<span class="tawrap"><textarea class="search" id="evses" rows="2" placeholder="For example, AF guideline update, TAVI versus surgery debate">${esc(E.sessions||"")}</textarea>${taTools("evses")}</span></label>
   <div style="margin-top:8px"><b style="font-size:15px">Reflection for appraisal</b> <span class="au" style="font-size:13px">(optional)</span>
-   <label class="au" style="display:block;margin-top:6px">What did you learn?<span class="tawrap"><textarea class="search" id="cpdlearn" rows="2">${esc(S.cpdRef.learn||"")}</textarea>${micBtn("cpdlearn")}</span></label>
-   <label class="au" style="display:block;margin-top:6px">How will it change your practice?<span class="tawrap"><textarea class="search" id="cpdchange" rows="2">${esc(S.cpdRef.change||"")}</textarea>${micBtn("cpdchange")}</span></label>
-   <label class="au" style="display:block;margin-top:6px">Any further learning needed?<span class="tawrap"><textarea class="search" id="cpdfurther" rows="2">${esc(S.cpdRef.further||"")}</textarea>${micBtn("cpdfurther")}</span></label>
+   <label class="au" style="display:block;margin-top:6px">What did you learn?<span class="tawrap"><textarea class="search" id="cpdlearn" rows="2">${esc(S.cpdRef.learn||"")}</textarea>${taTools("cpdlearn")}</span></label>
+   <label class="au" style="display:block;margin-top:6px">How will it change your practice?<span class="tawrap"><textarea class="search" id="cpdchange" rows="2">${esc(S.cpdRef.change||"")}</textarea>${taTools("cpdchange")}</span></label>
+   <label class="au" style="display:block;margin-top:6px">Any further learning needed?<span class="tawrap"><textarea class="search" id="cpdfurther" rows="2">${esc(S.cpdRef.further||"")}</textarea>${taTools("cpdfurther")}</span></label>
    <div class="au" style="margin-top:8px">Good Medical Practice domains</div>
    <div class="row" style="flex-wrap:wrap;overflow:visible">${GMP.map(d=>`<button class="chip ${(S.cpdRef.domains||[]).includes(d)?"on":""}" data-act="cpddom" data-v="${esc(d)}">${esc(d)}</button>`).join("")}</div></div>
-  <div class="pk"><a href="#" data-act="evsave">Save to CPD log</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`;
+  <div class="pk"><a href="#" data-act="evsave">${E.edit?"Save changes":"Save to CPD log"}</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`;
 }
 function evSave(){
  const E=S.ev,cr=parseFloat(E.cr);
  if(!E.n.trim()){toast("Add the name of the course or meeting.");return}
  if(!(cr>0)){toast("Enter the CPD credits or hours.");return}
  if(!E.s){toast("Add the date.");return}
+ if(E.edit){const c=st.cpd.find(x=>x.id===E.edit);if(c)Object.assign(c,{title:E.n.trim(),src:E.org.trim(),date:E.s,end:E.e||E.s,venue:E.v.trim(),credits:cr,minutes:Math.round(cr*60),sessions:(E.sessions||"").trim(),kind:E.t==="online"||E.t==="webinar"?"online":"event",ref:{learn:(S.cpdRef.learn||"").trim(),change:(S.cpdRef.change||"").trim(),further:(S.cpdRef.further||"").trim(),domains:(S.cpdRef.domains||[]).slice()},note:""});save();S.modal=null;S.ev=null;render();toast("CPD entry updated");return}
  st.cpd.push({id:"c"+Date.now().toString(36),pmid:E.id?"ev:"+E.id:"man:"+Date.now().toString(36),kind:E.t==="online"||E.t==="webinar"?"online":"event",title:E.n.trim(),src:E.org.trim(),date:E.s,end:E.e||E.s,venue:E.v.trim(),credits:cr,minutes:Math.round(cr*60),sessions:(E.sessions||"").trim(),url:E.url||"",
   ref:{learn:(S.cpdRef.learn||"").trim(),change:(S.cpdRef.change||"").trim(),further:(S.cpdRef.further||"").trim(),domains:(S.cpdRef.domains||[]).slice()},note:"",at:Date.now()});
  save();S.modal=null;S.ev=null;render();toast(`Logged ${cr} CPD ${cr===1?"credit":"credits"}`);
@@ -1281,13 +1506,13 @@ function dictate(id){
  const r=new SRec();r.lang="en-GB";r.continuous=true;r.interimResults=true;r._id=id;
  const base=ta.value?ta.value.replace(/\s*$/," "):"";let fin="";
  r.onresult=e=>{let tmp="";for(let i=e.resultIndex;i<e.results.length;i++){const x=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=x.trim()+" ";else tmp+=x}
-  let v=(base+fin+tmp).replace(/\s+/g," ").trimStart();v=v.charAt(0).toUpperCase()+v.slice(1);ta.value=v;ta.dispatchEvent(new Event("input",{bubbles:true}))};
+  ta.value=fixDictation((base+fin+tmp).replace(/[ \t]+/g," ").trimStart());ta.dispatchEvent(new Event("input",{bubbles:true}))};
  r.onend=()=>{if(dict===r)dict=null;document.querySelectorAll(".mic").forEach(b=>b.classList.remove("on"))};
  r.onerror=e=>{if(e.error==="not-allowed"||e.error==="service-not-allowed")toast("Allow microphone access, or use the microphone on your keyboard.")};
- try{r.start();dict=r;const b=document.querySelector(`.mic[data-v="${id}"]`);if(b)b.classList.add("on");toast("Listening… tap 🎤 again to stop")}catch(e){ta.focus();toast("Tap the microphone on your keyboard to dictate.")}
+ try{r.start();dict=r;const b=document.querySelector(`.mic[data-v="${id}"]`);if(b)b.classList.add("on");toast("Listening… tap the microphone again to stop")}catch(e){ta.focus();toast("Tap the microphone on your keyboard to dictate.")}
 }
 // ---------- SOAR: printable PDF of the CPD log, and per-entry copy ----------
-const JSPDF="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+const JSPDF="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js";
 const cpdKind=c=>c.kind||(String(c.pmid).startsWith("pod:")?"podcast":"reading");
 const KINDNAME={event:"Conferences and courses",online:"Online learning and webinars",reading:"Journal reading",podcast:"Podcasts"};
 const KINDONE={event:"Conference or course",online:"Online learning or webinar",reading:"Journal reading",podcast:"Podcast"};
@@ -1304,7 +1529,7 @@ async function soarCopy(id){
  try{await navigator.clipboard.writeText(t);toast("Copied. In SOAR, tap Add CPD entry and paste.")}
  catch(e){S.copyText=t;S.modal={type:"copy"};renderModal()}
 }
-async function soarPDF(){
+async function soarPDF(attach){
  const L=cpdList().slice().sort((a,b)=>a.date.localeCompare(b.date));if(!L.length){toast("Nothing logged in this period.");return}
  S.readyMsg="Making your PDF";S.modal={type:"ready"};S.readyFile=null;renderModal();
  try{
@@ -1346,10 +1571,11 @@ async function soarPDF(){
     y+=1.5;doc.setDrawColor(226,228,236);doc.line(M,y,W-M,y);y+=3;
    }
   }
+  let nC=0;if(attach){S.readyMsg="Adding certificates";renderModal();try{nC=await addCerts(doc,L,W,M,NAVY,GREY)}catch(x){}}
   const pages=doc.getNumberOfPages();for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(8.5);doc.setTextColor(...GREY);doc.text(`Page ${i} of ${pages}`,W-M,292,{align:"right"});doc.text("CPD log for appraisal (SOAR, Form 3, Domain 1, supporting documents)",M,292)}
   const name=`CPD-log-${S.cpdP==="all"?"all":a+"-to-"+b}.pdf`;
   S.readyFile=new File([doc.output("blob")],name,{type:"application/pdf"});
-  S.readyMsg=`Your CPD log is ready: ${L.length} activities, ${tot.toFixed(1)} hours.`;renderModal();
+  S.readyMsg=`Your CPD log is ready: ${L.length} activities, ${tot.toFixed(1)} hours${nC?`, with ${nC} certificate ${nC===1?"page":"pages"}`:""}.`;renderModal();
  }catch(e){S.modal=null;renderModal();toast(navigator.onLine===false?"Making the PDF needs a connection the first time.":"Couldn't make the PDF. Try again.")}
 }
 async function readyShare(){
@@ -1361,19 +1587,146 @@ function readySheet(){return S.readyFile?`<div class="sheet" role="dialog" aria-
  <p class="note">Tap Save or share, then Save to Files. In SOAR, go to Form 3 › Domain 1 › CPD, open Supporting documents, and upload it. Add your overall reflection in Collective reflection.</p>
  <div class="pk"><a href="#" data-act="readyshare">Save or share</a><a href="#" class="alt" data-act="mclose">Done</a></div></div>`
  :`<div class="sheet"><div class="msg"><span class="spin"></span>${esc(S.readyMsg||"Working")}</div></div>`}
-function copySheet(){return `<div class="sheet" role="dialog" aria-label="Copy for SOAR"><h3>Copy for SOAR</h3><p class="note">Select all and copy, then paste into SOAR's Add CPD entry form.</p><textarea class="search" rows="12" readonly onclick="this.select()">${esc(S.copyText||"")}</textarea><div class="pk"><a href="#" class="alt" data-act="mclose">Done</a></div></div>`}
+function copySheet(){return `<div class="sheet" role="dialog" aria-label="Copy for SOAR"><h3>Copy for SOAR</h3><p class="note">Select all and copy, then paste into SOAR's Add CPD entry form.</p><textarea class="search selall" rows="12" readonly>${esc(S.copyText||"")}</textarea><div class="pk"><a href="#" class="alt" data-act="mclose">Done</a></div></div>`}
 
+// ---------- reflection boxes: microphone, larger editor, auto-grow, tidy up ----------
+const MICSVG=`<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><line x1="12" y1="17.5" x2="12" y2="21.5"/></svg>`;
+const EXPSVG=`<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="14 4 20 4 20 10"/><polyline points="10 20 4 20 4 14"/><line x1="20" y1="4" x2="13" y2="11"/><line x1="4" y1="20" x2="11" y2="13"/></svg>`;
+const taTools=id=>`<button type="button" class="mic" data-act="mic" data-v="${id}" aria-label="Dictate">${MICSVG}</button><button type="button" class="tx" data-act="tabig" data-v="${id}" aria-label="Open a larger editor">${EXPSVG}</button>${aiURL()?`<button type="button" class="tidy" data-act="tidy" data-v="${id}">✨ Tidy up</button>`:""}`;
+const FIELDS={cpdlearn:["learn","What did you learn?"],cpdchange:["change","How will it change your practice?"],cpdfurther:["further","Any further learning needed?"],evses:["sessions","Sessions or topics attended"]};
+function getField(id){if(id==="evses")return (S.ev&&S.ev.sessions)||"";const f=FIELDS[id];return f?(S.cpdRef[f[0]]||""):""}
+function setField(id,v){if(id==="evses"){if(S.ev)S.ev.sessions=v;return}const f=FIELDS[id];if(f)S.cpdRef[f[0]]=v}
+function autoGrow(el){if(!el||el.id==="bigta")return;el.style.height="auto";el.style.height=Math.min(el.scrollHeight+2,Math.round(innerHeight*0.45))+"px"}
+const growAll=()=>document.querySelectorAll("#modal .tawrap textarea").forEach(autoGrow);
+document.addEventListener("input",e=>{if(e.target.matches&&e.target.matches(".tawrap textarea"))autoGrow(e.target)});
+function bigOpen(id){if(dict){try{dict.stop()}catch(e){}dict=null}S.big={id,prev:S.modal};S.modal={type:"big"};renderModal();setTimeout(()=>{const t=document.getElementById("bigta");if(t){t.focus();t.setSelectionRange(t.value.length,t.value.length)}},150)}
+function bigSheet(){const id=S.big.id;return `<div class="sheet big" role="dialog" aria-label="${FIELDS[id][1]}"><h3>${FIELDS[id][1]}</h3>
+ <span class="tawrap"><textarea class="search" id="bigta">${esc(getField(id))}</textarea><button type="button" class="mic" data-act="mic" data-v="bigta" aria-label="Dictate">${MICSVG}</button></span>
+ <div class="pk">${aiURL()?`<a href="#" class="alt" data-act="tidy" data-v="bigta">✨ Tidy up</a>`:""}<a href="#" data-act="bigdone">Done</a></div></div>`}
+function bigDone(){if(dict){try{dict.stop()}catch(e){}dict=null}const t=document.getElementById("bigta");if(t&&S.big)setField(S.big.id,t.value);S.modal=S.big?S.big.prev:null;S.big=null;renderModal()}
+// spoken punctuation and commonly misheard medical words
+const DICTFIX=[[/\b(full stop|period)\b/gi,"."],[/\bcomma\b/gi,","],[/\bquestion mark\b/gi,"?"],[/\bcolon\b/gi,":"],[/\bsemi-?colon\b/gi,";"],[/\b(new paragraph|new line|next line)\b/gi,"\n"],
+ [/\bc\.? ?o\.? ?p\.? ?d\b|\bco pd\b|\bcopd\b/gi,"COPD"],[/\ba[ -]?fib\b|\bafib\b/gi,"AF"],[/\be\.? ?c\.? ?g\b|\becg\b/gi,"ECG"],[/\becho cardiogram/gi,"echocardiogram"],[/\btrope? ?on[ie]n\b/gi,"troponin"],
+ [/\bn ?t ?pro ?b ?n ?p\b/gi,"NT-proBNP"],[/\bs ?g ?l ?t ?(2|two)\b/gi,"SGLT2"],[/\bh ?f ?r ?e ?f\b|\bheff? ?ref\b/gi,"HFrEF"],[/\bh ?f ?p ?e ?f\b|\bheff? ?peff?\b/gi,"HFpEF"],[/\btavvy\b|\btabby\b|\bt ?a ?v ?i\b/gi,"TAVI"],
+ [/\bp ?c ?i\b/gi,"PCI"],[/\bc ?t ?c ?a\b/gi,"CTCA"],[/\bc ?m ?r\b/gi,"CMR"],[/\bd ?o ?a ?c\b|\bdoac\b/gi,"DOAC"],[/\bf ?e ?v ?(1|one)\b/gi,"FEV1"],[/\bf ?v ?c\b/gi,"FVC"],[/\bi ?l ?d\b/gi,"ILD"],[/\bi ?p ?f\b/gi,"IPF"],
+ [/\bc ?pap\b|\bsee pap\b/gi,"CPAP"],[/\bn ?i ?v\b/gi,"NIV"],[/\be ?s ?c\b(?= guideline)/gi,"ESC"],[/\bnice\b(?= guideline)/gi,"NICE"],[/\bb ?t ?s\b/gi,"BTS"],[/\bmi\b/g,"MI"],[/\bgp\b/gi,"GP"],[/\bnhs\b/gi,"NHS"]];
+function fixDictation(t){
+ let x=String(t);for(const[re,v]of DICTFIX)x=x.replace(re,v);
+ x=x.replace(/[ \t]+([.,;:?!])/g,"$1").replace(/([.,;:?!])(?=[A-Za-z])/g,"$1 ").replace(/[ \t]*\n[ \t]*/g,"\n").replace(/[ \t]{2,}/g," ");
+ x=x.replace(/(^|[.?!]\s+|\n)([a-z])/g,(m,a,b)=>a+b.toUpperCase());
+ return x.replace(/\bi\b/g,"I");
+}
+async function tidyField(id){
+ const t=document.getElementById(id),txt=(t?t.value:getField(id)).trim();if(!txt){toast("Nothing to tidy yet.");return}
+ const field=id==="bigta"?S.big.id:id;S.tidy={id:field,orig:txt,fixed:"",busy:true,prev:S.modal,bigText:id==="bigta"};
+ if(id==="bigta"&&S.big)setField(S.big.id,txt);S.modal={type:"tidy"};renderModal();
+ try{const j=await aiCall("tidy",{text:txt});S.tidy.fixed=String((j.data&&j.data.text)||"").trim()||txt}catch(e){S.modal=S.tidy.prev;S.tidy=null;renderModal();toast(aiErr(e.code));return}
+ S.tidy.busy=false;renderModal();
+}
+function tidySheet(){const T=S.tidy;return `<div class="sheet" role="dialog" aria-label="Tidy up"><h3>✨ Tidied text</h3>
+ ${T.busy?`<div class="msg"><span class="spin"></span>Correcting spelling and misheard words…</div>`:`<p class="note">Spelling, grammar and misheard words corrected, with your meaning unchanged. Edit it here if needed.</p>
+ <textarea class="search" id="tidyta" rows="8" style="font-size:16px">${esc(T.fixed)}</textarea>
+ <details style="margin-top:8px"><summary class="au">Your original</summary><p style="font-size:15px;white-space:pre-wrap">${esc(T.orig)}</p></details>
+ <div class="pk"><a href="#" data-act="tidyok">Use tidied text</a><a href="#" class="alt" data-act="tidyno">Keep mine</a></div>`}</div>`}
+function tidyFinish(ok){const T=S.tidy;if(ok){const t=document.getElementById("tidyta");setField(T.id,t?t.value:T.fixed)}S.modal=T.prev;S.tidy=null;renderModal()}
+// ---------- voice and speed while listening ----------
+function voiceLabel(){const nv=useNV(),nm=nv&&st.engine==="kokoro"?KK.voices[st.kkVoice||"bf_emma"].split(",")[0]:nv?NV.voices[st.nvVoice||"jenny"][0].split(",")[0]:((ttsVoice()||{}).name||"Phone voice").replace(/\s*\(.*\)\s*/,"");return `${nm} · ${(+st.rate||1)}×`}
+const vBtn=()=>`<button class="vbtn" data-act="vpick" aria-label="Change voice or speed">${esc(voiceLabel())}</button>`;
+function vSheet(){
+ const nv=st.engine==="natural"&&S.nvHave,cur=useNV()&&st.engine==="natural"?"nv":(ttsVoice()||{}).voiceURI;
+ const sys=TTS.voices.slice(0,8);
+ return `<div class="sheet" role="dialog" aria-label="Voice and speed"><h3>Voice and speed</h3>
+ <div class="au">Speed</div><div class="row" style="flex-wrap:wrap;overflow:visible">${[["0.85","Slower"],["1","Normal"],["1.15","A bit faster"],["1.3","Faster"],["1.5","Fastest"]].map(([v,l])=>`<button class="chip ${String(st.rate||"1")===v?"on":""}" data-act="vrate" data-v="${v}">${l}</button>`).join("")}</div>
+ <div class="au" style="margin-top:10px">Voice</div><div class="row" style="flex-wrap:wrap;overflow:visible">
+  ${S.nvHave?`<button class="chip ${cur==="nv"?"on":""}" data-act="vset" data-v="nv">${esc(NV.voices[st.nvVoice||"jenny"][0])} (natural)</button>`:""}
+  ${st.kkHave?Object.entries(KK.voices).map(([k,v2])=>`<button class="chip ${st.engine==="kokoro"&&(st.kkVoice||"bf_emma")===k?"on":""}" data-act="vset" data-v="kk:${k}">${esc(v2.split(",")[0])} (Kokoro)</button>`).join(""):""}
+  ${sys.map(v=>`<button class="chip ${cur===v.voiceURI&&!useNV()?"on":""}" data-act="vset" data-v="${esc(v.voiceURI)}">${esc(v.name.replace(/\s*\(.*\)\s*/,""))}</button>`).join("")}</div>
+ <p class="note">Changes apply straight away. Other natural voices can be downloaded in Settings › Reading aloud.</p>
+ <div class="pk"><a href="#" data-act="vdone">Done</a></div></div>`;
+}
+function ttsRestart(){
+ if(!TTS.playing)return;const cur=TTS.cur;TTS.gen++;try{speechSynthesis.cancel()}catch(e){}if(NV.src)try{NV.src.stop()}catch(e){}
+ if(cur)TTS.q.unshift(cur);TTS.pre=null;TTS.paused=false;if(NV.ctx&&NV.ctx.state==="suspended")NV.ctx.resume();if(useNV())nvCtx();ttsNext();render();
+}
+function vSet(v){if(v.startsWith("kk:")){st.engine="kokoro";st.kkVoice=v.slice(3);NV.failed=false;save();if(KK.tts)ttsRestart();else{toast("Loading Kokoro…");kkLoad().then(()=>ttsRestart()).catch(()=>{NV.failed=true;toast("Couldn't load Kokoro just now.")})}renderModal();return}
+ if(v==="nv"){st.kkVoice=st.kkVoice;if(!S.nvHave){toast("Download the natural voice in Settings first.");return}st.engine="natural";NV.failed=false;if(!NV.sess)nvLoad(st.nvVoice||"jenny").catch(()=>{NV.failed=true})}else{st.engine="system";st.voice=v}save();ttsRestart();renderModal()}
+// ---------- certificates stored on the phone ----------
+const CERTDB=KEY+"-certs";
+function cDB(){return new Promise((res,rej)=>{const r=indexedDB.open(CERTDB,1);r.onupgradeneeded=()=>r.result.createObjectStore("c",{keyPath:"id"});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+async function cAll(){const db=await cDB();return new Promise((res,rej)=>{const q=db.transaction("c").objectStore("c").getAll();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>rej(q.error)})}
+async function cPut(o){const db=await cDB();return new Promise((res,rej)=>{const tx=db.transaction("c","readwrite");tx.objectStore("c").put(o);tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})}
+async function cDel(id){const db=await cDB();return new Promise((res,rej)=>{const tx=db.transaction("c","readwrite");tx.objectStore("c").delete(id);tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})}
+let certMeta=null;
+async function certRefresh(){try{certMeta={};for(const c of await cAll())(certMeta[c.cpd]=certMeta[c.cpd]||[]).push({id:c.id,name:c.name,type:c.type})}catch(e){certMeta={}}if(S.tab==="saved"&&S.lib==="cpd")render()}
+async function certAdd(cpdId,file){await cPut({id:"k"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),cpd:cpdId,name:file.name||"Certificate",type:file.type||"",blob:file,at:Date.now()});await certRefresh();toast("Certificate saved with this entry")}
+async function certOpen(id){const all=await cAll(),c=all.find(x=>x.id===id);if(!c)return;const u=URL.createObjectURL(c.blob);const w=window.open(u,"_blank");if(!w){const a=document.createElement("a");a.href=u;a.target="_blank";a.click()}setTimeout(()=>URL.revokeObjectURL(u),60000)}
+const certRow=c=>{const L=(certMeta||{})[c.id]||[];return `<div class="certs">${L.map(x=>`<div class="cert">📎 <span>${esc(x.name)}</span> <button class="link" data-act="certopen" data-v="${x.id}">Open</button><button class="link red" data-act="certdel" data-v="${x.id}">Remove</button></div>`).join("")}
+ <label class="link certadd">${L.length?"Add another certificate":"Attach certificate"}<input type="file" accept="image/*,application/pdf" data-cert="${c.id}" style="display:none"></label></div>`};
+// ---------- SOAR export: details and certificate option ----------
+async function soarStart(){
+ S.soar={attach:true,n:0};try{const all=await cAll(),ids=new Set(cpdList().map(c=>c.id));S.soar.n=all.filter(c=>ids.has(c.cpd)).length}catch(e){}
+ S.modal={type:"soar"};renderModal();
+}
+function soarSheet(){const n=S.soar.n;return `<div class="sheet" role="dialog" aria-label="Export for SOAR"><h3>Export for SOAR</h3>
+ <p class="note">Your name and GMC number appear at the top of the document.</p>
+ <label class="au" style="display:block">Your name<input class="search" id="myname" value="${esc(st.myName||"")}" placeholder="For example, Dr A Smith" autocomplete="name"></label>
+ <label class="au" style="display:block;margin-top:6px">GMC number<input class="search" id="mygmc" value="${esc(st.myGMC||"")}" inputmode="numeric" autocomplete="off"></label>
+ ${n?`<label class="set"><span>Attach certificates<br><small class="au">${n} saved for this period, added at the end of the PDF</small></span><input type="checkbox" id="soarattach" ${S.soar.attach?"checked":""}></label>`:`<p class="note">No certificates saved for this period. You can attach them to conference and course entries in the CPD log.</p>`}
+ <div class="pk"><a href="#" data-act="soargo">Make PDF</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`}
+function soarGo(){
+ const nm=(st.myName||"").trim(),g=(st.myGMC||"").trim();
+ if(!nm||!g){toast(!nm&&!g?"Please add your name and GMC number.":!nm?"Please add your name.":"Please add your GMC number.");const x=document.getElementById(!nm?"myname":"mygmc");if(x)x.focus();return}
+ soarPDF(!!(S.soar&&S.soar.attach&&S.soar.n));
+}
+const PDFJS_URL="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js",PDFJS_W="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+async function imgToJpeg(blob,max=1600){
+ const u=URL.createObjectURL(blob);try{const im=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=u});
+  const r=Math.min(1,max/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement("canvas");c.width=Math.round(im.naturalWidth*r);c.height=Math.round(im.naturalHeight*r);
+  const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);return{data:c.toDataURL("image/jpeg",0.85),w:c.width,h:c.height}}finally{URL.revokeObjectURL(u)}
+}
+async function pdfToJpegs(blob,maxPages=4){
+ if(!window.pdfjsLib)await loadJS(PDFJS_URL);pdfjsLib.GlobalWorkerOptions.workerSrc=await verifiedURL(PDFJS_W,"text/javascript");
+ const pdf=await pdfjsLib.getDocument({data:await blob.arrayBuffer()}).promise,out=[];
+ for(let p=1;p<=Math.min(pdf.numPages,maxPages);p++){const page=await pdf.getPage(p),vp=page.getViewport({scale:1.6}),c=document.createElement("canvas");c.width=vp.width;c.height=vp.height;
+  const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);await page.render({canvasContext:g,viewport:vp}).promise;out.push({data:c.toDataURL("image/jpeg",0.85),w:c.width,h:c.height})}
+ return out;
+}
+async function addCerts(doc,L,W,M,NAVY,GREY){
+ const all=await cAll(),by={};for(const c of all)(by[c.cpd]=by[c.cpd]||[]).push(c);let added=0;
+ for(const e of L)for(const c of (by[e.id]||[])){
+  let pages=[];try{pages=/pdf/i.test(c.type)||/\.pdf$/i.test(c.name)?await pdfToJpegs(c.blob):[await imgToJpeg(c.blob)]}catch(x){continue}
+  pages.forEach((pg,i)=>{doc.addPage();doc.setFont("helvetica","bold");doc.setFontSize(12);doc.setTextColor(...NAVY);doc.text(`Certificate: ${e.title}`.slice(0,95),M,M+2);
+   doc.setFont("helvetica","normal");doc.setFontSize(9.5);doc.setTextColor(...GREY);doc.text(`${ukDate(e.date)}${e.end&&e.end!==e.date?` – ${ukDate(e.end)}`:""}${pages.length>1?`  ·  page ${i+1} of ${pages.length}`:""}`,M,M+8);
+   const bw=W-2*M,bh=297-2*M-22,r=Math.min(bw/pg.w,bh/pg.h),w=pg.w*r,h=pg.h*r;doc.addImage(pg.data,"JPEG",M+(bw-w)/2,M+14,w,h);added++});
+ }
+ return added;
+}
+// ---------- edit an existing CPD entry ----------
+function cpdEdit(id){
+ const c=st.cpd.find(x=>x.id===id);if(!c)return;S.cpdRef={learn:(c.ref&&c.ref.learn)||c.note||"",change:(c.ref&&c.ref.change)||"",further:(c.ref&&c.ref.further)||"",domains:((c.ref&&c.ref.domains)||[]).slice()};
+ if(c.kind==="event"||c.kind==="online"||c.credits!=null){S.ev={id:String(c.pmid).startsWith("ev:")?String(c.pmid).slice(3):"",edit:c.id,n:c.title||"",org:c.src||"",t:c.kind==="online"?"online":"conf",s:c.date||"",e:c.end||c.date||"",v:c.venue||"",cr:c.credits!=null?String(c.credits):String(Math.round(c.minutes/6)/10),url:c.url||"",sessions:c.sessions||""};S.modal={type:"event"}}
+ else{S.cpdMin=c.minutes;S.cpdDate=c.date;S.modal={type:"cpd",pmid:c.pmid,title:c.title,edit:c.id}}
+ renderModal();
+}
+
+document.addEventListener("focusin",e=>{if(e.target.classList&&e.target.classList.contains("selall"))e.target.select()});
 function renderModal(){
  const el=document.getElementById("modal");if(!el)return;
  const m=S.modal;if(!m){el.innerHTML="";el.className="";return}
  const it=findItem(m.pmid)||st.saved[m.pmid]||{title:m.title||""};
- el.className="ov";
+ el.className="ov";setTimeout(growAll,0);
+ if(m.type==="big"&&S.big){el.innerHTML=bigSheet();return}
+ if(m.type==="tidy"&&S.tidy){el.innerHTML=tidySheet();return}
+ if(m.type==="voice"){el.innerHTML=vSheet();return}
+ if(m.type==="pron"){el.innerHTML=pronSheet();return}
+ if(m.type==="mypdf"){el.innerHTML=myPdfSheet(m);return}
+ if(m.type==="soar"&&S.soar){el.innerHTML=soarSheet();return}
  if(m.type==="slides"&&S.slideFile)el.innerHTML=`<div class="sheet" role="dialog" aria-label="Slides ready"><h3>Your slides are ready</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p><div class="res low"><p>${esc(S.slideMsg||"")}</p></div><p class="note">Tap Save or share, then choose Save to Files, PowerPoint, Keynote, Mail or WhatsApp.</p><div class="pk"><a href="#" data-act="slideshare">Save or share</a><a href="#" class="alt" data-act="mclose">Done</a></div></div>`;
  else if(m.type==="slides")el.innerHTML=`<div class="sheet" role="dialog" aria-label="Make slides"><h3>Make slides</h3><p class="note" style="margin:0 0 6px">Version ${APPVER}</p><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
   ${S.slideBusy?`<div class="msg"><span class="spin"></span>${esc(S.slideBusy)}</div>`:`<label class="set"><span>Number of slides</span><select id="slidecount">${[3,4,5,6,7,8,10,12].map(n=>`<option value="${n}" ${+S.slideN===n?"selected":""}>${n}</option>`).join("")}</select></label>
-  ${aiURL()?`<label class="set"><span>Write the slides with AI<br><small class="au">Free, from the abstract</small></span><input type="checkbox" id="slideai" ${S.slideAI?"checked":""}></label>`:""}
-  <p class="note">Title, study at a glance, background, methods, results, key numbers and take-home message, chosen to fit the number of slides, then a reference slide. Speaker notes hold the full text of each slide.</p>
-  <label class="set"><span>Use the full paper and its figures<br><small class="au">Free open-access papers only</small></span><input type="checkbox" id="slidefigs" ${S.slideFigs?"checked":""}></label>
+  ${aiURL()?`<label class="set"><span>Design the slides with AI<br><small class="au">Free. Uses the full paper when it's open access, and picks a layout for each slide</small></span><input type="checkbox" id="slideai" ${S.slideAI?"checked":""}></label>`:""}
+  <p class="note">${aiURL()&&S.slideAI?"The AI chooses the best layout for each slide: headline numbers, comparisons, bar charts, a study-design flow and a take-home message. Speaker notes are included.":"Title, study at a glance, background, methods, results, key numbers and take-home message, then a reference slide."}</p>
+  ${myPdf[m.pmid]?`<p class="note">📄 Using your PDF (${myPdf[m.pmid].pages} pages). Original figures aren't copied: the AI redraws key results as charts.</p>`:`<label class="set"><span>Include the paper's key figures<br><small class="au">Open-access papers only. A credit line is always added.</small></span><input type="checkbox" id="slidefigs" ${S.slideFigs?"checked":""}></label><p class="note" style="margin-top:0">Paywalled paper? Tap 📄 Use my PDF under the abstract to use your own copy.</p>`}
   <div style="margin:8px 0"><b style="font-size:15px">Chart slides</b><p class="note" style="margin:2px 0 6px">Redraw key results as an editable bar chart or a forest plot.</p>
    ${(S.charts||[]).map((c,i)=>`<div class="kp" style="padding:8px 0;display:flex;justify-content:space-between;gap:8px"><span>${c.type==="bar"?"Bar chart":"Forest plot"}: ${esc(c.title||"Untitled")}</span><button class="link" data-act="chdel" data-v="${i}">Remove</button></div>`).join("")}
    ${S.chartDraft?chartForm():`<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:600" data-act="chadd">+ Add a chart</button>`}</div>
@@ -1382,18 +1735,18 @@ function renderModal(){
  else if(m.type==="ready"){el.innerHTML=readySheet()}
  else if(m.type==="copy"){el.innerHTML=copySheet()}
  else if(m.type==="topic"&&S.tEdit){el.innerHTML=topicSheet()}
- else if(m.type==="cpd"){const done=cpdFor(m.pmid);el.innerHTML=`<div class="sheet" role="dialog" aria-label="Log CPD"><h3>Log CPD</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
-  ${done?`<p class="note">Already logged for this paper: ${hrs(done)}.</p>`:""}
+ else if(m.type==="cpd"){const done=cpdFor(m.pmid);el.innerHTML=`<div class="sheet" role="dialog" aria-label="Log CPD"><h3>${m.edit?"Edit CPD entry":"Log CPD"}</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
+  ${done&&!m.edit?`<p class="note">Already logged for this paper: ${hrs(done)}.</p>`:""}
   <div class="row" style="flex-wrap:wrap;overflow:visible">${[10,15,20,30,45,60].map(n=>`<button class="chip ${+S.cpdMin===n?"on":""}" data-act="cpdmin" data-v="${n}">${n} min</button>`).join("")}</div>
   <label class="set"><span>Minutes</span><input class="search" style="width:110px" type="number" inputmode="numeric" min="1" id="cpdmins" value="${S.cpdMin||""}"></label>
   <label class="set"><span>Date</span><input class="search" style="width:170px" type="date" id="cpddate" value="${S.cpdDate||isoD(new Date())}"></label>
   <div style="margin-top:8px"><b style="font-size:15px">Reflection for appraisal</b> <span class="au" style="font-size:13px">(optional)</span>
-   <label class="au" style="display:block;margin-top:6px">What did you learn?<span class="tawrap"><textarea class="search" id="cpdlearn" rows="2" placeholder="Key messages from this paper">${esc(S.cpdRef.learn||"")}</textarea>${micBtn("cpdlearn")}</span></label>
-   <label class="au" style="display:block;margin-top:6px">How will it change your practice?<span class="tawrap"><textarea class="search" id="cpdchange" rows="2" placeholder="For example, I'll discuss anticoagulation earlier in device-detected AF">${esc(S.cpdRef.change||"")}</textarea>${micBtn("cpdchange")}</span></label>
-   <label class="au" style="display:block;margin-top:6px">Any further learning needed?<span class="tawrap"><textarea class="search" id="cpdfurther" rows="2" placeholder="For example, read the ESC AF guideline section on this">${esc(S.cpdRef.further||"")}</textarea>${micBtn("cpdfurther")}</span></label>
+   <label class="au" style="display:block;margin-top:6px">What did you learn?<span class="tawrap"><textarea class="search" id="cpdlearn" rows="2" placeholder="Key messages from this paper">${esc(S.cpdRef.learn||"")}</textarea>${taTools("cpdlearn")}</span></label>
+   <label class="au" style="display:block;margin-top:6px">How will it change your practice?<span class="tawrap"><textarea class="search" id="cpdchange" rows="2" placeholder="For example, I'll discuss anticoagulation earlier in device-detected AF">${esc(S.cpdRef.change||"")}</textarea>${taTools("cpdchange")}</span></label>
+   <label class="au" style="display:block;margin-top:6px">Any further learning needed?<span class="tawrap"><textarea class="search" id="cpdfurther" rows="2" placeholder="For example, read the ESC AF guideline section on this">${esc(S.cpdRef.further||"")}</textarea>${taTools("cpdfurther")}</span></label>
    <div class="au" style="margin-top:8px">Good Medical Practice domains</div>
    <div class="row" style="flex-wrap:wrap;overflow:visible">${GMP.map(d=>`<button class="chip ${(S.cpdRef.domains||[]).includes(d)?"on":""}" data-act="cpddom" data-v="${esc(d)}">${esc(d)}</button>`).join("")}</div></div>
-  <div class="pk"><a href="#" data-act="cpdsave">Save to CPD log</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`}
+  <div class="pk"><a href="#" data-act="cpdsave">${m.edit?"Save changes":"Save to CPD log"}</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`}
 }
 
 // ---------- podcasts ----------
@@ -1429,7 +1782,13 @@ function loadVoices(){const v=(window.speechSynthesis&&speechSynthesis.getVoices
  const rank=x=>(/premium/i.test(x.name)?0:/enhanced|neural|natural/i.test(x.name)?1:2)+(/en-GB/i.test(x.lang)?0:/en-(IE|AU|NZ|ZA)/i.test(x.lang)?0.3:/en/i.test(x.lang)?0.5:5);
  TTS.voices=v.filter(x=>/^en/i.test(x.lang)&&!/(Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Wobble|Zarvox|Trinoids|Whisper|Albert|Fred|Junior|Ralph|Kathy|Jester|Organ|Superstar|Grandma|Grandpa|Rocko|Shelley|Flo|Eddy|Reed|Sandy|Good News)/.test(x.name)).sort((a,b)=>rank(a)-rank(b)||a.name.localeCompare(b.name))}
 if(window.speechSynthesis){loadVoices();speechSynthesis.onvoiceschanged=()=>{loadVoices();if(S.tab==="settings")render()}}
-function speakable(t){return String(t)
+function brk(t){let x=String(t);for(let k=0;k<3;k++)x=x.replace(/\(([^()]*)\)|\[([^\[\]]*)\]/g,(m,a,b)=>{const inner=a!=null?a:b;
+  let r=inner.match(/(hazard ratio|odds ratio|relative risk|risk ratio|rate ratio)[^0-9]{0,6}(\d+(?:\.\d+)?)/i),nm;
+  if(r)nm=/hazard/i.test(r[1])?"hazard ratio":/odds/i.test(r[1])?"odds ratio":/rate ratio/i.test(r[1])?"rate ratio":"relative risk";
+  else{r=inner.match(/\b(a?HR|a?OR|RR|IRR)\b[^0-9A-Za-z]{0,6}(\d+(?:\.\d+)?)/);if(r)nm=/HR/.test(r[1])?"hazard ratio":/OR/.test(r[1])?"odds ratio":/IRR/.test(r[1])?"rate ratio":"relative risk"}
+  return r?`, ${nm} ${r[2]},`:" "});
+ return x.replace(/\s+,/g,",").replace(/,\s*,/g,",").replace(/,\s*([.;:])/g,"$1").replace(/\s{2,}/g," ").replace(/\s+([.;:,!?])/g,"$1")}
+function speakable(t){return unitsNorm(pronApply(brk(t)))
  // keep statistics simple when read aloud: drop confidence intervals, tidy the ratio
  .replace(/\s*\(\s*(?:95|90|99)\s*%\s*(?:CI|confidence intervals?|credible interval)[^)]*\)/gi,"")
  .replace(/[;,]?\s*(?:95|90|99)\s*%\s*(?:CI|confidence intervals?|credible interval)(?:\s*\[[^\]]*\])?\s*[,:=]?\s*-?\d+(?:\.\d+)?\s*(?:to|-|–|—|,)\s*-?\d+(?:\.\d+)?/gi,"")
@@ -1459,7 +1818,7 @@ function ttsArticle(pmid){
 }
 function ttsBar(pmid){
  const on=TTS.pmid===pmid&&TTS.playing;
- return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"AI summary"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${!S.nvHave&&!on?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#2E4A86" data-act="nvdl">Try the natural voice</button>`:""}<span class="au" style="font-size:13px">${esc((ttsVoice()||{}).name||"")}${st.rate&&+st.rate!==1?`, ${st.rate}×`:""}</span></div>`;
+ return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"AI summary"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${pdfBtn(pmid)}${!S.nvHave&&!on?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#2E4A86" data-act="nvdl">Try the natural voice</button>`:""}${on?vBtn():""}</div>`;
 }
 
 // ---------- share ----------
@@ -1474,7 +1833,7 @@ TTS.list=[];TTS.idx=-1;TTS.mode="";TTS.gen=0;TTS.title="";
 function speakNext(){
  const g=TTS.gen;
  if(!TTS.q.length){if(TTS.mode==="list"&&TTS.playing){playNext();return}TTS.playing=false;TTS.pmid="";TTS.mode="";render();return}
- const v=ttsVoice(),u=new SpeechSynthesisUtterance(TTS.q.shift());if(v){u.voice=v;u.lang=v.lang}u.rate=+st.rate||1;
+ const v=ttsVoice(),txt=TTS.q.shift(),u=new SpeechSynthesisUtterance(txt);TTS.cur=txt;if(v){u.voice=v;u.lang=v.lang}u.rate=+st.rate||1;
  u.onend=()=>{if(TTS.playing&&g===TTS.gen)speakNext()};u.onerror=()=>{if(TTS.playing&&g===TTS.gen)speakNext()};speechSynthesis.speak(u);
 }
 ttsSay=function(chunks,pmid){
@@ -1510,7 +1869,7 @@ function renderNP(){
  if(!(TTS.playing&&TTS.mode==="list")){el.innerHTML="";el.className="";return}
  el.className="np";
  el.innerHTML=`<div class="npt"><small>${TTS.idx>=0?`Article ${TTS.idx+1} of ${TTS.list.length}`:"Starting"}</small><span>${esc(TTS.title||"Saved articles")}</span></div>
-  <button data-act="nppause" aria-label="${TTS.paused?"Resume":"Pause"}">${TTS.paused?"▶":"⏸"}</button><button data-act="npnext" aria-label="Next article">⏭</button><button data-act="ttsstop" aria-label="Stop">■</button>`;
+  ${vBtn()}<button data-act="nppause" aria-label="${TTS.paused?"Resume":"Pause"}">${TTS.paused?"▶":"⏸"}</button><button data-act="npnext" aria-label="Next article">⏭</button><button data-act="ttsstop" aria-label="Stop">■</button>`;
 }
 // ---------- reflection for appraisal (GMC Good Medical Practice 2024 domains) ----------
 const GMP=["Knowledge, skills and development","Patients, partnership and communication","Colleagues, culture and safety","Trust and professionalism"];
@@ -1575,7 +1934,7 @@ function vJournalSettings(){
 }
 
 // ---------- natural voice: free neural voices (Piper) that run on the phone after a one-off download ----------
-const NV={base:"https://huggingface.co/diffusionstudio/piper-voices/resolve/main",ort:"https://cdnjs.cloudflare.com/ajax/libs/onnxruntime-web/1.18.0/",
+const NV={base:"https://huggingface.co/diffusionstudio/piper-voices/resolve/main",ort:"https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/",
  ph:"https://cdn.jsdelivr.net/npm/@diffusionstudio/piper-wasm@1.0.0/build/piper_phonemize",phjs:"https://cdn.jsdelivr.net/npm/@diffusionstudio/vits-web@1.0.3/dist/piper-DeOu3H9E.js",
  voices:{jenny:["Jenny, British female","en/en_GB/jenny_dioco/medium/en_GB-jenny_dioco-medium.onnx"],alan:["Alan, British male","en/en_GB/alan/medium/en_GB-alan-medium.onnx"],
   cori:["Cori, British female","en/en_GB/cori/medium/en_GB-cori-medium.onnx"],north:["Northern English male","en/en_GB/northern_english_male/medium/en_GB-northern_english_male-medium.onnx"]},
@@ -1591,20 +1950,20 @@ async function nvIsDownloaded(k){try{const c=await caches.open("cardio-cpd-voice
 async function nvLoad(k,onp){
  if(NV.sess&&NV.key===k)return;
  if(!window.ort)await loadJS(NV.ort+"ort.min.js");
- ort.env.wasm.wasmPaths=NV.ort;ort.env.wasm.numThreads=1;
- if(!NV.create)NV.create=(await import(NV.phjs)).createPiperPhonemize;
+ const simd=WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,0,0,1,5,1,96,0,1,123,3,2,1,0,10,10,1,8,0,65,0,253,15,253,98,11]));ort.env.wasm.wasmPaths=simd?{"ort-wasm-simd.wasm":await verifiedURL(NV.ort+"ort-wasm-simd.wasm","application/wasm")}:{"ort-wasm.wasm":await verifiedURL(NV.ort+"ort-wasm.wasm","application/wasm")};ort.env.wasm.numThreads=1;
+ if(!NV.create)NV.create=(await import(await verifiedURL(NV.phjs,"text/javascript"))).createPiperPhonemize;NV.phw=await verifiedURL(NV.ph+".wasm","application/wasm");NV.phd=await verifiedURL(NV.ph+".data");
  NV.cfg=JSON.parse(await (await nvCachedBlob(nvUrl(k)+".json")).text());
  const model=await nvCachedBlob(nvUrl(k),onp);
  NV.sess=await ort.InferenceSession.create(await model.arrayBuffer(),{executionProviders:["wasm"]});NV.key=k;
 }
 function nvPhonemes(text){return new Promise((res,rej)=>{let done=false;
  NV.create({print:l=>{if(!done){done=true;try{res(JSON.parse(l).phoneme_ids)}catch(e){rej(e)}}},printErr:()=>{},
-  locateFile:f=>f.endsWith(".wasm")?NV.ph+".wasm":f.endsWith(".data")?NV.ph+".data":f})
+  locateFile:f=>f.endsWith(".wasm")?NV.phw:f.endsWith(".data")?NV.phd:f})
  .then(m=>m.callMain(["-l",NV.cfg.espeak.voice,"--input",JSON.stringify([{text}]),"--espeak_data","/espeak-ng-data"])).catch(rej);
  setTimeout(()=>{if(!done)rej(new Error("phonemes"))},15000)})}
 function nvSplit(t){if(t.length<=170)return[t];const out=[];let cur="";for(const part of t.split(/(?<=[,;:])\s+/)){if(cur&&(cur+" "+part).length>170){out.push(cur);cur=part}else cur=cur?cur+" "+part:part}if(cur)out.push(cur);return out}
 NV.slow=[];
-async function nvSynth(text){const t0=performance.now();const b=await nvSynth0(text);NV.slow.push((performance.now()-t0)/1000/Math.max(.5,b.duration));if(NV.slow.length>6)NV.slow.shift();return b}
+async function nvSynth(text){const t0=performance.now();const b=useKK()?await kkSynth(text):await nvSynth0(text);NV.slow.push((performance.now()-t0)/1000/Math.max(.5,b.duration));if(NV.slow.length>6)NV.slow.shift();return b}
 async function nvSynth0(text){
  const ids=await nvPhonemes(text),inf=NV.cfg.inference||{},rate=+st.rate||1;
  const feeds={input:new ort.Tensor("int64",BigInt64Array.from(ids.map(BigInt)),[1,ids.length]),input_lengths:new ort.Tensor("int64",BigInt64Array.from([BigInt(ids.length)]),[1]),
@@ -1615,17 +1974,27 @@ async function nvSynth0(text){
 }
 function nvCtx(){if(!NV.ctx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;NV.ctx=new AC()}if(NV.ctx.state==="suspended")NV.ctx.resume();return NV.ctx}
 function nvPlayBuf(buf,g){return new Promise(res=>{const s=NV.ctx.createBufferSource();s.buffer=buf;s.connect(NV.ctx.destination);s.onended=()=>res();NV.src=s;s.start();if(g!==TTS.gen){try{s.stop()}catch(e){}res()}})}
-const useNV=()=>st.engine==="natural"&&NV.sess&&!NV.failed;
+const useKK=()=>st.engine==="kokoro"&&!!KK.tts&&!KK.off;
+const usePiper=()=>!!NV.sess&&(st.engine==="natural"||(st.engine==="kokoro"&&(KK.off||!KK.tts)));
+const useNV=()=>!NV.failed&&(useKK()||usePiper());
+function nvFallback(text,why){
+ TTS.q.unshift(text);TTS.pre=null;NV.slow=[];
+ if(useKK()){KK.off=true;
+  if(NV.sess){toast(`Kokoro ${why}, so the Piper natural voice is reading instead.`);nvSpeakNext();return}
+  nvIsDownloaded(st.nvVoice||"jenny").then(h=>{S.nvHave=h;if(h)nvLoad(st.nvVoice||"jenny").catch(()=>{})});
+  toast(`Kokoro ${why}, so the phone's voice is reading now${S.nvHave?" and the Piper voice will take over next time":""}.`);speakNext();return}
+ NV.failed=true;toast(why==="is too slow on this phone"?"This phone is a little slow for the natural voice, so its built-in voice will read for now.":"The natural voice couldn't play, so the phone's voice is reading instead.");speakNext();
+}
 async function nvSpeakNext(){
  const g=TTS.gen;
  if(!TTS.q.length){if(TTS.mode==="list"&&TTS.playing){playNext();return}TTS.playing=false;TTS.pmid="";TTS.mode="";render();return}
- let text=TTS.q.shift();const parts=nvSplit(text);if(parts.length>1){text=parts[0];TTS.q.unshift(...parts.slice(1))}
+ let text=TTS.q.shift();const parts=nvSplit(text);if(parts.length>1){text=parts[0];TTS.q.unshift(...parts.slice(1))}TTS.cur=text;
  try{
   const buf=TTS.pre&&TTS.pre.text===text?await TTS.pre.p:await nvSynth(text);if(g!==TTS.gen)return;
-  if(NV.slow.length>=3&&NV.slow.reduce((a,x)=>a+x,0)/NV.slow.length>1.4){NV.failed=true;toast("This phone is a little slow for the natural voice, so its built-in voice will read for now.");TTS.q.unshift(text);speakNext();return}
+  if(NV.slow.length>=3&&NV.slow.reduce((a,x)=>a+x,0)/NV.slow.length>1.4){nvFallback(text,"is too slow on this phone");return}
   TTS.pre=TTS.q.length?{text:TTS.q[0],p:nvSynth(TTS.q[0])}:null;
   await nvPlayBuf(buf,g);if(g===TTS.gen&&TTS.playing)nvSpeakNext();
- }catch(e){NV.failed=true;toast("The natural voice couldn't play, so the phone's voice is reading instead.");TTS.q.unshift(text);speakNext()}
+ }catch(e){nvFallback(text,"couldn't play")}
 }
 async function nvDownload(){
  const k=st.nvVoice||"jenny";if(NV.busy)return;NV.busy=true;NV.prog="Starting download";render();
@@ -1638,19 +2007,20 @@ async function nvRemove(){try{const c=await caches.open("cardio-cpd-voices");for
 async function nvBoot(){S.nvHave=await nvIsDownloaded(st.nvVoice||"jenny");if(st.engine==="natural"&&S.nvHave)nvLoad(st.nvVoice||"jenny").catch(()=>{NV.failed=true});if(S.tab==="settings")render()}
 
 // ---------- AI summaries and slide text (free Cloudflare Workers AI, set up once by the app owner) ----------
-const AI_DEFAULT_URL="__AI_URL__";
+const AI_DEFAULT_URL="https://cardio-ai.yerramasuajay.workers.dev";
 const aiURL=()=>String(st.aiUrl||AI_DEFAULT_URL||"").replace(/\/+$/,"").replace(/^__AI_URL__$/,"");
 const absText=parts=>(parts||[]).filter(p=>!/regist|funding/i.test(p.l)).map(p=>(p.l?p.l+": ":"")+p.t).join("\n");
 async function aiCall(task,payload){
  const u=aiURL();if(!u)throw Object.assign(new Error("setup"),{code:"setup"});
  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),45000);
- let r;try{r=await fetch(`${u}/${task}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload),signal:ctl.signal})}
+ let r;try{r=await fetch(`${u}/${task}`,{method:"POST",headers:{"Content-Type":"application/json","X-Device-Id":deviceId()},body:JSON.stringify(payload),signal:ctl.signal})}
  catch(e){clearTimeout(tm);throw Object.assign(new Error("net"),{code:e.name==="AbortError"?"slow":"net"})}
  clearTimeout(tm);let j={};try{j=await r.json()}catch(e){}
- if(!r.ok||!j.ok)throw Object.assign(new Error(j.error||"ai"),{code:j.error||"ai"});
+ if(!r.ok||!j.ok){const c=j.error==="ratelimit"?"ratelimit-"+(j.scope==="minute"?"minute":"day"):(j.error||"ai");throw Object.assign(new Error(c),{code:c})}
+ j.data=plainAI(j.data);j.used=j.used==="full"?"full":"abstract";
  return j;
 }
-const aiErr=c=>c==="quota"?"Today's free AI allowance has been used up. It resets tomorrow.":c==="setup"?"AI isn't set up yet. See Settings › AI features.":c==="slow"?"The AI took too long. Try again.":c==="no abstract"?"This paper has no abstract for the AI to work from.":c==="net"?"Couldn't reach the AI service. Check your connection.":"The AI couldn't answer just now. Try again in a moment.";
+const aiErr=c=>c==="ratelimit-minute"?"That was a lot of AI requests in a short time. Wait a minute and try again.":c==="ratelimit-day"?"This phone has reached its daily AI limit. It resets tomorrow.":c==="quota"?"Today's free AI allowance has been used up. It resets tomorrow.":c==="setup"?"AI isn't set up yet. See Settings › AI features.":c==="slow"?"The AI took too long. Try again.":c==="no abstract"?"This paper has no abstract for the AI to work from.":c==="net"?"Couldn't reach the AI service. Check your connection.":"The AI couldn't answer just now. Try again in a moment.";
 async function fullTextForAI(pmcid){
  const r=await fetch(`${EPMC}${pmcid}/fullTextXML`);if(!r.ok)return "";
  const x=new DOMParser().parseFromString((await r.text()).replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),body=x.getElementsByTagName("body")[0];if(!body)return "";
@@ -1668,10 +2038,11 @@ async function aiSummary(pmid){
  try{
   let parts=Array.isArray(S.abs[pmid])?S.abs[pmid]:null,P=null,full="";
   if(!parts||archived){P=await paperData(pmid);if(!parts&&P.parts.length){parts=P.parts;S.abs[pmid]=parts}}
-  if(archived&&P&&P.pmcid&&P.oa){S.aiBusyMsg="Reading the full text";render();try{full=await fullTextForAI(P.pmcid)}catch(e){}}
+  if(myPdf[pmid])full=myPdf[pmid].text;
+  else if(archived&&P&&P.pmcid&&P.oa){S.aiBusyMsg="Reading the full text";render();try{full=await fullTextForAI(P.pmcid)}catch(e){}}
   if(!parts&&!full){throw Object.assign(new Error("no abstract"),{code:"no abstract"})}
   const j=await aiCall("summary",{title:it.title||(P&&P.title)||"",abstract:absText(parts||[]),fulltext:full});
-  st.aiSum[pmid]={...j.data,model:j.model,src:full&&j.used==="full"?"full":"abstract",at:Date.now()};
+  st.aiSum[pmid]={...j.data,model:j.model,src:full&&j.used==="full"?(myPdf[pmid]?"pdf":"full"):"abstract",at:Date.now()};
   const keys=Object.keys(st.aiSum);if(keys.length>300){keys.sort((a,b)=>st.aiSum[a].at-st.aiSum[b].at).slice(0,keys.length-300).forEach(k=>delete st.aiSum[k])}
   save()}
  catch(e){S.aiOpen[pmid]=false;toast(aiErr(e.code))}
@@ -1683,16 +2054,16 @@ function aiBox(pmid){
  if(S.aiBusy[pmid])return `<div class="aibox"><span class="spin"></span>${esc(S.aiBusyMsg||"Writing an AI summary")}…</div>`;
  if(!s||!S.aiOpen[pmid])return "";
  const li=a=>(Array.isArray(a)?a:[]).filter(Boolean).map(x=>`<li>${esc(x)}</li>`).join("");
- return `<div class="aibox"><div class="aih">✨ AI summary${s.src==="full"?" of the full text":""} <span>Check against the ${s.src==="full"?"paper":"abstract"}</span></div>
+ return `<div class="aibox"><div class="aih">✨ AI summary${s.src==="pdf"?" of your PDF":s.src==="full"?" of the full text":""} <span>Check against the ${s.src==="abstract"||!s.src?"abstract":"paper"}</span></div>
   ${s.bottomline?`<p class="aibl">${esc(s.bottomline)}</p>`:""}
   ${s.question?`<p><b>Question</b> ${esc(s.question)}</p>`:""}${s.design?`<p><b>Design</b> ${esc(s.design)}</p>`:""}
   ${li(s.results)?`<p><b>Key results</b></p><ul>${li(s.results)}</ul>`:""}${s.practice?`<p><b>For practice</b> ${esc(s.practice)}</p>`:""}
   ${li(s.limitations)?`<p><b>Limitations</b></p><ul>${li(s.limitations)}</ul>`:""}
-  <div class="tts" style="border-top:0;padding-top:0"><button data-act="aisay" data-id="${pmid}">▶ Listen to summary</button></div></div>`;
+  ${(()=>{const on=TTS.pmid==="ai:"+pmid&&TTS.playing;return `<div class="tts" style="border-top:0;padding-top:0"><button data-act="aisay" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen to summary"}</button>${on?`<button data-act="ttsstop">■ Stop</button>${vBtn()}`:""}</div>`})()}</div>`;
 }
 function aiSay(pmid){const s=(st.aiSum||{})[pmid];if(!s)return;const it=findItem(pmid)||st.saved[pmid]||{};
  const parts=[speakable(it.title||""),s.bottomline&&"In short. "+speakable(s.bottomline),s.question&&"The question. "+speakable(s.question),s.design&&"Design. "+speakable(s.design),...(s.results||[]).map((r,i)=>(i===0?"Key results. ":"")+speakable(r)),s.practice&&"For practice. "+speakable(s.practice)].filter(Boolean);
- ttsSay(parts.flatMap(p=>sentences(p)),pmid)}
+ ttsSay(parts.flatMap(p=>sentences(p)),"ai:"+pmid)}
 async function aiTest(){
  const u=aiURL();if(!u){toast("Add the AI address first.");return}
  S.aiTest="Testing…";render();
@@ -1700,6 +2071,64 @@ async function aiTest(){
  catch(e){S.aiTest="Couldn't connect. Check the address."}
  render();
 }
+
+// ---------- Kokoro: optional, most natural free voice, runs on the phone after a one-off download ----------
+const KK={url:"https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm",model:"onnx-community/Kokoro-82M-v1.0-ONNX",tts:null,busy:false,prog:"",
+ voices:{bf_emma:"Emma, British female",bf_isabella:"Isabella, British female",bm_george:"George, British male",bm_lewis:"Lewis, British male",af_heart:"Heart, American female"}};
+async function kkLoad(onp){
+ if(KK.tts)return;
+ const m=window.__kokoroMock||await import(KK.url);
+ KK.tts=await m.KokoroTTS.from_pretrained(KK.model,{dtype:"q8",device:"wasm",progress_callback:p=>{if(onp&&p&&p.status==="progress"&&p.total>5e6)onp((p.loaded||0)/(p.total||1))}});
+}
+async function kkSynth(text){
+ const a=await KK.tts.generate(text,{voice:st.kkVoice||"bf_emma",speed:+st.rate||1});
+ const pcm=a.audio||a.data,sr=a.sampling_rate||24000,buf=NV.ctx.createBuffer(1,pcm.length,sr);buf.getChannelData(0).set(pcm);return buf;
+}
+async function kkDownload(){
+ if(KK.busy)return;KK.busy=true;KK.prog="Starting download";render();
+ try{await kkLoad(p=>{KK.prog=`Downloading ${Math.round(p*100)}%`;const el=document.getElementById("kkprog");if(el)el.textContent=KK.prog});
+  st.engine="kokoro";st.kkHave=true;NV.failed=false;NV.slow=[];save();KK.prog="";toast("Kokoro voice ready. It works offline from now on.")}
+ catch(e){KK.prog="";toast(navigator.onLine===false?"You're offline. Connect to Wi-Fi to download the voice.":"Couldn't download the Kokoro voice. Try again on Wi-Fi.")}
+ KK.busy=false;render();
+}
+async function kkRemove(){try{for(const k of await caches.keys())if(/transformers/i.test(k))await caches.delete(k)}catch(e){}KK.tts=null;st.kkHave=false;if(st.engine==="kokoro")st.engine="system";save();render();toast("Kokoro voice removed from this phone")}
+function kkBoot(){if(st.engine==="kokoro"&&st.kkHave)kkLoad().catch(()=>{KK.off=true;nvIsDownloaded(st.nvVoice||"jenny").then(h=>{S.nvHave=h;if(h)nvLoad(st.nvVoice||"jenny").catch(()=>{})})})}
+// ---------- pronunciation: units, symbols, statistics and clinical abbreviations ----------
+const PRON_COMMON=[["NNT","number needed to treat"],["NNH","number needed to harm"],["IQR","interquartile range"],["SD","standard deviation"],["SE","standard error"],["ARR","absolute risk reduction"],["RRR","relative risk reduction"],
+ ["aHR","adjusted hazard ratio"],["aOR","adjusted odds ratio"],["IRR","incidence rate ratio"],["AUC","area under the curve"],["ROC","R O C"],["RCT","randomised controlled trial"],["RCTs","randomised controlled trials"],["ITT","intention to treat"],
+ ["QoL","quality of life"],["e.g.","for example"],["i.e.","that is"],["et al.","and colleagues"],["et al","and colleagues"],["NHS","N H S"],["UK","U K"],["GP","G P"],["ED","emergency department"],["ICU","I C U"],
+ ["BMI","B M I"],["BP","B P"],["eGFR","e G F R"],["CKD","C K D"],["CRP","C R P"],["ECG","E C G"],["AF","A F"],["MI","M I"],["PE","P E"],["VTE","V T E"],["DVT","D V T"],["CT","C T"],["MRI","M R I"]];
+const PRON_SPEC=[["AF", "A F"], ["LVEF", "L V ejection fraction"], ["LV", "L V"], ["RV", "R V"], ["HFrEF", "heart failure with reduced ejection fraction"], ["HFpEF", "heart failure with preserved ejection fraction"], ["HFmrEF", "heart failure with mildly reduced ejection fraction"], ["STEMI", "stemmy"], ["NSTEMI", "en stemmy"], ["NSTE-ACS", "non S T elevation acute coronary syndrome"], ["ACS", "A C S"], ["PCI", "P C I"], ["CABG", "cabbage"], ["TAVI", "tavvy"], ["TAVR", "T A V R"], ["SAVR", "savver"], ["MACE", "major adverse cardiovascular events"], ["CMR", "C M R"], ["CTCA", "C T coronary angiography"], ["CCTA", "coronary C T angiography"], ["CAC", "C A C"], ["FFR", "F F R"], ["NT-proBNP", "N T pro B N P"], ["BNP", "B N P"], ["hs-cTnT", "high sensitivity troponin T"], ["hs-cTnI", "high sensitivity troponin I"], ["SGLT2i", "S G L T 2 inhibitor"], ["SGLT2", "S G L T 2"], ["GLP-1 RA", "G L P 1 receptor agonist"], ["GLP-1", "G L P 1"], ["DOACs", "dee oaks"], ["DOAC", "dee oak"], ["VKA", "V K A"], ["INR", "I N R"], ["LDL-C", "L D L cholesterol"], ["LDL", "L D L"], ["HDL", "H D L"], ["Lp", "lipoprotein little a"], ["CHA2DS2-VASc", "chads vasc"], ["CHA₂DS₂-VASc", "chads vasc"], ["CHA2DS2-VA", "chads V A"], ["CHA₂DS₂-VA", "chads V A"], ["HAS-BLED", "has bled"], ["ICD", "I C D"], ["CRT-D", "C R T D"], ["CRT", "C R T"], ["PPM", "permanent pacemaker"], ["LAAO", "L A A O"], ["HCM", "H C M"], ["DCM", "D C M"], ["ARVC", "A R V C"], ["PFO", "P F O"], ["TOE", "T O E"], ["TTE", "T T E"], ["SCD", "sudden cardiac death"], ["CVD", "cardiovascular disease"], ["CV", "cardiovascular"], ["ESC", "E S C"], ["ACC", "A C C"], ["AHA", "A H A"], ["MRA", "M R A"], ["ARNI", "arnee"], ["ACEi", "ace inhibitor"], ["ARB", "A R B"], ["PAD", "P A D"], ["TIA", "T I A"]];
+const PRON_DEFAULT=PRON_SPEC.concat(PRON_COMMON.filter(([f])=>!PRON_SPEC.some(([g])=>g===f)));
+let pronCache=null,pronKey="";
+const pronList=()=>Array.isArray(st.pron)?st.pron:PRON_DEFAULT;
+function pronRules(){const k=JSON.stringify(pronList());if(k===pronKey&&pronCache)return pronCache;pronKey=k;
+ pronCache=pronList().filter(([f,t])=>f&&f.trim()&&t!=null).sort((a,b)=>b[0].length-a[0].length).map(([f,t])=>{const e=f.trim().replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  try{return[new RegExp(`(?<![A-Za-z0-9])${e}(?![A-Za-z0-9])`,"g"),String(t)]}catch(x){return null}}).filter(Boolean);return pronCache}
+function pronApply(x){for(const[re,t]of pronRules())x=x.replace(re,t);return x}
+const UNITS=[["mL/min/1.73 m²","millilitres per minute per 1.73 square metres"],["mL/min/1.73m²","millilitres per minute per 1.73 square metres"],["mL/min/1.73 m2","millilitres per minute per 1.73 square metres"],["mL/min/1.73m2","millilitres per minute per 1.73 square metres"],
+ ["mmol/L","millimoles per litre"],["µmol/L","micromoles per litre"],["umol/L","micromoles per litre"],["mg/dL","milligrams per decilitre"],["mg/dl","milligrams per decilitre"],["ng/L","nanograms per litre"],["ng/mL","nanograms per millilitre"],["pg/mL","picograms per millilitre"],
+ ["mL/min","millilitres per minute"],["L/min","litres per minute"],["kg/m²","kilograms per square metre"],["kg/m2","kilograms per square metre"],["cmH2O","centimetres of water"],["cmH₂O","centimetres of water"],["mmHg","millimetres of mercury"],["kPa","kilopascals"],
+ ["mcg","micrograms"],["µg","micrograms"],["mg","milligrams"],["kg","kilograms"],["g","grams"],["mL","millilitres"],["ml","millilitres"],["L","litres"],["bpm","beats per minute"],["ms","milliseconds"],["cm","centimetres"],["mm","millimetres"],["m²","square metres"],["m2","square metres"],
+ ["hrs","hours"],["hr","hours"],["h","hours"],["yrs","years"],["yr","years"],["y","years"],["wks","weeks"],["wk","weeks"],["mo","months"],["d","days"],["min","minutes"]];
+const UNITRE=UNITS.map(([u,w])=>[new RegExp(`(\\d)[\\s-]?${u.replace(/[.*+?^${}()|[\]\\/]/g,"\\$&")}(?![A-Za-z0-9²])`,"g"),w]);
+function unitsNorm(x){
+ x=x.replace(/\b(\d{2,3})\/(\d{2,3})(?=\s*mm\s?Hg)/g,"$1 over $2");
+ for(const[re,w]of UNITRE)x=x.replace(re,(m,d)=>`${d} ${w}`);
+ x=x.replace(/\b1 (milligram|microgram|kilogram|gram|millilitre|litre|centimetre|millimetre|hour|year|week|month|day|minute|millisecond)s\b/g,"1 $1");
+ x=x.replace(/\/(day|week|month|year|min|minute|hour|kg)\b/g," per $1").replace(/([A-Za-z])\/(?=[A-Za-z])/g,"$1 ").replace(/\bper min\b/g,"per minute").replace(/\bper kg\b/g,"per kilogram");
+ return x.replace(/°C/g," degrees Celsius").replace(/×/g," times ").replace(/≈/g," approximately ").replace(/~(?=\s?\d)/g,"about ").replace(/→/g," to ").replace(/↑/g," increased ").replace(/↓/g," decreased ").replace(/≠/g," not equal to ").replace(/\s&\s/g," and ").replace(/\bn\s*=\s*(\d)/g,"n equals $1");
+}
+// Settings › Pronunciation editor
+function pronSheet(){
+ const q=(S.pronq||"").toLowerCase(),L=pronList().map((r,i)=>[r,i]).filter(([r])=>!q||(r[0]+" "+r[1]).toLowerCase().includes(q));
+ return `<div class="sheet big" role="dialog" aria-label="Pronunciation"><h3>Pronunciation</h3>
+ <p class="note" style="margin:0 0 6px">How abbreviations are read aloud. Written exactly as in articles (capitals matter). Units and symbols such as mmHg, mg/dL, ≥ and ± are handled automatically.</p>
+ <div style="display:flex;gap:8px"><input class="search" id="pronq" type="search" placeholder="Find" value="${esc(S.pronq||"")}" autocomplete="off"><button class="more" style="width:auto;margin:0;padding:8px 12px" data-act="pronadd">+ Add</button></div>
+ <div style="overflow-y:auto;flex:1;margin-top:8px">${L.map(([r,i])=>`<div class="prow"><input class="search" data-pf="${i}" value="${esc(r[0])}" placeholder="Written" autocapitalize="off" autocorrect="off"><span class="au">→</span><input class="search" data-pt="${i}" value="${esc(r[1])}" placeholder="Say as"><button class="pbtn" data-act="pronhear" data-v="${i}" aria-label="Hear it">▶</button><button class="pbtn" data-act="prondel" data-v="${i}" aria-label="Delete">✕</button></div>`).join("")||`<div class="msg">Nothing matches.</div>`}</div>
+ <div class="pk"><a href="#" class="alt" data-act="pronreset">Reset to defaults</a><a href="#" data-act="mclose">Done</a></div></div>`;
+}
+function pronEdit(i,k,v){const L=pronList().map(r=>r.slice());if(!L[i])return;L[i][k]=v;st.pron=L;save()}
 
 function ttsNext(){useNV()?nvSpeakNext():speakNext()}
 function render(){
@@ -1771,7 +2200,7 @@ document.addEventListener("click",e=>{
  else if(a==="nvdl"){e.preventDefault();nvCtx();nvDownload()}
  else if(a==="nvrm"){e.preventDefault();nvRemove()}
  else if(a==="aisum")aiSummary(b.dataset.id);
- else if(a==="aisay")aiSay(b.dataset.id);
+ else if(a==="aisay"){const k="ai:"+b.dataset.id;if(TTS.pmid===k&&TTS.playing){if(TTS.paused){useNV()?NV.ctx.resume():speechSynthesis.resume();TTS.paused=false}else{useNV()?NV.ctx.suspend():speechSynthesis.pause();TTS.paused=true}render()}else aiSay(b.dataset.id)}
  else if(a==="aitest"){e.preventDefault();aiTest()}
  else if(a==="evcheck"){evRefresh(true)}
  else if(a==="evf"){S.evf=b.dataset.v;render()}
@@ -1782,21 +2211,44 @@ document.addEventListener("click",e=>{
  else if(a==="evsave"){e.preventDefault();evSave()}
  else if(a==="cpdevents"){e.preventDefault();S.lib="events";render();window.scrollTo(0,0)}
  else if(a==="mic"){e.preventDefault();dictate(b.dataset.v)}
- else if(a==="soarpdf"){e.preventDefault();soarPDF()}
+ else if(a==="soarpdf"){e.preventDefault();soarStart()}
  else if(a==="readyshare"){e.preventDefault();readyShare()}
  else if(a==="soarcopy"){soarCopy(b.dataset.v)}
+ else if(a==="tabig"){bigOpen(b.dataset.v)}
+ else if(a==="bigdone"){e.preventDefault();bigDone()}
+ else if(a==="tidy"){e.preventDefault();tidyField(b.dataset.v)}
+ else if(a==="tidyok"){e.preventDefault();tidyFinish(true)}
+ else if(a==="tidyno"){e.preventDefault();tidyFinish(false)}
+ else if(a==="vpick"){if(S.modal&&S.modal.type!=="voice")S.vprev=S.modal;S.modal={type:"voice"};renderModal()}
+ else if(a==="vrate"){st.rate=b.dataset.v;save();ttsRestart();renderModal()}
+ else if(a==="vset"){vSet(b.dataset.v)}
+ else if(a==="vdone"){e.preventDefault();S.modal=S.vprev||null;S.vprev=null;renderModal()}
+ else if(a==="cpdedit"){cpdEdit(b.dataset.v)}
+ else if(a==="certopen"){certOpen(b.dataset.v)}
+ else if(a==="certdel"){cDel(b.dataset.v).then(certRefresh).then(()=>toast("Certificate removed"))}
+ else if(a==="soargo"){e.preventDefault();soarGo()}
+ else if(a==="mypdfsum"){e.preventDefault();const id=S.modal.pmid;S.modal=null;renderModal();if(st.aiSum)delete st.aiSum[id];S.open[id]=true;aiSummary(id)}
+ else if(a==="mypdfslides"){e.preventDefault();const id=S.modal.pmid;S.charts=[];S.chartDraft=null;S.slideFile=null;S.slideBusy="";S.modal={type:"slides",pmid:id};renderModal()}
+ else if(a==="kkdl"){e.preventDefault();nvCtx();kkDownload()}
+ else if(a==="kkrm"){e.preventDefault();kkRemove()}
+ else if(a==="pronopen"){e.preventDefault();S.pronq="";S.modal={type:"pron"};renderModal()}
+ else if(a==="pronadd"){st.pron=[["",""],...pronList().map(r=>r.slice())];save();S.pronq="";renderModal();setTimeout(()=>{const x=document.querySelector('[data-pf="0"]');if(x)x.focus()},100)}
+ else if(a==="prondel"){const L=pronList().map(r=>r.slice());L.splice(+b.dataset.v,1);st.pron=L;save();renderModal()}
+ else if(a==="pronhear"){const r=pronList()[+b.dataset.v];if(r&&r[0])ttsSay([speakable(r[0])],"test")}
+ else if(a==="pronreset"){e.preventDefault();if(confirm("Reset the pronunciation list to the defaults? Your changes will be lost.")){delete st.pron;save();renderModal()}}
  else if(a==="backup"){e.preventDefault();backupNow()}
- else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;makeSlides(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
+ else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;(S.slideAI&&aiURL()?makeDeck:makeSlides)(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
  else if(a==="cpd"){S.modal={type:"cpd",pmid:b.dataset.id};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
  else if(a==="cpdmin"){S.cpdMin=+b.dataset.v;renderModal()}
- else if(a==="cpdsave"){e.preventDefault();const mins=Math.round(+S.cpdMin);if(!(mins>0)){toast("Enter the minutes spent.");return}const it=findItem(S.modal.pmid)||(S.modal.title?{title:"Podcast: "+S.modal.title,src:"Podcast"}:{});
+ else if(a==="cpdsave"){e.preventDefault();const mins=Math.round(+S.cpdMin);if(!(mins>0)){toast("Enter the minutes spent.");return}
+  if(S.modal.edit){const c=st.cpd.find(x=>x.id===S.modal.edit);if(c){c.minutes=mins;c.date=S.cpdDate||c.date;c.ref={learn:(S.cpdRef.learn||"").trim(),change:(S.cpdRef.change||"").trim(),further:(S.cpdRef.further||"").trim(),domains:(S.cpdRef.domains||[]).slice()};c.note="";save()}S.modal=null;render();toast("CPD entry updated");return}const it=findItem(S.modal.pmid)||(S.modal.title?{title:"Podcast: "+S.modal.title,src:"Podcast"}:{});
   st.cpd.push({id:"c"+Date.now().toString(36),pmid:S.modal.pmid,title:it.title||"",src:it.src==="Podcast"?"Podcast":(jOf(it).name||it.src||""),doi:it.doi||"",date:S.cpdDate||isoD(new Date()),minutes:mins,ref:{learn:(S.cpdRef.learn||"").trim(),change:(S.cpdRef.change||"").trim(),further:(S.cpdRef.further||"").trim(),domains:(S.cpdRef.domains||[]).slice()},note:"",at:Date.now()});
   save();S.modal=null;render();toast(`Logged ${mins} minutes of CPD`)}
- else if(a==="mclose"){e.preventDefault();S.readyFile=null;if(dict){try{dict.stop()}catch(x){}dict=null}S.modal=null;S.slideBusy="";S.slideFile=null;renderModal()}
+ else if(a==="mclose"){e.preventDefault();S.big=null;S.tidy=null;S.soar=null;S.readyFile=null;if(dict){try{dict.stop()}catch(x){}dict=null}S.modal=null;S.slideBusy="";S.slideFile=null;renderModal()}
  else if(a==="slideshare"){e.preventDefault();slideShare()}
  else if(a==="cpdp"){S.cpdP=b.dataset.v;render()}
  else if(a==="cpdask"){S.confirm="cpd:"+b.dataset.v;render()}
- else if(a==="cpddel"){st.cpd=st.cpd.filter(c=>c.id!==b.dataset.v);save();S.confirm="";render()}
+ else if(a==="cpddel"){const did=b.dataset.v;cAll().then(x=>Promise.all(x.filter(k=>k.cpd===did).map(k=>cDel(k.id)))).then(certRefresh).catch(()=>{});st.cpd=st.cpd.filter(c=>c.id!==b.dataset.v);save();S.confirm="";render()}
  else if(a==="cpdcsv"){e.preventDefault();cpdCSV()}
  else if(a==="cpdcopy"){e.preventDefault();const t=cpdSummary();(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast("Copied: paste it into your appraisal")).catch(()=>toast("Couldn't copy on this phone. Use Export instead."))}
  else if(a==="clearsaved"){if(confirm("Remove all archived articles?")){st.saved={};save();render()}}
@@ -1809,8 +2261,12 @@ function cvSet(el){
 document.addEventListener("input",e=>{
  if(e.target.dataset&&e.target.dataset.cv){cvSet(e.target);return}
  if(e.target.id==="q"){S.q=e.target.value;clearTimeout(qTimer);qTimer=setTimeout(()=>load(),700)}
- else if(e.target.id==="myname"){st.myName=e.target.value;save()}
+ else if(e.target.id==="myname"||e.target.id==="cpdname"){st.myName=e.target.value;save()}
+ else if(e.target.id==="cpdgmc"){st.myGMC=e.target.value.trim();save()}
  else if(e.target.id==="mygmc"){st.myGMC=e.target.value.trim();save()}
+ else if(e.target.id==="pronq"){S.pronq=e.target.value;const q=S.pronq.toLowerCase();document.querySelectorAll(".prow").forEach(r=>{const v=[...r.querySelectorAll("input")].map(i=>i.value).join(" ").toLowerCase();r.style.display=!q||v.includes(q)?"":"none"})}
+ else if(e.target.dataset&&e.target.dataset.pf!=null){pronEdit(+e.target.dataset.pf,0,e.target.value)}
+ else if(e.target.dataset&&e.target.dataset.pt!=null){pronEdit(+e.target.dataset.pt,1,e.target.value)}
  else if(e.target.id==="aiurl"){st.aiUrl=e.target.value.trim();save()}
  else if(["ftezp","ftoa","ftemail"].includes(e.target.id)){st.ft={...(st.ft||{}),[e.target.id.slice(2)]:e.target.value.trim()};save()}
  else if(e.target.id==="cpdmins"){S.cpdMin=e.target.value}
@@ -1839,8 +2295,12 @@ document.addEventListener("change",e=>{
  if(el.id==="cpddate"){S.cpdDate=el.value;return}
  if(el.dataset&&el.dataset.th){st.topicEdits=st.topicEdits||{};const id=el.dataset.th;if(id.startsWith("ct")){const x=(st.customTopics||[]).find(y=>y.id===id);if(x)x.hidden=!el.checked}else st.topicEdits[id]={...(st.topicEdits[id]||{}),hidden:!el.checked};save();applyTopics();render();return}
  if(el.id==="jgen"){S.jgen=el.checked;return}
- if(el.id==="enginesel"){st.engine=el.value;save();if(el.value==="natural"&&S.nvHave)nvLoad(st.nvVoice||"jenny").catch(()=>{NV.failed=true});render();return}
+ if(el.id==="enginesel"){st.engine=el.value;NV.failed=false;save();if(el.value==="natural"&&S.nvHave)nvLoad(st.nvVoice||"jenny").catch(()=>{NV.failed=true});if(el.value==="kokoro"&&st.kkHave)kkLoad().then(render).catch(()=>{NV.failed=true});render();return}
  if(el.id==="nvvoice"){st.nvVoice=el.value;save();NV.sess=null;NV.key="";nvIsDownloaded(el.value).then(h=>{S.nvHave=h;if(h&&st.engine==="natural")nvLoad(el.value).catch(()=>{});render()});return}
+ if(el.dataset&&el.dataset.cert&&el.files&&el.files[0]){const f=el.files[0];el.value="";certAdd(el.dataset.cert,f);return}
+ if(el.id==="soarattach"&&S.soar){S.soar.attach=el.checked;return}
+ if(el.dataset&&el.dataset.mypdf&&el.files&&el.files[0]){const f=el.files[0];el.value="";myPdfLoad(el.dataset.mypdf,f);return}
+ if(el.id==="kkvoice"){st.kkVoice=el.value;save();return}
  if(el.id==="voicesel"){st.voice=el.value;save();return}
  if(el.id==="ratesel"){st.rate=el.value;save();return}
  if(el.id==="ftmode"){st.ft={...(st.ft||{}),mode:el.value};save();render();return}
