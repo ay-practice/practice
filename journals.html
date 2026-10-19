@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-I/SHBA0Re01bSrgy7YuFCVk9QYepiebmgEsnd2xcbfQ=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-X2eTKF3hlkDBkkfp4U9hQFvsHPTarkl602LvH/v6iZ8=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -287,6 +287,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 .mic.on{background:#C0504D!important}
 .tawrap textarea{padding-right:66px!important;min-height:104px!important}
 .tx{right:14px!important;top:8px!important}
+#q{padding:7px 12px!important;border-radius:12px!important;min-height:0!important;line-height:1.3}
 </style>
 </head>
 <body>
@@ -300,7 +301,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="journal-reader-v1",APPVER="20 Oct 2026 (z5)";
+const KEY="journal-reader-v1",APPVER="21 Oct 2026 (z6)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -370,7 +371,7 @@ const seen=new Set(st.seen);
 const S={tab:"latest",cat:"all",j:"all",q:"",qscope:"mine",qsort:"date",lib:"later",cpdP:"12m",cpdFrom:"",cpdTo:"",modal:null,slideN:6,slideBusy:"",slideFigs:true,charts:[],chartDraft:null,cpdMin:30,cpdDate:"",cpdNote:"",aiOpen:{},aiBusy:{},aiTest:"",slideAI:true,cpdRef:{domains:[]},tEdit:null,jfind:null,jq:"",jgen:false,items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,
  g:"esc",gsub:"esc",gl:{},gerr:{},gload:{},dq:"",dvlaErr:false,dvlaLoading:false};
 const $m=document.getElementById("main");
-applyJournals();applyTopics();if(!st.engine)st.engine="system";if(st.engine==="kokoro"||st.engine==="google")st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}try{kkCleanup()}catch(e){}try{for(const k of ["cpd-usage-cardiology","cpd-usage-cardiology-sent","cpd-usage-respiratory","cpd-usage-respiratory-sent","cpd-stats-off","cpd-stats-noticed"])localStorage.removeItem(k)}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
+applyJournals();applyTopics();if(!st.engine)st.engine="system";if(st.engine==="kokoro")st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}try{kkCleanup()}catch(e){}try{if(aiURL()&&st.engine==="system"&&!isAndroid&&!st.engineMigrated){st.engine="google";st.engineMigrated=1;save()}if(st.ggVoice&&!/^[fm][12]$/.test(st.ggVoice)){st.ggVoice=/-m$/.test(st.ggVoice)?"m1":"f1";save()}}catch(e){}try{for(const k of ["cpd-usage-cardiology","cpd-usage-cardiology-sent","cpd-usage-respiratory","cpd-usage-respiratory-sent","cpd-stats-off","cpd-stats-noticed"])localStorage.removeItem(k)}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const clean=s=>String(s||"").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'");
 const catsOf=title=>{const c=CATS.filter(x=>x.re.test(title)).map(x=>x.id);return c.length?c:["oth"]};
@@ -644,13 +645,14 @@ function vSettings(){
  ${vJournalSettings()}
  <h3>Reading aloud</h3><div class="card">
   <p class="help" style="margin-top:8px">Open an abstract and tap Listen. Hazard ratios are read simply and confidence intervals are skipped.</p>
-  <label class="set"><span>Voice type</span><select id="enginesel"><option value="natural" ${st.engine==="natural"?"selected":""}>Piper natural voice (offline, one-off download)</option><option value="system" ${st.engine!=="natural"?"selected":""}>${isAndroid?"Google voice (built into Android)":"Phone's built-in voice"}</option></select></label>
+  ${st.engine==="google"?`<label class="set"><span>Natural voice</span><select id="ggvoice">${Object.entries(GG.voices).map(([k,v])=>`<option value="${k}" ${(st.ggVoice||"f1")===k?"selected":""}>${v}</option>`).join("")}</select></label>`:""}
+  <label class="set"><span>Voice type</span><select id="enginesel">${aiURL()?`<option value="google" ${st.engine==="google"?"selected":""}>Natural voice (online, recommended)</option>`:""}<option value="natural" ${st.engine==="natural"?"selected":""}>Piper voice (offline, one-off download)</option>${isAndroid||!aiURL()?`<option value="system" ${st.engine!=="natural"&&st.engine!=="google"?"selected":""}>${isAndroid?"Google voice (built into Android)":"Phone's built-in voice"}</option>`:""}</select></label>
   ${st.engine==="natural"?`<label class="set"><span>Natural voice</span><select id="nvvoice">${Object.entries(NV.voices).map(([k,v])=>`<option value="${k}" ${(st.nvVoice||"jenny")===k?"selected":""}>${v[0]}</option>`).join("")}</select></label>
    ${S.nvHave?`<p class="note">Downloaded and ready. It works offline. <button class="link" data-act="nvrm">Remove it</button></p>`:`<div class="pk"><a href="#" data-act="nvdl">${NV.busy?"Downloading…":"Download this voice (about 60 MB, once)"}</a></div><p class="note"><span id="nvprog">${esc(NV.prog||"")}</span> Free, natural-sounding and private: it runs on your phone, with nothing sent anywhere. Best downloaded on Wi-Fi.</p>`}`:""}
   ${st.engine==="natural"||st.engine==="google"?"":TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
   <label class="set"><span>Speed</span><select id="ratesel">${[["0.85","Slower"],["1","Normal"],["1.15","A bit faster"],["1.3","Faster"],["1.5","Fastest"]].map(([v,l])=>`<option value="${v}" ${String(st.rate||"1")===v?"selected":""}>${l}</option>`).join("")}</select></label>
   <div class="pk"><a href="#" data-act="ttstest">Test voice</a><a href="#" class="alt" data-act="pronopen">Pronunciation list (${pronList().length})</a></div>
-  ${isAndroid&&st.engine!=="natural"?`<p class="note">On Android, this uses Google's own voices, which are free and work offline. For more voices, open your phone's <b>Settings › Text-to-speech output</b> (often under Accessibility or General management), choose <b>Speech Services by Google</b>, and download <b>English (United Kingdom)</b>.</p>`:""}${st.engine==="natural"||st.engine==="google"||isAndroid?"":`<p class="note"><b>For the most natural sound</b>, choose Natural voice above, or download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>`}
+  ${st.engine==="google"?`<p class="note">Natural British voices, streamed through your AI service from Microsoft's free tier, so it needs an internet connection and nothing can be charged. <b>Fair use:</b> about 12 abstracts a day per phone, from a free monthly allowance shared by everyone using the app. When it runs out or you're offline, the Piper voice reads instead${S.nvHave?"":", so it's worth downloading it as a backup"}.</p>${S.nvHave?"":`<div class="pk"><a href="#" class="alt" data-act="nvdl">${NV.busy?"Downloading…":"Download the Piper backup voice (about 60 MB)"}</a></div><p class="note"><span id="nvprog">${esc(NV.prog||"")}</span></p>`}`:""}${isAndroid&&st.engine!=="natural"&&st.engine!=="google"?`<p class="note">On Android, this uses Google's own voices, which are free and work offline. For more voices, open your phone's <b>Settings › Text-to-speech output</b> (often under Accessibility or General management), choose <b>Speech Services by Google</b>, and download <b>English (United Kingdom)</b>.</p>`:""}${st.engine==="natural"||st.engine==="google"||isAndroid?"":`<p class="note"><b>For the most natural sound</b>, choose Natural voice above, or download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>`}
  </div>
  <h3>Pronunciation</h3><div class="card"><p class="help" style="margin-top:8px">How abbreviations are read aloud. Units, symbols and statistics are handled automatically; edit, add or remove abbreviations here.</p><div class="pk" style="margin-bottom:10px"><a href="#" data-act="pronopen">Edit pronunciation list (${pronList().length} words)</a></div></div>
  <h3>AI features</h3><div class="card">
@@ -1199,11 +1201,11 @@ async function myPdfLoad(pmid,file){
   myPdf[pmid]={text:txt,pages:r.pages,name:file.name||"PDF"};S.pdfBusy="";renderModal();render()}
  catch(e){S.modal=null;S.pdfBusy="";renderModal();toast(e.code==="scan"?"This PDF has no readable text (it may be a scan), so it can't be used.":navigator.onLine===false?"Reading a PDF needs a connection the first time.":"Couldn't read this PDF. Try another copy.")}
 }
-function myPdfSheet(m){const P=myPdf[m.pmid];return `<div class="sheet" role="dialog" aria-label="Use my PDF"><h3>📄 Use my PDF</h3>
+function myPdfSheet(m){const P=myPdf[m.pmid];return `<div class="sheet" role="dialog" aria-label="Add the full paper"><h3>📄 Add the full paper (PDF)</h3>
  ${S.pdfBusy||!P?`<div class="msg"><span class="spin"></span><span id="pdfmsg">${esc(S.pdfBusy||"Reading")}</span></div>`:`<div class="res low"><p>Read ${P.pages} ${P.pages===1?"page":"pages"} of <b>${esc(P.name)}</b> on your phone.</p></div>
  <p class="note">The PDF itself stays on your phone and isn't kept after you close the app. Only the extracted text is sent to the AI service to write your summary or slides, and the service doesn't store it. Original figures aren't copied: the AI redraws key results as charts instead.</p>
  <div class="pk"><a href="#" data-act="mypdfsum">✨ Summarise the PDF</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="mypdfslides">Make slides from the PDF</a><a href="#" class="alt" data-act="mclose">Done</a></div>`}</div>`}
-const pdfBtn=pmid=>`<label class="pdfbtn">${myPdf[pmid]?"📄 PDF loaded ✓":"📄 Use my PDF"}<input type="file" accept="application/pdf,.pdf" data-mypdf="${pmid}" style="display:none"></label>`;
+const pdfBtn=pmid=>`<label class="pdfbtn">${myPdf[pmid]?"📄 Full paper added ✓":"📄 Add full paper (PDF)"}<input type="file" accept="application/pdf,.pdf" data-mypdf="${pmid}" style="display:none"></label>`;
 function deckForest(pptx,s,x,T,F){
  const rows=(x.rows||[]).map(r=>({l:String(r.label||""),e:parseFloat(r.value),lo:parseFloat(r.lo),hi:parseFloat(r.hi)})).filter(r=>r.l&&r.e>0&&r.lo>0&&r.hi>0).slice(0,10);
  if(!rows.length)return false;
@@ -1641,7 +1643,7 @@ function tidySheet(){const T=S.tidy;return `<div class="sheet" role="dialog" ari
  <div class="pk"><a href="#" data-act="tidyok">Use tidied text</a><a href="#" class="alt" data-act="tidyno">Keep mine</a></div>`}</div>`}
 function tidyFinish(ok){const T=S.tidy;if(ok){const t=document.getElementById("tidyta");setField(T.id,t?t.value:T.fixed)}S.modal=T.prev;S.tidy=null;renderModal()}
 // ---------- voice and speed while listening ----------
-function voiceLabel(){const nv=useNV(),nm=nv&&useGoogle()?GG.voices[st.ggVoice||"hd-f"].split(",")[0].replace(" (most natural)",""):nv?NV.voices[st.nvVoice||"jenny"][0].split(",")[0]:((ttsVoice()||{}).name||"Phone voice").replace(/\s*\(.*\)\s*/,"");return `${nm} · ${(+st.rate||1)}×`}
+function voiceLabel(){const nv=useNV(),nm=nv&&useGoogle()?(GG.voices[st.ggVoice]||GG.voices.f1).split(" (")[0]:nv?NV.voices[st.nvVoice||"jenny"][0].split(",")[0]:((ttsVoice()||{}).name||"Phone voice").replace(/\s*\(.*\)\s*/,"");return `${nm} · ${(+st.rate||1)}×`}
 const vBtn=()=>`<button class="vbtn" data-act="vpick" aria-label="Change voice or speed">${esc(voiceLabel())}</button>`;
 function vSheet(){
  const nv=st.engine==="natural"&&S.nvHave,cur=st.engine==="natural"&&useNV()?"nv":(ttsVoice()||{}).voiceURI;
@@ -1649,8 +1651,9 @@ function vSheet(){
  return `<div class="sheet" role="dialog" aria-label="Voice and speed"><h3>Voice and speed</h3>
  <div class="au">Speed</div><div class="row" style="flex-wrap:wrap;overflow:visible">${[["0.85","Slower"],["1","Normal"],["1.15","A bit faster"],["1.3","Faster"],["1.5","Fastest"]].map(([v,l])=>`<button class="chip ${String(st.rate||"1")===v?"on":""}" data-act="vrate" data-v="${v}">${l}</button>`).join("")}</div>
  <div class="au" style="margin-top:10px">Voice</div><div class="row" style="flex-wrap:wrap;overflow:visible">
+  ${aiURL()?Object.entries(GG.voices).map(([k,v2])=>`<button class="chip ${st.engine==="google"&&(st.ggVoice||"f1")===k?"on":""}" data-act="vset" data-v="gg:${k}">${esc(v2.split(" (")[0])}</button>`).join(""):""}
   ${S.nvHave?`<button class="chip ${cur==="nv"?"on":""}" data-act="vset" data-v="nv">${esc(NV.voices[st.nvVoice||"jenny"][0])} (natural)</button>`:""}
-  ${sys.map(v=>`<button class="chip ${cur===v.voiceURI&&!useNV()?"on":""}" data-act="vset" data-v="${esc(v.voiceURI)}">${esc(v.name.replace(/\s*\(.*\)\s*/,""))}</button>`).join("")}</div>
+  ${(isAndroid||!aiURL()?sys:[]).map(v=>`<button class="chip ${cur===v.voiceURI&&!useNV()?"on":""}" data-act="vset" data-v="${esc(v.voiceURI)}">${esc(v.name.replace(/\s*\(.*\)\s*/,""))}</button>`).join("")}</div>
  <p class="note">Changes apply straight away.</p>
  <div class="pk"><a href="#" data-act="vdone">Done</a></div></div>`;
 }
@@ -1736,7 +1739,7 @@ function renderModal(){
   ${S.slideBusy?`<div class="msg"><span class="spin"></span>${esc(S.slideBusy)}</div>`:`<label class="set"><span>Number of slides</span><select id="slidecount">${[3,4,5,6,7,8,10,12].map(n=>`<option value="${n}" ${+S.slideN===n?"selected":""}>${n}</option>`).join("")}</select></label>
   ${aiURL()?`<label class="set"><span>Design the slides with AI<br><small class="au">Free. Uses the full paper when it's open access, and picks a layout for each slide</small></span><input type="checkbox" id="slideai" ${S.slideAI?"checked":""}></label>`:""}
   <p class="note">${aiURL()&&S.slideAI?"The AI chooses the best layout for each slide: headline numbers, comparisons, bar charts, a study-design flow and a take-home message. Speaker notes are included.":"Title, study at a glance, background, methods, results, key numbers and take-home message, then a reference slide."}</p>
-  ${myPdf[m.pmid]?`<p class="note">📄 Using your PDF (${myPdf[m.pmid].pages} pages). Original figures aren't copied: the AI redraws key results as charts.</p>`:`<label class="set"><span>Include the paper's key figures<br><small class="au">Open-access papers only. A credit line is always added.</small></span><input type="checkbox" id="slidefigs" ${S.slideFigs?"checked":""}></label><p class="note" style="margin-top:0">Paywalled paper? Tap 📄 Use my PDF under the abstract to use your own copy.</p>`}
+  ${myPdf[m.pmid]?`<p class="note">📄 Using your PDF (${myPdf[m.pmid].pages} pages). Original figures aren't copied: the AI redraws key results as charts.</p>`:`<label class="set"><span>Include the paper's key figures<br><small class="au">Open-access papers only. A credit line is always added.</small></span><input type="checkbox" id="slidefigs" ${S.slideFigs?"checked":""}></label><p class="note" style="margin-top:0">Paywalled paper? Tap 📄 Add full paper (PDF) under the abstract and choose the PDF you've downloaded.</p>`}
   <div style="margin:8px 0"><b style="font-size:15px">Chart slides</b><p class="note" style="margin:2px 0 6px">Redraw key results as an editable bar chart or a forest plot.</p>
    ${(S.charts||[]).map((c,i)=>`<div class="kp" style="padding:8px 0;display:flex;justify-content:space-between;gap:8px"><span>${c.type==="bar"?"Bar chart":"Forest plot"}: ${esc(c.title||"Untitled")}</span><button class="link" data-act="chdel" data-v="${i}">Remove</button></div>`).join("")}
    ${S.chartDraft?chartForm():`<button class="link" style="color:#2E4A86;text-decoration:none;font-weight:600" data-act="chadd">+ Add a chart</button>`}</div>
@@ -1989,8 +1992,8 @@ const useNV=()=>!NV.failed&&(useGoogle()||usePiper());
 function nvFallback(text,why){
  TTS.q.unshift(text);TTS.pre=null;NV.slow=[];
  if(useGoogle()){GG.off=true;const w=WHY[why]||WHY.google;
-  if(NV.sess){toast(`The Google voice ${w}, so the Piper natural voice is reading instead.`);nvSpeakNext();return}
-  toast(`The Google voice ${w}, so the phone's voice is reading instead.`);speakNext();return}
+  if(NV.sess){toast(`The natural voice ${w}, so the Piper voice is reading instead.`);nvSpeakNext();return}
+  toast(`The natural voice ${w}, so the phone's voice is reading instead.`);speakNext();return}
  NV.failed=true;toast(why==="tooslow"?"This phone is a little slow for the natural voice, so its built-in voice will read for now.":"The natural voice couldn't play, so the phone's voice is reading instead.");speakNext();
 }
 function withTimeout(p,ms){return Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error("slow")),ms))])}
@@ -2009,7 +2012,7 @@ async function nvSpeakNext(){
 async function nvDownload(){
  const k=st.nvVoice||"jenny";if(NV.busy)return;NV.busy=true;NV.prog="Starting download";render();
  try{await nvLoad(k,p=>{NV.prog=`Downloading ${Math.round(p*100)}%`;const el=document.getElementById("nvprog");if(el)el.textContent=NV.prog});
-  st.engine="natural";save();NV.failed=false;NV.prog="";S.nvHave=true;toast("Natural voice ready. It works offline from now on.")}
+  if(st.engine!=="google")st.engine="natural";save();NV.failed=false;NV.prog="";S.nvHave=true;toast("Natural voice ready. It works offline from now on.")}
  catch(e){NV.prog="";toast(navigator.onLine===false?"You're offline. Connect to Wi-Fi to download the voice.":"Couldn't download the voice. Try again on Wi-Fi.")}
  NV.busy=false;S.nvHave=await nvIsDownloaded(k);render();
 }
@@ -2084,20 +2087,21 @@ async function aiTest(){
 
 // ---------- Kokoro: optional, most natural free voice, runs on the phone after a one-off download ----------
 // ---------- Google natural voices, streamed through the AI service (free monthly allowance) ----------
-const GG={off:false,voices:{"hd-f":"Aoede, Google HD, female (most natural)","hd-m":"Charon, Google HD, male (most natural)","n2-f":"Google Neural2, female","n2-m":"Google Neural2, male","wn-f":"Google WaveNet, female","wn-m":"Google WaveNet, male"}};
-const useGoogle=()=>false; // cloud voices switched off: no Google Cloud account or charges
+const GG={off:false,voices:{f1:"Sonia (British female)",m1:"Ryan (British male)",f2:"Libby (British female)",m2:"Thomas (British male)"}};
+const useGoogle=()=>st.engine==="google"&&!!aiURL()&&!GG.off;
 const isAndroid=/Android/i.test(navigator.userAgent);
 async function ggSynth(text){
  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),20000);let r;
- try{r=await fetch(`${aiURL()}/tts`,{method:"POST",headers:{"Content-Type":"application/json","X-Device-Id":deviceId()},body:JSON.stringify({text,voice:st.ggVoice||"hd-f",rate:+st.rate||1}),signal:ctl.signal,credentials:"omit"})}
+ try{r=await fetch(`${aiURL()}/tts`,{method:"POST",headers:{"Content-Type":"application/json","X-Device-Id":deviceId()},body:JSON.stringify({text,voice:/^[fm][12]$/.test(st.ggVoice||"")?st.ggVoice:"f1",rate:+st.rate||1}),signal:ctl.signal,credentials:"omit"})}
  catch(e){throw new Error(e.name==="AbortError"?"slow":"offline")}finally{clearTimeout(tm)}
  const j=await r.json().catch(()=>({}));
  if(!r.ok||!j.audio)throw new Error(j.error==="quota"?"quota":j.error==="ratelimit"?"limit":j.error==="setup"?"setup":"google");
+ if(typeof j.left==="number"&&j.left<5000){let d="";try{d=localStorage.getItem("cpd-tts-warned")}catch(x){}const t=new Date().toISOString().slice(0,10);if(d!==t){try{localStorage.setItem("cpd-tts-warned",t)}catch(x){}toast("This phone has about 2 abstracts left today with the natural voice. It resets tomorrow.")}}
  const bin=Uint8Array.from(atob(j.audio),c=>c.charCodeAt(0));
  return await NV.ctx.decodeAudioData(bin.buffer);
 }
 function kkCleanup(){if(st.kkHave||st.engine==="kokoro"){caches.keys().then(ks=>ks.filter(k=>/transformers/i.test(k)).forEach(k=>caches.delete(k))).catch(()=>{});st.kkHave=false;if(st.engine==="kokoro")st.engine="system";save()}}
-const WHY={quota:"has used today's free allowance",limit:"has reached this phone's limit for today",setup:"isn't set up yet",slow:"is taking too long",offline:"needs an internet connection",google:"couldn't play"};
+const WHY={quota:"has used this month's free allowance",limit:"has reached this phone's daily allowance (about 12 abstracts)",setup:"isn't set up yet",slow:"is taking too long",offline:"needs an internet connection",google:"couldn't play"};
 // ---------- pronunciation: units, symbols, statistics and clinical abbreviations ----------
 const PRON_COMMON=[["NNT","number needed to treat"],["NNH","number needed to harm"],["IQR","interquartile range"],["SD","standard deviation"],["SE","standard error"],["ARR","absolute risk reduction"],["RRR","relative risk reduction"],
  ["aHR","adjusted hazard ratio"],["aOR","adjusted odds ratio"],["IRR","incidence rate ratio"],["AUC","area under the curve"],["ROC","R O C"],["RCT","randomised controlled trial"],["RCTs","randomised controlled trials"],["ITT","intention to treat"],
