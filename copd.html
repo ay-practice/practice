@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ZgktXFQo8od1FlCzSph4kl/jo0B9Q4VYmbFKHLwAZB0=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-etFlGKGF6BwYagsrtNGJm2EsnhstDaYyBRk4c2L4nU0=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -288,11 +288,36 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 .tawrap textarea{padding-right:66px!important;min-height:104px!important}
 .tx{right:14px!important;top:8px!important}
 #q{padding:7px 12px!important;border-radius:12px!important;min-height:0!important;line-height:1.3}
+/* header: four icons */
+h1{font-size:23px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.15}.top{align-items:center!important;flex-wrap:nowrap!important}.hright{flex:0 0 auto}
+.ttl{display:flex;flex-direction:column;min-width:0}.ttl .newc{font-size:12px;line-height:1.2}
+.hright{gap:4px!important}.hicon{width:34px!important;height:34px!important;border-radius:11px!important;position:relative}
+.hicon .dot{display:none;position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:50%;background:#E8485F;box-shadow:0 0 0 2px rgba(255,255,255,.9)}.hicon.todo .dot{display:block}
+@media (max-width:380px){h1{font-size:20px!important}.hicon{width:31px!important;height:31px!important}}
+.msg.warn{background:rgba(255,244,214,.82)!important;border:1px solid rgba(217,169,63,.45)!important;color:#5a4206}
+.prof-ok{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px!important;font-size:14px}
+.help video{width:100%;max-height:58vh;border-radius:16px;background:#0b0f1a;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.help .tips{overflow-y:auto;flex:1;margin-top:10px}.help .tips p{font-size:14.5px;margin:0 0 8px;line-height:1.45}
+/* glass design */
+body{background:radial-gradient(1100px 600px at 0% -10%,#CDEDEA,transparent 60%),radial-gradient(900px 520px at 110% 8%,#FCDDE3,transparent 55%),radial-gradient(1000px 700px at 50% 115%,#D8EEF4,transparent 60%),#EBF4F4!important;background-attachment:fixed!important}
+header{background:linear-gradient(135deg,rgba(15,61,73,.96),rgba(29,106,122,.92))!important;backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid rgba(255,255,255,.16);box-shadow:0 10px 30px rgba(10,20,40,.18)}
+.tabs{background:rgba(255,255,255,.12)!important;border:1px solid rgba(255,255,255,.2);border-radius:16px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hicon{background:rgba(255,255,255,.12)!important;border:1px solid rgba(255,255,255,.28)!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.hicon.on{background:rgba(255,255,255,.95)!important}
+.art,.card,.calc,.gl,.msg,.aibox,.hl{background:rgba(255,255,255,.56)!important;backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);border:1px solid rgba(255,255,255,.78)!important;box-shadow:0 8px 26px rgba(30,40,80,.08)!important}
+.gl .kp,.card .card{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important}
+.kp{border-color:rgba(255,255,255,.7)!important}
+.msg.err{background:rgba(255,232,236,.78)!important}
+.chip:not(.on){background:rgba(255,255,255,.55)!important;border:1px solid rgba(255,255,255,.85)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.search{background:rgba(255,255,255,.7)!important;border:1px solid rgba(255,255,255,.9)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.acts>a,.acts>button,.tts button,.pdfbtn{background:rgba(255,255,255,.62)!important;border:1px solid rgba(255,255,255,.9)!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.sheet{background:rgba(255,255,255,.84)!important;backdrop-filter:blur(26px) saturate(170%);-webkit-backdrop-filter:blur(26px) saturate(170%);border-top:1px solid rgba(255,255,255,.95);box-shadow:0 -12px 40px rgba(10,20,40,.18)!important}
+.ov{background:rgba(20,25,45,.26)!important;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.np{background:rgba(15,61,73,.92)!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.2)}
 </style>
 </head>
 <body>
 <header><div class="hin">
- <div class="top"><h1>Respiratory CPD</h1><span class="hright"><span class="newc" id="newc"></span><button class="hicon" data-tab="saved" aria-label="Library"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1.3 6.3-1.3 10 .8v13.2c-3.7-2.1-7-2.1-10-.8z"/><path d="M22 5.5c-3-1.3-6.3-1.3-10 .8v13.2c3.7-2.1 7-2.1 10-.8z"/></svg></button><button class="hicon" data-tab="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
+ <div class="top"><div class="ttl"><h1>Respiratory CPD</h1><span class="newc" id="newc"></span></div><span class="hright"><button class="hicon" data-tab="saved" aria-label="Library"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1.3 6.3-1.3 10 .8v13.2c-3.7-2.1-7-2.1-10-.8z"/><path d="M22 5.5c-3-1.3-6.3-1.3-10 .8v13.2c3.7-2.1 7-2.1 10-.8z"/></svg></button><button class="hicon" data-act="help" aria-label="Help"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.4-2.7 4"/><circle cx="12" cy="17.3" r=".6" fill="currentColor"/></svg></button><button class="hicon" id="profbtn" data-act="profile" aria-label="Your profile"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg><span class="dot"></span></button><button class="hicon" data-tab="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
  <nav class="tabs" aria-label="Sections"><button data-tab="latest">Articles</button><button data-tab="guide">Guidelines</button><button data-tab="pods">Podcasts</button><button data-tab="scores">Scores</button><button data-tab="cpd">CPD</button></nav>
 </div></header>
 <main id="main"></main>
@@ -301,7 +326,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="copd-reader-v1",APPVER="21 Oct 2026 (r15)";
+const KEY="copd-reader-v1",APPVER="22 Oct 2026 (r16)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"lrm",name:"Lancet Respir Med",ta:"Lancet Respir Med",c:"#8A93A8"},
@@ -717,9 +742,6 @@ function vSettings(){
   <label class="set"><span>Try a free legal copy first<br><small class="au">Uses Unpaywall to find open-access versions</small></span><input type="checkbox" id="ftunpay" ${(st.ft||{}).unpay?"checked":""}></label>
   ${(st.ft||{}).unpay?`<label class="au" style="display:block;padding-bottom:10px">Your email (Unpaywall asks for one; it isn't shared with anyone else)<input class="search" id="ftemail" type="email" value="${esc((st.ft||{}).email||"")}" placeholder="name@example.com" autocomplete="email"></label>`:""}
  </div>
- <h3>Your details for CPD exports</h3><div class="card">
-  <label class="au" style="display:block;padding-top:8px">Your name<input class="search" id="myname" value="${esc(st.myName||"")}" placeholder="Shown at the top of your SOAR export" autocomplete="name"></label>
-  <label class="au" style="display:block;padding:6px 0 10px">GMC number (optional)<input class="search" id="mygmc" value="${esc(st.myGMC||"")}" inputmode="numeric" autocomplete="off"></label></div>
  <h3>Privacy</h3><div class="card"><p class="help" style="margin-top:8px">This app doesn't collect usage statistics. Your library, CPD log, certificates and PDFs stay on this phone. Only the paper text you ask the AI to work on is sent to the AI service, which doesn't store it.</p></div>
  <h3>Backup</h3><div class="card"><p class="help" style="margin-top:8px">Saves your Library (read later and CPD log) and settings. Do this before deleting or re-adding the app.</p>
   <div class="pk"><a href="#" data-act="backup">Save backup</a><label class="alt" style="flex:1 1 140px;text-align:center;padding:12px;border-radius:10px;font-weight:600;border:1px solid #1D5E6E;color:#1D5E6E;cursor:pointer">Restore backup<input type="file" id="restorefile" accept=".json,application/json" style="display:none"></label></div></div>
@@ -1325,7 +1347,7 @@ function vCPD(){
   <div class="calc" style="--cc:#1D5E6E;margin-top:8px"><div class="au">Total CPD${S.cpdP==="all"?"":`, ${fmtD(a)} to ${fmtD(b)}`}</div>
    <div class="res low" style="margin-top:6px"><div class="big">${(tot/60).toFixed(1)} hours</div><p>${(()=>{const k=c=>c.kind||(String(c.pmid).startsWith("pod:")?"podcast":"reading"),g={reading:["Journal reading",0,0],podcast:["Podcasts",0,0],event:["Conferences and courses",0,0],online:["Online learning",0,0]};L.forEach(c=>{const x=g[k(c)]||g.reading;x[1]+=c.minutes;x[2]++});return Object.values(g).filter(x=>x[2]).map(x=>`${x[0]}: ${(x[1]/60).toFixed(1)} h (${x[2]})`).join("<br>")||"Nothing logged yet"})()}</p></div>
    <div class="pk" style="margin-top:8px"><a href="#" data-act="cpdevents">+ Log a course, conference or webinar</a></div>
-   ${L.length?`<div class="card" style="margin-top:12px;padding:8px 12px;background:rgba(255,255,255,.7)"><div style="display:flex;gap:8px"><label class="au" style="flex:1.4">Your name<input class="search" id="cpdname" value="${esc(st.myName||"")}" placeholder="Name for SOAR" autocomplete="name"></label><label class="au" style="flex:1">GMC number<input class="search" id="cpdgmc" value="${esc(st.myGMC||"")}" inputmode="numeric" autocomplete="off"></label></div></div><div class="pk" style="margin-top:8px"><a href="#" data-act="soarpdf">Export for SOAR (PDF)</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="cpdcsv">Spreadsheet</a><a href="#" class="alt" data-act="cpdcopy">Copy summary</a></div>`:""}</div>
+   ${L.length?`<div style="margin-top:12px">${profileLine()}</div><div class="pk" style="margin-top:8px"><a href="#" data-act="soarpdf">Export for SOAR (PDF)</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="cpdcsv">Spreadsheet</a><a href="#" class="alt" data-act="cpdcopy">Copy summary</a></div>`:""}</div>
   ${L.length?`<div class="gl" style="margin-top:12px">${L.map(c=>`<div class="kp"><div style="display:flex;justify-content:space-between"><b style="font-size:14px">${c.end&&c.end!==c.date?fmtRange(c.date,c.end):fmtD(c.date)}</b><b style="font-size:14px">${c.credits!=null?`${c.credits} ${c.credits===1?"credit":"credits"}`:hrs(c.minutes)}</b></div>
    <div style="font-family:'Iowan Old Style',Charter,Georgia,serif;font-size:16px;margin:2px 0">${esc(c.title)}</div><div class="au">${esc(c.src||"")}${c.venue?` · ${esc(c.venue)}`:""}</div>${c.sessions?`<div class="au" style="margin-top:4px"><b>Sessions:</b> ${esc(c.sessions)}</div>`:""}
    ${c.ref?[["Learning",c.ref.learn],["Change to practice",c.ref.change],["Further learning",c.ref.further]].filter(x=>x[1]).map(([k,v])=>`<div class="au" style="margin-top:4px"><b>${k}:</b> ${esc(v)}</div>`).join("")+((c.ref.domains||[]).length?`<div class="tags">${c.ref.domains.map(d=>`<span class="tag" style="--tc:#5A6E8C">${esc(d)}</span>`).join("")}</div>`:""):c.note?`<div class="au" style="margin-top:4px;font-style:italic">${esc(c.note)}</div>`:""}
@@ -1640,14 +1662,12 @@ async function soarStart(){
  S.modal={type:"soar"};renderModal();
 }
 function soarSheet(){const n=S.soar.n;return `<div class="sheet" role="dialog" aria-label="Export for SOAR"><h3>Export for SOAR</h3>
- <p class="note">Your name and GMC number appear at the top of the document.</p>
- <label class="au" style="display:block">Your name<input class="search" id="myname" value="${esc(st.myName||"")}" placeholder="For example, Dr A Smith" autocomplete="name"></label>
- <label class="au" style="display:block;margin-top:6px">GMC number<input class="search" id="mygmc" value="${esc(st.myGMC||"")}" inputmode="numeric" autocomplete="off"></label>
+ ${profileLine()}
  ${n?`<label class="set"><span>Attach certificates<br><small class="au">${n} saved for this period, added at the end of the PDF</small></span><input type="checkbox" id="soarattach" ${S.soar.attach?"checked":""}></label>`:`<p class="note">No certificates saved for this period. You can attach them to conference and course entries in the CPD log.</p>`}
  <div class="pk"><a href="#" data-act="soargo">Make PDF</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`}
 function soarGo(){
  const nm=(st.myName||"").trim(),g=(st.myGMC||"").trim();
- if(!nm||!g){toast(!nm&&!g?"Please add your name and GMC number.":!nm?"Please add your name.":"Please add your GMC number.");const x=document.getElementById(!nm?"myname":"mygmc");if(x)x.focus();return}
+ if(!nm||!g){profileOpen({type:"soar"});return}
  soarPDF(!!(S.soar&&S.soar.attach&&S.soar.n));
 }
 const PDFJS_URL="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js",PDFJS_W="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
@@ -1682,6 +1702,40 @@ function cpdEdit(id){
 }
 
 document.addEventListener("focusin",e=>{if(e.target.classList&&e.target.classList.contains("selall"))e.target.select()});
+const APPTITLE="Respiratory CPD",HELPVIDEO="help-respiratory.mp4";
+// ---------- profile: name and GMC number for the CPD document ----------
+const profileDone=()=>!!((st.myName||"").trim()&&(st.myGMC||"").trim());
+function profileSheet(){const back=S.profBack;return `<div class="sheet" role="dialog" aria-label="Your profile"><h3>Your profile</h3>
+ <p class="note">Your name and GMC number appear at the top of your CPD document for SOAR and appraisal. They're stored only on this phone.</p>
+ ${back?`<div class="msg warn">Add your name and GMC number so they're included on your CPD document.</div>`:""}
+ <label class="au" style="display:block;margin-top:8px">Name<input class="search" id="profname" value="${esc(st.myName||"")}" placeholder="For example, Dr A Smith" autocomplete="name"></label>
+ <label class="au" style="display:block;margin-top:8px">GMC number<input class="search" id="profgmc" value="${esc(st.myGMC||"")}" inputmode="numeric" maxlength="7" placeholder="7 digits" autocomplete="off"></label>
+ <div class="pk"><a href="#" data-act="profsave">${back?"Save and continue":"Save"}</a><a href="#" class="alt" data-act="profcancel">Cancel</a></div></div>`}
+function profileOpen(back){S.profBack=back||null;S.modal={type:"profile"};renderModal();setTimeout(()=>{const x=document.getElementById((st.myName||"").trim()?"profgmc":"profname");if(x&&back)x.focus()},150)}
+function profileSave(){
+ const n=(document.getElementById("profname")||{}).value||"",g=((document.getElementById("profgmc")||{}).value||"").replace(/\s/g,"");
+ if(g&&!/^\d{7}$/.test(g)){toast("A GMC number has 7 digits.");return}
+ st.myName=n.trim();st.myGMC=g;save();
+ const back=S.profBack;S.profBack=null;
+ if(back&&profileDone()){S.modal=back;renderModal();toast("Profile saved");return}
+ S.modal=null;renderModal();render();toast(profileDone()?"Profile saved":"Saved. Add both your name and GMC number for your CPD document.");
+}
+const profileLine=()=>profileDone()?`<div class="card prof-ok"><span>Exporting as <b>${esc(st.myName)}</b> · GMC ${esc(st.myGMC)}</span><button class="link" data-act="profile">Edit</button></div>`
+ :`<div class="msg warn">Add your name and GMC number to your profile so they're included on your CPD document. <button class="link" data-act="profile">Open profile</button></div>`;
+// ---------- help: a short video and tips ----------
+function helpSheet(){return `<div class="sheet big help" role="dialog" aria-label="Help"><h3>How to use ${APPTITLE}</h3>
+ <video id="helpvid" src="${HELPVIDEO}" controls playsinline preload="metadata" poster=""></video>
+ <div class="tips">
+  <p><b>Articles:</b> pick a topic or journal, or search. Tap <b>Abstract</b>, then <b>▶ Listen</b> or <b>✨ Summarise</b>.</p>
+  <p><b>Saving and CPD:</b> <b>Archive</b> keeps a paper in the Library (the book icon). <b>CPD</b> logs the time with your reflection; use the microphone to dictate.</p>
+  <p><b>CPD tab:</b> your CPD log, conferences and courses, certificates and <b>Export for SOAR</b>.</p>
+  <p><b>Paywalled papers:</b> tap <b>📄 Add full paper (PDF)</b> to use the PDF you've downloaded for a summary or slides.</p>
+  <p><b>Guidelines, Podcasts and Scores:</b> quick references, listening for CPD, and calculators.</p>
+  <p><b>Profile and Settings:</b> the person icon holds your name and GMC number; the gear has voices, topics, journals and backup.</p>
+ </div>
+ <div class="pk"><a href="#" data-act="mclose">Close</a></div></div>`}
+const ICON_HELP='<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.4-2.7 4"/><circle cx="12" cy="17.3" r=".6" fill="currentColor"/></svg>';
+
 function renderModal(){
  const el=document.getElementById("modal");if(!el)return;
  const m=S.modal;if(!m){el.innerHTML="";el.className="";return}
@@ -1691,6 +1745,8 @@ function renderModal(){
  if(m.type==="tidy"&&S.tidy){el.innerHTML=tidySheet();return}
  if(m.type==="voice"){el.innerHTML=vSheet();return}
  if(m.type==="pron"){el.innerHTML=pronSheet();return}
+ if(m.type==="profile"){el.innerHTML=profileSheet();return}
+ if(m.type==="help"){el.innerHTML=helpSheet();const v=document.getElementById("helpvid");if(v)v.onerror=()=>{v.outerHTML=`<div class="msg">The help video isn't available right now. The tips below cover the main features.</div>`};return}
  if(m.type==="mypdf"){el.innerHTML=myPdfSheet(m);return}
  if(m.type==="soar"&&S.soar){el.innerHTML=soarSheet();return}
  if(m.type==="slides"&&S.slideFile)el.innerHTML=`<div class="sheet" role="dialog" aria-label="Slides ready"><h3>Your slides are ready</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p><div class="res low"><p>${esc(S.slideMsg||"")}</p></div><p class="note">Tap Save or share, then choose Save to Files, PowerPoint, Keynote, Mail or WhatsApp.</p><div class="pk"><a href="#" data-act="slideshare">Save or share</a><a href="#" class="alt" data-act="mclose">Done</a></div></div>`;
@@ -2097,7 +2153,7 @@ function pronEdit(i,k,v){const L=pronList().map(r=>r.slice());if(!L[i])return;L[
 
 function ttsNext(){useNV()?nvSpeakNext():speakNext()}
 function render(){
- document.querySelectorAll(".tabs button,.hicon").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
+ document.querySelectorAll(".tabs button,.hicon").forEach(b=>b.classList.toggle("on",!!b.dataset.tab&&b.dataset.tab===S.tab));{const pb=document.getElementById("profbtn");if(pb)pb.classList.toggle("todo",!profileDone())};
  const n=S.newIds.size;document.getElementById("newc").textContent=n?`${n} new`:"";
  const fid=document.activeElement&&["q","dq"].includes(document.activeElement.id)?document.activeElement.id:"";
  $m.innerHTML=S.tab==="latest"?vLatest():S.tab==="guide"?vGuide():S.tab==="pods"?vPods():S.tab==="scores"?vScores():S.tab==="saved"?vSaved():S.tab==="cpd"?vCPDTab():vSettings();
@@ -2202,6 +2258,10 @@ document.addEventListener("click",e=>{
  else if(a==="prondel"){const L=pronList().map(r=>r.slice());L.splice(+b.dataset.v,1);st.pron=L;save();renderModal()}
  else if(a==="pronhear"){const r=pronList()[+b.dataset.v];if(r&&r[0])ttsSay([speakable(r[0])],"test")}
  else if(a==="pronreset"){e.preventDefault();if(confirm("Reset the pronunciation list to the defaults? Your changes will be lost.")){delete st.pron;save();renderModal()}}
+ else if(a==="profile"){e.preventDefault();profileOpen(null)}
+ else if(a==="help"){S.modal={type:"help"};renderModal()}
+ else if(a==="profsave"){e.preventDefault();profileSave()}
+ else if(a==="profcancel"){e.preventDefault();S.modal=S.profBack||null;S.profBack=null;renderModal()}
  else if(a==="backup"){e.preventDefault();backupNow()}
  else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;(S.slideAI&&aiURL()?makeDeck:makeSlides)(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
  else if(a==="cpd"){S.modal={type:"cpd",pmid:b.dataset.id};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
