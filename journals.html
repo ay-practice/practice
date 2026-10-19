@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-xeT9axlc3Qgl5ZWOngDgEb5pf6zn4dlcBtKEXFIW++8=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-I/SHBA0Re01bSrgy7YuFCVk9QYepiebmgEsnd2xcbfQ=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -274,12 +274,25 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 .prow{display:flex;gap:6px;align-items:center;margin-bottom:6px}.prow input{padding:8px 10px;font-size:15px}.prow input:first-child{flex:0 0 32%}.prow .au{flex:0 0 auto}
 .pbtn{flex:0 0 34px;height:34px;border-radius:8px;border:1px solid #DCE0F4;background:#fff;color:var(--accent);padding:0}
 .pdfbtn{display:inline-flex;align-items:center;border:1px solid #DCE0F4;background:#fff;color:var(--accent);border-radius:999px;padding:7px 14px;font-weight:700;font-size:14px;cursor:pointer}
+/* one row of buttons, Library and Settings as icons */
+.top{align-items:center!important}
+.hright{display:flex;align-items:center;gap:6px}
+.hicon{width:40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;display:flex;align-items:center;justify-content:center;padding:0}
+.hicon.on{background:#fff;color:#1C2541}
+.tabs button{flex:1 1 auto!important;font-size:15px!important;padding:9px 4px!important;letter-spacing:0!important}
+@media (max-width:380px){.tabs button{font-size:14px!important;padding:9px 2px!important}}
+/* a bigger, clearer microphone */
+.mic{width:50px!important;height:50px!important;right:8px!important;bottom:8px!important;background:#2E3A6B!important;color:#fff!important;border:0!important;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+.mic svg{width:26px;height:26px}
+.mic.on{background:#C0504D!important}
+.tawrap textarea{padding-right:66px!important;min-height:104px!important}
+.tx{right:14px!important;top:8px!important}
 </style>
 </head>
 <body>
 <header><div class="hin">
- <div class="top"><h1>Cardiology CPD</h1><span class="newc" id="newc"></span></div>
- <nav class="tabs" aria-label="Sections"><button data-tab="latest">Articles</button><button data-tab="guide">Guidelines</button><button data-tab="pods">Podcasts</button><button data-tab="scores">Scores</button><button data-tab="saved">Library</button><button data-tab="settings">Settings</button></nav>
+ <div class="top"><h1>Cardiology CPD</h1><span class="hright"><span class="newc" id="newc"></span><button class="hicon" data-tab="saved" aria-label="Library"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1.3 6.3-1.3 10 .8v13.2c-3.7-2.1-7-2.1-10-.8z"/><path d="M22 5.5c-3-1.3-6.3-1.3-10 .8v13.2c3.7-2.1 7-2.1 10-.8z"/></svg></button><button class="hicon" data-tab="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
+ <nav class="tabs" aria-label="Sections"><button data-tab="latest">Articles</button><button data-tab="guide">Guidelines</button><button data-tab="pods">Podcasts</button><button data-tab="scores">Scores</button><button data-tab="cpd">CPD</button></nav>
 </div></header>
 <main id="main"></main>
 <div id="modal"></div>
@@ -287,7 +300,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="journal-reader-v1",APPVER="20 Oct 2026 (z)";
+const KEY="journal-reader-v1",APPVER="20 Oct 2026 (z5)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -357,7 +370,7 @@ const seen=new Set(st.seen);
 const S={tab:"latest",cat:"all",j:"all",q:"",qscope:"mine",qsort:"date",lib:"later",cpdP:"12m",cpdFrom:"",cpdTo:"",modal:null,slideN:6,slideBusy:"",slideFigs:true,charts:[],chartDraft:null,cpdMin:30,cpdDate:"",cpdNote:"",aiOpen:{},aiBusy:{},aiTest:"",slideAI:true,cpdRef:{domains:[]},tEdit:null,jfind:null,jq:"",jgen:false,items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,
  g:"esc",gsub:"esc",gl:{},gerr:{},gload:{},dq:"",dvlaErr:false,dvlaLoading:false};
 const $m=document.getElementById("main");
-applyJournals();applyTopics();if(!st.engine)st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}try{kkBoot()}catch(e){}try{for(const k of ["cpd-usage-cardiology","cpd-usage-cardiology-sent","cpd-usage-respiratory","cpd-usage-respiratory-sent","cpd-stats-off","cpd-stats-noticed"])localStorage.removeItem(k)}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
+applyJournals();applyTopics();if(!st.engine)st.engine="system";if(st.engine==="kokoro"||st.engine==="google")st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}try{kkCleanup()}catch(e){}try{for(const k of ["cpd-usage-cardiology","cpd-usage-cardiology-sent","cpd-usage-respiratory","cpd-usage-respiratory-sent","cpd-stats-off","cpd-stats-noticed"])localStorage.removeItem(k)}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const clean=s=>String(s||"").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'");
 const catsOf=title=>{const c=CATS.filter(x=>x.re.test(title)).map(x=>x.id);return c.length?c:["oth"]};
@@ -538,7 +551,7 @@ function card(it){
    <button class="${cpdFor(it.pmid)?"arch on":""}" data-act="cpd" data-id="${it.pmid}">${cpdFor(it.pmid)?"CPD ✓":"CPD"}</button>
    <button class="arch ${sv?"on":""}" data-act="star" data-id="${it.pmid}" aria-pressed="${sv}">${sv?"Saved":"Archive"}</button>
   </div>
-  ${S.tab==="saved"&&sv&&!S.open[it.pmid]&&(aiURL()||(st.aiSum||{})[it.pmid])?`<div style="margin-top:8px">${aiBox(it.pmid)||`<button class="link" style="color:#4B3C8F;text-decoration:none;font-weight:700;padding:0" data-act="aisum" data-id="${it.pmid}">✨ AI summary${(st.aiSum||{})[it.pmid]?"":" (uses the full text when it's free)"}</button> ${pdfBtn(it.pmid)}`}${(st.aiSum||{})[it.pmid]&&S.aiOpen[it.pmid]?`<button class="link" style="padding:0;margin-top:4px" data-act="aisum" data-id="${it.pmid}">Hide summary</button>`:""}</div>`:""}
+  ${S.tab==="saved"&&sv&&!S.open[it.pmid]&&(aiURL()||(st.aiSum||{})[it.pmid])?`<div style="margin-top:8px">${aiBox(it.pmid)||`<button class="link" style="color:#4B3C8F;text-decoration:none;font-weight:700;padding:0" data-act="aisum" data-id="${it.pmid}">✨ Summarise${(st.aiSum||{})[it.pmid]?"":" (uses the full text when it's free)"}</button> ${pdfBtn(it.pmid)}`}${(st.aiSum||{})[it.pmid]&&S.aiOpen[it.pmid]?`<button class="link" style="padding:0;margin-top:4px" data-act="aisum" data-id="${it.pmid}">Hide summary</button>`:""}</div>`:""}
   ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:aiBox(it.pmid)+ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")+ttsBar(it.pmid)}</div>`:""}
  </article>`;
 }
@@ -560,7 +573,7 @@ function vSIGN(){return `<p class="note">Scottish Intercollegiate Guidelines Net
  <div class="gl">${SIGNL.map(([c,tt,y,u])=>`<a class="gi" href="https://www.sign.ac.uk/guidelines/${u}/" target="_blank" rel="noopener"><div class="code">${c}, ${y}</div>${esc(tt)}</a>`).join("")}</div>
  <p class="note">An update of SIGN 149 (risk estimation) is in progress. <a href="https://www.sign.ac.uk/guidelines/" target="_blank" rel="noopener">See all SIGN guidelines</a>, or use the free SIGN Guidelines app for recommendations on the go.</p>`}
 function vGuide(){
- const top=[["esc","ESC"],["acc","ACC/AHA"],["nice","NICE"],["sign","SIGN"],["dvla","DVLA"],["caa","CAA"]].map(([id,l])=>`<button class="chip ${S.g===id||(id==="esc"&&S.g==="pocket")?"on":""}" data-act="g" data-v="${id}">${l}</button>`).join("");
+ const top=[["esc","ESC"],["acc","ACC/AHA"],["nice","NICE"],["sign","SIGN"],["dvla","DVLA"],["caa","CAA"]].map(([id,l])=>`<button class="chip ${S.g===id||(id==="esc"&&S.g==="pocket")||(id==="dvla"&&S.g==="dvsync")?"on":""}" data-act="g" data-v="${id}">${l}</button>`).join("");
  let body="";
  if(S.g==="sign"){body=vSIGN()}
  else if(["esc","pocket","acc","nice"].includes(S.g)){
@@ -583,8 +596,8 @@ function vGuide(){
     ${S.gload[k]?`<div class="msg"><span class="spin"></span>Loading from PubMed</div>`:""}
     ${list?list.length?list.map(card).join(""):`<div class="msg">No guidelines found.</div>`:""}`;
   }
- }else if(S.g==="dvla"){
-  const dsub=`<div class="sub">${[["cv","Cardiovascular"],["sync","Syncope and blackouts"]].map(([id,l])=>`<button class="chip ${(S.dv||"cv")===id?"on":""}" data-act="dv" data-v="${id}">${l}</button>`).join("")}</div>`;
+ }else if(S.g==="dvla"||S.g==="dvsync"){
+  const dsub=`<div class="sub">${[["dvla","DVLA cardiovascular"],["dvsync","DVLA syncope"]].map(([id,l])=>`<button class="chip ${S.g===id?"on":""}" data-act="g" data-v="${id}">${l}</button>`).join("")}</div>`;S.dv=S.g==="dvsync"?"sync":"cv";
   if(S.dv==="sync"){
    if((!st.dvlaSync||Date.now()-st.dvlaSync.at>7*864e5)&&!S.dsLoading&&!S.dsErr)setTimeout(()=>loadDVLASync());
    if(st.dvlaSync&&dsSrc!==st.dvlaSync.html){dsSecs=cleanDoc(st.dvlaSync.html);dsSrc=st.dvlaSync.html}
@@ -616,10 +629,9 @@ function vGuide(){
  }
  return `<div class="row">${top}</div>${body}`;
 }
+function vCPDTab(){const L=S.lib==="events"?"events":"cpd";return `<div class="row">${[["cpd","CPD log"],["events","Conferences and courses"]].map(([id,l])=>`<button class="chip ${L===id?"on":""}" data-act="lib" data-v="${id}">${l}</button>`).join("")}</div>`+(L==="events"?vEvents():vCPD())}
 function vSaved(){
- const sub=`<div class="row">${[["later","Read later"],["cpd","CPD log"],["events","Conferences"]].map(([id,l])=>`<button class="chip ${S.lib===id?"on":""}" data-act="lib" data-v="${id}">${l}</button>`).join("")}</div>`;
- if(S.lib==="cpd")return sub+vCPD();
- if(S.lib==="events")return sub+vEvents();
+ const sub="";
  const items=Object.values(st.saved).sort((a,b)=>(b.at||0)-(a.at||0));
  return sub+(items.length?`<div class="pk" style="margin-top:4px"><a href="#" data-act="listenall">▶ Listen to all ${items.length}</a></div><p class="note" style="margin-top:0">Reads each title and abstract in turn. Keep the app open with the screen on, as iPhone stops reading when it locks.</p><p class="help">${items.length} archived ${items.length===1?"article":"articles"} to read later, newest first. Tap Saved to remove one.</p>${items.map(card).join("")}`:`<div class="msg">Nothing archived yet. Tap Archive on any article or guideline to keep it here to read later.</div>`);
 }
@@ -632,14 +644,13 @@ function vSettings(){
  ${vJournalSettings()}
  <h3>Reading aloud</h3><div class="card">
   <p class="help" style="margin-top:8px">Open an abstract and tap Listen. Hazard ratios are read simply and confidence intervals are skipped.</p>
-  <label class="set"><span>Voice type</span><select id="enginesel"><option value="natural" ${st.engine==="natural"?"selected":""}>Natural voice (recommended)</option><option value="kokoro" ${st.engine==="kokoro"?"selected":""}>Kokoro, most natural (larger download)</option><option value="system" ${st.engine!=="natural"&&st.engine!=="kokoro"?"selected":""}>Phone's built-in voice</option></select></label>
+  <label class="set"><span>Voice type</span><select id="enginesel"><option value="natural" ${st.engine==="natural"?"selected":""}>Piper natural voice (offline, one-off download)</option><option value="system" ${st.engine!=="natural"?"selected":""}>${isAndroid?"Google voice (built into Android)":"Phone's built-in voice"}</option></select></label>
   ${st.engine==="natural"?`<label class="set"><span>Natural voice</span><select id="nvvoice">${Object.entries(NV.voices).map(([k,v])=>`<option value="${k}" ${(st.nvVoice||"jenny")===k?"selected":""}>${v[0]}</option>`).join("")}</select></label>
    ${S.nvHave?`<p class="note">Downloaded and ready. It works offline. <button class="link" data-act="nvrm">Remove it</button></p>`:`<div class="pk"><a href="#" data-act="nvdl">${NV.busy?"Downloading…":"Download this voice (about 60 MB, once)"}</a></div><p class="note"><span id="nvprog">${esc(NV.prog||"")}</span> Free, natural-sounding and private: it runs on your phone, with nothing sent anywhere. Best downloaded on Wi-Fi.</p>`}`:""}
-  ${st.engine==="kokoro"?`<label class="set"><span>Kokoro voice</span><select id="kkvoice">${Object.entries(KK.voices).map(([k,v])=>`<option value="${k}" ${(st.kkVoice||"bf_emma")===k?"selected":""}>${v}</option>`).join("")}</select></label>
-   ${st.kkHave?`<p class="note">Downloaded${KK.tts?" and ready":", loading"}. Works offline. All five Kokoro voices are included. <button class="link" data-act="kktest">Test Kokoro</button> · <button class="link" data-act="kkrm">Remove it</button></p>${S.kkDiag?`<p class="note" id="kkdiag">${esc(S.kkDiag)}</p>`:""}`:`<div class="pk"><a href="#" data-act="kkdl">${KK.busy?"Downloading…":"Download Kokoro (about 90 MB, once)"}</a></div><p class="note"><span id="kkprog">${esc(KK.prog||"")}</span> The most natural free voice. It runs on your phone with nothing sent anywhere, but needs a recent phone: on older ones it may pause between sentences, and if it is too slow the app switches to the Piper natural voice (if downloaded) or the phone's voice. Best downloaded on Wi-Fi.</p>`}`:""}${st.engine==="natural"||st.engine==="kokoro"?"":TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
+  ${st.engine==="natural"||st.engine==="google"?"":TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
   <label class="set"><span>Speed</span><select id="ratesel">${[["0.85","Slower"],["1","Normal"],["1.15","A bit faster"],["1.3","Faster"],["1.5","Fastest"]].map(([v,l])=>`<option value="${v}" ${String(st.rate||"1")===v?"selected":""}>${l}</option>`).join("")}</select></label>
   <div class="pk"><a href="#" data-act="ttstest">Test voice</a><a href="#" class="alt" data-act="pronopen">Pronunciation list (${pronList().length})</a></div>
-  ${st.engine==="natural"||st.engine==="kokoro"?"":`<p class="note"><b>For the most natural sound</b>, choose Natural voice above, or download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>`}
+  ${isAndroid&&st.engine!=="natural"?`<p class="note">On Android, this uses Google's own voices, which are free and work offline. For more voices, open your phone's <b>Settings › Text-to-speech output</b> (often under Accessibility or General management), choose <b>Speech Services by Google</b>, and download <b>English (United Kingdom)</b>.</p>`:""}${st.engine==="natural"||st.engine==="google"||isAndroid?"":`<p class="note"><b>For the most natural sound</b>, choose Natural voice above, or download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>`}
  </div>
  <h3>Pronunciation</h3><div class="card"><p class="help" style="margin-top:8px">How abbreviations are read aloud. Units, symbols and statistics are handled automatically; edit, add or remove abbreviations here.</p><div class="pk" style="margin-bottom:10px"><a href="#" data-act="pronopen">Edit pronunciation list (${pronList().length} words)</a></div></div>
  <h3>AI features</h3><div class="card">
@@ -1191,7 +1202,7 @@ async function myPdfLoad(pmid,file){
 function myPdfSheet(m){const P=myPdf[m.pmid];return `<div class="sheet" role="dialog" aria-label="Use my PDF"><h3>📄 Use my PDF</h3>
  ${S.pdfBusy||!P?`<div class="msg"><span class="spin"></span><span id="pdfmsg">${esc(S.pdfBusy||"Reading")}</span></div>`:`<div class="res low"><p>Read ${P.pages} ${P.pages===1?"page":"pages"} of <b>${esc(P.name)}</b> on your phone.</p></div>
  <p class="note">The PDF itself stays on your phone and isn't kept after you close the app. Only the extracted text is sent to the AI service to write your summary or slides, and the service doesn't store it. Original figures aren't copied: the AI redraws key results as charts instead.</p>
- <div class="pk"><a href="#" data-act="mypdfsum">✨ AI summary from the PDF</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="mypdfslides">Make slides from the PDF</a><a href="#" class="alt" data-act="mclose">Done</a></div>`}</div>`}
+ <div class="pk"><a href="#" data-act="mypdfsum">✨ Summarise the PDF</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="mypdfslides">Make slides from the PDF</a><a href="#" class="alt" data-act="mclose">Done</a></div>`}</div>`}
 const pdfBtn=pmid=>`<label class="pdfbtn">${myPdf[pmid]?"📄 PDF loaded ✓":"📄 Use my PDF"}<input type="file" accept="application/pdf,.pdf" data-mypdf="${pmid}" style="display:none"></label>`;
 function deckForest(pptx,s,x,T,F){
  const rows=(x.rows||[]).map(r=>({l:String(r.label||""),e:parseFloat(r.value),lo:parseFloat(r.lo),hi:parseFloat(r.hi)})).filter(r=>r.l&&r.e>0&&r.lo>0&&r.hi>0).slice(0,10);
@@ -1413,7 +1424,7 @@ async function evRefresh(force){
  const c=st.evCache;
  if(c&&c.list&&(!force&&Date.now()-c.at<7*864e5)){evApply(c.list);return}
  try{const r=await fetch("cpd-events.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const j=await r.json();
-  if(Array.isArray(j.events)&&j.events.length){st.evCache={updated:j.updated||"",list:j.events,at:Date.now()};save();evApply(j.events);if(S.tab==="saved"&&S.lib==="events")render();if(force)toast(`Conference list updated (${j.updated||"latest"})`)}}
+  if(Array.isArray(j.events)&&j.events.length){st.evCache={updated:j.updated||"",list:j.events,at:Date.now()};save();evApply(j.events);if(S.tab==="cpd"&&S.lib==="events")render();if(force)toast(`Conference list updated (${j.updated||"latest"})`)}}
  catch(e){if(c&&c.list)evApply(c.list);if(force)toast("Couldn't check for an updated list just now.")}
 }
 const evUpdated=()=>(st.evCache&&st.evCache.updated)||EV_BUILTIN;
@@ -1630,25 +1641,24 @@ function tidySheet(){const T=S.tidy;return `<div class="sheet" role="dialog" ari
  <div class="pk"><a href="#" data-act="tidyok">Use tidied text</a><a href="#" class="alt" data-act="tidyno">Keep mine</a></div>`}</div>`}
 function tidyFinish(ok){const T=S.tidy;if(ok){const t=document.getElementById("tidyta");setField(T.id,t?t.value:T.fixed)}S.modal=T.prev;S.tidy=null;renderModal()}
 // ---------- voice and speed while listening ----------
-function voiceLabel(){const nv=useNV(),nm=nv&&st.engine==="kokoro"?KK.voices[st.kkVoice||"bf_emma"].split(",")[0]:nv?NV.voices[st.nvVoice||"jenny"][0].split(",")[0]:((ttsVoice()||{}).name||"Phone voice").replace(/\s*\(.*\)\s*/,"");return `${nm} · ${(+st.rate||1)}×`}
+function voiceLabel(){const nv=useNV(),nm=nv&&useGoogle()?GG.voices[st.ggVoice||"hd-f"].split(",")[0].replace(" (most natural)",""):nv?NV.voices[st.nvVoice||"jenny"][0].split(",")[0]:((ttsVoice()||{}).name||"Phone voice").replace(/\s*\(.*\)\s*/,"");return `${nm} · ${(+st.rate||1)}×`}
 const vBtn=()=>`<button class="vbtn" data-act="vpick" aria-label="Change voice or speed">${esc(voiceLabel())}</button>`;
 function vSheet(){
- const nv=st.engine==="natural"&&S.nvHave,cur=useNV()&&st.engine==="natural"?"nv":(ttsVoice()||{}).voiceURI;
+ const nv=st.engine==="natural"&&S.nvHave,cur=st.engine==="natural"&&useNV()?"nv":(ttsVoice()||{}).voiceURI;
  const sys=TTS.voices.slice(0,8);
  return `<div class="sheet" role="dialog" aria-label="Voice and speed"><h3>Voice and speed</h3>
  <div class="au">Speed</div><div class="row" style="flex-wrap:wrap;overflow:visible">${[["0.85","Slower"],["1","Normal"],["1.15","A bit faster"],["1.3","Faster"],["1.5","Fastest"]].map(([v,l])=>`<button class="chip ${String(st.rate||"1")===v?"on":""}" data-act="vrate" data-v="${v}">${l}</button>`).join("")}</div>
  <div class="au" style="margin-top:10px">Voice</div><div class="row" style="flex-wrap:wrap;overflow:visible">
   ${S.nvHave?`<button class="chip ${cur==="nv"?"on":""}" data-act="vset" data-v="nv">${esc(NV.voices[st.nvVoice||"jenny"][0])} (natural)</button>`:""}
-  ${st.kkHave?Object.entries(KK.voices).map(([k,v2])=>`<button class="chip ${st.engine==="kokoro"&&(st.kkVoice||"bf_emma")===k?"on":""}" data-act="vset" data-v="kk:${k}">${esc(v2.split(",")[0])} (Kokoro)</button>`).join(""):""}
   ${sys.map(v=>`<button class="chip ${cur===v.voiceURI&&!useNV()?"on":""}" data-act="vset" data-v="${esc(v.voiceURI)}">${esc(v.name.replace(/\s*\(.*\)\s*/,""))}</button>`).join("")}</div>
- <p class="note">Changes apply straight away. Other natural voices can be downloaded in Settings › Reading aloud.</p>
+ <p class="note">Changes apply straight away.</p>
  <div class="pk"><a href="#" data-act="vdone">Done</a></div></div>`;
 }
 function ttsRestart(){
  if(!TTS.playing)return;const cur=TTS.cur;TTS.gen++;try{speechSynthesis.cancel()}catch(e){}if(NV.src)try{NV.src.stop()}catch(e){}
  if(cur)TTS.q.unshift(cur);TTS.pre=null;TTS.paused=false;if(NV.ctx&&NV.ctx.state==="suspended")NV.ctx.resume();if(useNV())nvCtx();ttsNext();render();
 }
-function vSet(v){if(v.startsWith("kk:")){st.engine="kokoro";st.kkVoice=v.slice(3);NV.failed=false;save();if(KK.tts)ttsRestart();else{toast("Loading Kokoro…");kkLoad().then(()=>ttsRestart()).catch(()=>{NV.failed=true;toast("Couldn't load Kokoro just now.")})}renderModal();return}
+function vSet(v){if(v.startsWith("gg:")){st.engine="google";st.ggVoice=v.slice(3);GG.off=false;NV.failed=false;save();if(TTS.playing)nvCtx();ttsRestart();renderModal();return}
  if(v==="nv"){st.kkVoice=st.kkVoice;if(!S.nvHave){toast("Download the natural voice in Settings first.");return}st.engine="natural";NV.failed=false;if(!NV.sess)nvLoad(st.nvVoice||"jenny").catch(()=>{NV.failed=true})}else{st.engine="system";st.voice=v}save();ttsRestart();renderModal()}
 // ---------- certificates stored on the phone ----------
 const CERTDB=KEY+"-certs";
@@ -1657,7 +1667,7 @@ async function cAll(){const db=await cDB();return new Promise((res,rej)=>{const 
 async function cPut(o){const db=await cDB();return new Promise((res,rej)=>{const tx=db.transaction("c","readwrite");tx.objectStore("c").put(o);tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})}
 async function cDel(id){const db=await cDB();return new Promise((res,rej)=>{const tx=db.transaction("c","readwrite");tx.objectStore("c").delete(id);tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})}
 let certMeta=null;
-async function certRefresh(){try{certMeta={};for(const c of await cAll())(certMeta[c.cpd]=certMeta[c.cpd]||[]).push({id:c.id,name:c.name,type:c.type})}catch(e){certMeta={}}if(S.tab==="saved"&&S.lib==="cpd")render()}
+async function certRefresh(){try{certMeta={};for(const c of await cAll())(certMeta[c.cpd]=certMeta[c.cpd]||[]).push({id:c.id,name:c.name,type:c.type})}catch(e){certMeta={}}if(S.tab==="cpd")render()}
 async function certAdd(cpdId,file){await cPut({id:"k"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),cpd:cpdId,name:file.name||"Certificate",type:file.type||"",blob:file,at:Date.now()});await certRefresh();toast("Certificate saved with this entry")}
 async function certOpen(id){const all=await cAll(),c=all.find(x=>x.id===id);if(!c)return;const u=URL.createObjectURL(c.blob);const w=window.open(u,"_blank");if(!w){const a=document.createElement("a");a.href=u;a.target="_blank";a.click()}setTimeout(()=>URL.revokeObjectURL(u),60000)}
 const certRow=c=>{const L=(certMeta||{})[c.id]||[];return `<div class="certs">${L.map(x=>`<div class="cert">📎 <span>${esc(x.name)}</span> <button class="link" data-act="certopen" data-v="${x.id}">Open</button><button class="link red" data-act="certdel" data-v="${x.id}">Remove</button></div>`).join("")}
@@ -1779,7 +1789,7 @@ function vPods(){
 // ---------- reading aloud with the phone's own voices ----------
 const TTS={voices:[],playing:false,paused:false,q:[],pmid:""};
 function loadVoices(){const v=(window.speechSynthesis&&speechSynthesis.getVoices())||[];
- const rank=x=>(/premium/i.test(x.name)?0:/enhanced|neural|natural/i.test(x.name)?1:2)+(/en-GB/i.test(x.lang)?0:/en-(IE|AU|NZ|ZA)/i.test(x.lang)?0.3:/en/i.test(x.lang)?0.5:5);
+ const rank=x=>(/google/i.test(x.name+" "+x.voiceURI)?0:/premium/i.test(x.name)?0:/enhanced|neural|natural/i.test(x.name)?1:2)+(/en-GB/i.test(x.lang)?0:/en-(IE|AU|NZ|ZA)/i.test(x.lang)?0.3:/en/i.test(x.lang)?0.5:5);
  TTS.voices=v.filter(x=>/^en/i.test(x.lang)&&!/(Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Wobble|Zarvox|Trinoids|Whisper|Albert|Fred|Junior|Ralph|Kathy|Jester|Organ|Superstar|Grandma|Grandpa|Rocko|Shelley|Flo|Eddy|Reed|Sandy|Good News)/.test(x.name)).sort((a,b)=>rank(a)-rank(b)||a.name.localeCompare(b.name))}
 if(window.speechSynthesis){loadVoices();speechSynthesis.onvoiceschanged=()=>{loadVoices();if(S.tab==="settings")render()}}
 function brk(t){let x=String(t);for(let k=0;k<3;k++)x=x.replace(/\(([^()]*)\)|\[([^\[\]]*)\]/g,(m,a,b)=>{const inner=a!=null?a:b;
@@ -1818,7 +1828,7 @@ function ttsArticle(pmid){
 }
 function ttsBar(pmid){
  const on=TTS.pmid===pmid&&TTS.playing;
- return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${on&&useNV()&&!TTS.started?`<span class="au" style="font-size:13px">Preparing voice…</span>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"AI summary"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${pdfBtn(pmid)}${!S.nvHave&&!on?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#2E4A86" data-act="nvdl">Try the natural voice</button>`:""}${on?vBtn():""}</div>`;
+ return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${on&&useNV()&&!TTS.started?`<span class="au" style="font-size:13px">Preparing voice…</span>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"Summarise"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${pdfBtn(pmid)}${!S.nvHave&&!on?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#2E4A86" data-act="nvdl">Try the natural voice</button>`:""}${on?vBtn():""}</div>`;
 }
 
 // ---------- share ----------
@@ -1838,7 +1848,7 @@ function speakNext(){
 }
 ttsSay=function(chunks,pmid){
  if(!window.speechSynthesis){toast("This phone's browser can't read aloud.");return}
- TTS.gen++;speechSynthesis.cancel();if(NV.src)try{NV.src.stop()}catch(e){}TTS.q=chunks.slice();TTS.pre=null;TTS.started=false;TTS.playing=true;TTS.paused=false;TTS.pmid=pmid;if(pmid!=="list")TTS.mode="";
+ TTS.gen++;speechSynthesis.cancel();if(NV.src)try{NV.src.stop()}catch(e){}TTS.q=chunks.slice();TTS.pre=null;TTS.started=false;GG.off=false;TTS.playing=true;TTS.paused=false;TTS.pmid=pmid;if(pmid!=="list")TTS.mode="";
  if(useNV())nvCtx();ttsNext();render();
 };
 ttsStop=function(){TTS.gen++;if(window.speechSynthesis)speechSynthesis.cancel();if(NV.src)try{NV.src.stop()}catch(e){};if(NV.ctx&&NV.ctx.state==="suspended")NV.ctx.resume();TTS.playing=false;TTS.paused=false;TTS.q=[];TTS.pmid="";TTS.mode="";TTS.list=[];TTS.idx=-1;render()};
@@ -1963,7 +1973,7 @@ function nvPhonemes(text){return new Promise((res,rej)=>{let done=false;
  setTimeout(()=>{if(!done)rej(new Error("phonemes"))},15000)})}
 function nvSplit(t,n=170){if(t.length<=n)return[t];const out=[];let cur="";for(const part of t.split(/(?<=[,;:])\s+/)){if(cur&&(cur+" "+part).length>n){out.push(cur);cur=part}else cur=cur?cur+" "+part:part}if(cur)out.push(cur);return out}
 NV.slow=[];
-async function nvSynth(text){const t0=performance.now();const b=useKK()?await kkSynth(text):await nvSynth0(text);NV.slow.push((performance.now()-t0)/1000/Math.max(.5,b.duration));if(NV.slow.length>6)NV.slow.shift();return b}
+async function nvSynth(text){const t0=performance.now();const b=useGoogle()?await ggSynth(text):await nvSynth0(text);NV.slow.push((performance.now()-t0)/1000/Math.max(.5,b.duration));if(NV.slow.length>6)NV.slow.shift();return b}
 async function nvSynth0(text){
  const ids=await nvPhonemes(text),inf=NV.cfg.inference||{},rate=+st.rate||1;
  const feeds={input:new ort.Tensor("int64",BigInt64Array.from(ids.map(BigInt)),[1,ids.length]),input_lengths:new ort.Tensor("int64",BigInt64Array.from([BigInt(ids.length)]),[1]),
@@ -1974,29 +1984,27 @@ async function nvSynth0(text){
 }
 function nvCtx(){try{if(navigator.audioSession&&navigator.audioSession.type!=="playback")navigator.audioSession.type="playback"}catch(e){}if(!NV.ctx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;NV.ctx=new AC()}if(NV.ctx.state!=="running")NV.ctx.resume().catch(()=>{});return NV.ctx}
 function nvPlayBuf(buf,g){return new Promise(res=>{const s=NV.ctx.createBufferSource();s.buffer=buf;s.connect(NV.ctx.destination);s.onended=()=>res();NV.src=s;s.start();if(g!==TTS.gen){try{s.stop()}catch(e){}res()}})}
-const useKK=()=>st.engine==="kokoro"&&!!KK.tts&&!KK.off;
-const usePiper=()=>!!NV.sess&&(st.engine==="natural"||(st.engine==="kokoro"&&(KK.off||!KK.tts)));
-const useNV=()=>!NV.failed&&(useKK()||usePiper());
+const usePiper=()=>!!NV.sess&&(st.engine==="natural"||(st.engine==="google"&&(GG.off||!aiURL())));
+const useNV=()=>!NV.failed&&(useGoogle()||usePiper());
 function nvFallback(text,why){
  TTS.q.unshift(text);TTS.pre=null;NV.slow=[];
- if(useKK()){KK.off=true;
-  if(NV.sess){toast(`Kokoro ${why}, so the Piper natural voice is reading instead.`);nvSpeakNext();return}
-  nvIsDownloaded(st.nvVoice||"jenny").then(h=>{S.nvHave=h;if(h)nvLoad(st.nvVoice||"jenny").catch(()=>{})});
-  toast(`Kokoro ${why}, so the phone's voice is reading now${S.nvHave?" and the Piper voice will take over next time":""}.`);speakNext();return}
- NV.failed=true;toast(why==="is too slow on this phone"?"This phone is a little slow for the natural voice, so its built-in voice will read for now.":"The natural voice couldn't play, so the phone's voice is reading instead.");speakNext();
+ if(useGoogle()){GG.off=true;const w=WHY[why]||WHY.google;
+  if(NV.sess){toast(`The Google voice ${w}, so the Piper natural voice is reading instead.`);nvSpeakNext();return}
+  toast(`The Google voice ${w}, so the phone's voice is reading instead.`);speakNext();return}
+ NV.failed=true;toast(why==="tooslow"?"This phone is a little slow for the natural voice, so its built-in voice will read for now.":"The natural voice couldn't play, so the phone's voice is reading instead.");speakNext();
 }
 function withTimeout(p,ms){return Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error("slow")),ms))])}
 async function nvSpeakNext(){
  const g=TTS.gen;
  if(!TTS.q.length){if(TTS.mode==="list"&&TTS.playing){playNext();return}TTS.playing=false;TTS.pmid="";TTS.mode="";render();return}
- let text=TTS.q.shift();const parts=nvSplit(text,!TTS.started&&useKK()?90:170);if(parts.length>1){text=parts[0];TTS.q.unshift(...parts.slice(1))}TTS.cur=text;
+ let text=TTS.q.shift();if(useGoogle())while(TTS.q.length&&text.length+TTS.q[0].length<480&&!/^Article \d/.test(TTS.q[0]))text+=" "+TTS.q.shift();const parts=nvSplit(text,useGoogle()?1400:170);if(parts.length>1){text=parts[0];TTS.q.unshift(...parts.slice(1))}TTS.cur=text;
  try{
-  const buf=await withTimeout(TTS.pre&&TTS.pre.text===text?TTS.pre.p:nvSynth(text),!TTS.started?(useKK()?15000:20000):45000);if(g!==TTS.gen)return;
-  if(NV.slow.length>=3&&NV.slow.reduce((a,x)=>a+x,0)/NV.slow.length>1.4){nvFallback(text,"is too slow on this phone");return}
+  const buf=await withTimeout(TTS.pre&&TTS.pre.text===text?TTS.pre.p:nvSynth(text),!TTS.started?(useGoogle()?15000:20000):45000);if(g!==TTS.gen)return;
+  if(NV.slow.length>=3&&NV.slow.reduce((a,x)=>a+x,0)/NV.slow.length>1.4){nvFallback(text,"tooslow");return}
   TTS.pre=TTS.q.length?{text:TTS.q[0],p:nvSynth(TTS.q[0])}:null;
   if(!TTS.started){TTS.started=true;render()}
   await nvPlayBuf(buf,g);if(g===TTS.gen&&TTS.playing)nvSpeakNext();
- }catch(e){if(g!==TTS.gen)return;nvFallback(text,e&&e.message==="slow"?"is taking too long to start on this phone":"couldn't play")}
+ }catch(e){if(g!==TTS.gen)return;nvFallback(text,e&&e.message||"google")}
 }
 async function nvDownload(){
  const k=st.nvVoice||"jenny";if(NV.busy)return;NV.busy=true;NV.prog="Starting download";render();
@@ -2075,34 +2083,21 @@ async function aiTest(){
 }
 
 // ---------- Kokoro: optional, most natural free voice, runs on the phone after a one-off download ----------
-const KK={url:"https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm",model:"onnx-community/Kokoro-82M-v1.0-ONNX",tts:null,busy:false,prog:"",
- voices:{bf_emma:"Emma, British female",bf_isabella:"Isabella, British female",bm_george:"George, British male",bm_lewis:"Lewis, British male",af_heart:"Heart, American female"}};
-async function kkLoad(onp){
- if(KK.tts)return;
- const m=window.__kokoroMock||await import(KK.url);
- KK.tts=await m.KokoroTTS.from_pretrained(KK.model,{dtype:"q8",device:"wasm",progress_callback:p=>{if(onp&&p&&p.status==="progress"&&p.total>5e6)onp((p.loaded||0)/(p.total||1))}});
+// ---------- Google natural voices, streamed through the AI service (free monthly allowance) ----------
+const GG={off:false,voices:{"hd-f":"Aoede, Google HD, female (most natural)","hd-m":"Charon, Google HD, male (most natural)","n2-f":"Google Neural2, female","n2-m":"Google Neural2, male","wn-f":"Google WaveNet, female","wn-m":"Google WaveNet, male"}};
+const useGoogle=()=>false; // cloud voices switched off: no Google Cloud account or charges
+const isAndroid=/Android/i.test(navigator.userAgent);
+async function ggSynth(text){
+ const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),20000);let r;
+ try{r=await fetch(`${aiURL()}/tts`,{method:"POST",headers:{"Content-Type":"application/json","X-Device-Id":deviceId()},body:JSON.stringify({text,voice:st.ggVoice||"hd-f",rate:+st.rate||1}),signal:ctl.signal,credentials:"omit"})}
+ catch(e){throw new Error(e.name==="AbortError"?"slow":"offline")}finally{clearTimeout(tm)}
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok||!j.audio)throw new Error(j.error==="quota"?"quota":j.error==="ratelimit"?"limit":j.error==="setup"?"setup":"google");
+ const bin=Uint8Array.from(atob(j.audio),c=>c.charCodeAt(0));
+ return await NV.ctx.decodeAudioData(bin.buffer);
 }
-async function kkSynth(text){
- const a=await KK.tts.generate(text,{voice:st.kkVoice||"bf_emma",speed:+st.rate||1});
- const pcm=a.audio||a.data,sr=a.sampling_rate||24000,buf=NV.ctx.createBuffer(1,pcm.length,sr);buf.getChannelData(0).set(pcm);return buf;
-}
-async function kkDownload(){
- if(KK.busy)return;KK.busy=true;KK.prog="Starting download";render();
- try{await kkLoad(p=>{KK.prog=`Downloading ${Math.round(p*100)}%`;const el=document.getElementById("kkprog");if(el)el.textContent=KK.prog});
-  st.engine="kokoro";st.kkHave=true;NV.failed=false;NV.slow=[];save();KK.prog="";toast("Kokoro voice ready. It works offline from now on.")}
- catch(e){KK.prog="";toast(navigator.onLine===false?"You're offline. Connect to Wi-Fi to download the voice.":"Couldn't download the Kokoro voice. Try again on Wi-Fi.")}
- KK.busy=false;render();
-}
-async function kkRemove(){try{for(const k of await caches.keys())if(/transformers/i.test(k))await caches.delete(k)}catch(e){}KK.tts=null;st.kkHave=false;if(st.engine==="kokoro")st.engine="system";save();render();toast("Kokoro voice removed from this phone")}
-async function kkTest(){
- S.kkDiag="Testing Kokoro…";render();
- try{nvCtx();const t0=performance.now();if(!KK.tts)await kkLoad();const t1=performance.now();
-  const b=await withTimeout(kkSynth("This is the Kokoro voice, reading a short test sentence."),60000);const t2=performance.now(),gen=(t2-t1)/1000,dur=b.duration;
-  S.kkDiag=`Working: it took ${gen.toFixed(1)} seconds to make ${dur.toFixed(1)} seconds of speech${t1-t0>500?`, plus ${((t1-t0)/1000).toFixed(1)} seconds to load`:""}. ${gen>dur*1.3?"That's too slow for smooth listening on this phone, so the Piper natural voice is the better choice.":"That's fast enough for smooth listening."} If you heard nothing, check the volume.`;
-  render();await nvPlayBuf(b,TTS.gen)}
- catch(e){S.kkDiag=e&&e.message==="slow"?"Kokoro took over a minute to make one sentence, so it's too slow on this phone. Use the Piper natural voice instead.":`Kokoro couldn't run on this phone (${String(e&&e.message||e).slice(0,120)}). Use the Piper natural voice instead.`;render()}
-}
-function kkBoot(){if(st.engine==="kokoro"&&st.kkHave)kkLoad().catch(()=>{KK.off=true;nvIsDownloaded(st.nvVoice||"jenny").then(h=>{S.nvHave=h;if(h)nvLoad(st.nvVoice||"jenny").catch(()=>{})})})}
+function kkCleanup(){if(st.kkHave||st.engine==="kokoro"){caches.keys().then(ks=>ks.filter(k=>/transformers/i.test(k)).forEach(k=>caches.delete(k))).catch(()=>{});st.kkHave=false;if(st.engine==="kokoro")st.engine="system";save()}}
+const WHY={quota:"has used today's free allowance",limit:"has reached this phone's limit for today",setup:"isn't set up yet",slow:"is taking too long",offline:"needs an internet connection",google:"couldn't play"};
 // ---------- pronunciation: units, symbols, statistics and clinical abbreviations ----------
 const PRON_COMMON=[["NNT","number needed to treat"],["NNH","number needed to harm"],["IQR","interquartile range"],["SD","standard deviation"],["SE","standard error"],["ARR","absolute risk reduction"],["RRR","relative risk reduction"],
  ["aHR","adjusted hazard ratio"],["aOR","adjusted odds ratio"],["IRR","incidence rate ratio"],["AUC","area under the curve"],["ROC","R O C"],["RCT","randomised controlled trial"],["RCTs","randomised controlled trials"],["ITT","intention to treat"],
@@ -2142,10 +2137,10 @@ function pronEdit(i,k,v){const L=pronList().map(r=>r.slice());if(!L[i])return;L[
 
 function ttsNext(){useNV()?nvSpeakNext():speakNext()}
 function render(){
- document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
+ document.querySelectorAll(".tabs button,.hicon").forEach(b=>b.classList.toggle("on",b.dataset.tab===S.tab));
  const n=S.newIds.size;document.getElementById("newc").textContent=n?`${n} new`:"";
  const fid=document.activeElement&&["q","dq"].includes(document.activeElement.id)?document.activeElement.id:"";
- $m.innerHTML=S.tab==="latest"?vLatest():S.tab==="guide"?vGuide():S.tab==="pods"?vPods():S.tab==="scores"?vScores():S.tab==="saved"?vSaved():vSettings();
+ $m.innerHTML=S.tab==="latest"?vLatest():S.tab==="guide"?vGuide():S.tab==="pods"?vPods():S.tab==="scores"?vScores():S.tab==="saved"?vSaved():S.tab==="cpd"?vCPDTab():vSettings();
  renderModal();renderNP();
  if(popKey&&Date.now()-popAt<450){popEl(document.querySelector(popKey))}
  if(fid){const q=document.getElementById(fid);if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
@@ -2220,7 +2215,7 @@ document.addEventListener("click",e=>{
  else if(a==="evlog")evOpen(b.dataset.v);
  else if(a==="evics")evICS(b.dataset.v);
  else if(a==="evsave"){e.preventDefault();evSave()}
- else if(a==="cpdevents"){e.preventDefault();S.lib="events";render();window.scrollTo(0,0)}
+ else if(a==="cpdevents"){e.preventDefault();S.tab="cpd";S.lib="events";render();window.scrollTo(0,0)}
  else if(a==="mic"){e.preventDefault();dictate(b.dataset.v)}
  else if(a==="soarpdf"){e.preventDefault();soarStart()}
  else if(a==="readyshare"){e.preventDefault();readyShare()}
@@ -2240,9 +2235,6 @@ document.addEventListener("click",e=>{
  else if(a==="soargo"){e.preventDefault();soarGo()}
  else if(a==="mypdfsum"){e.preventDefault();const id=S.modal.pmid;S.modal=null;renderModal();if(st.aiSum)delete st.aiSum[id];S.open[id]=true;aiSummary(id)}
  else if(a==="mypdfslides"){e.preventDefault();const id=S.modal.pmid;S.charts=[];S.chartDraft=null;S.slideFile=null;S.slideBusy="";S.modal={type:"slides",pmid:id};renderModal()}
- else if(a==="kkdl"){e.preventDefault();nvCtx();kkDownload()}
- else if(a==="kktest"){kkTest()}
- else if(a==="kkrm"){e.preventDefault();kkRemove()}
  else if(a==="pronopen"){e.preventDefault();S.pronq="";S.modal={type:"pron"};renderModal()}
  else if(a==="pronadd"){st.pron=[["",""],...pronList().map(r=>r.slice())];save();S.pronq="";renderModal();setTimeout(()=>{const x=document.querySelector('[data-pf="0"]');if(x)x.focus()},100)}
  else if(a==="prondel"){const L=pronList().map(r=>r.slice());L.splice(+b.dataset.v,1);st.pron=L;save();renderModal()}
@@ -2307,12 +2299,12 @@ document.addEventListener("change",e=>{
  if(el.id==="cpddate"){S.cpdDate=el.value;return}
  if(el.dataset&&el.dataset.th){st.topicEdits=st.topicEdits||{};const id=el.dataset.th;if(id.startsWith("ct")){const x=(st.customTopics||[]).find(y=>y.id===id);if(x)x.hidden=!el.checked}else st.topicEdits[id]={...(st.topicEdits[id]||{}),hidden:!el.checked};save();applyTopics();render();return}
  if(el.id==="jgen"){S.jgen=el.checked;return}
- if(el.id==="enginesel"){st.engine=el.value;NV.failed=false;save();if(el.value==="natural"&&S.nvHave)nvLoad(st.nvVoice||"jenny").catch(()=>{NV.failed=true});if(el.value==="kokoro"&&st.kkHave)kkLoad().then(render).catch(()=>{NV.failed=true});render();return}
+ if(el.id==="enginesel"){st.engine=el.value;NV.failed=false;save();if(el.value==="natural"&&S.nvHave)nvLoad(st.nvVoice||"jenny").catch(()=>{NV.failed=true});if(el.value==="google")GG.off=false;render();return}
  if(el.id==="nvvoice"){st.nvVoice=el.value;save();NV.sess=null;NV.key="";nvIsDownloaded(el.value).then(h=>{S.nvHave=h;if(h&&st.engine==="natural")nvLoad(el.value).catch(()=>{});render()});return}
  if(el.dataset&&el.dataset.cert&&el.files&&el.files[0]){const f=el.files[0];el.value="";certAdd(el.dataset.cert,f);return}
  if(el.id==="soarattach"&&S.soar){S.soar.attach=el.checked;return}
  if(el.dataset&&el.dataset.mypdf&&el.files&&el.files[0]){const f=el.files[0];el.value="";myPdfLoad(el.dataset.mypdf,f);return}
- if(el.id==="kkvoice"){st.kkVoice=el.value;save();return}
+ if(el.id==="ggvoice"){st.ggVoice=el.value;GG.off=false;save();return}
  if(el.id==="voicesel"){st.voice=el.value;save();return}
  if(el.id==="ratesel"){st.rate=el.value;save();return}
  if(el.id==="ftmode"){st.ft={...(st.ft||{}),mode:el.value};save();render();return}
