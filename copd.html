@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-9+dzOQayj7NjgbLVv1/q0qIaujd2yJf033BRRnXeksc=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-z3XNw5vK75/7tu1tFlpfm0jVLN2PbHEdArVzON2viXo=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -287,7 +287,7 @@ main{padding-bottom:calc(90px + env(safe-area-inset-bottom))!important}
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="copd-reader-v1",APPVER="19 Oct 2026 (r10)";
+const KEY="copd-reader-v1",APPVER="20 Oct 2026 (r11)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"lrm",name:"Lancet Respir Med",ta:"Lancet Respir Med",c:"#8A93A8"},
@@ -682,7 +682,7 @@ function vSettings(){
   ${st.engine==="natural"?`<label class="set"><span>Natural voice</span><select id="nvvoice">${Object.entries(NV.voices).map(([k,v])=>`<option value="${k}" ${(st.nvVoice||"jenny")===k?"selected":""}>${v[0]}</option>`).join("")}</select></label>
    ${S.nvHave?`<p class="note">Downloaded and ready. It works offline. <button class="link" data-act="nvrm">Remove it</button></p>`:`<div class="pk"><a href="#" data-act="nvdl">${NV.busy?"Downloading…":"Download this voice (about 60 MB, once)"}</a></div><p class="note"><span id="nvprog">${esc(NV.prog||"")}</span> Free, natural-sounding and private: it runs on your phone, with nothing sent anywhere. Best downloaded on Wi-Fi.</p>`}`:""}
   ${st.engine==="kokoro"?`<label class="set"><span>Kokoro voice</span><select id="kkvoice">${Object.entries(KK.voices).map(([k,v])=>`<option value="${k}" ${(st.kkVoice||"bf_emma")===k?"selected":""}>${v}</option>`).join("")}</select></label>
-   ${st.kkHave?`<p class="note">Downloaded${KK.tts?" and ready":", loading"}. Works offline. All five Kokoro voices are included. <button class="link" data-act="kkrm">Remove it</button></p>`:`<div class="pk"><a href="#" data-act="kkdl">${KK.busy?"Downloading…":"Download Kokoro (about 90 MB, once)"}</a></div><p class="note"><span id="kkprog">${esc(KK.prog||"")}</span> The most natural free voice. It runs on your phone with nothing sent anywhere, but needs a recent phone: on older ones it may pause between sentences, and if it is too slow the app switches to the Piper natural voice (if downloaded) or the phone's voice. Best downloaded on Wi-Fi.</p>`}`:""}${st.engine==="natural"||st.engine==="kokoro"?"":TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
+   ${st.kkHave?`<p class="note">Downloaded${KK.tts?" and ready":", loading"}. Works offline. All five Kokoro voices are included. <button class="link" data-act="kktest">Test Kokoro</button> · <button class="link" data-act="kkrm">Remove it</button></p>${S.kkDiag?`<p class="note" id="kkdiag">${esc(S.kkDiag)}</p>`:""}`:`<div class="pk"><a href="#" data-act="kkdl">${KK.busy?"Downloading…":"Download Kokoro (about 90 MB, once)"}</a></div><p class="note"><span id="kkprog">${esc(KK.prog||"")}</span> The most natural free voice. It runs on your phone with nothing sent anywhere, but needs a recent phone: on older ones it may pause between sentences, and if it is too slow the app switches to the Piper natural voice (if downloaded) or the phone's voice. Best downloaded on Wi-Fi.</p>`}`:""}${st.engine==="natural"||st.engine==="kokoro"?"":TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
   <label class="set"><span>Speed</span><select id="ratesel">${[["0.85","Slower"],["1","Normal"],["1.15","A bit faster"],["1.3","Faster"],["1.5","Fastest"]].map(([v,l])=>`<option value="${v}" ${String(st.rate||"1")===v?"selected":""}>${l}</option>`).join("")}</select></label>
   <div class="pk"><a href="#" data-act="ttstest">Test voice</a><a href="#" class="alt" data-act="pronopen">Pronunciation list (${pronList().length})</a></div>
   ${st.engine==="natural"||st.engine==="kokoro"?"":`<p class="note"><b>For the most natural sound</b>, choose Natural voice above, or download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>`}
@@ -1774,7 +1774,7 @@ function ttsArticle(pmid){
 }
 function ttsBar(pmid){
  const on=TTS.pmid===pmid&&TTS.playing;
- return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"AI summary"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${pdfBtn(pmid)}${!S.nvHave&&!on?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#1D6A7A" data-act="nvdl">Try the natural voice</button>`:""}${on?vBtn():""}</div>`;
+ return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${on&&useNV()&&!TTS.started?`<span class="au" style="font-size:13px">Preparing voice…</span>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"AI summary"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${pdfBtn(pmid)}${!S.nvHave&&!on?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#1D6A7A" data-act="nvdl">Try the natural voice</button>`:""}${on?vBtn():""}</div>`;
 }
 
 // ---------- share ----------
@@ -1794,7 +1794,7 @@ function speakNext(){
 }
 ttsSay=function(chunks,pmid){
  if(!window.speechSynthesis){toast("This phone's browser can't read aloud.");return}
- TTS.gen++;speechSynthesis.cancel();if(NV.src)try{NV.src.stop()}catch(e){}TTS.q=chunks.slice();TTS.pre=null;TTS.playing=true;TTS.paused=false;TTS.pmid=pmid;if(pmid!=="list")TTS.mode="";
+ TTS.gen++;speechSynthesis.cancel();if(NV.src)try{NV.src.stop()}catch(e){}TTS.q=chunks.slice();TTS.pre=null;TTS.started=false;TTS.playing=true;TTS.paused=false;TTS.pmid=pmid;if(pmid!=="list")TTS.mode="";
  if(useNV())nvCtx();ttsNext();render();
 };
 ttsStop=function(){TTS.gen++;if(window.speechSynthesis)speechSynthesis.cancel();if(NV.src)try{NV.src.stop()}catch(e){};if(NV.ctx&&NV.ctx.state==="suspended")NV.ctx.resume();TTS.playing=false;TTS.paused=false;TTS.q=[];TTS.pmid="";TTS.mode="";TTS.list=[];TTS.idx=-1;render()};
@@ -1917,7 +1917,7 @@ function nvPhonemes(text){return new Promise((res,rej)=>{let done=false;
   locateFile:f=>f.endsWith(".wasm")?NV.phw:f.endsWith(".data")?NV.phd:f})
  .then(m=>m.callMain(["-l",NV.cfg.espeak.voice,"--input",JSON.stringify([{text}]),"--espeak_data","/espeak-ng-data"])).catch(rej);
  setTimeout(()=>{if(!done)rej(new Error("phonemes"))},15000)})}
-function nvSplit(t){if(t.length<=170)return[t];const out=[];let cur="";for(const part of t.split(/(?<=[,;:])\s+/)){if(cur&&(cur+" "+part).length>170){out.push(cur);cur=part}else cur=cur?cur+" "+part:part}if(cur)out.push(cur);return out}
+function nvSplit(t,n=170){if(t.length<=n)return[t];const out=[];let cur="";for(const part of t.split(/(?<=[,;:])\s+/)){if(cur&&(cur+" "+part).length>n){out.push(cur);cur=part}else cur=cur?cur+" "+part:part}if(cur)out.push(cur);return out}
 NV.slow=[];
 async function nvSynth(text){const t0=performance.now();const b=useKK()?await kkSynth(text):await nvSynth0(text);NV.slow.push((performance.now()-t0)/1000/Math.max(.5,b.duration));if(NV.slow.length>6)NV.slow.shift();return b}
 async function nvSynth0(text){
@@ -1928,7 +1928,7 @@ async function nvSynth0(text){
  const out=await NV.sess.run(feeds),pcm=out.output.data,sr=(NV.cfg.audio&&NV.cfg.audio.sample_rate)||22050;
  const buf=NV.ctx.createBuffer(1,pcm.length,sr);buf.getChannelData(0).set(pcm);return buf;
 }
-function nvCtx(){if(!NV.ctx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;NV.ctx=new AC()}if(NV.ctx.state==="suspended")NV.ctx.resume();return NV.ctx}
+function nvCtx(){try{if(navigator.audioSession&&navigator.audioSession.type!=="playback")navigator.audioSession.type="playback"}catch(e){}if(!NV.ctx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;NV.ctx=new AC()}if(NV.ctx.state!=="running")NV.ctx.resume().catch(()=>{});return NV.ctx}
 function nvPlayBuf(buf,g){return new Promise(res=>{const s=NV.ctx.createBufferSource();s.buffer=buf;s.connect(NV.ctx.destination);s.onended=()=>res();NV.src=s;s.start();if(g!==TTS.gen){try{s.stop()}catch(e){}res()}})}
 const useKK=()=>st.engine==="kokoro"&&!!KK.tts&&!KK.off;
 const usePiper=()=>!!NV.sess&&(st.engine==="natural"||(st.engine==="kokoro"&&(KK.off||!KK.tts)));
@@ -1941,16 +1941,18 @@ function nvFallback(text,why){
   toast(`Kokoro ${why}, so the phone's voice is reading now${S.nvHave?" and the Piper voice will take over next time":""}.`);speakNext();return}
  NV.failed=true;toast(why==="is too slow on this phone"?"This phone is a little slow for the natural voice, so its built-in voice will read for now.":"The natural voice couldn't play, so the phone's voice is reading instead.");speakNext();
 }
+function withTimeout(p,ms){return Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error("slow")),ms))])}
 async function nvSpeakNext(){
  const g=TTS.gen;
  if(!TTS.q.length){if(TTS.mode==="list"&&TTS.playing){playNext();return}TTS.playing=false;TTS.pmid="";TTS.mode="";render();return}
- let text=TTS.q.shift();const parts=nvSplit(text);if(parts.length>1){text=parts[0];TTS.q.unshift(...parts.slice(1))}TTS.cur=text;
+ let text=TTS.q.shift();const parts=nvSplit(text,!TTS.started&&useKK()?90:170);if(parts.length>1){text=parts[0];TTS.q.unshift(...parts.slice(1))}TTS.cur=text;
  try{
-  const buf=TTS.pre&&TTS.pre.text===text?await TTS.pre.p:await nvSynth(text);if(g!==TTS.gen)return;
+  const buf=await withTimeout(TTS.pre&&TTS.pre.text===text?TTS.pre.p:nvSynth(text),!TTS.started?(useKK()?15000:20000):45000);if(g!==TTS.gen)return;
   if(NV.slow.length>=3&&NV.slow.reduce((a,x)=>a+x,0)/NV.slow.length>1.4){nvFallback(text,"is too slow on this phone");return}
   TTS.pre=TTS.q.length?{text:TTS.q[0],p:nvSynth(TTS.q[0])}:null;
+  if(!TTS.started){TTS.started=true;render()}
   await nvPlayBuf(buf,g);if(g===TTS.gen&&TTS.playing)nvSpeakNext();
- }catch(e){nvFallback(text,"couldn't play")}
+ }catch(e){if(g!==TTS.gen)return;nvFallback(text,e&&e.message==="slow"?"is taking too long to start on this phone":"couldn't play")}
 }
 async function nvDownload(){
  const k=st.nvVoice||"jenny";if(NV.busy)return;NV.busy=true;NV.prog="Starting download";render();
@@ -2048,6 +2050,14 @@ async function kkDownload(){
  KK.busy=false;render();
 }
 async function kkRemove(){try{for(const k of await caches.keys())if(/transformers/i.test(k))await caches.delete(k)}catch(e){}KK.tts=null;st.kkHave=false;if(st.engine==="kokoro")st.engine="system";save();render();toast("Kokoro voice removed from this phone")}
+async function kkTest(){
+ S.kkDiag="Testing Kokoro…";render();
+ try{nvCtx();const t0=performance.now();if(!KK.tts)await kkLoad();const t1=performance.now();
+  const b=await withTimeout(kkSynth("This is the Kokoro voice, reading a short test sentence."),60000);const t2=performance.now(),gen=(t2-t1)/1000,dur=b.duration;
+  S.kkDiag=`Working: it took ${gen.toFixed(1)} seconds to make ${dur.toFixed(1)} seconds of speech${t1-t0>500?`, plus ${((t1-t0)/1000).toFixed(1)} seconds to load`:""}. ${gen>dur*1.3?"That's too slow for smooth listening on this phone, so the Piper natural voice is the better choice.":"That's fast enough for smooth listening."} If you heard nothing, check the volume.`;
+  render();await nvPlayBuf(b,TTS.gen)}
+ catch(e){S.kkDiag=e&&e.message==="slow"?"Kokoro took over a minute to make one sentence, so it's too slow on this phone. Use the Piper natural voice instead.":`Kokoro couldn't run on this phone (${String(e&&e.message||e).slice(0,120)}). Use the Piper natural voice instead.`;render()}
+}
 function kkBoot(){if(st.engine==="kokoro"&&st.kkHave)kkLoad().catch(()=>{KK.off=true;nvIsDownloaded(st.nvVoice||"jenny").then(h=>{S.nvHave=h;if(h)nvLoad(st.nvVoice||"jenny").catch(()=>{})})})}
 // ---------- pronunciation: units, symbols, statistics and clinical abbreviations ----------
 const PRON_COMMON=[["NNT","number needed to treat"],["NNH","number needed to harm"],["IQR","interquartile range"],["SD","standard deviation"],["SE","standard error"],["ARR","absolute risk reduction"],["RRR","relative risk reduction"],
@@ -2101,6 +2111,7 @@ let qTimer,dTimer;
 document.addEventListener("click",e=>{
  const tb=e.target.closest("[data-tab]");if(tb){S.tab=tb.dataset.tab;render();window.scrollTo(0,0);return}
  const b=e.target.closest("[data-act]");if(!b)return;
+ if(b.tagName==="A"&&b.getAttribute("href")==="#")e.preventDefault();
  const a=b.dataset.act;
  if(a==="c"){S.cat=b.dataset.v;load()}
  else if(a==="j"){S.j=b.dataset.v;load()}
@@ -2188,6 +2199,7 @@ document.addEventListener("click",e=>{
  else if(a==="mypdfsum"){e.preventDefault();const id=S.modal.pmid;S.modal=null;renderModal();if(st.aiSum)delete st.aiSum[id];S.open[id]=true;aiSummary(id)}
  else if(a==="mypdfslides"){e.preventDefault();const id=S.modal.pmid;S.charts=[];S.chartDraft=null;S.slideFile=null;S.slideBusy="";S.modal={type:"slides",pmid:id};renderModal()}
  else if(a==="kkdl"){e.preventDefault();nvCtx();kkDownload()}
+ else if(a==="kktest"){kkTest()}
  else if(a==="kkrm"){e.preventDefault();kkRemove()}
  else if(a==="pronopen"){e.preventDefault();S.pronq="";S.modal={type:"pron"};renderModal()}
  else if(a==="pronadd"){st.pron=[["",""],...pronList().map(r=>r.slice())];save();S.pronq="";renderModal();setTimeout(()=>{const x=document.querySelector('[data-pf="0"]');if(x)x.focus()},100)}
