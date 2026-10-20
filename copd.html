@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-SSqa/6lIuQdRhvyhJ6l585GvRleNct6+ZKIJMe29VCo=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-F6wz01YAbbN+yGwVAdID2kvNt48ykjFpZNwOPoL1V5Y=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -323,11 +323,26 @@ header{background:linear-gradient(135deg,rgba(15,61,73,.96),rgba(29,106,122,.92)
 .slide{background:#fff;border-radius:12px;padding:14px 16px;margin:0 0 12px;box-shadow:0 2px 12px rgba(0,0,0,.12);position:relative;min-height:160px}
 .slide.dark{background:#1C2541;color:#fff}.sl-n{position:absolute;top:8px;right:12px;font-size:12px;opacity:.6}.sl-t{font-weight:800;font-size:17px;margin-right:24px}
 .sl-l{font-size:14px;margin-top:6px;line-height:1.4}.sl-l.big{font-size:22px;font-weight:800}.slide img{max-width:100%;max-height:220px;display:block;margin:8px auto 0}.sl-c{font-size:13px;margin-top:8px;opacity:.85}
+/* back from the full paper */
+.ftbar{position:fixed;left:10px;right:10px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:60;background:rgba(20,26,46,.9);color:#fff;border-radius:18px;padding:10px 12px;box-shadow:0 12px 34px rgba(0,0,0,.3);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.ftbar .fth{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;opacity:.8}.ftbar .ftx{background:none;border:0;color:#fff;font-size:16px;padding:2px 6px}
+.ftbar .ftt{font-weight:700;font-size:14.5px;margin:2px 0 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ftbar .ftb{display:flex;gap:6px;flex-wrap:wrap}.ftbar .ftb button,.ftbar .pdfbtn{background:rgba(255,255,255,.14)!important;color:#fff!important;border:1px solid rgba(255,255,255,.28)!important;border-radius:999px;padding:7px 12px;font-weight:700;font-size:13.5px}
+/* slide styles and page picker */
+.sw{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;border:1px solid rgba(0,0,0,.15)}
+.sw-classic{background:linear-gradient(90deg,var(--accent) 30%,#fff 30%)}.sw-dark{background:#141B33}.sw-minimal{background:#fff}.sw-bold{background:#C0504D}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;overflow-y:auto;flex:1}
+.pg{background:rgba(255,255,255,.7);border:2px solid transparent;border-radius:10px;padding:4px;display:flex;flex-direction:column;align-items:center}.pg.on{border-color:var(--accent)}
+.pgimg{width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;background:#fff;border-radius:6px;overflow:hidden}.pgimg img{width:100%;height:100%;object-fit:contain}.pgn{font-size:12px;margin-top:3px}
+/* archive animation and Library count */
+.flydoc{position:fixed;z-index:99990;pointer-events:none;color:var(--accent);filter:drop-shadow(0 6px 12px rgba(0,0,0,.28));will-change:transform}
+.libcount{position:absolute;top:-6px;right:-7px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#E8485F;color:#fff;font:700 11px/18px -apple-system,"Segoe UI",system-ui,sans-serif;text-align:center;box-shadow:0 0 0 2px rgba(255,255,255,.9);pointer-events:none}
+.hicon.on .libcount{box-shadow:0 0 0 2px rgba(28,37,65,.35)}
 </style>
 </head>
 <body>
 <header><div class="hin">
- <div class="top"><div class="ttl"><h1>Respiratory CPD</h1><span class="newc" id="newc"></span></div><span class="hright"><button class="hicon" data-tab="saved" aria-label="Library"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1.3 6.3-1.3 10 .8v13.2c-3.7-2.1-7-2.1-10-.8z"/><path d="M22 5.5c-3-1.3-6.3-1.3-10 .8v13.2c3.7-2.1 7-2.1 10-.8z"/></svg></button><button class="hicon" data-act="help" aria-label="Help"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.4-2.7 4"/><circle cx="12" cy="17.3" r=".6" fill="currentColor"/></svg></button><button class="hicon" id="profbtn" data-act="profile" aria-label="Your profile"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg><span class="dot"></span></button><button class="hicon" data-tab="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
+ <div class="top"><div class="ttl"><h1>Respiratory CPD</h1><span class="newc" id="newc"></span></div><span class="hright"><button class="hicon" data-tab="saved" aria-label="Library"><span class="libcount" id="libcount" style="display:none"></span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1.3 6.3-1.3 10 .8v13.2c-3.7-2.1-7-2.1-10-.8z"/><path d="M22 5.5c-3-1.3-6.3-1.3-10 .8v13.2c3.7-2.1 7-2.1 10-.8z"/></svg></button><button class="hicon" data-act="help" aria-label="Help"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.4-2.7 4"/><circle cx="12" cy="17.3" r=".6" fill="currentColor"/></svg></button><button class="hicon" id="profbtn" data-act="profile" aria-label="Your profile"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg><span class="dot"></span></button><button class="hicon" data-tab="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
  <nav class="tabs" aria-label="Sections"><button data-tab="latest">Articles</button><button data-tab="guide">Guidelines</button><button data-tab="pods">Podcasts</button><button data-tab="scores">Scores</button><button data-tab="cpd">CPD</button></nav>
 </div></header>
 <main id="main"></main>
@@ -336,7 +351,7 @@ header{background:linear-gradient(135deg,rgba(15,61,73,.96),rgba(29,106,122,.92)
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="copd-reader-v1",APPVER="23 Oct 2026 (r18)";
+const KEY="copd-reader-v1",APPVER="24 Oct 2026 (r21)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"lrm",name:"Lancet Respir Med",ta:"Lancet Respir Med",c:"#8A93A8"},
@@ -423,7 +438,7 @@ const seen=new Set(st.seen);
 const S={tab:"latest",cat:"all",j:"all",q:"",qscope:"mine",qsort:"date",lib:"later",cpdP:"12m",cpdFrom:"",cpdTo:"",modal:null,slideN:6,slideBusy:"",slideFigs:true,charts:[],chartDraft:null,cpdMin:30,cpdDate:"",cpdNote:"",aiOpen:{},aiBusy:{},aiTest:"",slideAI:true,cpdRef:{domains:[]},tEdit:null,jfind:null,jq:"",jgen:false,items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,
  g:"gold",gsub:"esc",gl:{},gerr:{},gload:{},dq:"",dvlaErr:false,dvlaLoading:false};
 const $m=document.getElementById("main");
-applyJournals();applyTopics();if(!st.engine)st.engine="system";if(st.engine==="kokoro")st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}try{kkCleanup()}catch(e){}try{if(aiURL()&&st.engine==="system"&&!isAndroid&&!st.engineMigrated){st.engine="google";st.engineMigrated=1;save()}if(st.ggVoice&&!/^[fm][12]$/.test(st.ggVoice)){st.ggVoice=/-m$/.test(st.ggVoice)?"m1":"f1";save()}}catch(e){}try{for(const k of ["cpd-usage-cardiology","cpd-usage-cardiology-sent","cpd-usage-respiratory","cpd-usage-respiratory-sent","cpd-stats-off","cpd-stats-noticed"])localStorage.removeItem(k)}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
+applyJournals();applyTopics();if(!st.engine)st.engine="system";if(st.engine==="kokoro")st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}try{kkCleanup()}catch(e){}try{if("serviceWorker" in navigator&&/Android/i.test(navigator.userAgent))navigator.serviceWorker.register("cpd-share-sw.js",{scope:"./"+location.pathname.split("/").pop()}).catch(()=>{})}catch(e){}try{sharedInbox()}catch(e){}try{if(aiURL()&&st.engine==="system"&&!isAndroid&&!st.engineMigrated){st.engine="google";st.engineMigrated=1;save()}if(st.ggVoice&&!/^[fm][12]$/.test(st.ggVoice)){st.ggVoice=/-m$/.test(st.ggVoice)?"m1":"f1";save()}}catch(e){}try{for(const k of ["cpd-usage-cardiology","cpd-usage-cardiology-sent","cpd-usage-respiratory","cpd-usage-respiratory-sent","cpd-stats-off","cpd-stats-noticed"])localStorage.removeItem(k)}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const clean=s=>String(s||"").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'");
 const catsOf=title=>{const c=CATS.filter(x=>x.re.test(title)).map(x=>x.id);return c.length?c:["oth"]};
@@ -615,7 +630,7 @@ function card(it){
   <div class="tags">${cats}</div>
   <div class="acts">
    <button data-act="abs" data-id="${it.pmid}">${S.open[it.pmid]?"Hide":"Abstract"}</button>
-   ${it.doi?`<a href="${esc(ftURL(it.doi))}" target="_blank" rel="noopener" data-act="ft" data-doi="${esc(it.doi)}">Full text</a>`:""}
+   ${it.doi?`<a href="${esc(ftURL(it.doi))}" target="_blank" rel="noopener" data-act="ft" data-doi="${esc(it.doi)}" data-id="${it.pmid}">Full text</a>`:""}
    <button data-act="share" data-id="${it.pmid}">Share</button>
    <button class="${cpdFor(it.pmid)?"arch on":""}" data-act="cpd" data-id="${it.pmid}">${cpdFor(it.pmid)?"CPD ✓":"CPD"}</button>
    <button class="arch ${sv?"on":""}" data-act="star" data-id="${it.pmid}" aria-pressed="${sv}">${sv?"Saved":"Archive"}</button>
@@ -1126,6 +1141,7 @@ async function makeSlides(pmid,count){
  }
  if(!chosen.length){s=frame("Summary");s.addText("PubMed and Europe PMC have no abstract for this paper (often the case for editorials, letters and news items). Add key points from the full text.",{x:0.7,y:1.6,w:11.9,h:2,fontFace:FONT,fontSize:20,color:"222222"})}
  for(const c of chosen)c.f();
+ if(pdfFig.length)addPdfFigs();
  for(const ch of (S.charts||[]))addChartSlide(pptx,ch,short,NAVY,ACC,GREY,FONT);
  // open-access figures
  let figNote="",nFig=0;
@@ -1152,7 +1168,7 @@ async function makeSlides(pmid,count){
  S.slideBusy="";S.slideFile=file;S.slideMsg=[`${n} slides ready${aiUsed?", written by AI from the abstract. Check them before presenting.":"."}`,!aiUsed&&chosen.length+2<count&&P.parts.length?"The abstract only had enough content for that many.":"",figNote].filter(Boolean).join(" ");renderModal();
 }
 // ---------- AI-designed slides: full paper when open access, key figures, chosen layouts, themed template ----------
-const DECK={dark:"0F3D49",mid:"14505F",acc:"C2505E",acc2:"1D6A7A",soft:"EAF4F4",soft2:"FBEFF0",light:"9FD8D6",text:"222222",grey:"5C6375",app:"Respiratory CPD"};
+const DECK={dark:"0F3D49",mid:"14505F",acc:"C2505E",acc2:"1D6A7A",soft:"EAF4F4",soft2:"FBEFF0",light:"9FD8D6",text:"222222",grey:"5C6375",app:"Respiratory CPD",night:"0B2B33",nightCard:"16434F",nightCard2:"45283A"};
 async function oaFull(pmcid){
  const r=await fetch(`${EPMC}${pmcid}/fullTextXML`);if(!r.ok)return{text:"",figs:[]};
  const x=new DOMParser().parseFromString((await r.text()).replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),body=x.getElementsByTagName("body")[0],secs={};
@@ -1194,7 +1210,7 @@ function pdfSections(t){
  const take=(k,n)=>(secs[k]||"").slice(0,n);
  return [take("Results",6000),take("Conclusions",3500),take("Methods",3000),take("Background",1500)].filter(Boolean).join("\n\n").slice(0,14000)||t.slice(0,14000);
 }
-async function myPdfLoad(pmid,file){
+async function myPdfLoad(pmid,file){if(S.ftBar===pmid){S.ftBar=null;renderFtBar();ftShowCard(pmid)}
  S.pdfFor=pmid;S.pdfBusy="Opening your PDF";S.modal={type:"mypdf",pmid};renderModal();
  try{const r=await pdfTextOf(file),txt=pdfSections(r.text);
   if(txt.replace(/\s/g,"").length<300)throw Object.assign(new Error("scan"),{code:"scan"});
@@ -1225,7 +1241,7 @@ function deckForest(pptx,s,x,T,F){
  return true;
 }
 
-const LAYOUTS=["bullets","bignumber","comparison","bar","flow","takehome","figure","forest"];
+const LAYOUTS=["bullets","bignumber","comparison","bar","flow","takehome","figure","forest","questions"];
 async function makeDeck(pmid,count){
  const it=findItem(pmid)||st.saved[pmid]||{};
  S.slideBusy="Fetching the paper";renderModal();
@@ -1247,31 +1263,35 @@ async function makeDeck(pmid,count){
  if(!slides.length){toast("The AI didn't return slides. Using the built-in slide writer instead.");return makeSlides(pmid,count)}
  S.slideBusy=useFigs?"Adding the paper's figures":"Building slides";renderModal();
  await loadJS(PPTX_SRC);
- const pptx=deckTrack(new PptxGenJS());pptx.layout="LAYOUT_WIDE";const T=DECK,F="Calibri",W=13.333;
+ const pptx=deckTrack(new PptxGenJS());pptx.layout="LAYOUT_WIDE";const T=deckStyle(DECK,st.slideStyle||"classic"),F="Calibri",W=13.333;
  const surname=n=>{n=String(n||"").trim();return /^[A-Za-z'\-]+(?:\s[A-Za-z'\-]+)*\s[A-Z]{1,3}$/.test(n)?n.replace(/\s[A-Z]{1,3}$/,""):n.split(/\s+/).pop()};
  const short=`${surname(P.aus[0])}${P.aus.length>1?" et al":""}, ${P.iso||P.journal} ${P.year}`.replace(/^, /,"");
  const cc=/^CC/.test(P.license||""),lic=cc?P.license.replace(/^CC[ -]?/,"CC ").replace(/-/g," ")+" licence":"";
  let num=1;
- const frame=(title,col)=>{const s=pptx.addSlide();num++;s.background={color:"FFFFFF"};
-  s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:W,h:0.12,fill:{color:col||T.acc},line:{color:col||T.acc}});
-  s.addText(String(title||"").slice(0,90),{x:0.6,y:0.32,w:12.1,h:0.85,fontFace:F,fontSize:30,bold:true,color:T.dark,fit:"shrink"});
-  s.addShape(pptx.ShapeType.line,{x:0.62,y:1.2,w:1.2,h:0,line:{color:col||T.acc,width:3}});
-  s.addText(short,{x:0.6,y:7.0,w:9.5,h:0.3,fontFace:F,fontSize:10,color:T.grey});
-  s.addText(`${num}`,{x:12.2,y:7.0,w:0.6,h:0.3,fontFace:F,fontSize:10,color:T.grey,align:"right"});return s};
+ const frame=(title,col)=>{const s=pptx.addSlide();num++;s.background={color:T.bg};const c=col||T.acc,tt=String(title||"").slice(0,90);
+  if(T.sy==="bold"){s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:W,h:1.22,fill:{color:T.mid},line:{color:T.mid}});s.addShape(pptx.ShapeType.rect,{x:0,y:1.22,w:W,h:0.07,fill:{color:c},line:{color:c}});s.addText(tt,{x:0.6,y:0.18,w:12.1,h:0.9,fontFace:F,fontSize:30,bold:true,color:"FFFFFF",fit:"shrink",valign:"middle"})}
+  else if(T.sy==="minimal"){s.addText(tt,{x:0.6,y:0.3,w:12.1,h:0.9,fontFace:F,fontSize:32,bold:true,color:T.dark,fit:"shrink"});s.addShape(pptx.ShapeType.line,{x:0.62,y:1.22,w:12.1,h:0,line:{color:"E3E6EE",width:1}});s.addShape(pptx.ShapeType.line,{x:0.62,y:1.22,w:0.9,h:0,line:{color:c,width:3}})}
+  else{s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:W,h:0.12,fill:{color:c},line:{color:c}});s.addText(tt,{x:0.6,y:0.32,w:12.1,h:0.85,fontFace:F,fontSize:30,bold:true,color:T.dark,fit:"shrink"});s.addShape(pptx.ShapeType.line,{x:0.62,y:1.2,w:1.2,h:0,line:{color:c,width:3}})}
+  s.addText(short,{x:0.6,y:7.0,w:9.5,h:0.3,fontFace:F,fontSize:10,color:T.grey});s.addText(`${num}`,{x:12.2,y:7.0,w:0.6,h:0.3,fontFace:F,fontSize:10,color:T.grey,align:"right"});return s};
  const notes=(s,x)=>{if(x&&x.notes)s.addNotes(String(x.notes))};
  const bulletBox=(s,list,o)=>{const L=(list||[]).map(String).filter(Boolean).slice(0,6);if(!L.length)return;const len=L.join(" ").length;
   s.addText(L.map(b=>({text:b,options:{bullet:{indent:20},paraSpaceAfter:12}})),{x:o.x,y:o.y,w:o.w,h:o.h,fontFace:F,fontSize:o.fs||(len>480?17:len>330?19:22),color:T.text,valign:"top",fit:"shrink"})};
  // title slide
- let s=pptx.addSlide();s.background={color:T.dark};
- s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:0.28,h:7.5,fill:{color:T.acc},line:{color:T.acc}});
- s.addShape(pptx.ShapeType.ellipse,{x:10.6,y:-1.4,w:4.2,h:4.2,fill:{color:T.mid,transparency:35},line:{color:T.mid,transparency:100}});
- s.addText(P.title,{x:0.9,y:1.5,w:11.2,h:2.9,fontFace:F,fontSize:P.title.length>140?28:36,bold:true,color:"FFFFFF",valign:"top",fit:"shrink"});
- s.addText(P.aus.slice(0,8).join(", ")+(P.aus.length>8?", et al":""),{x:0.9,y:4.6,w:11.2,h:0.7,fontFace:F,fontSize:16,color:"D5DCEB",fit:"shrink"});
- s.addText(`${P.iso||P.journal}${P.year?", "+P.year:""}`,{x:0.9,y:5.3,w:11.2,h:0.5,fontFace:F,fontSize:16,italic:true,color:T.light});
- s.addText(`Journal club · ${T.app}`,{x:0.9,y:6.75,w:8,h:0.35,fontFace:F,fontSize:11,color:"AEB8CC"});
+ let s=pptx.addSlide();s.background={color:T.titleBg};
+ if(T.sy==="minimal")s.addShape(pptx.ShapeType.rect,{x:0.6,y:1.45,w:0.12,h:3.0,fill:{color:T.acc},line:{color:T.acc}});
+ else if(T.sy==="bold"){s.addShape(pptx.ShapeType.ellipse,{x:9.2,y:-2.4,w:6.8,h:6.8,fill:{color:"FFFFFF",transparency:86},line:{color:"FFFFFF",transparency:100}});s.addShape(pptx.ShapeType.ellipse,{x:-1.9,y:5.0,w:4.2,h:4.2,fill:{color:"FFFFFF",transparency:90},line:{color:"FFFFFF",transparency:100}})}
+ else{s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:0.28,h:7.5,fill:{color:T.acc},line:{color:T.acc}});s.addShape(pptx.ShapeType.ellipse,{x:10.6,y:-1.4,w:4.2,h:4.2,fill:{color:T.mid,transparency:35},line:{color:T.mid,transparency:100}})}
+ s.addText(P.title,{x:T.sy==="minimal"?1.05:0.9,y:1.4,w:11.2,h:2.9,fontFace:F,fontSize:P.title.length>140?28:36,bold:true,color:T.titleTx,valign:"top",fit:"shrink"});
+ s.addText(P.aus.slice(0,8).join(", ")+(P.aus.length>8?", et al":""),{x:T.sy==="minimal"?1.05:0.9,y:4.55,w:11.2,h:0.7,fontFace:F,fontSize:16,color:T.titleSub,fit:"shrink"});
+ s.addText(`${P.iso||P.journal}${P.year?", "+P.year:""}`,{x:T.sy==="minimal"?1.05:0.9,y:5.25,w:11.2,h:0.5,fontFace:F,fontSize:16,italic:true,color:T.sy==="minimal"?T.acc:T.sy==="bold"?"FFFFFF":T.light});
+ // figures chosen from the reader's own PDF
+ let pdfFig=[],nPdf=0;
+ if(mine&&S.pdfPick&&S.pdfPick.pmid===pmid&&S.pdfPick.pages.length){S.slideBusy="Adding figures from your PDF";renderModal();for(const n of S.pdfPick.pages.slice(0,4)){try{pdfFig.push({n,img:await pdfPageImage(mine.file,n)})}catch(e){}}}
+ const addPdfFigs=()=>{for(const f of pdfFig){s=frame(`Figure from the paper (page ${f.n})`,T.acc2);const bw=12.1,bh=5.0,r=Math.min(bw/f.img.w,bh/f.img.h),w=f.img.w*r,h=f.img.h*r;
+  s.addImage({data:f.img.data,x:0.6+(bw-w)/2,y:1.45+(bh-h)/2,w,h});s.addText(`Reproduced from ${short}, for teaching, with acknowledgement.`,{x:0.6,y:6.62,w:12.1,h:0.3,fontFace:F,fontSize:9,italic:true,color:T.grey});nPdf++}pdfFig=[]};
  let nFig=0,figNote="";
  for(const x of slides){
-  const L=x.layout;
+  const L=x.layout;if(L==="takehome"&&pdfFig.length)addPdfFigs();
   if(L==="bignumber"){const N=(x.numbers||[]).filter(n=>n&&n.value!=null).slice(0,3);if(!N.length){x.layout="bullets"}else{
    s=frame(x.title,T.acc);const w=12.1/N.length;
    N.forEach((n,i)=>{const X=0.6+i*w;s.addShape(pptx.ShapeType.roundRect,{x:X+0.1,y:1.7,w:w-0.2,h:4.4,fill:{color:T.soft2},line:{color:T.soft2},rectRadius:0.15});
@@ -1281,13 +1301,13 @@ async function makeDeck(pmid,count){
    notes(s,x);continue}}
   if(x.layout==="comparison"&&x.left&&x.right){
    s=frame(x.title,T.acc2);[[x.left,0.6,T.acc2],[x.right,6.85,T.acc]].forEach(([c,X,col])=>{
-    s.addShape(pptx.ShapeType.roundRect,{x:X,y:1.55,w:5.85,h:5.2,fill:{color:"FFFFFF"},line:{color:col,width:1.5},rectRadius:0.12});
+    s.addShape(pptx.ShapeType.roundRect,{x:X,y:1.55,w:5.85,h:5.2,fill:{color:T.card},line:{color:col,width:1.5},rectRadius:0.12});
     s.addShape(pptx.ShapeType.rect,{x:X,y:1.55,w:5.85,h:0.75,fill:{color:col},line:{color:col}});
     s.addText(String(c.heading||""),{x:X+0.2,y:1.58,w:5.45,h:0.7,fontFace:F,fontSize:20,bold:true,color:"FFFFFF",valign:"middle",fit:"shrink"});
     bulletBox(s,c.points,{x:X+0.2,y:2.5,w:5.45,h:4.1,fs:17})});notes(s,x);continue}
   if(x.layout==="bar"){const g=(x.groups||[]).map(String).slice(0,3),cats=(x.categories||[]).filter(c=>c&&Array.isArray(c.values)&&c.values.every(v=>isFinite(parseFloat(v))));
    if(g.length&&cats.length){s=frame(x.title,T.acc2);
-    s.addChart(pptx.ChartType.bar,g.map((nm,i)=>({name:nm,labels:cats.map(c=>String(c.label)),values:cats.map(c=>parseFloat(c.values[i])||0)})),{x:0.7,y:1.5,w:11.9,h:5.3,barDir:"col",barGrouping:"clustered",chartColors:[T.acc2,T.acc,T.grey],showLegend:g.length>1,legendPos:"b",legendFontSize:13,showValue:true,dataLabelFontSize:13,dataLabelFormatCode:"General",catAxisLabelFontSize:14,valAxisLabelFontSize:12,valAxisTitle:x.unit||"",showValAxisTitle:!!x.unit,valGridLine:{color:"E5E7EF",size:1}});
+    s.addChart(pptx.ChartType.bar,g.map((nm,i)=>({name:nm,labels:cats.map(c=>String(c.label)),values:cats.map(c=>parseFloat(c.values[i])||0)})),{x:0.7,y:1.5,w:11.9,h:5.3,barDir:"col",barGrouping:"clustered",chartColors:[T.acc2,T.acc,T.grey],showLegend:g.length>1,legendPos:"b",legendFontSize:13,showValue:true,dataLabelFontSize:13,dataLabelFormatCode:"General",catAxisLabelFontSize:14,valAxisLabelFontSize:12,valAxisTitle:x.unit||"",showValAxisTitle:!!x.unit,valGridLine:{color:T.sy==="dark"?"3A4468":"E5E7EF",size:1},catAxisLabelColor:T.text,valAxisLabelColor:T.text,legendColor:T.text,dataLabelColor:T.text,valAxisTitleColor:T.text});
     notes(s,x);continue}x.layout="bullets"}
   if(x.layout==="flow"){const st2=(x.steps||[]).filter(z=>z&&z.label).slice(0,5);if(st2.length>=2){
    s=frame(x.title||"Study design",T.acc2);const n=st2.length,gap=0.35,w=(12.1-gap*(n-1))/n;
@@ -1299,6 +1319,8 @@ async function makeDeck(pmid,count){
     s.addText(String(z.detail||""),{x:X+0.15,y:3.4,w:w-0.3,h:2.3,fontFace:F,fontSize:n>4?12:14,color:T.text,align:"center",valign:"top",fit:"shrink"});
     if(i<n-1)s.addShape(pptx.ShapeType.line,{x:X+w+0.03,y:4.0,w:gap-0.06,h:0,line:{color:T.grey,width:2,endArrowType:"triangle"}})});
    notes(s,x);continue}x.layout="bullets"}
+  if(x.layout==="questions"){const Q=(x.questions||[]).map(String).filter(Boolean).slice(0,5);if(Q.length){s=frame(x.title||"Questions for discussion",T.acc2);
+   Q.forEach((q,i)=>{const y=1.6+i*1.02;s.addShape(pptx.ShapeType.ellipse,{x:0.7,y:y+0.1,w:0.6,h:0.6,fill:{color:T.acc2},line:{color:T.acc2}});s.addText(String(i+1),{x:0.7,y:y+0.1,w:0.6,h:0.6,fontFace:F,fontSize:16,bold:true,color:"FFFFFF",align:"center",valign:"middle"});s.addText(q,{x:1.55,y,w:11,h:0.8,fontFace:F,fontSize:Q.length>4?17:19,color:T.text,valign:"middle",fit:"shrink"})});notes(s,x);continue}x.layout="bullets"}
   if(x.layout==="forest"){s=frame(x.title,T.acc2);if(deckForest(pptx,s,x,T,F)){notes(s,x);continue}s.addText((x.rows||[]).map(r=>`${r.label}: ${r.value}`).join("\n")||"",{x:0.7,y:1.5,w:11.9,h:5,fontFace:F,fontSize:18,color:T.text,valign:"top"});notes(s,x);continue}
   if(x.layout==="takehome"){s=frame(x.title||"Take-home message",T.acc);
    s.addShape(pptx.ShapeType.roundRect,{x:0.6,y:1.55,w:12.1,h:5.1,fill:{color:T.soft},line:{color:T.soft},rectRadius:0.15});
@@ -1319,10 +1341,11 @@ async function makeDeck(pmid,count){
  for(const ch of (S.charts||[]))addChartSlide(pptx,ch,short,T.dark,T.acc2,T.grey,F);
  if(useFigs)figNote=nFig?(cc?`${nFig} key ${nFig===1?"figure":"figures"} included, with credit lines.`:"Figures added as captions with links, because the licence doesn't allow copying the images."):"";
  else if(S.slideFigs&&!mine)figNote=P.pmcid&&P.oa?"No figures found in the full paper.":"Not open access, so the paper's figures can't be included.";
+ if(nPdf)figNote=`${nPdf} ${nPdf===1?"figure":"figures"} from your PDF added, with an acknowledgement.`;
  // reference slide
  s=frame("Reference",T.grey);
  s.addText(`${P.aus.slice(0,6).join(", ")}${P.aus.length>6?", et al":""}. ${P.title} ${P.iso||P.journal}. ${P.year}${P.vol?";"+P.vol:""}${P.iss?"("+P.iss+")":""}${P.pages?":"+P.pages:""}.${P.doi?" doi:"+P.doi:""}`,{x:0.7,y:1.5,w:11.9,h:2.2,fontFace:F,fontSize:18,color:T.text,valign:"top",fit:"shrink"});
- s.addText(`PubMed ${pmid}${P.pmcid?", "+P.pmcid:""}. Slides written by AI from ${mine?"the reader's own copy of the paper; charts redrawn from the reported numbers":full.text?"the open-access full paper":"the abstract"}${nFig?"; figures reproduced under the paper's open-access licence":""}. Check against the paper before presenting.`,{x:0.7,y:4.1,w:11.9,h:1,fontFace:F,fontSize:13,color:T.grey});
+ s.addText(`PubMed ${pmid}${P.pmcid?", "+P.pmcid:""}. ${nPdf?"Figures from the paper are reproduced for teaching, with acknowledgement. ":""}Slides written by AI from ${mine?"the reader's own copy of the paper; charts redrawn from the reported numbers":full.text?"the open-access full paper":"the abstract"}${nFig?"; figures reproduced under the paper's open-access licence":""}. Check against the paper before presenting.`,{x:0.7,y:4.1,w:11.9,h:1,fontFace:F,fontSize:13,color:T.grey});
  const blob=await pptx.write({outputType:"blob"});
  const name=`${short.replace(/[^\w ]+/g,"").replace(/\s+/g,"-").slice(0,60)||"paper"}-slides.pptx`;
  S.slideBusy="";S.slideFile=new File([blob],name,{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"});
@@ -1791,6 +1814,81 @@ function deckTrack(pptx){S.slidePrev=[];const add=pptx.addSlide.bind(pptx);
   return s};
  return pptx}
 
+const APPKEY="r";
+// ---------- slide styles ----------
+const SLSTYLES=[["classic","Classic"],["dark","Dark"],["minimal","Minimal"],["bold","Bold"]];
+function deckStyle(D,sy){const T={...D,sy,bg:"FFFFFF",titleBg:D.dark,titleTx:"FFFFFF",titleSub:"D5DCEB",card:"FFFFFF"};
+ if(sy==="dark")Object.assign(T,{bg:D.night,text:"E9ECF5",dark:"FFFFFF",grey:"A9B2C8",soft:D.nightCard,soft2:D.nightCard2,titleBg:D.night,card:D.nightCard});
+ if(sy==="minimal")Object.assign(T,{soft:"F5F6F9",soft2:"F7F3F4",titleBg:"FFFFFF",titleTx:D.dark,titleSub:D.grey});
+ if(sy==="bold")Object.assign(T,{titleBg:D.acc,titleSub:"FFFFFF"});
+ return T}
+const styleChips=()=>`<div class="au" style="margin-top:8px">Slide style</div><div class="row" style="flex-wrap:wrap;overflow:visible">${SLSTYLES.map(([k,l])=>`<button class="chip ${(st.slideStyle||"classic")===k?"on":""}" data-act="slsty" data-v="${k}"><span class="sw sw-${k}"></span>${l}</button>`).join("")}</div>`;
+// ---------- figures from your own PDF: choose pages, added with an acknowledgement ----------
+const pdfThumbs={};
+async function pdfDoc(file){if(!window.pdfjsLib)await loadJS(PDFJS_URL);pdfjsLib.GlobalWorkerOptions.workerSrc=await verifiedURL(PDFJS_W,"text/javascript");return pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise}
+function pickSheet(m){const P=myPdf[m.pmid],sel=(S.pdfPick&&S.pdfPick.pmid===m.pmid?S.pdfPick.pages:[]);return `<div class="sheet big" role="dialog" aria-label="Choose figures"><h3>Choose figures from your PDF</h3>
+ <p class="note" style="margin:0 0 6px">Tap up to 4 pages with figures or tables. Each is added as a slide, cropped to the content, with an acknowledgement of the paper. Only include material you're permitted to show for teaching.</p>
+ <div id="pgrid" class="pgrid">${Array.from({length:Math.min(P?P.pages:0,24)},(_,i)=>`<button class="pg ${sel.includes(i+1)?"on":""}" data-act="pdfpg" data-v="${i+1}"><span class="pgimg" id="pg${i+1}">${pdfThumbs[m.pmid]&&pdfThumbs[m.pmid][i+1]?`<img src="${pdfThumbs[m.pmid][i+1]}" alt="">`:`<span class="spin"></span>`}</span><span class="pgn">Page ${i+1}${sel.includes(i+1)?" ✓":""}</span></button>`).join("")}</div>
+ <div class="pk"><a href="#" data-act="pdfpickdone">Done${sel.length?` (${sel.length} chosen)`:""}</a></div></div>`}
+async function pickThumbs(pmid){const P=myPdf[pmid];if(!P||!P.file)return;pdfThumbs[pmid]=pdfThumbs[pmid]||{};
+ try{const pdf=await pdfDoc(P.file);for(let p=1;p<=Math.min(pdf.numPages,24);p++){if(pdfThumbs[pmid][p])continue;const page=await pdf.getPage(p),vp=page.getViewport({scale:0.32}),c=document.createElement("canvas");c.width=vp.width;c.height=vp.height;const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);await page.render({canvasContext:g,viewport:vp}).promise;
+  pdfThumbs[pmid][p]=c.toDataURL("image/jpeg",0.7);const el=document.getElementById("pg"+p);if(el)el.innerHTML=`<img src="${pdfThumbs[pmid][p]}" alt="">`}}catch(e){}}
+async function pdfPageImage(file,n){
+ const pdf=await pdfDoc(file),page=await pdf.getPage(n),vp=page.getViewport({scale:2.2}),c=document.createElement("canvas");c.width=vp.width;c.height=vp.height;
+ const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);await page.render({canvasContext:g,viewport:vp}).promise;
+ // crop away the white margins
+ const d=g.getImageData(0,0,c.width,c.height).data;let x0=c.width,y0=c.height,x1=0,y1=0;
+ for(let y=0;y<c.height;y+=3)for(let x=0;x<c.width;x+=3){const i=(y*c.width+x)*4;if(d[i]<235||d[i+1]<235||d[i+2]<235){if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}}
+ if(x1<=x0||y1<=y0)return{data:c.toDataURL("image/jpeg",0.88),w:c.width,h:c.height};
+ const pad=12,cx=Math.max(0,x0-pad),cy=Math.max(0,y0-pad),cw=Math.min(c.width,x1+pad)-cx,ch=Math.min(c.height,y1+pad)-cy,o=document.createElement("canvas");o.width=cw;o.height=ch;
+ o.getContext("2d").drawImage(c,cx,cy,cw,ch,0,0,cw,ch);return{data:o.toDataURL("image/jpeg",0.88),w:cw,h:ch};
+}
+// ---------- back from the full paper ----------
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&S.ftBack&&Date.now()-S.ftBack.at>2500&&Date.now()-S.ftBack.at<3*3600e3){S.ftBar=S.ftBack.pmid;S.ftBack=null;renderFtBar()}});
+function renderFtBar(){let el=document.getElementById("ftbar");if(!el){el=document.createElement("div");el.id="ftbar";document.body.appendChild(el)}
+ const id=S.ftBar;if(!id){el.innerHTML="";el.className="";return}
+ const it=findItem(id)||st.saved[id]||{};el.className="ftbar";
+ el.innerHTML=`<div class="fth"><span>Back from the full paper</span><button class="ftx" data-act="ftclose" aria-label="Close">✕</button></div><div class="ftt">${esc(it.title||"This paper")}</div>
+ <div class="ftb"><button data-act="ftsum">✨ Summarise</button><button data-act="ftslides">Make slides</button>${pdfBtn(id)}</div>`}
+function ftShowCard(id){
+ if(!S.items.some(x=>x.pmid===id)&&!st.saved[id]){const it=findItem(id);if(it)st.saved[id]={...it,at:Date.now()};save()}
+ if(!S.items.some(x=>x.pmid===id)){S.tab="saved"}if(!S.open[id])loadAbs(id);else render();
+ setTimeout(()=>{const b=document.querySelector(`[data-act="abs"][data-id="${id}"]`);if(b)b.scrollIntoView({behavior:"smooth",block:"start"})},150)}
+// ---------- PDFs shared into the app (Android) ----------
+async function sharedInbox(){
+ if(!/[?&]shared=1/.test(location.search))return;history.replaceState(null,"",location.pathname);
+ try{const c=await caches.open("cpd-share-inbox"),key=new URL(`__shared-${APPKEY}.pdf`,location.href).href,r=await c.match(key);if(!r)return;
+  const name=decodeURIComponent(r.headers.get("X-Name")||"Shared.pdf"),file=new File([await r.blob()],name,{type:"application/pdf"});await c.delete(key);
+  toast("Reading the shared PDF…");
+  let pmid="";try{const t=(await pdfTextOf(file)).text,m=t.match(/\b(10\.\d{4,9}\/[^\s"<>]+)/);
+   if(m){const doi=m[1].replace(/[.,;)\]]+$/,"");const j=await getJSON(`${E}esearch.fcgi?db=pubmed&retmode=json&tool=cardioreader&term=${encodeURIComponent(doi+"[aid]")}`);pmid=((j.esearchresult||{}).idlist||[])[0]||""}}catch(e){}
+  if(!pmid){try{const L=JSON.parse(localStorage.getItem("cpd-ftlast")||"null");if(L&&Date.now()-L.at<6*3600e3)pmid=L.pmid}catch(e){}}
+  if(!pmid){toast("Couldn't tell which paper this is. Open the paper in the app and tap Add full paper (PDF).");return}
+  if(!st.saved[pmid]){try{const P=await paperData(pmid);st.saved[pmid]={pmid,title:P.title,src:P.iso||P.journal,authors:P.aus.slice(0,3).join(", ")+(P.aus.length>3?", et al.":""),date:P.year,doi:P.doi,at:Date.now()};save()}catch(e){}}
+  S.tab="saved";myPdfLoad(pmid,file);try{if(!S.abs[pmid])loadAbs(pmid);else{S.open[pmid]=true;render()}}catch(e){}
+ }catch(e){}
+}
+
+// ---------- archive: a page flies into the Library, and the Library shows how many are saved ----------
+const DOCSVG='<svg viewBox="0 0 40 50" width="34" height="42" aria-hidden="true"><path d="M4 2h22l10 10v34a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" fill="#fff" stroke="currentColor" stroke-width="2"/><path d="M26 2v10h10" fill="none" stroke="currentColor" stroke-width="2"/><g stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="9" y1="20" x2="29" y2="20"/><line x1="9" y1="27" x2="29" y2="27"/><line x1="9" y1="34" x2="22" y2="34"/></g></svg>';
+function libCount(){const n=Object.keys(st.saved||{}).length,el=document.getElementById("libcount");if(!el)return;el.textContent=n>99?"99+":String(n);el.style.display=n?"":"none"}
+function libBump(){const ic=document.querySelector('.hicon[data-tab="saved"]'),bd=document.getElementById("libcount");
+ if(ic&&ic.animate)ic.animate([{transform:"scale(1)"},{transform:"scale(1.22)"},{transform:"scale(1)"}],{duration:420,easing:"ease-out"});
+ if(bd&&bd.animate)bd.animate([{transform:"scale(.4)"},{transform:"scale(1.35)"},{transform:"scale(1)"}],{duration:480,easing:"ease-out"})}
+function flyToLibrary(from){
+ const to=document.querySelector('.hicon[data-tab="saved"]');if(!from||!to||!document.body.animate){libCount();libBump();return}
+ const a=from.getBoundingClientRect(),b=to.getBoundingClientRect(),x0=a.left+a.width/2,y0=a.top+a.height/2,x1=b.left+b.width/2,y1=b.top+b.height/2;
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches||y0<0||y0>innerHeight){libCount();libBump();return}
+ const d=document.createElement("div");d.className="flydoc";d.innerHTML=DOCSVG;d.style.left=(x0-17)+"px";d.style.top=(y0-21)+"px";document.body.appendChild(d);
+ const dx=x1-x0,dy=y1-y0,lift=Math.min(160,Math.abs(dy)*0.35+60);
+ const anim=d.animate([
+  {transform:"translate(0,0) scale(.6) rotate(0deg)",opacity:0},
+  {transform:"translate(0,-14px) scale(1.15) rotate(-6deg)",opacity:1,offset:.15},
+  {transform:`translate(${dx*0.5}px,${dy*0.5-lift}px) scale(.95) rotate(8deg)`,opacity:1,offset:.6},
+  {transform:`translate(${dx}px,${dy}px) scale(.3) rotate(0deg)`,opacity:.5}],{duration:950,easing:"cubic-bezier(.45,.05,.35,1)"});
+ anim.onfinish=()=>{d.remove();libCount();libBump()};
+}
+
 function renderModal(){
  const el=document.getElementById("modal");if(!el)return;
  const m=S.modal;if(!m){el.innerHTML="";el.className="";return}
@@ -1802,6 +1900,7 @@ function renderModal(){
  if(m.type==="tidy"&&S.tidy){el.innerHTML=tidySheet();return}
  if(m.type==="voice"){el.innerHTML=vSheet();return}
  if(m.type==="pron"){el.innerHTML=pronSheet();return}
+ if(m.type==="pdfpick"){el.innerHTML=pickSheet(m);return}
  if(m.type==="profile"){el.innerHTML=profileSheet();return}
  if(m.type==="help"){el.innerHTML=helpSheet();const v=document.getElementById("helpvid");if(v)v.onerror=()=>{v.outerHTML=`<div class="msg">The help video isn't available right now. The tips below cover the main features.</div>`};return}
  if(m.type==="mypdf"){el.innerHTML=myPdfSheet(m);return}
@@ -1809,9 +1908,9 @@ function renderModal(){
  if(m.type==="slides"&&S.slideFile)el.innerHTML=`<div class="sheet" role="dialog" aria-label="Slides ready"><h3>Your slides are ready</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p><div class="res low"><p>${esc(S.slideMsg||"")}</p></div><p class="note">Tap Open to look through them here, or Save or share to save to Files or open in PowerPoint, Keynote, Mail or WhatsApp.</p><div class="pk"><a href="#" data-act="slideopen">Open</a><a href="#" class="alt" data-act="slideshare">Save or share</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="mclose">Done</a></div></div>`;
  else if(m.type==="slides")el.innerHTML=`<div class="sheet" role="dialog" aria-label="Make slides"><h3>Make slides</h3><p class="note" style="margin:0 0 6px">Version ${APPVER}</p><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
   ${S.slideBusy?`<div class="msg"><span class="spin"></span>${esc(S.slideBusy)}</div>`:`<label class="set"><span>Number of slides</span><select id="slidecount">${[3,4,5,6,7,8,10,12].map(n=>`<option value="${n}" ${+S.slideN===n?"selected":""}>${n}</option>`).join("")}</select></label>
-  ${aiURL()?`<label class="set"><span>Design the slides with AI<br><small class="au">Free. Uses the full paper when it's open access, and picks a layout for each slide</small></span><input type="checkbox" id="slideai" ${S.slideAI?"checked":""}></label>`:""}
+  ${aiURL()?`${styleChips()}<label class="set" style="margin-top:6px"><span>Design the slides with AI<br><small class="au">Free. Uses the full paper when it's open access, and picks a layout for each slide</small></span><input type="checkbox" id="slideai" ${S.slideAI?"checked":""}></label>`:""}
   <p class="note">${aiURL()&&S.slideAI?"The AI chooses the best layout for each slide: headline numbers, comparisons, bar charts, a study-design flow and a take-home message. Speaker notes are included.":"Title, study at a glance, background, methods, results, key numbers and take-home message, then a reference slide."}</p>
-  ${myPdf[m.pmid]?`<p class="note">📄 Using your PDF (${myPdf[m.pmid].pages} pages). Original figures aren't copied: the AI redraws key results as charts.</p>`:`<label class="set"><span>Include the paper's key figures<br><small class="au">Open-access papers only. A credit line is always added.</small></span><input type="checkbox" id="slidefigs" ${S.slideFigs?"checked":""}></label><p class="note" style="margin-top:0">Paywalled paper? Tap 📄 Add full paper (PDF) under the abstract and choose the PDF you've downloaded.</p>`}
+  ${myPdf[m.pmid]?`<p class="note">📄 Using your PDF (${myPdf[m.pmid].pages} pages). The AI redraws key results as charts, and you can add figures from the PDF.</p><div class="pk" style="margin-top:4px"><a href="#" class="alt" data-act="pdfpick">🖼 Add figures from your PDF${S.pdfPick&&S.pdfPick.pmid===m.pmid&&S.pdfPick.pages.length?` (${S.pdfPick.pages.length} chosen)`:""}</a></div>`:`<label class="set"><span>Include the paper's key figures<br><small class="au">Open-access papers only. A credit line is always added.</small></span><input type="checkbox" id="slidefigs" ${S.slideFigs?"checked":""}></label><p class="note" style="margin-top:0">Paywalled paper? Tap 📄 Add full paper (PDF) under the abstract and choose the PDF you've downloaded.</p>`}
   <div style="margin:8px 0"><b style="font-size:15px">Chart slides</b><p class="note" style="margin:2px 0 6px">Redraw key results as an editable bar chart or a forest plot.</p>
    ${(S.charts||[]).map((c,i)=>`<div class="kp" style="padding:8px 0;display:flex;justify-content:space-between;gap:8px"><span>${c.type==="bar"?"Bar chart":"Forest plot"}: ${esc(c.title||"Untitled")}</span><button class="link" data-act="chdel" data-v="${i}">Remove</button></div>`).join("")}
    ${S.chartDraft?chartForm():`<button class="link" style="color:#1D6A7A;text-decoration:none;font-weight:600" data-act="chadd">+ Add a chart</button>`}</div>
@@ -2210,7 +2309,7 @@ function pronEdit(i,k,v){const L=pronList().map(r=>r.slice());if(!L[i])return;L[
 
 function ttsNext(){useNV()?nvSpeakNext():speakNext()}
 function render(){
- document.querySelectorAll(".tabs button,.hicon").forEach(b=>b.classList.toggle("on",!!b.dataset.tab&&b.dataset.tab===S.tab));{const pb=document.getElementById("profbtn");if(pb)pb.classList.toggle("todo",!profileDone())};
+ document.querySelectorAll(".tabs button,.hicon").forEach(b=>b.classList.toggle("on",!!b.dataset.tab&&b.dataset.tab===S.tab));{const pb=document.getElementById("profbtn");if(pb)pb.classList.toggle("todo",!profileDone())}if(!document.querySelector(".flydoc"))libCount();;
  const n=S.newIds.size;document.getElementById("newc").textContent=n?`${n} new`:"";
  const fid=document.activeElement&&["q","dq"].includes(document.activeElement.id)?document.activeElement.id:"";
  $m.innerHTML=S.tab==="latest"?vLatest():S.tab==="guide"?vGuide():S.tab==="pods"?vPods():S.tab==="scores"?vScores():S.tab==="saved"?vSaved():S.tab==="cpd"?vCPDTab():vSettings();
@@ -2230,7 +2329,7 @@ document.addEventListener("click",e=>{
  else if(a==="refresh")load();
  else if(a==="more"){if(!S.loading)load(true)}
  else if(a==="abs")loadAbs(b.dataset.id);
- else if(a==="star"){const id=b.dataset.id;if(st.saved[id])delete st.saved[id];else{const it=findItem(id);if(it)st.saved[id]={...it,at:Date.now()}}save();render()}
+ else if(a==="star"){const id=b.dataset.id;let added=false;if(st.saved[id])delete st.saved[id];else{const it=findItem(id);if(it){st.saved[id]={...it,at:Date.now()};added=true}}save();if(added){flyToLibrary(b);const keep=Object.keys(st.saved).length-1,el=document.getElementById("libcount");render();if(el){el.textContent=keep>99?"99+":String(keep);el.style.display=keep?"":"none"}}else render()}
  else if(a==="g"){S.g=b.dataset.v;render()}
  else if(a==="gs"){S.gsub=b.dataset.v;render()}
  else if(a==="gretry"){S.gerr[S.gsub]="";loadGuide(S.gsub)}
@@ -2246,7 +2345,7 @@ document.addEventListener("click",e=>{
  else if(a==="chcancel"){e.preventDefault();S.chartDraft=null;renderModal()}
  else if(a==="chsave"){e.preventDefault();const d=S.chartDraft;if(!parseRows(d.data,d.type==="bar"?2:4).length){toast(d.type==="bar"?"Add at least one line: label, value":"Add at least one line: label, HR, lower CI, upper CI");return}(S.charts=S.charts||[]).push(d);S.chartDraft=null;renderModal()}
  else if(a==="chdel"){S.charts.splice(+b.dataset.v,1);renderModal()}
- else if(a==="ft"){e.preventDefault();openFullText(b.dataset.doi)}
+ else if(a==="ft"){e.preventDefault();S.ftBack={pmid:b.dataset.id,at:Date.now()};try{localStorage.setItem("cpd-ftlast",JSON.stringify(S.ftBack))}catch(x){}openFullText(b.dataset.doi)}
  else if(a==="podcpd"){S.modal={type:"cpd",pmid:b.dataset.id,title:b.dataset.n};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
  else if(a==="tts"){const id=b.dataset.id;if(TTS.pmid===id&&TTS.playing){if(TTS.paused){useNV()?NV.ctx.resume():speechSynthesis.resume();TTS.paused=false}else{useNV()?NV.ctx.suspend():speechSynthesis.pause();TTS.paused=true}render()}else ttsArticle(id)}
  else if(a==="ttsstop")ttsStop();
@@ -2324,6 +2423,13 @@ document.addEventListener("click",e=>{
  else if(a==="mypdfopen"){e.preventDefault();const P=myPdf[S.modal.pmid];if(P&&P.file)viewOpen({kind:"pdf",title:P.name,file:P.file})}
  else if(a==="viewshare"){viewShare()}
  else if(a==="viewclose"){viewClose()}
+ else if(a==="slsty"){st.slideStyle=b.dataset.v;save();renderModal()}
+ else if(a==="pdfpick"){e.preventDefault();const id=S.modal.pmid;if(!S.pdfPick||S.pdfPick.pmid!==id)S.pdfPick={pmid:id,pages:[]};S.modal={type:"pdfpick",pmid:id};renderModal();pickThumbs(id)}
+ else if(a==="pdfpg"){const n=+b.dataset.v,P=S.pdfPick;const k=P.pages.indexOf(n);if(k>=0)P.pages.splice(k,1);else if(P.pages.length<4)P.pages.push(n);else toast("Up to 4 pages.");P.pages.sort((x,y)=>x-y);renderModal()}
+ else if(a==="pdfpickdone"){e.preventDefault();S.modal={type:"slides",pmid:S.modal.pmid};renderModal()}
+ else if(a==="ftclose"){S.ftBar=null;renderFtBar()}
+ else if(a==="ftsum"){const id=S.ftBar;S.ftBar=null;renderFtBar();ftShowCard(id);if(!(st.aiSum||{})[id]||!S.aiOpen[id])aiSummary(id)}
+ else if(a==="ftslides"){const id=S.ftBar;S.ftBar=null;renderFtBar();S.charts=[];S.chartDraft=null;S.slideFile=null;S.slideBusy="";S.modal={type:"slides",pmid:id};renderModal()}
  else if(a==="backup"){e.preventDefault();backupNow()}
  else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;(S.slideAI&&aiURL()?makeDeck:makeSlides)(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
  else if(a==="cpd"){S.modal={type:"cpd",pmid:b.dataset.id};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}

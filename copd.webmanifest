@@ -20,5 +20,22 @@
    "type": "image/png",
    "purpose": "any maskable"
   }
- ]
+ ],
+ "share_target": {
+  "action": "copd.html?share=1",
+  "method": "POST",
+  "enctype": "multipart/form-data",
+  "params": {
+   "title": "title",
+   "files": [
+    {
+     "name": "pdf",
+     "accept": [
+      "application/pdf",
+      ".pdf"
+     ]
+    }
+   ]
+  }
+ }
 }
