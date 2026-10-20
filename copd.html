@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-etFlGKGF6BwYagsrtNGJm2EsnhstDaYyBRk4c2L4nU0=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-SSqa/6lIuQdRhvyhJ6l585GvRleNct6+ZKIJMe29VCo=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -313,6 +313,16 @@ header{background:linear-gradient(135deg,rgba(15,61,73,.96),rgba(29,106,122,.92)
 .sheet{background:rgba(255,255,255,.84)!important;backdrop-filter:blur(26px) saturate(170%);-webkit-backdrop-filter:blur(26px) saturate(170%);border-top:1px solid rgba(255,255,255,.95);box-shadow:0 -12px 40px rgba(10,20,40,.18)!important}
 .ov{background:rgba(20,25,45,.26)!important;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
 .np{background:rgba(15,61,73,.92)!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.2)}
+.set select{max-width:56vw;min-width:0;text-overflow:ellipsis}
+/* in-app viewer */
+.viewer .vhead{display:flex;justify-content:space-between;align-items:center;gap:8px}.viewer .vhead h3{margin:0;font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vbtns{display:flex;gap:6px;flex:0 0 auto}.vbtns .more{width:auto!important;margin:0!important;padding:8px 12px!important;font-size:14px}
+.vbody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;margin-top:10px}
+.vpage{width:100%;display:block;margin:0 0 10px;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.14);background:#fff}
+.vtable{font-size:12px;border-collapse:collapse;min-width:900px;background:#fff}.vtable td,.vtable th{border:1px solid #E2E5EC;padding:5px 6px;vertical-align:top;text-align:left}
+.slide{background:#fff;border-radius:12px;padding:14px 16px;margin:0 0 12px;box-shadow:0 2px 12px rgba(0,0,0,.12);position:relative;min-height:160px}
+.slide.dark{background:#1C2541;color:#fff}.sl-n{position:absolute;top:8px;right:12px;font-size:12px;opacity:.6}.sl-t{font-weight:800;font-size:17px;margin-right:24px}
+.sl-l{font-size:14px;margin-top:6px;line-height:1.4}.sl-l.big{font-size:22px;font-weight:800}.slide img{max-width:100%;max-height:220px;display:block;margin:8px auto 0}.sl-c{font-size:13px;margin-top:8px;opacity:.85}
 </style>
 </head>
 <body>
@@ -326,7 +336,7 @@ header{background:linear-gradient(135deg,rgba(15,61,73,.96),rgba(29,106,122,.92)
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
 "use strict";
-const KEY="copd-reader-v1",APPVER="22 Oct 2026 (r16)";
+const KEY="copd-reader-v1",APPVER="23 Oct 2026 (r18)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"lrm",name:"Lancet Respir Med",ta:"Lancet Respir Med",c:"#8A93A8"},
@@ -1078,7 +1088,7 @@ async function makeSlides(pmid,count){
    for(const k of ["Methods","Results","Conclusions"]){const extra=(F[k]||[]).flatMap(sentences).filter(s=>k!=="Results"||hasStat(s)).slice(0,4);if(extra.length&&S2[k].length<3){S2[k]=S2[k].concat(extra.filter(e=>!S2[k].includes(e)));ftUsed=true}}}catch(e){}}
  S.slideBusy="Building slides";renderModal();
  await loadJS(PPTX_SRC);
- const pptx=new PptxGenJS();pptx.layout="LAYOUT_WIDE";
+ const pptx=deckTrack(new PptxGenJS());pptx.layout="LAYOUT_WIDE";
  const NAVY="1C2541",ACC="3E6EA8",RED="C0504D",GREY="5C6375",FONT="Calibri";
  const surname=n=>{n=String(n||"").trim();return /^[A-Za-z'\-]+(?:\s[A-Za-z'\-]+)*\s[A-Z]{1,3}$/.test(n)?n.replace(/\s[A-Z]{1,3}$/,""):n.split(/\s+/).pop()};
  const short=`${surname(P.aus[0])}${P.aus.length>1?" et al":""}, ${P.iso||P.journal} ${P.year}`.replace(/^, /,"");
@@ -1188,13 +1198,13 @@ async function myPdfLoad(pmid,file){
  S.pdfFor=pmid;S.pdfBusy="Opening your PDF";S.modal={type:"mypdf",pmid};renderModal();
  try{const r=await pdfTextOf(file),txt=pdfSections(r.text);
   if(txt.replace(/\s/g,"").length<300)throw Object.assign(new Error("scan"),{code:"scan"});
-  myPdf[pmid]={text:txt,pages:r.pages,name:file.name||"PDF"};S.pdfBusy="";renderModal();render()}
+  myPdf[pmid]={text:txt,pages:r.pages,name:file.name||"PDF",file};S.pdfBusy="";renderModal();render()}
  catch(e){S.modal=null;S.pdfBusy="";renderModal();toast(e.code==="scan"?"This PDF has no readable text (it may be a scan), so it can't be used.":navigator.onLine===false?"Reading a PDF needs a connection the first time.":"Couldn't read this PDF. Try another copy.")}
 }
 function myPdfSheet(m){const P=myPdf[m.pmid];return `<div class="sheet" role="dialog" aria-label="Add the full paper"><h3>📄 Add the full paper (PDF)</h3>
  ${S.pdfBusy||!P?`<div class="msg"><span class="spin"></span><span id="pdfmsg">${esc(S.pdfBusy||"Reading")}</span></div>`:`<div class="res low"><p>Read ${P.pages} ${P.pages===1?"page":"pages"} of <b>${esc(P.name)}</b> on your phone.</p></div>
  <p class="note">The PDF itself stays on your phone and isn't kept after you close the app. Only the extracted text is sent to the AI service to write your summary or slides, and the service doesn't store it. Original figures aren't copied: the AI redraws key results as charts instead.</p>
- <div class="pk"><a href="#" data-act="mypdfsum">✨ Summarise the PDF</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="mypdfslides">Make slides from the PDF</a><a href="#" class="alt" data-act="mclose">Done</a></div>`}</div>`}
+ <div class="pk"><a href="#" data-act="mypdfsum">✨ Summarise the PDF</a><a href="#" class="alt" data-act="mypdfopen">Open the PDF</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="mypdfslides">Make slides from the PDF</a><a href="#" class="alt" data-act="mclose">Done</a></div>`}</div>`}
 const pdfBtn=pmid=>`<label class="pdfbtn">${myPdf[pmid]?"📄 Full paper added ✓":"📄 Add full paper (PDF)"}<input type="file" accept="application/pdf,.pdf" data-mypdf="${pmid}" style="display:none"></label>`;
 function deckForest(pptx,s,x,T,F){
  const rows=(x.rows||[]).map(r=>({l:String(r.label||""),e:parseFloat(r.value),lo:parseFloat(r.lo),hi:parseFloat(r.hi)})).filter(r=>r.l&&r.e>0&&r.lo>0&&r.hi>0).slice(0,10);
@@ -1237,7 +1247,7 @@ async function makeDeck(pmid,count){
  if(!slides.length){toast("The AI didn't return slides. Using the built-in slide writer instead.");return makeSlides(pmid,count)}
  S.slideBusy=useFigs?"Adding the paper's figures":"Building slides";renderModal();
  await loadJS(PPTX_SRC);
- const pptx=new PptxGenJS();pptx.layout="LAYOUT_WIDE";const T=DECK,F="Calibri",W=13.333;
+ const pptx=deckTrack(new PptxGenJS());pptx.layout="LAYOUT_WIDE";const T=DECK,F="Calibri",W=13.333;
  const surname=n=>{n=String(n||"").trim();return /^[A-Za-z'\-]+(?:\s[A-Za-z'\-]+)*\s[A-Z]{1,3}$/.test(n)?n.replace(/\s[A-Z]{1,3}$/,""):n.split(/\s+/).pop()};
  const short=`${surname(P.aus[0])}${P.aus.length>1?" et al":""}, ${P.iso||P.journal} ${P.year}`.replace(/^, /,"");
  const cc=/^CC/.test(P.license||""),lic=cc?P.license.replace(/^CC[ -]?/,"CC ").replace(/-/g," ")+" licence":"";
@@ -1361,8 +1371,7 @@ function cpdCSV(){
  const rows=[["Date","End date","Type","Title","Organiser or journal","Venue","CPD hours or credits","Sessions","PMID","DOI","Key learning","Change to practice","Further learning","GMP domains"].join(",")].concat(L.map(c=>{const r=c.ref||{};return [c.date,c.end||c.date,q(kind(c)),q(c.title),q(c.src),q(c.venue),c.credits!=null?c.credits:(c.minutes/60).toFixed(2),q(c.sessions),/^\d+$/.test(String(c.pmid))?c.pmid:"",q(c.doi),q(r.learn||c.note||""),q(r.change),q(r.further),q((r.domains||[]).join("; "))].join(",")}));
  rows.push(`Total,,,,,,${(L.reduce((a,c)=>a+c.minutes,0)/60).toFixed(1)}`);
  const f=new File([rows.join("\r\n")],`cpd-reading-${isoD(new Date())}.csv`,{type:"text/csv"});
- if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:"CPD log"}).catch(()=>{});return}
- const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
+ viewOpen({kind:"table",title:"CPD spreadsheet",file:f,rows:parseCSV(rows.join("\n"))});
 }
 function cpdSummary(){const L=cpdList(),tot=L.reduce((a,c)=>a+c.minutes,0);return `Total CPD: ${(tot/60).toFixed(1)} hours (${L.length} activities)\n\n`+L.map(c=>`${c.date}${c.end&&c.end!==c.date?" to "+c.end:""} (${c.credits!=null?c.credits+" credits":c.minutes+" min"}): ${c.title}. ${c.src||""}${c.venue?", "+c.venue:""}${c.sessions?". Sessions: "+c.sessions:""}${reflText(c)?" "+reflText(c):""}`).join("\n")}
 // ---------- bottom sheet ----------
@@ -1493,18 +1502,6 @@ function topicSheet(){const t=S.tEdit;return `<div class="sheet" role="dialog" a
 // ---------- dictation for reflections ----------
 const SRec=window.SpeechRecognition||window.webkitSpeechRecognition;let dict=null;
 const micBtn=id=>`<button type="button" class="mic" data-act="mic" data-v="${id}" aria-label="Dictate">🎤</button>`;
-function dictate(id){
- const ta=document.getElementById(id);if(!ta)return;
- if(dict){const same=dict._id===id;try{dict.stop()}catch(e){}dict=null;document.querySelectorAll(".mic").forEach(b=>b.classList.remove("on"));if(same)return}
- if(!SRec){ta.focus();toast("Tap the microphone on your iPhone keyboard to dictate.");return}
- const r=new SRec();r.lang="en-GB";r.continuous=true;r.interimResults=true;r._id=id;
- const base=ta.value?ta.value.replace(/\s*$/," "):"";let fin="";
- r.onresult=e=>{let tmp="";for(let i=e.resultIndex;i<e.results.length;i++){const x=e.results[i][0].transcript;if(e.results[i].isFinal)fin+=x.trim()+" ";else tmp+=x}
-  ta.value=fixDictation((base+fin+tmp).replace(/[ \t]+/g," ").trimStart());ta.dispatchEvent(new Event("input",{bubbles:true}))};
- r.onend=()=>{if(dict===r)dict=null;document.querySelectorAll(".mic").forEach(b=>b.classList.remove("on"))};
- r.onerror=e=>{if(e.error==="not-allowed"||e.error==="service-not-allowed")toast("Allow microphone access, or use the microphone on your keyboard.")};
- try{r.start();dict=r;const b=document.querySelector(`.mic[data-v="${id}"]`);if(b)b.classList.add("on");toast("Listening… tap the microphone again to stop")}catch(e){ta.focus();toast("Tap the microphone on your keyboard to dictate.")}
-}
 // ---------- SOAR: printable PDF of the CPD log, and per-entry copy ----------
 const JSPDF="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js";
 const cpdKind=c=>c.kind||(String(c.pmid).startsWith("pod:")?"podcast":"reading");
@@ -1578,8 +1575,8 @@ async function readyShare(){
  const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;a.target="_blank";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);
 }
 function readySheet(){return S.readyFile?`<div class="sheet" role="dialog" aria-label="Export ready"><h3>Ready for SOAR</h3><div class="res low"><p>${esc(S.readyMsg||"")}</p></div>
- <p class="note">Tap Save or share, then Save to Files. In SOAR, go to Form 3 › Domain 1 › CPD, open Supporting documents, and upload it. Add your overall reflection in Collective reflection.</p>
- <div class="pk"><a href="#" data-act="readyshare">Save or share</a><a href="#" class="alt" data-act="mclose">Done</a></div></div>`
+ <p class="note">Tap Open to read it here, or Save or share, then Save to Files. In SOAR, go to Form 3 › Domain 1 › CPD, open Supporting documents, and upload it. Add your overall reflection in Collective reflection.</p>
+ <div class="pk"><a href="#" data-act="readyopen">Open</a><a href="#" class="alt" data-act="readyshare">Save or share</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="mclose">Done</a></div></div>`
  :`<div class="sheet"><div class="msg"><span class="spin"></span>${esc(S.readyMsg||"Working")}</div></div>`}
 function copySheet(){return `<div class="sheet" role="dialog" aria-label="Copy for SOAR"><h3>Copy for SOAR</h3><p class="note">Select all and copy, then paste into SOAR's Add CPD entry form.</p><textarea class="search selall" rows="12" readonly>${esc(S.copyText||"")}</textarea><div class="pk"><a href="#" class="alt" data-act="mclose">Done</a></div></div>`}
 
@@ -1653,7 +1650,7 @@ async function cDel(id){const db=await cDB();return new Promise((res,rej)=>{cons
 let certMeta=null;
 async function certRefresh(){try{certMeta={};for(const c of await cAll())(certMeta[c.cpd]=certMeta[c.cpd]||[]).push({id:c.id,name:c.name,type:c.type})}catch(e){certMeta={}}if(S.tab==="cpd")render()}
 async function certAdd(cpdId,file){await cPut({id:"k"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),cpd:cpdId,name:file.name||"Certificate",type:file.type||"",blob:file,at:Date.now()});await certRefresh();toast("Certificate saved with this entry")}
-async function certOpen(id){const all=await cAll(),c=all.find(x=>x.id===id);if(!c)return;const u=URL.createObjectURL(c.blob);const w=window.open(u,"_blank");if(!w){const a=document.createElement("a");a.href=u;a.target="_blank";a.click()}setTimeout(()=>URL.revokeObjectURL(u),60000)}
+async function certOpen(id){const all=await cAll(),c=all.find(x=>x.id===id);if(!c)return;const pdf=/pdf/i.test(c.type)||/\.pdf$/i.test(c.name);viewOpen({kind:pdf?"pdf":"img",title:c.name,file:new File([c.blob],c.name,{type:c.type||(pdf?"application/pdf":"image/jpeg")})})}
 const certRow=c=>{const L=(certMeta||{})[c.id]||[];return `<div class="certs">${L.map(x=>`<div class="cert">📎 <span>${esc(x.name)}</span> <button class="link" data-act="certopen" data-v="${x.id}">Open</button><button class="link red" data-act="certdel" data-v="${x.id}">Remove</button></div>`).join("")}
  <label class="link certadd">${L.length?"Add another certificate":"Attach certificate"}<input type="file" accept="image/*,application/pdf" data-cert="${c.id}" style="display:none"></label></div>`};
 // ---------- SOAR export: details and certificate option ----------
@@ -1736,11 +1733,71 @@ function helpSheet(){return `<div class="sheet big help" role="dialog" aria-labe
  <div class="pk"><a href="#" data-act="mclose">Close</a></div></div>`}
 const ICON_HELP='<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.4-2.7 4"/><circle cx="12" cy="17.3" r=".6" fill="currentColor"/></svg>';
 
+// ---------- dictation: rebuilt from scratch on each update, so text can't snowball and freeze the app ----------
+function dictStop(){if(dict){try{clearTimeout(dict._max);dict.stop()}catch(e){}dict=null}document.querySelectorAll(".mic").forEach(b=>b.classList.remove("on"))}
+function dictate(id){
+ const ta=document.getElementById(id);if(!ta)return;
+ if(dict){const same=dict._id===id;dictStop();if(same)return}
+ if(!SRec){ta.focus();toast("Tap the microphone on your keyboard to dictate.");return}
+ const r=new SRec();r.lang="en-GB";r.continuous=true;r.interimResults=true;r._id=id;
+ const base=ta.value?ta.value.replace(/\s*$/," "):"";let heard="",pend=0;
+ const apply=()=>{pend=0;if(!ta.isConnected)return;ta.value=fixDictation((base+heard).replace(/[ \t]+/g," ").trimStart()).slice(0,6000);ta.dispatchEvent(new Event("input",{bubbles:true}))};
+ r.onresult=e=>{try{
+  // some phones resend everything heard so far with each update, so build the text afresh and drop repeats
+  const parts=[];
+  for(let i=0;i<e.results.length;i++){const t=String((e.results[i][0]||{}).transcript||"").trim();if(!t)continue;const p=parts[parts.length-1],tl=t.toLowerCase(),pl=p?p.toLowerCase():"";
+   if(p&&tl.startsWith(pl))parts[parts.length-1]=t;else if(p&&pl.startsWith(tl))continue;else parts.push(t)}
+  heard=parts.join(" ").slice(0,5000);if(!pend)pend=requestAnimationFrame(apply)}catch(x){}};
+ r.onend=()=>{if(dict===r){clearTimeout(r._max);dict=null}document.querySelectorAll(".mic").forEach(b=>b.classList.remove("on"))};
+ r.onerror=e=>{const er=e&&e.error;if(er==="not-allowed"||er==="service-not-allowed")toast("Allow microphone access, or use the microphone on your keyboard.");else if(er==="no-speech")toast("Didn't hear anything. Tap the microphone and try again.");else if(er&&er!=="aborted")toast("Dictation stopped. Tap the microphone to try again, or use the keyboard's microphone.");if(dict===r)dictStop()};
+ r._max=setTimeout(()=>{if(dict===r){dictStop();toast("Dictation pauses after 2 minutes. Tap the microphone to carry on.")}},120000);
+ try{r.start();dict=r;const b=document.querySelector(`.mic[data-v="${id}"]`);if(b)b.classList.add("on");toast("Listening… tap the microphone again to stop")}catch(e){dict=null;ta.focus();toast("Tap the microphone on your keyboard to dictate.")}
+}
+// ---------- open files directly inside the app ----------
+function viewOpen(v){if(dict)dictStop();S.view={...v,prev:S.modal&&S.modal.type!=="viewer"?S.modal:null};S.modal={type:"viewer"};renderModal()}
+function viewClose(){const p=S.view&&S.view.prev;if(S.view&&S.view.url)URL.revokeObjectURL(S.view.url);S.view=null;S.modal=p||null;renderModal()}
+async function viewShare(){const f=S.view&&S.view.file;if(!f)return;
+ if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:f.name});return}catch(e){if(e&&e.name==="AbortError")return}}
+ const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000)}
+function viewerSheet(){const V=S.view||{};return `<div class="sheet big viewer" role="dialog" aria-label="${esc(V.title||"Viewer")}">
+ <div class="vhead"><h3>${esc(V.title||"")}</h3><div class="vbtns">${V.file?`<button class="more" data-act="viewshare">Save or share</button>`:""}<button class="more" data-act="viewclose">Close</button></div></div>
+ <div id="vbody" class="vbody"><div class="msg"><span class="spin"></span>Opening…</div></div></div>`}
+async function viewFill(){
+ const V=S.view,el=document.getElementById("vbody");if(!V||!el)return;
+ try{
+  if(V.kind==="pdf"){
+   if(!window.pdfjsLib)await loadJS(PDFJS_URL);pdfjsLib.GlobalWorkerOptions.workerSrc=await verifiedURL(PDFJS_W,"text/javascript");
+   const pdf=await pdfjsLib.getDocument({data:await V.file.arrayBuffer()}).promise;if(S.view!==V)return;el.innerHTML="";
+   const W=Math.min(el.clientWidth||360,900),n=Math.min(pdf.numPages,40);
+   for(let p=1;p<=n;p++){const page=await pdf.getPage(p),vp0=page.getViewport({scale:1}),sc=W/vp0.width*Math.min(2,devicePixelRatio||1.5),vp=page.getViewport({scale:sc}),c=document.createElement("canvas");
+    c.width=vp.width;c.height=vp.height;const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);await page.render({canvasContext:g,viewport:vp}).promise;if(S.view!==V)return;
+    const im=new Image();im.src=c.toDataURL("image/jpeg",0.85);im.alt=`Page ${p}`;im.className="vpage";el.appendChild(im)}
+   if(pdf.numPages>n)el.insertAdjacentHTML("beforeend",`<p class="note">Showing the first ${n} of ${pdf.numPages} pages. Use Save or share to see the rest.</p>`);
+  }else if(V.kind==="img"){V.url=URL.createObjectURL(V.file);el.innerHTML=`<img class="vpage" src="${V.url}" alt="">`}
+  else if(V.kind==="table"){const R=V.rows||[];el.innerHTML=`<div class="tw"><table class="vtable">${R.map((r,i)=>`<tr>${r.map(x=>i?`<td>${esc(x)}</td>`:`<th>${esc(x)}</th>`).join("")}</tr>`).join("")}</table></div>`}
+  else if(V.kind==="slides"){const L=S.slidePrev||[];
+   el.innerHTML=L.map((s,i)=>{const T=s.t.filter(x=>x.fs>10.5&&/[A-Za-z0-9]/.test(x.s)),title=T.find(x=>x.fs>=26&&x.fs<=40&&/[A-Za-z]{3}/.test(x.s))||T.slice().sort((a,b)=>b.fs-a.fs)[0],dark=/^(0|1|2)/.test(String((s.s&&s.s.background&&s.s.background.color)||"FFFFFF"));
+    const body=T.filter(x=>x!==title).map(x=>`<div class="sl-l${x.fs>=24?" big":""}">${esc(x.s).replace(/\n/g,"<br>")}</div>`).join("");
+    return `<div class="slide${dark?" dark":""}"><div class="sl-n">${i+1}</div>${title?`<div class="sl-t">${esc(title.s)}</div>`:""}${body}${s.img.map(d=>`<img src="${d}" alt="">`).join("")}${s.chart?`<div class="sl-c">📊 ${esc(s.chart.map(x=>`${x.name}: ${x.labels.map((l,j)=>`${l} ${x.values[j]}`).join(", ")}`).join(" · "))}</div>`:""}</div>`}).join("")||`<div class="msg">No preview available. Use Save or share.</div>`}
+ }catch(e){el.innerHTML=`<div class="msg err">Couldn't open it here. Use Save or share instead.</div>`}
+}
+function parseCSV(t){const out=[];let row=[],cur="",q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c==='"'){if(t[i+1]==='"'){cur+='"';i++}else q=false}else cur+=c}else if(c==='"')q=true;else if(c===","){row.push(cur);cur=""}else if(c==="\n"){row.push(cur.replace(/\r$/,""));out.push(row);row=[];cur=""}else cur+=c}if(cur||row.length){row.push(cur);out.push(row)}return out}
+// record what goes on each slide, so the slides can be previewed in the app
+function deckTrack(pptx){S.slidePrev=[];const add=pptx.addSlide.bind(pptx);
+ pptx.addSlide=(...a)=>{const s=add(...a),rec={t:[],img:[],chart:null,s};S.slidePrev.push(rec);
+  const at=s.addText.bind(s);s.addText=(txt,o={})=>{try{const str=Array.isArray(txt)?txt.map(r=>r&&typeof r==="object"?((r.options&&r.options.bullet?"• ":"")+(r.text||"")):String(r)).join("\n"):String(txt);if(str.trim())rec.t.push({s:str,fs:o.fontSize||14})}catch(e){}return at(txt,o)};
+  const ai=s.addImage.bind(s);s.addImage=o=>{try{if(o&&o.data)rec.img.push(o.data)}catch(e){}return ai(o)};
+  const ac=s.addChart.bind(s);s.addChart=(ty,d,o)=>{try{rec.chart=d}catch(e){}return ac(ty,d,o)};
+  return s};
+ return pptx}
+
 function renderModal(){
  const el=document.getElementById("modal");if(!el)return;
  const m=S.modal;if(!m){el.innerHTML="";el.className="";return}
  const it=findItem(m.pmid)||st.saved[m.pmid]||{title:m.title||""};
  el.className="ov";setTimeout(growAll,0);
+ if(m.type==="viewer"&&S.view){if(el._v!==S.view||!el.querySelector(".viewer")){el.innerHTML=viewerSheet();el._v=S.view;setTimeout(viewFill,30)}return}
+ el._v=null;
  if(m.type==="big"&&S.big){el.innerHTML=bigSheet();return}
  if(m.type==="tidy"&&S.tidy){el.innerHTML=tidySheet();return}
  if(m.type==="voice"){el.innerHTML=vSheet();return}
@@ -1749,7 +1806,7 @@ function renderModal(){
  if(m.type==="help"){el.innerHTML=helpSheet();const v=document.getElementById("helpvid");if(v)v.onerror=()=>{v.outerHTML=`<div class="msg">The help video isn't available right now. The tips below cover the main features.</div>`};return}
  if(m.type==="mypdf"){el.innerHTML=myPdfSheet(m);return}
  if(m.type==="soar"&&S.soar){el.innerHTML=soarSheet();return}
- if(m.type==="slides"&&S.slideFile)el.innerHTML=`<div class="sheet" role="dialog" aria-label="Slides ready"><h3>Your slides are ready</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p><div class="res low"><p>${esc(S.slideMsg||"")}</p></div><p class="note">Tap Save or share, then choose Save to Files, PowerPoint, Keynote, Mail or WhatsApp.</p><div class="pk"><a href="#" data-act="slideshare">Save or share</a><a href="#" class="alt" data-act="mclose">Done</a></div></div>`;
+ if(m.type==="slides"&&S.slideFile)el.innerHTML=`<div class="sheet" role="dialog" aria-label="Slides ready"><h3>Your slides are ready</h3><p class="au" style="margin-bottom:10px">${esc(it.title)}</p><div class="res low"><p>${esc(S.slideMsg||"")}</p></div><p class="note">Tap Open to look through them here, or Save or share to save to Files or open in PowerPoint, Keynote, Mail or WhatsApp.</p><div class="pk"><a href="#" data-act="slideopen">Open</a><a href="#" class="alt" data-act="slideshare">Save or share</a></div><div class="pk" style="margin-top:6px"><a href="#" class="alt" data-act="mclose">Done</a></div></div>`;
  else if(m.type==="slides")el.innerHTML=`<div class="sheet" role="dialog" aria-label="Make slides"><h3>Make slides</h3><p class="note" style="margin:0 0 6px">Version ${APPVER}</p><p class="au" style="margin-bottom:10px">${esc(it.title)}</p>
   ${S.slideBusy?`<div class="msg"><span class="spin"></span>${esc(S.slideBusy)}</div>`:`<label class="set"><span>Number of slides</span><select id="slidecount">${[3,4,5,6,7,8,10,12].map(n=>`<option value="${n}" ${+S.slideN===n?"selected":""}>${n}</option>`).join("")}</select></label>
   ${aiURL()?`<label class="set"><span>Design the slides with AI<br><small class="au">Free. Uses the full paper when it's open access, and picks a layout for each slide</small></span><input type="checkbox" id="slideai" ${S.slideAI?"checked":""}></label>`:""}
@@ -1843,7 +1900,7 @@ function ttsArticle(pmid){
 }
 function ttsBar(pmid){
  const on=TTS.pmid===pmid&&TTS.playing;
- return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${on&&useNV()&&!TTS.started?`<span class="au" style="font-size:13px">Preparing voice…</span>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"Summarise"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${pdfBtn(pmid)}${!S.nvHave&&!on?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#1D6A7A" data-act="nvdl">Try the natural voice</button>`:""}${on?vBtn():""}</div>`;
+ return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${on&&useNV()&&!TTS.started?`<span class="au" style="font-size:13px">Preparing voice…</span>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"Summarise"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${pdfBtn(pmid)}${!S.nvHave&&!on&&st.engine!=="google"?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#1D6A7A" data-act="nvdl">Try the natural voice</button>`:""}${on?vBtn():""}</div>`;
 }
 
 // ---------- share ----------
@@ -2262,6 +2319,11 @@ document.addEventListener("click",e=>{
  else if(a==="help"){S.modal={type:"help"};renderModal()}
  else if(a==="profsave"){e.preventDefault();profileSave()}
  else if(a==="profcancel"){e.preventDefault();S.modal=S.profBack||null;S.profBack=null;renderModal()}
+ else if(a==="readyopen"){e.preventDefault();if(S.readyFile)viewOpen({kind:"pdf",title:"Your CPD log",file:S.readyFile})}
+ else if(a==="slideopen"){e.preventDefault();if(S.slideFile)viewOpen({kind:"slides",title:"Your slides",file:S.slideFile})}
+ else if(a==="mypdfopen"){e.preventDefault();const P=myPdf[S.modal.pmid];if(P&&P.file)viewOpen({kind:"pdf",title:P.name,file:P.file})}
+ else if(a==="viewshare"){viewShare()}
+ else if(a==="viewclose"){viewClose()}
  else if(a==="backup"){e.preventDefault();backupNow()}
  else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;(S.slideAI&&aiURL()?makeDeck:makeSlides)(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
  else if(a==="cpd"){S.modal={type:"cpd",pmid:b.dataset.id};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
