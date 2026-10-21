@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-TlaylOo2Axp6LYU0wYo3vVoy7KpZNaZ3gxmZerjEIvs=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-YuC8G65rnFVHifH+wQhQw4WJalYea7IEXiDsVFzg8OY=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -649,13 +649,13 @@ const SRCH='<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="
 const NEWSTAG={Trial:"#3E6EA8",AI:"#1F7A8C",Device:"#8E6C3E",Contrast:"#4E8F5E",Safety:"#C0504D",Guideline:"#6D5BA8"};
 function agoTxt(t){if(!t)return"";const m=Math.round((Date.now()-t)/60000);return m<60?`${Math.max(1,m)} min ago`:m<1440?`${Math.round(m/60)} h ago`:`${Math.round(m/1440)} d ago`}
 async function newsLoad(force){
- const c=st.newsCache;if(!force&&c&&Date.now()-c.at<3600e3)return;if(S.newsBusy||!aiURL())return;S.newsBusy=true;
- try{const r=await fetch(`${aiURL()}/news?app=radiology`,{credentials:"omit"});const j=await r.json();if(r.ok&&Array.isArray(j.items)){st.newsCache={at:Date.now(),items:plainAI(j.items).filter(x=>x&&x.title&&/^https:\/\//.test(x.link||""))};save()}}catch(e){}
- S.newsBusy=false;if(S.tab==="latest")render();
+ const c=st.newsCache;if(!force&&c&&Date.now()-c.at<3600e3)return;if(S.newsBusy||!aiURL())return;if(!force&&S.newsFail&&Date.now()-S.newsFail<600e3)return;S.newsBusy=true;let ok=false;
+ try{const r=await fetch(`${aiURL()}/news?app=radiology`,{credentials:"omit"});const j=await r.json();if(r.ok&&Array.isArray(j.items)){st.newsCache={at:Date.now(),items:plainAI(j.items).filter(x=>x&&x.title&&/^https:\/\//.test(x.link||""))};save();ok=true}}catch(e){}
+ if(!ok)S.newsFail=Date.now();else S.newsFail=0;S.newsBusy=false;if(S.tab==="latest")render();
 }
 function vNews(){
  if(st.newsOff)return "";const c=st.newsCache;if(!c||Date.now()-c.at>3600e3)setTimeout(()=>newsLoad(),50);
- const L=(c&&c.items)||[];if(!L.length)return S.newsBusy||!c?`<div class="news"><div class="nh"><b><span class="gantry" aria-hidden="true"></span>What's new in radiology</b></div><div class="nrow"><div class="ncard nload"><span class="spin"></span>Loading news…</div></div></div>`:"";
+ const L=(c&&c.items)||[];if(!L.length)return S.newsBusy||(!c&&!S.newsFail)?`<div class="news"><div class="nh"><b><span class="gantry" aria-hidden="true"></span>What's new in radiology</b></div><div class="nrow"><div class="ncard nload"><span class="spin"></span>Loading news…</div></div></div>`:"";
  return `<div class="news"><div class="nh"><b><span class="gantry" aria-hidden="true"></span>What's new in radiology</b><span>Not peer-reviewed</span></div><div class="nrow${S.newsSwept?"":" sweep"}">${S.newsSwept?"":(setTimeout(()=>{S.newsSwept=true},1700),"")}${L.map(x=>`<a class="ncard" href="${esc(x.link)}" target="_blank" rel="noopener noreferrer">${x.tag?`<i style="background:${NEWSTAG[x.tag]||"#5C6375"}">${esc(x.tag)}</i>`:""}<span class="nt">${esc(x.title)}</span><span class="ns">${esc(x.src)}${x.date?` · ${agoTxt(x.date)}`:""}</span></a>`).join("")}</div></div>`;
 }
 function vLatest(){
