@@ -1,0 +1,216 @@
+{
+ "updated": "2026-10-21",
+ "events": [
+  {
+   "id": "ecr26",
+   "n": "ECR 2026",
+   "org": "European Society of Radiology",
+   "t": "conf",
+   "r": "eu",
+   "s": "2026-03-04",
+   "e": "2026-03-08",
+   "v": "Austria Center Vienna, Austria",
+   "url": "https://www.myesr.org/congress/"
+  },
+  {
+   "id": "bnms26",
+   "n": "BNMS Annual Spring Meeting 2026",
+   "org": "British Nuclear Medicine Society",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-04-20",
+   "e": "2026-04-22",
+   "v": "Manchester, UK",
+   "url": "https://www.bnms.org.uk"
+  },
+  {
+   "id": "bsur26",
+   "n": "BSUR Annual Scientific Meeting 2026",
+   "org": "British Society of Urogenital Radiology",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-05-20",
+   "e": "2026-05-22",
+   "v": "Birmingham, UK",
+   "url": "https://www.rcr.ac.uk/events-and-cpd/external-events/"
+  },
+  {
+   "id": "ukio26",
+   "n": "UKIO 2026",
+   "org": "UK Imaging and Oncology Congress (SoR, BIR, IPEM)",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-06-08",
+   "e": "2026-06-10",
+   "v": "ACC Liverpool, UK",
+   "url": "https://www.ukio.org.uk"
+  },
+  {
+   "id": "rcrai26",
+   "n": "RCR Global AI Conference 2026",
+   "org": "The Royal College of Radiologists",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-06-29",
+   "e": "2026-06-30",
+   "v": "QEII Centre, London, and online",
+   "url": "https://www.rcr.ac.uk/events-and-cpd/"
+  },
+  {
+   "id": "bser26",
+   "n": "BSER Conference 2026",
+   "org": "British Society of Emergency Radiology",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-09-21",
+   "e": "2026-09-22",
+   "v": "Hull, UK",
+   "url": "https://www.rcr.ac.uk/events-and-cpd/external-events/"
+  },
+  {
+   "id": "bsir26",
+   "n": "BSIR Annual Scientific Meeting 2026",
+   "org": "British Society of Interventional Radiology",
+   "t": "conf",
+   "r": "uk",
+   "s": "2026-11-04",
+   "e": "2026-11-06",
+   "v": "ICC Birmingham, UK",
+   "url": "https://www.bsirmeeting.org"
+  },
+  {
+   "id": "rsna26",
+   "n": "RSNA 2026",
+   "org": "Radiological Society of North America",
+   "t": "conf",
+   "r": "usa",
+   "s": "2026-11-29",
+   "e": "2026-12-03",
+   "v": "McCormick Place, Chicago, USA",
+   "url": "https://www.rsna.org/annual-meeting"
+  },
+  {
+   "id": "ecr27",
+   "n": "ECR 2027",
+   "org": "European Society of Radiology",
+   "t": "conf",
+   "r": "eu",
+   "s": "2027-03-03",
+   "e": "2027-03-07",
+   "v": "Austria Center Vienna, Austria",
+   "url": "https://www.myesr.org/congress/"
+  },
+  {
+   "id": "sir27",
+   "n": "SIR 2027 Annual Scientific Meeting",
+   "org": "Society of Interventional Radiology",
+   "t": "conf",
+   "r": "usa",
+   "s": "2027-03-20",
+   "e": "2027-03-24",
+   "v": "Los Angeles, USA",
+   "url": "https://www.sirmeeting.org"
+  },
+  {
+   "id": "bnms27",
+   "n": "BNMS Annual Spring Meeting 2027",
+   "org": "British Nuclear Medicine Society",
+   "t": "conf",
+   "r": "uk",
+   "when": "May 2027",
+   "v": "Belfast, UK",
+   "url": "https://www.bnms.org.uk"
+  },
+  {
+   "id": "ukio27",
+   "n": "UKIO 2027",
+   "org": "UK Imaging and Oncology Congress (SoR, BIR, IPEM)",
+   "t": "conf",
+   "r": "uk",
+   "s": "2027-06-07",
+   "e": "2027-06-09",
+   "v": "ACC Liverpool, UK",
+   "url": "https://www.ukio.org.uk"
+  },
+  {
+   "id": "rsna27",
+   "n": "RSNA 2027",
+   "org": "Radiological Society of North America",
+   "t": "conf",
+   "r": "usa",
+   "when": "November 2027, two weeks earlier than usual",
+   "v": "McCormick Place, Chicago, USA",
+   "url": "https://www.rsna.org/annual-meeting"
+  },
+  {
+   "id": "o-rcrhub",
+   "n": "RCR e-Learning Hub",
+   "org": "The Royal College of Radiologists",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Recorded lectures, case-based modules and webinars for radiologists, with CPD.",
+   "url": "https://www.rcr.ac.uk/events-and-cpd/rcr-e-learning-hub/"
+  },
+  {
+   "id": "o-real",
+   "n": "Radiology Events and Learning (REAL)",
+   "org": "The Royal College of Radiologists",
+   "t": "online",
+   "r": "online",
+   "v": "Online and in person",
+   "d": "RCR's programme of radiology study days, webinars and courses.",
+   "url": "https://www.rcr.ac.uk/events-and-cpd/radiology-events-and-learning-real/"
+  },
+  {
+   "id": "o-esr",
+   "n": "ESR Connect",
+   "org": "European Society of Radiology",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "ECR recordings, webinars and online courses, many with European CME credits.",
+   "url": "https://connect.myesr.org"
+  },
+  {
+   "id": "o-rsna",
+   "n": "RSNA Online Learning Center",
+   "org": "Radiological Society of North America",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Courses, annual meeting recordings and case-based learning.",
+   "url": "https://www.rsna.org/education"
+  },
+  {
+   "id": "o-rp",
+   "n": "Radiopaedia courses",
+   "org": "Radiopaedia",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Subspecialty courses and case collections from practising radiologists.",
+   "url": "https://radiopaedia.org/courses"
+  },
+  {
+   "id": "o-elfh",
+   "n": "e-Learning for Healthcare: radiology",
+   "org": "NHS England",
+   "t": "online",
+   "r": "online",
+   "v": "Online",
+   "d": "Free radiology e-learning for NHS staff, including the R-ITI training resources.",
+   "url": "https://www.e-lfh.org.uk"
+  },
+  {
+   "id": "o-bir",
+   "n": "BIR events and webinars",
+   "org": "British Institute of Radiology",
+   "t": "online",
+   "r": "online",
+   "v": "Online and in person",
+   "d": "Multiprofessional imaging study days and webinars with CPD.",
+   "url": "https://www.bir.org.uk"
+  }
+ ]
+}
