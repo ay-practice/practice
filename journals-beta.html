@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-2P68J90hNsfOiDgtYFLdyrQ1YxRaKsK0aA2QTc1OYF0=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-y6BKlSuBqLVgld7oGFS37HUDlSsh0RFTk/reOX0WaLA=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -348,11 +348,62 @@ header{background:linear-gradient(135deg,rgba(28,37,65,.96),rgba(58,72,132,.92))
 .ncard.nload{align-items:center;justify-content:center;flex-direction:row;color:var(--muted)}
 .chip.srch{padding-left:12px!important;padding-right:12px!important;display:inline-flex;align-items:center}
 .sbar{position:relative}.sbar .search{padding-right:40px!important}.sbar .sx{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:17px;color:var(--muted);padding:6px 8px}
+/* full-width, shorter news cards */
+.news{margin:0 -16px 6px!important}.news .nh{margin:0 16px 5px!important}
+.nrow{gap:0!important;padding:0 0 4px!important}
+.ncard{flex:0 0 100%!important;max-width:none!important;min-height:0!important;padding:9px 16px!important;gap:4px!important;border-radius:0!important;border-left:0!important;border-right:0!important;box-shadow:none!important}
+.ncard .ntop{display:flex;align-items:center;gap:8px}.ncard .ntop i{padding:3px 7px!important;font-size:10.5px!important}
+.ncard .ns{margin-top:0!important;font-size:11.5px!important}
+.ncard .nt{font-size:14.5px!important;line-height:1.3!important;-webkit-line-clamp:2!important}
+.ndots{display:flex;justify-content:center;gap:5px;margin-top:2px}.ndots b{width:6px;height:6px;border-radius:50%;background:rgba(28,37,65,.22)}.ndots b.on{background:var(--accent);width:16px;border-radius:3px}
+/* colourful news strip */
+.news .nh b{display:flex;align-items:center;gap:7px;font-size:15px}
+.ndot{width:8px;height:8px;border-radius:50%;background:#E8485F;box-shadow:0 0 0 0 rgba(232,72,95,.6);animation:npulse 1.8s infinite}
+@keyframes npulse{0%{box-shadow:0 0 0 0 rgba(232,72,95,.55)}70%{box-shadow:0 0 0 8px rgba(232,72,95,0)}100%{box-shadow:0 0 0 0 rgba(232,72,95,0)}}
+.ncard{position:relative;overflow:hidden;color:#fff!important;border:0!important;padding:11px 16px 12px!important;background:linear-gradient(120deg,#1C2541,#3A4884 60%,#C0504D)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.ncard::after{content:"";position:absolute;right:-40px;top:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22),rgba(255,255,255,0) 70%);pointer-events:none}
+.nc-trial{background:linear-gradient(120deg,#22407A,#3E6EA8 55%,#5E93DA)!important}
+.nc-drug{background:linear-gradient(120deg,#235A39,#3F8A57 55%,#69B67D)!important}
+.nc-device{background:linear-gradient(120deg,#8A2D3F,#C0504D 55%,#E2785A)!important}
+.nc-guideline{background:linear-gradient(120deg,#3D2F80,#6D5BA8 55%,#9686D8)!important}
+.ncard .ntop i{background:rgba(255,255,255,.2)!important;color:#fff;border:1px solid rgba(255,255,255,.35);font-weight:600!important;letter-spacing:.02em}
+.ncard .ns{color:rgba(255,255,255,.82)!important}
+.ncard .nt{font-weight:500!important;color:#fff;font-size:15px!important;text-shadow:0 1px 2px rgba(0,0,0,.15)}
+.ndots{margin-top:6px!important}
+/* news strip: a little higher and a little larger */
+.news{margin-top:-10px!important}.news .nh{margin-bottom:7px!important}
+.ncard{padding:15px 16px 16px!important;min-height:104px!important;gap:6px!important}
+.ncard .nt{font-size:16px!important;line-height:1.35!important}
+.ncard .ntop i{font-size:11px!important;padding:4px 8px!important}.ncard .ns{font-size:12px!important}
+/* news strip: about a quarter smaller than the last version */
+.ncard{padding:10px 16px 11px!important;min-height:78px!important;gap:4px!important}
+.ncard .nt{font-size:15px!important;line-height:1.3!important}
+.ncard .ntop i{font-size:10.5px!important;padding:3px 7px!important}.ncard .ns{font-size:11.5px!important}
+/* news strip: another 15% shorter */
+.ncard{padding:7px 16px 8px!important;min-height:0!important;gap:3px!important}
+.ncard .nt{font-size:14.5px!important;line-height:1.25!important}
+.ncard .ntop i{font-size:10px!important;padding:2px 6px!important}.ncard .ns{font-size:11px!important}
+/* "Heartbeat Headlines" heading with an ECG trace that draws itself */
+.news .nh .hB{display:flex;align-items:center;gap:8px}
+.news .nh .ht{font:italic 700 19px/1.1 Georgia,"Times New Roman",serif;background:linear-gradient(90deg,#C0504D,#8A3C8F 55%,#2E3A6B);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ecg polyline{stroke-dasharray:90;stroke-dashoffset:90;animation:ecgdraw 2.4s ease-in-out infinite}
+@keyframes ecgdraw{0%{stroke-dashoffset:90}55%{stroke-dashoffset:0}85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@media (prefers-reduced-motion:reduce){.ecg polyline{animation:none;stroke-dashoffset:0}}
+/* Focus areas */
+.fhead h2{font-size:21px;margin:4px 0 2px}.fcard{padding:12px 14px!important;margin:10px 0!important}.fct{font-weight:800;font-size:16.5px}.fmeta{font-size:12.5px;margin-top:2px}.fstat{font-size:13.5px;margin-top:6px}
+.fnew{display:inline-block;background:#E8485F;color:#fff;font-size:11px;padding:2px 7px;border-radius:999px;margin-left:4px}
+.fbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.fbtns button{border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.65);border-radius:999px;padding:7px 12px;font-weight:700;font-size:13px;color:var(--accent)}.fbtns button.red{color:#C0504D}
+.fstep{padding:7px 0;font-size:15px;color:var(--muted)}.fstep.done{color:#3F8A57}.fstep.now{color:var(--ink);font-weight:700}.fstep small{font-weight:400;color:var(--muted)}
+.fview .vbody h4{font-size:16px;margin:14px 0 4px;color:var(--accent)}.fov{font-size:15.5px;line-height:1.5}.fpts{margin:0 0 4px 18px;font-size:15px;line-height:1.45}.fpts li{margin:4px 0}
+.fref{font-size:11px;vertical-align:super;white-space:nowrap}.fref a{color:var(--accent);text-decoration:none;font-weight:700}.fref a+a::before{content:","}
+.ftab{font-size:13px;border-collapse:collapse;min-width:520px;background:rgba(255,255,255,.6)}.ftab td,.ftab th{border-bottom:1px solid #E2E5EC;padding:6px;vertical-align:top;text-align:left}
+.fmcq{background:rgba(255,255,255,.6);border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14.5px}.fmcq ul{list-style:none;margin:4px 0}.fmcq details{margin-top:6px}
+.frefs{font-size:13px;margin-left:20px;line-height:1.4}.frefs li{margin:5px 0}.frefs a{color:var(--ink)}
 </style>
 </head>
 <body>
 <header><div class="hin">
- <div class="top"><div class="ttl"><h1>Cardiology CPD</h1><span class="beta">BETA TEST VERSION</span><span class="newc" id="newc"></span></div><span class="hright"><button class="hicon" data-tab="saved" aria-label="Library"><span class="libcount" id="libcount" style="display:none"></span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1.3 6.3-1.3 10 .8v13.2c-3.7-2.1-7-2.1-10-.8z"/><path d="M22 5.5c-3-1.3-6.3-1.3-10 .8v13.2c3.7-2.1 7-2.1 10-.8z"/></svg></button><button class="hicon" data-act="help" aria-label="Help"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.2a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.4-2.7 4"/><circle cx="12" cy="17.3" r=".6" fill="currentColor"/></svg></button><button class="hicon" id="profbtn" data-act="profile" aria-label="Your profile"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg><span class="dot"></span></button><button class="hicon" data-tab="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
+ <div class="top"><div class="ttl"><h1>Cardiology CPD</h1><span class="beta">BETA TEST VERSION</span><span class="newc" id="newc"></span></div><span class="hright"><button class="hicon" data-tab="saved" aria-label="Library"><span class="libcount" id="libcount" style="display:none"></span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1.3 6.3-1.3 10 .8v13.2c-3.7-2.1-7-2.1-10-.8z"/><path d="M22 5.5c-3-1.3-6.3-1.3-10 .8v13.2c3.7-2.1 7-2.1 10-.8z"/></svg></button><button class="hicon" data-tab="focus" aria-label="Focus areas"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg><span class="libcount" id="focuscount" style="display:none"></span></button><button class="hicon" id="profbtn" data-act="profile" aria-label="Your profile"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg><span class="dot"></span></button><button class="hicon" data-tab="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
  <nav class="tabs" aria-label="Sections"><button data-tab="latest">Articles</button><button data-tab="guide">Guidelines</button><button data-tab="pods">Podcasts</button><button data-tab="scores">Scores</button><button data-tab="cpd">CPD</button></nav>
 </div></header>
 <main id="main"></main>
@@ -432,7 +483,7 @@ const seen=new Set(st.seen);
 const S={tab:"latest",cat:"all",j:"all",q:"",qscope:"mine",qsort:"date",lib:"later",cpdP:"12m",cpdFrom:"",cpdTo:"",modal:null,slideN:6,slideBusy:"",slideFigs:true,charts:[],chartDraft:null,cpdMin:30,cpdDate:"",cpdNote:"",aiOpen:{},aiBusy:{},aiTest:"",slideAI:true,cpdRef:{domains:[]},tEdit:null,jfind:null,jq:"",jgen:false,items:[],count:0,loading:false,err:"",open:{},abs:{},newIds:new Set(),reqId:0,
  g:"esc",gsub:"esc",gl:{},gerr:{},gload:{},dq:"",dvlaErr:false,dvlaLoading:false};
 const $m=document.getElementById("main");
-applyJournals();applyTopics();if(!st.engine)st.engine="system";if(st.engine==="kokoro")st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}try{kkCleanup()}catch(e){}try{if("serviceWorker" in navigator&&/Android/i.test(navigator.userAgent))navigator.serviceWorker.register("cpd-share-sw.js",{scope:"./"+location.pathname.split("/").pop()}).catch(()=>{})}catch(e){}try{sharedInbox()}catch(e){}try{if(aiURL()&&st.engine==="system"&&!isAndroid&&!st.engineMigrated){st.engine="google";st.engineMigrated=1;save()}if(st.ggVoice&&!/^[fm][12]$/.test(st.ggVoice)){st.ggVoice=/-m$/.test(st.ggVoice)?"m1":"f1";save()}}catch(e){}try{for(const k of ["cpd-usage-cardiology","cpd-usage-cardiology-sent","cpd-usage-respiratory","cpd-usage-respiratory-sent","cpd-stats-off","cpd-stats-noticed"])localStorage.removeItem(k)}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
+applyJournals();applyTopics();if(!st.engine)st.engine="system";if(st.engine==="kokoro")st.engine="system";if(!st.nvVoice)st.nvVoice="jenny";setTimeout(()=>{try{nvBoot()}catch(e){}try{kkCleanup()}catch(e){}setTimeout(()=>{try{focusCheck(false)}catch(e){}},4000);try{if("serviceWorker" in navigator&&/Android/i.test(navigator.userAgent))navigator.serviceWorker.register("cpd-share-sw.js",{scope:"./"+location.pathname.split("/").pop()}).catch(()=>{})}catch(e){}try{sharedInbox()}catch(e){}try{if(aiURL()&&st.engine==="system"&&!isAndroid&&!st.engineMigrated){st.engine="google";st.engineMigrated=1;save()}if(st.ggVoice&&!/^[fm][12]$/.test(st.ggVoice)){st.ggVoice=/-m$/.test(st.ggVoice)?"m1":"f1";save()}}catch(e){}try{for(const k of ["cpd-usage-cardiology","cpd-usage-cardiology-sent","cpd-usage-respiratory","cpd-usage-respiratory-sent","cpd-stats-off","cpd-stats-noticed"])localStorage.removeItem(k)}catch(e){}},500);setTimeout(()=>{try{evRefresh()}catch(e){}},1500);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const clean=s=>String(s||"").replace(/<[^>]+>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&quot;/g,'"').replace(/&#39;/g,"'");
 const catsOf=title=>{const c=CATS.filter(x=>x.re.test(title)).map(x=>x.id);return c.length?c:["oth"]};
@@ -626,10 +677,11 @@ async function newsLoad(force){
  try{const r=await fetch(`${aiURL()}/news?app=cardiology`,{credentials:"omit"});const j=await r.json();if(r.ok&&Array.isArray(j.items)){st.newsCache={at:Date.now(),items:plainAI(j.items).filter(x=>x&&x.title&&/^https:\/\//.test(x.link||""))};save()}}catch(e){}
  S.newsBusy=false;if(S.tab==="latest")render();
 }
+document.addEventListener("scroll",e=>{const r=e.target;if(!r.classList||!r.classList.contains("nrow"))return;const i=Math.round(r.scrollLeft/Math.max(1,r.clientWidth));r.parentElement.querySelectorAll(".ndots b").forEach((d,k)=>d.classList.toggle("on",k===i))},true);
 function vNews(){
  if(st.newsOff)return "";const c=st.newsCache;if(!c||Date.now()-c.at>3600e3)setTimeout(()=>newsLoad(),50);
- const L=(c&&c.items)||[];if(!L.length)return S.newsBusy||!c?`<div class="news"><div class="nh"><b>What's new in cardiology</b></div><div class="nrow"><div class="ncard nload"><span class="spin"></span>Loading news…</div></div></div>`:"";
- return `<div class="news"><div class="nh"><b>What's new in cardiology</b><span>Not peer-reviewed</span></div><div class="nrow">${L.map(x=>`<a class="ncard" href="${esc(x.link)}" target="_blank" rel="noopener noreferrer">${x.tag?`<i style="background:${NEWSTAG[x.tag]||"#5C6375"}">${esc(x.tag)}</i>`:""}<span class="nt">${esc(x.title)}</span><span class="ns">${esc(x.src)}${x.date?` · ${agoTxt(x.date)}`:""}</span></a>`).join("")}</div></div>`;
+ const L=(c&&c.items)||[];if(!L.length)return S.newsBusy||!c?`<div class="news"><div class="nh"><div class="hB" aria-label="Heartbeat Headlines: the latest cardiology news"><svg class="ecg" viewBox="0 0 64 16" width="44" height="12" aria-hidden="true"><defs><linearGradient id="egr" x1="0" x2="1"><stop offset="0" stop-color="#E8485F"/><stop offset="1" stop-color="#3E6EA8"/></linearGradient></defs><polyline points="0,9 14,9 18,9 21,3 24,14 27,9 34,9 38,9 41,1 44,15 47,9 64,9" fill="none" stroke="url(#egr)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ht">Heartbeat Headlines</span></div></div><div class="nrow"><div class="ncard nload"><span class="spin"></span>Loading news…</div></div></div>`:"";
+ return `<div class="news"><div class="nh"><div class="hB" aria-label="Heartbeat Headlines: the latest cardiology news"><svg class="ecg" viewBox="0 0 64 16" width="44" height="12" aria-hidden="true"><defs><linearGradient id="egr" x1="0" x2="1"><stop offset="0" stop-color="#E8485F"/><stop offset="1" stop-color="#3E6EA8"/></linearGradient></defs><polyline points="0,9 14,9 18,9 21,3 24,14 27,9 34,9 38,9 41,1 44,15 47,9 64,9" fill="none" stroke="url(#egr)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ht">Heartbeat Headlines</span></div></div><div class="nrow">${L.map(x=>`<a class="ncard nc-${esc((x.tag||"news").toLowerCase())}" href="${esc(x.link)}" target="_blank" rel="noopener noreferrer"><span class="ntop">${x.tag?`<i>${{Trial:"🧪",Drug:"💊",Device:"🫀",Guideline:"📘"}[x.tag]||""} ${esc(x.tag)}</i>`:`<i>📰 News</i>`}<span class="ns">${esc(x.src)}${x.date?` · ${agoTxt(x.date)}`:""}</span></span><span class="nt">${esc(x.title)}</span></a>`).join("")}</div><div class="ndots">${L.map((_,i)=>`<b class="${i?"":"on"}"></b>`).join("")}</div></div>`;
 }
 function vLatest(){
  const catChips=[["all","All","#2E3A6B"],["top","Top 5","#A87A12"]].concat(CATS.map(c=>[c.id,c.name,c.c]),[["oth","Others",OTHERS.c]]).map(([id,l,c])=>`<button class="chip cat ${S.cat===id?"on":""}" style="--cc:${c}" data-act="c" data-v="${id}">${l}</button>`).join("");
@@ -747,6 +799,7 @@ function vSettings(){
   <label class="set"><span>Try a free legal copy first<br><small class="au">Uses Unpaywall to find open-access versions</small></span><input type="checkbox" id="ftunpay" ${(st.ft||{}).unpay?"checked":""}></label>
   ${(st.ft||{}).unpay?`<label class="au" style="display:block;padding-bottom:10px">Your email (Unpaywall asks for one; it isn't shared with anyone else)<input class="search" id="ftemail" type="email" value="${esc((st.ft||{}).email||"")}" placeholder="name@example.com" autocomplete="email"></label>`:""}
  </div>
+ <h3>Help</h3><div class="card"><p class="help" style="margin-top:8px">A short video and tips on using the app.</p><div class="pk" style="margin-bottom:10px"><a href="#" data-act="help">Open help</a></div></div>
  <h3>What's new</h3><div class="card"><label class="set"><span>Show "What's new in cardiology"<br><small class="au">Headlines from TCTMD, Medical Xpress, ScienceDaily, CardioBrief and Healio, refreshed hourly. Tapping one opens the original article.</small></span><input type="checkbox" id="newson" ${st.newsOff?"":"checked"}></label></div>
  <h3>Privacy</h3><div class="card"><p class="help" style="margin-top:8px">This app doesn't collect usage statistics. Your library, CPD log, certificates and PDFs stay on this phone. Only the paper text you ask the AI to work on is sent to the AI service, which doesn't store it.</p></div>
  <h3>Backup</h3><div class="card"><p class="help" style="margin-top:8px">Saves your Library (read later and CPD log) and settings. Do this before deleting or re-adding the app.</p>
@@ -1301,20 +1354,21 @@ function deckForest(pptx,s,x,T,F){
 }
 
 const LAYOUTS=["bullets","bignumber","comparison","bar","flow","takehome","figure","forest","questions"];
-async function makeDeck(pmid,count){
- const it=findItem(pmid)||st.saved[pmid]||{};
- S.slideBusy="Fetching the paper";renderModal();
- const P=await paperData(pmid);if(!P.title)P.title=it.title||"Paper";
+async function makeDeck(pmid,count,topic){
+ const it=topic?{}:(findItem(pmid)||st.saved[pmid]||{});
+ S.slideBusy=topic?"Preparing your topic slides":"Fetching the paper";renderModal();
+ const P=topic?{title:topic.title,aus:[st.myName||""].filter(Boolean),journal:"Evidence review",iso:"Evidence review",year:new Date().getFullYear(),parts:[],pmcid:"",oa:false,doi:"",vol:"",iss:"",pages:""}:await paperData(pmid);if(!P.title)P.title=it.title||"Paper";
  if(!P.aus.length&&it.authors)P.aus=it.authors.replace(/, et al\.$/,"").split(", ");
- let full={text:"",figs:[]};const mine=myPdf[pmid];
- if(mine)full={text:mine.text,figs:[]};
+ let full={text:"",figs:[]};const mine=topic?null:myPdf[pmid];
+ if(topic)full={text:topic.text,figs:[]};
+ else if(mine)full={text:mine.text,figs:[]};
  else if(P.pmcid&&P.oa){S.slideBusy="Reading the open-access full paper";renderModal();try{full=await oaFull(P.pmcid)}catch(e){}}
- if(!P.parts.length&&!full.text)return makeSlides(pmid,count);
+ if(!topic&&!P.parts.length&&!full.text)return makeSlides(pmid,count);
  const useFigs=!!(S.slideFigs&&full.figs.length),nAI=Math.max(2,count-2);
  S.slideBusy="The AI is designing your slides";renderModal();
  let d;
- try{const j=await aiCall("slides",{title:P.title,abstract:absText(P.parts),fulltext:full.text,redraw:!!mine||!useFigs&&!!full.text,n:nAI,figures:useFigs?full.figs.map(f=>({label:f.label,caption:f.cap.slice(0,300)})):[]});d=j.data}
- catch(e){toast(aiErr(e.code)+" Using the built-in slide writer instead.");return makeSlides(pmid,count)}
+ try{const j=await aiCall("slides",{mode:topic?"topic":"",title:P.title,abstract:absText(P.parts),fulltext:full.text,redraw:!!mine||!useFigs&&!!full.text,n:nAI,figures:useFigs?full.figs.map(f=>({label:f.label,caption:f.cap.slice(0,300)})):[]});d=j.data}
+ catch(e){if(topic){S.slideBusy="";S.modal=null;renderModal();toast(aiErr(e.code));return}toast(aiErr(e.code)+" Using the built-in slide writer instead.");return makeSlides(pmid,count)}
  let slides=(d.slides||[]).filter(x=>x&&typeof x==="object").map(x=>({...x,layout:LAYOUTS.includes(x.layout)?x.layout:"bullets"}));
  if(!useFigs)slides=slides.filter(x=>x.layout!=="figure");
  if(useFigs&&!slides.some(x=>x.layout==="figure")){const pick=(d.figures||[]).concat(full.figs.map(f=>f.label)).filter((v,i,a)=>a.indexOf(v)===i).slice(0,1);
@@ -1402,13 +1456,15 @@ async function makeDeck(pmid,count){
  else if(S.slideFigs&&!mine)figNote=P.pmcid&&P.oa?"No figures found in the full paper.":"Not open access, so the paper's figures can't be included.";
  if(nPdf)figNote=`${nPdf} ${nPdf===1?"figure":"figures"} from your PDF added, with an acknowledgement.`;
  // reference slide
- s=frame("Reference",T.grey);
+ if(topic){for(let k=0;k<Math.max(1,topic.refs.length);k+=8){s=frame(k?"References (continued)":"References",T.grey);s.addText(topic.refs.slice(k,k+8).map((r,q)=>`[${k+q+1}] ${r}`).join("\n")||"See the summary in the app.",{x:0.6,y:1.45,w:12.1,h:5.3,fontFace:F,fontSize:12,color:T.text,valign:"top",fit:"shrink",paraSpaceAfter:4})}}
+ else{s=frame("Reference",T.grey);
  s.addText(`${P.aus.slice(0,6).join(", ")}${P.aus.length>6?", et al":""}. ${P.title} ${P.iso||P.journal}. ${P.year}${P.vol?";"+P.vol:""}${P.iss?"("+P.iss+")":""}${P.pages?":"+P.pages:""}.${P.doi?" doi:"+P.doi:""}`,{x:0.7,y:1.5,w:11.9,h:2.2,fontFace:F,fontSize:18,color:T.text,valign:"top",fit:"shrink"});
  s.addText(`PubMed ${pmid}${P.pmcid?", "+P.pmcid:""}. ${nPdf?"Figures from the paper are reproduced for teaching, with acknowledgement. ":""}Slides written by AI from ${mine?"the reader's own copy of the paper; charts redrawn from the reported numbers":full.text?"the open-access full paper":"the abstract"}${nFig?"; figures reproduced under the paper's open-access licence":""}. Check against the paper before presenting.`,{x:0.7,y:4.1,w:11.9,h:1,fontFace:F,fontSize:13,color:T.grey});
+ }
  const blob=await pptx.write({outputType:"blob"});
  const name=`${short.replace(/[^\w ]+/g,"").replace(/\s+/g,"-").slice(0,60)||"paper"}-slides.pptx`;
  S.slideBusy="";S.slideFile=new File([blob],name,{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"});
- S.slideMsg=[`${num} slides ready, designed by AI from ${mine?"your PDF, with charts redrawn from its numbers":full.text?"the full paper":"the abstract"}. Check them before presenting.`,figNote].filter(Boolean).join(" ");renderModal();
+ S.slideMsg=[`${num} slides ready, designed by AI from ${topic?"your Focus review":mine?"your PDF, with charts redrawn from its numbers":full.text?"the full paper":"the abstract"}. Check them before presenting.`,figNote].filter(Boolean).join(" ");renderModal();
 }
 
 async function slideShare(){
@@ -1957,6 +2013,130 @@ function flyToLibrary(from){
  anim.onfinish=()=>{d.remove();libCount();libBump()};
 }
 
+// ---------- Focus areas: the key papers on a topic, a referenced review, slides, kept up to date ----------
+const TARGETSVG='<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg>';
+const FENG={qwen:"Qwen3.8 27B",kimi:"Kimi K2.6"};const engOf=m=>/kimi/i.test(m||"")?"kimi":/qwen/i.test(m||"")?"qwen":"other";const modelName=m=>/kimi/i.test(m||"")?"Kimi K2.6":/qwen/i.test(m||"")?"Qwen3.8 27B":/gpt-oss/i.test(m||"")?"GPT-OSS 120B":/llama/i.test(m||"")?"Llama 3.3 70B":"AI";
+const FTYPES=[["rct","Trials"],["meta","Meta-analyses"],["guide","Guidelines"],["review","Reviews"]];
+const FTYPEQ={rct:'"Randomized Controlled Trial"[pt]',meta:'("Meta-Analysis"[pt] OR "Systematic Review"[pt])',guide:'("Practice Guideline"[pt] OR "Guideline"[pt] OR guideline[ti] OR guidelines[ti] OR "scientific statement"[ti] OR "consensus"[ti])',review:'"Review"[pt]'};
+const fList=()=>st.focus=st.focus||[];
+// keep what's typed in the Focus form, so tapping a button in it doesn't lose it
+["input","change"].forEach(ev=>document.addEventListener(ev,e=>{const t=e.target;if(S.fe&&t&&/^fe(topic|focus|target|slides)$/.test(t.id||""))S.fe[t.id.slice(2)]=t.id==="feslides"?+t.value:t.value}));
+const fById=id=>fList().find(f=>f.id===id);
+const ymd=d=>d.toISOString().slice(0,10).replace(/-/g,"/");
+function fQuery(f){
+ let q=`(${f.topic})${f.focus?` AND (${f.focus})`:""}`;
+ const T=(f.types||[]).filter(t=>FTYPEQ[t]);if(T.length)q+=` AND (${T.map(t=>FTYPEQ[t]).join(" OR ")})`;
+ return q+" AND hasabstract AND english[la]";
+}
+function fUntil(f){return f.target&&f.target<new Date().toISOString().slice(0,10)}
+function fNewTotal(){return fList().reduce((a,f)=>a+((f.newIds||[]).length),0)}
+function fBadge(){const el=document.getElementById("focuscount");if(!el)return;const n=fNewTotal();el.textContent=n>99?"99+":String(n);el.style.display=n?"":"none"}
+async function fetchText(url,tries=3){for(let i=0;i<tries;i++){try{const r=await fetch(url);if(r.ok)return await r.text();if(r.status!==429&&r.status<500)throw new Error("http "+r.status)}catch(e){if(i===tries-1)throw e}await new Promise(z=>setTimeout(z,800*(i+1)))}}
+function fProg(step,detail){S.fprog={step,detail};const el=document.getElementById("fprogtxt");if(el)el.innerHTML=fProgHTML();else renderModal()}
+const FSTEPS=["Searching PubMed","Ranking the papers","Reading the abstracts","Writing your review","Saving"];
+const fProgHTML=()=>FSTEPS.map((t,i)=>`<div class="fstep ${i<S.fprog.step?"done":i===S.fprog.step?"now":""}">${i<S.fprog.step?"✓":i===S.fprog.step?'<span class="spin"></span>':"○"} ${t}${i===S.fprog.step&&S.fprog.detail?` <small>${esc(S.fprog.detail)}</small>`:""}</div>`).join("");
+async function focusRun(id,engine){
+ const f=fById(id);if(!f)return;engine=engine||f.engine||"qwen";S.fprog={step:0,detail:""};S.frun=id;S.modal={type:"fprog",id};renderModal();
+ try{
+  const now=new Date(),from=new Date(now);from.setFullYear(now.getFullYear()-(+f.years||5));
+  const q=fQuery(f);
+  const sr=await getJSON(`${E}esearch.fcgi?db=pubmed&retmode=json&tool=cardioreader&retmax=150&sort=relevance&datetype=pdat&mindate=${ymd(from)}&maxdate=${ymd(now)}&term=${encodeURIComponent(q)}`);
+  const ids=(sr.esearchresult&&sr.esearchresult.idlist)||[],total=+((sr.esearchresult||{}).count||0);
+  if(ids.length<3)throw Object.assign(new Error("few"),{code:"few"});
+  fProg(1,`${total} found`);
+  let cites={},ptype={};
+  try{const eq=ids.map(x=>"EXT_ID:"+x).join(" OR ");const j=await getJSON(`${EPMC}search?query=${encodeURIComponent(`(${eq}) AND SRC:MED`)}&format=json&resultType=lite&pageSize=200`);
+   for(const r of (j.resultList&&j.resultList.result)||[]){cites[r.pmid]=+r.citedByCount||0;ptype[r.pmid]=String(r.pubType||"").toLowerCase()}}catch(e){}
+  const yr=now.getFullYear(),N=Math.min(50,ids.length);
+  const score=(id,i)=>{const t=ptype[id]||"";return 2*(1-i/ids.length)+1.4*Math.log10(1+(cites[id]||0))+(/meta-analysis|systematic review/.test(t)?2:/randomi[sz]ed controlled trial/.test(t)?1.8:/guideline/.test(t)?2:/review/.test(t)?0.8:0)};
+  const pick=ids.map((id,i)=>({id,s:score(id,i)})).sort((a,b)=>b.s-a.s).slice(0,N).map(x=>x.id);
+  fProg(2,`top ${pick.length} papers`);
+  const xml=await fetchText(`${E}efetch.fcgi?db=pubmed&retmode=xml&tool=cardioreader&id=${pick.join(",")}`);
+  const doc=new DOMParser().parseFromString(xml.replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),papers=[];
+  for(const a of doc.getElementsByTagName("PubmedArticle")){
+   const g=(n,el=a)=>((el.getElementsByTagName(n)[0]||{}).textContent||"").trim(),pmid=g("PMID");
+   const abs=[...a.getElementsByTagName("AbstractText")].map(x=>(x.getAttribute("Label")?x.getAttribute("Label")+": ":"")+x.textContent.trim()).join(" ");
+   const types=[...a.getElementsByTagName("PublicationType")].map(x=>x.textContent).filter(t=>/Trial|Meta|Systematic|Guideline|Review|Cohort|Observational/i.test(t));
+   const year=g("Year",a.getElementsByTagName("PubDate")[0]||a)||(g("MedlineDate").match(/\d{4}/)||[""])[0];
+   if(abs.length>100)papers.push({pmid,title:g("ArticleTitle").replace(/\.$/,""),journal:g("ISOAbbreviation")||g("Title"),year,type:types.join(", ")||"Study",cites:cites[pmid]||0,abstract:abs.replace(/\s+/g," ").slice(0,1800)});
+  }
+  papers.sort((x,y)=>pick.indexOf(x.pmid)-pick.indexOf(y.pmid));
+  if(papers.length<3)throw Object.assign(new Error("few"),{code:"few"});
+  fProg(3,"this can take a minute or two");
+  const prev=f.result&&f.result.review?(f.result.review.overview||""):"",newRefs=prev?papers.map((p,i)=>(f.used||[]).includes(p.pmid)?0:i+1).filter(Boolean):[];
+  const j=await aiCall("focus",{topic:f.topic,focus:f.focus||"",years:f.years,papers,prev,newRefs,engine},180000);
+  fProg(4,"");
+  f.result={at:Date.now(),papers:papers.map((p,i)=>({n:i+1,pmid:p.pmid,title:p.title,journal:p.journal,year:p.year,type:p.type,cites:p.cites,isNew:newRefs.includes(i+1)})),review:j.data,model:j.model||"",asked:engine,total,version:((f.result&&f.result.version)||0)+1};
+  f.results=f.results||{};f.results[engOf(j.model)]=f.result;
+  f.used=papers.map(p=>p.pmid);f.lastCheck=Date.now();f.newIds=[];save();fBadge();
+  S.modal={type:"fview",id};renderModal();render();
+ }catch(e){S.modal=null;renderModal();toast(e.code==="few"?"Fewer than 3 papers matched. Try a broader topic, more years or more evidence types.":aiErr(e.code||"ai"))}
+ S.frun=null;
+}
+async function focusCheck(force){
+ const today=new Date();
+ for(const f of fList()){
+  if(!f.result||fUntil(f)||(!force&&f.lastCheck&&Date.now()-f.lastCheck<12*3600e3))continue;
+  try{const since=new Date(f.lastCheck||f.result.at);const sr=await getJSON(`${E}esearch.fcgi?db=pubmed&retmode=json&tool=cardioreader&retmax=50&sort=pub_date&datetype=edat&mindate=${ymd(since)}&maxdate=${ymd(today)}&term=${encodeURIComponent(fQuery(f))}`);
+   const ids=((sr.esearchresult||{}).idlist||[]).filter(x=>!(f.used||[]).includes(x));f.newIds=[...new Set([...(f.newIds||[]),...ids])].slice(0,50);f.lastCheck=Date.now()}catch(e){}
+ }
+ save();fBadge();if(S.tab==="focus")render();
+}
+function fAgo(t){const d=Math.round((Date.now()-t)/864e5);return d<1?"today":d===1?"yesterday":`${d} days ago`}
+function focusCard(f){
+ const R=f.result,n=(f.newIds||[]).length,types=(f.types||[]).map(t=>(FTYPES.find(x=>x[0]===t)||[0,""])[1]).join(", ")||"All study types";
+ return `<div class="card fcard"><div class="fct">${esc(f.topic)}${f.focus?` <span class="au">· ${esc(f.focus)}</span>`:""}</div>
+ <div class="au fmeta">Last ${f.years} years · ${esc(types)}${f.target?` · ${fUntil(f)?"finalised":"until "+new Date(f.target+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"})}`:""}</div>
+ <div class="fstat">${R?`${R.papers.length} key papers · updated ${fAgo(R.at)}`:"Not built yet"}${n?` <b class="fnew">🆕 ${n} new ${n===1?"paper":"papers"}</b>`:""}</div>
+ <div class="fbtns">${R?`<button data-act="fopen" data-v="${f.id}">Open summary</button>`:""}<button data-act="frun" data-v="${f.id}">${R?(n?"Update with new papers":"Rebuild"):"Build review"}</button>${R?`<button data-act="fslides" data-v="${f.id}">Slides</button>`:""}<button data-act="fedit" data-v="${f.id}">Edit</button>${S.confirm==="f:"+f.id?`<button class="red" data-act="fdel" data-v="${f.id}">Confirm delete</button>`:`<button data-act="fdelask" data-v="${f.id}">Delete</button>`}</div></div>`;
+}
+function vFocus(){
+ setTimeout(()=>focusCheck(false),300);const L=fList();
+ return `<div class="fhead"><h2>🎯 Focus areas</h2><p class="note">For an exam, a talk or a topic you want to master: gathers the key papers, writes a referenced summary and slides, and keeps checking for new papers until your date.</p></div>
+ ${L.map(focusCard).join("")||`<div class="msg">No focus areas yet. Add one, for example "HFpEF" over the last 5 years.</div>`}
+ ${L.length<10?`<div class="pk" style="margin-top:10px"><a href="#" data-act="fnew">+ New focus area</a></div>`:`<p class="note">You can have up to 10 focus areas.</p>`}`;
+}
+function feSheet(){const F=S.fe;return `<div class="sheet big" role="dialog" aria-label="Focus area"><h3>${F.id?"Edit focus area":"New focus area"}</h3><div style="overflow-y:auto;flex:1">
+ <label class="au" style="display:block">Topic<input class="search" id="fetopic" value="${esc(F.topic||"")}" placeholder="For example, HFpEF"></label>
+ <label class="au" style="display:block;margin-top:8px">Narrow it down (optional)<input class="search" id="fefocus" value="${esc(F.focus||"")}" placeholder="For example, SGLT2 inhibitors, or imaging"></label>
+ <div class="au" style="margin-top:10px">How far back</div><div class="row" style="flex-wrap:wrap;overflow:visible">${[2,5,10,15].map(y=>`<button class="chip ${+F.years===y?"on":""}" data-act="feyr" data-v="${y}">${y} years</button>`).join("")}</div>
+ <div class="au" style="margin-top:8px">Types of evidence <small>(none chosen = all)</small></div><div class="row" style="flex-wrap:wrap;overflow:visible">${FTYPES.map(([k,l])=>`<button class="chip ${(F.types||[]).includes(k)?"on":""}" data-act="fetype" data-v="${k}">${l}</button>`).join("")}</div>
+ <div class="au" style="margin-top:10px">AI engine</div><div class="row" style="flex-wrap:wrap;overflow:visible">${Object.entries(FENG).map(([k,l])=>`<button class="chip ${(F.engine||"qwen")===k?"on":""}" data-act="feeng" data-v="${k}">${l}</button>`).join("")}</div>
+ <p class="note" style="margin-top:0">Qwen3.8 runs on the free allowance. Kimi K2.6 needs paid Cloudflare credits; without them, Qwen is used instead.</p>
+ <label class="au" style="display:block;margin-top:10px">Keep updating until (optional)<input class="search" type="date" id="fetarget" value="${esc(F.target||"")}"></label>
+ <label class="set"><span>Slides</span><select id="feslides">${[6,8,10,12,15,20].map(n=>`<option ${+F.slides===n?"selected":""}>${n}</option>`).join("")}</select></label>
+ </div><div class="pk"><a href="#" data-act="fesave">${F.id?"Save":"Save and build"}</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`}
+const refLinks=(refs,R)=>{const L=(Array.isArray(refs)?refs:[refs]).map(n=>+n).filter(n=>n>=1&&n<=R.papers.length);return L.length?` <span class="fref">${L.map(n=>`<a href="https://pubmed.ncbi.nlm.nih.gov/${R.papers[n-1].pmid}/" target="_blank" rel="noopener">${n}</a>`).join("")}</span>`:""};
+function fviewSheet(m){
+ const f=fById(m.id),R=f&&f.result;if(!R)return "";const V=R.review||{},pts=(L,cls="")=>`<ul class="fpts ${cls}">${(L||[]).map(p=>`<li>${esc(p.text||"")}${refLinks(p.refs,R)}</li>`).join("")}</ul>`;
+ return `<div class="sheet big fview" role="dialog" aria-label="${esc(V.title||f.topic)}"><div class="vhead"><h3>${esc(V.title||f.topic)}</h3><div class="vbtns"><button class="more" data-act="mclose">Close</button></div></div><div class="vbody">
+ <p class="au">${R.papers.length} key papers from the last ${f.years} years · updated ${fAgo(R.at)} · version ${R.version} · written by <b>${modelName(R.model)}</b>${R.asked&&engOf(R.model)!==R.asked?` (${FENG[R.asked]} wasn't available)`:""}. AI-written from the abstracts: check key facts against the papers.</p>
+ <div class="row" style="flex-wrap:wrap;overflow:visible;margin:4px 0 2px">${Object.entries(FENG).map(([k,l])=>(f.results||{})[k]?`<button class="chip ${engOf(R.model)===k?"on":""}" data-act="fshow" data-v="${f.id}:${k}">${l} version</button>`:`<button class="chip" data-act="fcomp" data-v="${f.id}:${k}">+ Compare with ${l}</button>`).join("")}</div>
+ ${V.changes?`<div class="msg warn"><b>What's new in this version:</b> ${esc(V.changes)}</div>`:""}
+ <div class="tts" style="border-top:0"><button data-act="flisten" data-v="${f.id}">▶ Listen</button><button data-act="fslides" data-v="${f.id}">Make slides</button><button data-act="fshare" data-v="${f.id}">Share</button></div>
+ ${V.overview?`<p class="fov">${esc(V.overview)}</p>`:""}
+ ${(V.sections||[]).map(s=>`<h4>${esc(s.heading||"")}</h4>${pts(s.points)}`).join("")}
+ ${(V.keyTrials||[]).length?`<h4>Key trials</h4><div class="tw"><table class="ftab"><tr><th>Trial</th><th>Design</th><th>Finding</th></tr>${V.keyTrials.map(k=>`<tr><td><b>${esc(k.name||"")}</b> ${esc(k.year||"")}${refLinks([k.ref],R)}</td><td>${esc(k.design||"")}</td><td>${esc(k.finding||"")}</td></tr>`).join("")}</table></div>`:""}
+ ${(V.guidelines||[]).length?`<h4>Guidelines</h4>${pts(V.guidelines)}`:""}${(V.controversies||[]).length?`<h4>Uncertainties and debates</h4>${pts(V.controversies)}`:""}
+ ${(V.practice||[]).length?`<h4>For practice</h4>${pts(V.practice)}`:""}${(V.pearls||[]).length?`<h4>Exam pearls</h4>${pts(V.pearls,"pearls")}`:""}
+ ${(V.mcqs||[]).length?`<h4>Practice questions</h4>${V.mcqs.map((q,i)=>`<div class="fmcq"><p><b>${i+1}.</b> ${esc(q.q||"")}</p><ul>${(q.options||[]).map(o=>`<li>${esc(o)}</li>`).join("")}</ul><details><summary>Show answer</summary><p><b>${esc(q.answer||"")}</b>. ${esc(q.why||"")}${refLinks(q.refs,R)}</p></details></div>`).join("")}`:""}
+ <h4>References</h4><ol class="frefs">${R.papers.map(p=>`<li>${p.isNew?'<b class="fnew">NEW</b> ':""}<a href="https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/" target="_blank" rel="noopener">${esc(p.title)}</a>. <i>${esc(p.journal)}</i> ${esc(p.year)}. <span class="au">${esc(p.type)}${p.cites?` · cited ${p.cites}×`:""}</span></li>`).join("")}</ol>
+ </div></div>`;
+}
+function focusText(f){const R=f.result,V=R.review||{},L=[];const cite=r=>{const n=(Array.isArray(r)?r:[r]).filter(Boolean);return n.length?` [${n.join(",")}]`:""};
+ if(V.overview)L.push("Overview: "+V.overview);for(const s of V.sections||[]){L.push(s.heading+":");for(const p of s.points||[])L.push("- "+p.text+cite(p.refs))}
+ for(const k of V.keyTrials||[])L.push(`Key trial: ${k.name} ${k.year}, ${k.design}: ${k.finding}${cite([k.ref])}`);
+ for(const[h,a]of [["Guidelines",V.guidelines],["Uncertainties",V.controversies],["For practice",V.practice],["Exam pearls",V.pearls]])if((a||[]).length){L.push(h+":");for(const p of a)L.push("- "+p.text+cite(p.refs))}
+ return L.join("\n")}
+function focusTopic(id){const f=fById(id);if(!f||!f.result)return null;const R=f.result,cited=new Set();const t=focusText(f);(t.match(/\[(\d+(?:,\d+)*)\]/g)||[]).forEach(m=>m.slice(1,-1).split(",").forEach(n=>cited.add(+n)));
+ return{title:(f.result.review&&f.result.review.title)||f.topic,text:t.slice(0,13500),refs:R.papers.filter(p=>cited.has(p.n)).slice(0,24).map(p=>`${p.title}. ${p.journal} ${p.year}. PMID ${p.pmid}`)}}
+function focusListen(id){const f=fById(id);if(!f||!f.result)return;const V=f.result.review||{},parts=[V.title||f.topic];if(V.overview)parts.push(V.overview);
+ for(const s of V.sections||[]){parts.push(s.heading);for(const p of s.points||[])parts.push(p.text)}for(const p of V.practice||[])parts.push(p.text);
+ ttsSay(parts.flatMap(p=>sentences(String(p))),"focus:"+id)}
+async function focusShare(id){const f=fById(id);if(!f||!f.result)return;const txt=`${(f.result.review||{}).title||f.topic}\n\n${focusText(f)}\n\nReferences\n${f.result.papers.map(p=>`[${p.n}] ${p.title}. ${p.journal} ${p.year}. https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/`).join("\n")}`;
+ if(navigator.share){try{await navigator.share({title:f.topic,text:txt});return}catch(e){if(e&&e.name==="AbortError")return}}
+ try{await navigator.clipboard.writeText(txt);toast("Summary copied")}catch(e){toast("Couldn't share it here.")}}
+
 function renderModal(){
  const el=document.getElementById("modal");if(!el)return;
  const m=S.modal;if(!m){el.innerHTML="";el.className="";return}
@@ -1968,6 +2148,9 @@ function renderModal(){
  if(m.type==="tidy"&&S.tidy){el.innerHTML=tidySheet();return}
  if(m.type==="voice"){el.innerHTML=vSheet();return}
  if(m.type==="pron"){el.innerHTML=pronSheet();return}
+ if(m.type==="fedit"&&S.fe){el.innerHTML=feSheet();return}
+ if(m.type==="fprog"){el.innerHTML=`<div class="sheet" role="dialog" aria-label="Building your review"><h3>Building your review</h3><div id="fprogtxt">${fProgHTML()}</div><p class="note">You can keep the app open while this runs.</p></div>`;return}
+ if(m.type==="fview"){el.innerHTML=fviewSheet(m);return}
  if(m.type==="pdfpick"){el.innerHTML=pickSheet(m);return}
  if(m.type==="profile"){el.innerHTML=profileSheet();return}
  if(m.type==="help"){el.innerHTML=helpSheet();const v=document.getElementById("helpvid");if(v)v.onerror=()=>{v.outerHTML=`<div class="msg">The help video isn't available right now. The tips below cover the main features.</div>`};return}
@@ -2262,9 +2445,9 @@ async function nvBoot(){S.nvHave=await nvIsDownloaded(st.nvVoice||"jenny");if(st
 const AI_DEFAULT_URL="https://cardio-ai.yerramasuajay.workers.dev";
 const aiURL=()=>String(st.aiUrl||AI_DEFAULT_URL||"").replace(/\/+$/,"").replace(/^__AI_URL__$/,"");
 const absText=parts=>(parts||[]).filter(p=>!/regist|funding/i.test(p.l)).map(p=>(p.l?p.l+": ":"")+p.t).join("\n");
-async function aiCall(task,payload){
+async function aiCall(task,payload,ms){
  const u=aiURL();if(!u)throw Object.assign(new Error("setup"),{code:"setup"});
- const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),45000);
+ const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),ms||45000);
  let r;try{r=await fetch(`${u}/${task}`,{method:"POST",headers:{"Content-Type":"application/json","X-Device-Id":deviceId()},body:JSON.stringify(payload),signal:ctl.signal})}
  catch(e){clearTimeout(tm);throw Object.assign(new Error("net"),{code:e.name==="AbortError"?"slow":"net"})}
  clearTimeout(tm);let j={};try{j=await r.json()}catch(e){}
@@ -2380,10 +2563,10 @@ function pronEdit(i,k,v){const L=pronList().map(r=>r.slice());if(!L[i])return;L[
 
 function ttsNext(){useNV()?nvSpeakNext():speakNext()}
 function render(){
- document.querySelectorAll(".tabs button,.hicon").forEach(b=>b.classList.toggle("on",!!b.dataset.tab&&b.dataset.tab===S.tab));{const pb=document.getElementById("profbtn");if(pb)pb.classList.toggle("todo",!profileDone())}if(!document.querySelector(".flydoc"))libCount();;
+ document.querySelectorAll(".tabs button,.hicon").forEach(b=>b.classList.toggle("on",!!b.dataset.tab&&b.dataset.tab===S.tab));{const pb=document.getElementById("profbtn");if(pb)pb.classList.toggle("todo",!profileDone())}if(!document.querySelector(".flydoc"))libCount();fBadge();;
  const n=S.newIds.size;document.getElementById("newc").textContent=n?`${n} new`:"";
  const fid=document.activeElement&&["q","dq"].includes(document.activeElement.id)?document.activeElement.id:"";
- $m.innerHTML=S.tab==="latest"?vLatest():S.tab==="guide"?vGuide():S.tab==="pods"?vPods():S.tab==="scores"?vScores():S.tab==="saved"?vSaved():S.tab==="cpd"?vCPDTab():vSettings();
+ $m.innerHTML=S.tab==="latest"?vLatest():S.tab==="guide"?vGuide():S.tab==="pods"?vPods():S.tab==="scores"?vScores():S.tab==="saved"?vSaved():S.tab==="cpd"?vCPDTab():S.tab==="focus"?vFocus():vSettings();
  renderModal();renderNP();
  if(popKey&&Date.now()-popAt<450){popEl(document.querySelector(popKey))}
  if(fid){const q=document.getElementById(fid);if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
@@ -2502,8 +2685,26 @@ document.addEventListener("click",e=>{
  else if(a==="srchopen"){S.searchOpen=true;render();setTimeout(()=>{const q=document.getElementById("q");if(q)q.focus()},60)}
  else if(a==="srchclose"){S.searchOpen=false;if(S.q.trim()){S.q="";const q=document.getElementById("q");if(q)q.value="";load()}render()}
  else if(a==="newsoff"){st.newsOff=!st.newsOff;save();render()}
+ else if(a==="fnew"){e.preventDefault();S.fe={years:5,types:["rct","meta","guide"],slides:10,engine:"qwen"};S.modal={type:"fedit"};renderModal();setTimeout(()=>{const x=document.getElementById("fetopic");if(x)x.focus()},120)}
+ else if(a==="fedit"){const f=fById(b.dataset.v);S.fe={...f,types:(f.types||[]).slice()};S.modal={type:"fedit"};renderModal()}
+ else if(a==="feyr"){S.fe.years=+b.dataset.v;renderModal()}
+ else if(a==="fetype"){const T=S.fe.types=S.fe.types||[],k=T.indexOf(b.dataset.v);if(k>=0)T.splice(k,1);else T.push(b.dataset.v);renderModal()}
+ else if(a==="fesave"){e.preventDefault();const F=S.fe;const gv=(k,d)=>{const x=document.getElementById(k);return x?x.value:d};F.topic=String(gv("fetopic",F.topic)||"").trim();F.focus=String(gv("fefocus",F.focus)||"").trim();F.target=gv("fetarget",F.target)||"";F.slides=+gv("feslides",F.slides)||10;
+  if(!F.topic){toast("Add a topic first.");return}
+  if(F.id){const f=fById(F.id),changed=f.topic!==F.topic||f.focus!==F.focus||f.years!==F.years||String(f.types)!==String(F.types);Object.assign(f,{topic:F.topic,focus:F.focus,years:F.years,types:F.types,target:F.target,slides:F.slides,engine:F.engine||"qwen"});if(changed){f.newIds=[];f.lastCheck=0}save();S.modal=null;renderModal();render();if(changed&&f.result)toast("Saved. Tap Rebuild to apply the changes.")}
+  else{if(fList().length>=10){toast("You can have up to 10 focus areas.");return}const id="f"+Date.now().toString(36);fList().push({id,topic:F.topic,focus:F.focus,years:F.years,types:F.types,target:F.target,slides:F.slides,engine:F.engine||"qwen",created:Date.now()});save();S.tab="focus";render();focusRun(id)}}
+ else if(a==="frun"){if(!S.frun)focusRun(b.dataset.v)}
+ else if(a==="feeng"){S.fe.engine=b.dataset.v;renderModal()}
+ else if(a==="fshow"){const[i,k]=b.dataset.v.split(":"),f=fById(i);if(f&&f.results&&f.results[k]){f.result=f.results[k];save();renderModal()}}
+ else if(a==="fcomp"){const[i,k]=b.dataset.v.split(":");if(!S.frun)focusRun(i,k)}
+ else if(a==="fopen"){S.modal={type:"fview",id:b.dataset.v};renderModal()}
+ else if(a==="fdelask"){S.confirm="f:"+b.dataset.v;render()}
+ else if(a==="fdel"){st.focus=fList().filter(f=>f.id!==b.dataset.v);S.confirm="";save();fBadge();render()}
+ else if(a==="flisten"){focusListen(b.dataset.v)}
+ else if(a==="fshare"){focusShare(b.dataset.v)}
+ else if(a==="fslides"){const f=fById(b.dataset.v);S.charts=[];S.chartDraft=null;S.slideFile=null;S.slideBusy="";S.slideN=String(f.slides||10);S.slideAI=true;S.modal={type:"slides",pmid:"focus:"+f.id,title:(f.result&&f.result.review&&f.result.review.title)||f.topic};renderModal()}
  else if(a==="backup"){e.preventDefault();backupNow()}
- else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;(S.slideAI&&aiURL()?makeDeck:makeSlides)(id,+S.slideN).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
+ else if(a==="slidego"){e.preventDefault();const id=S.modal.pmid;(String(id).startsWith("focus:")?makeDeck(null,+S.slideN,focusTopic(String(id).slice(6))):(S.slideAI&&aiURL()?makeDeck:makeSlides)(id,+S.slideN)).catch(()=>{S.slideBusy="";S.modal=null;renderModal();toast(navigator.onLine===false?"You're offline. Making slides needs a connection.":"Couldn't make the slides. Try again.")})}
  else if(a==="cpd"){S.modal={type:"cpd",pmid:b.dataset.id};S.cpdMin=30;S.cpdDate=isoD(new Date());S.cpdNote="";S.cpdRef={domains:[]};renderModal()}
  else if(a==="cpdmin"){S.cpdMin=+b.dataset.v;renderModal()}
  else if(a==="cpdsave"){e.preventDefault();const mins=Math.round(+S.cpdMin);if(!(mins>0)){toast("Enter the minutes spent.");return}
