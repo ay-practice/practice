@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-oSkOBas8S9DFHb+bOuDWJ96LkLQz1ZifJC5neJ6XA1k=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://cpd-voice.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Txw+drJkaymsU6bCIOKc77v0+VVgTbqjBFR+xxsHKp4=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://cpd-voice.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -713,15 +713,11 @@ function vSettings(){
  ${vTopicSettings()}
  ${vJournalSettings()}
  <h3>Reading aloud</h3><div class="card">
-  <p class="help" style="margin-top:8px">Open an abstract and tap Listen. Hazard ratios are read simply and confidence intervals are skipped.</p>
-  ${st.engine==="google"?`<label class="set"><span>Natural voice</span><select id="ggvoice">${Object.entries(GG.voices).map(([k,v])=>`<option value="${k}" ${(st.ggVoice||"f1")===k?"selected":""}>${v}</option>`).join("")}</select></label>`:""}
-  <label class="set"><span>Voice type</span><select id="enginesel">${aiURL()?`<option value="google" ${st.engine==="google"?"selected":""}>Natural voice (online, recommended)</option>`:""}<option value="natural" ${st.engine==="natural"?"selected":""}>Piper voice (offline, one-off download)</option>${isAndroid||!aiURL()?`<option value="system" ${st.engine!=="natural"&&st.engine!=="google"?"selected":""}>${isAndroid?"Google voice (built into Android)":"Phone's built-in voice"}</option>`:""}</select></label>
-  ${st.engine==="natural"?`<label class="set"><span>Natural voice</span><select id="nvvoice">${Object.entries(NV.voices).map(([k,v])=>`<option value="${k}" ${(st.nvVoice||"jenny")===k?"selected":""}>${v[0]}</option>`).join("")}</select></label>
-   ${S.nvHave?`<p class="note">Downloaded and ready. It works offline. <button class="link" data-act="nvrm">Remove it</button></p>`:`<div class="pk"><a href="#" data-act="nvdl">${NV.busy?"Downloading…":"Download this voice (about 60 MB, once)"}</a></div><p class="note"><span id="nvprog">${esc(NV.prog||"")}</span> Free, natural-sounding and private: it runs on your phone, with nothing sent anywhere. Best downloaded on Wi-Fi.</p>`}`:""}
-  ${st.engine==="natural"||st.engine==="google"?"":TTS.voices.length?`<label class="set"><span>Voice</span><select id="voicesel" style="max-width:60%">${TTS.voices.map(v=>`<option value="${esc(v.voiceURI)}" ${(ttsVoice()||{}).voiceURI===v.voiceURI?"selected":""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("")}</select></label>`:`<p class="note">No voices found yet. Try reopening the app.</p>`}
+  <p class="help" style="margin-top:8px">Articles are read by Google's natural British voices. Hazard ratios are read simply and confidence intervals are skipped. Needs an internet connection.</p>
+  ${GV_VOICES?`<label class="set"><span>Voice</span><select id="gvvoice">${Object.entries(GV_VOICES).map(([k,v])=>`<option value="${k}" ${gvVoice()===k?"selected":""}>${v}</option>`).join("")}</select></label>`:""}
   <label class="set"><span>Speed</span><select id="ratesel">${[["0.85","Slower"],["1","Normal"],["1.15","A bit faster"],["1.3","Faster"],["1.5","Fastest"]].map(([v,l])=>`<option value="${v}" ${String(st.rate||"1")===v?"selected":""}>${l}</option>`).join("")}</select></label>
-  ${GV_VOICES?`<label class="set"><span>Gemini voice</span><select id="gvvoice">${Object.entries(GV_VOICES).map(([k,v])=>`<option value="${k}" ${gvVoice()===k?"selected":""}>${v}</option>`).join("")}</select></label><p class="note">Used by the 🎙 Gemini voice button on each abstract. 🎧 Discussion turns a paper into a short talk between Anna and James. Both use Google's free daily allowance and need an internet connection.</p>`:""}<div class="pk"><a href="#" data-act="ttstest">Test voice</a><a href="#" class="alt" data-act="pronopen">Pronunciation list (${pronList().length})</a></div>
-  ${st.engine==="google"?`<p class="note">Natural British voices, streamed through your AI service from Microsoft's free tier, so it needs an internet connection and nothing can be charged. <b>Fair use:</b> about 12 abstracts a day per phone, from a free monthly allowance shared by everyone using the app. When it runs out or you're offline, the Piper voice reads instead${S.nvHave?"":", so it's worth downloading it as a backup"}.</p>${S.nvHave?"":`<div class="pk"><a href="#" class="alt" data-act="nvdl">${NV.busy?"Downloading…":"Download the Piper backup voice (about 60 MB)"}</a></div><p class="note"><span id="nvprog">${esc(NV.prog||"")}</span></p>`}`:""}${isAndroid&&st.engine!=="natural"&&st.engine!=="google"?`<p class="note">On Android, this uses Google's own voices, which are free and work offline. For more voices, open your phone's <b>Settings › Text-to-speech output</b> (often under Accessibility or General management), choose <b>Speech Services by Google</b>, and download <b>English (United Kingdom)</b>.</p>`:""}${st.engine==="natural"||st.engine==="google"||isAndroid?"":`<p class="note"><b>For the most natural sound</b>, choose Natural voice above, or download a free high-quality voice: iPhone <b>Settings › Accessibility › Spoken Content › Voices › English</b>, choose a voice such as <b>Serena</b>, <b>Jamie</b>, <b>Daniel</b> or <b>Kate</b>, and download the <b>Premium</b> (or <b>Enhanced</b>) version. Then reopen this app and pick it here; Premium voices are listed first.</p>`}
+  <div class="pk"><a href="#" data-act="ttstest">Test voice</a><a href="#" class="alt" data-act="pronopen">Pronunciation list (${pronList().length})</a></div>
+  <p class="note">🎧 Discussion turns a paper into a short talk between Anna and James, with a transcript. Google voices run on a free daily allowance shared by everyone using the app; audio starts after a few seconds and the rest loads while it plays.</p>
  </div>
  <h3>Pronunciation</h3><div class="card"><p class="help" style="margin-top:8px">How abbreviations are read aloud. Units, symbols and statistics are handled automatically; edit, add or remove abbreviations here.</p><div class="pk" style="margin-bottom:10px"><a href="#" data-act="pronopen">Edit pronunciation list (${pronList().length} words)</a></div></div>
  <h3>AI features</h3><div class="card">
@@ -2058,8 +2054,7 @@ function ttsArticle(pmid){
  ttsSay(out.filter(Boolean),pmid);
 }
 function ttsBar(pmid){
- const on=TTS.pmid===pmid&&TTS.playing;
- return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${on&&useNV()&&!TTS.started?`<span class="au" style="font-size:13px">Preparing voice…</span>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"Summarise"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${pdfBtn(pmid)}${!S.nvHave&&!on&&st.engine!=="google"?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#5E479B" data-act="nvdl">Try the natural voice</button>`:""}${on?vBtn():""}${gvBtns(pmid)}</div>${gvTranscript(pmid)}`;
+ return `<div class="tts">${gvBtns(pmid)}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"Summarise"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${pdfBtn(pmid)}</div>${gvTranscript(pmid)}`;
 }
 
 // ---------- share ----------
@@ -2300,7 +2295,7 @@ function aiBox(pmid){
   ${s.question?`<p><b>Question</b> ${esc(s.question)}</p>`:""}${s.design?`<p><b>Design</b> ${esc(s.design)}</p>`:""}
   ${li(s.results)?`<p><b>Key results</b></p><ul>${li(s.results)}</ul>`:""}${s.practice?`<p><b>For practice</b> ${esc(s.practice)}</p>`:""}
   ${li(s.limitations)?`<p><b>Limitations</b></p><ul>${li(s.limitations)}</ul>`:""}
-  ${(()=>{const on=TTS.pmid==="ai:"+pmid&&TTS.playing;return `<div class="tts" style="border-top:0;padding-top:0"><button data-act="aisay" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen to summary"}</button>${on?`<button data-act="ttsstop">■ Stop</button>${vBtn()}`:""}</div>`})()}</div>`;
+  ${(()=>{const on=TTS.pmid==="ai:"+pmid&&TTS.playing;return `<div class="tts" style="border-top:0;padding-top:0"><button data-act="aisay" data-id="${pmid}">${gvLab(pmid,"sum")||"▶ Listen to summary"}</button>${on?`<button data-act="ttsstop">■ Stop</button>${vBtn()}`:""}</div>`})()}</div>`;
 }
 function aiSay(pmid){const s=(st.aiSum||{})[pmid];if(!s)return;const it=findItem(pmid)||st.saved[pmid]||{};
  const parts=[speakable(it.title||""),s.bottomline&&"In short. "+speakable(s.bottomline),s.question&&"The question. "+speakable(s.question),s.design&&"Design. "+speakable(s.design),...(s.results||[]).map((r,i)=>(i===0?"Key results. ":"")+speakable(r)),s.practice&&"For practice. "+speakable(s.practice)].filter(Boolean);
@@ -2565,7 +2560,7 @@ document.addEventListener("change",e=>{
  if(el.id==="soarattach"&&S.soar){S.soar.attach=el.checked;return}
  if(el.dataset&&el.dataset.mypdf&&el.files&&el.files[0]){const f=el.files[0];el.value="";myPdfLoad(el.dataset.mypdf,f);return}
  if(el.id==="newson"){st.newsOff=!el.checked;save();return}
- if(el.id==="gvvoice"){st.gvVoice=el.value;for(const k in GV.cache)if(k.startsWith("one:"))delete GV.cache[k];save();return}
+ if(el.id==="gvvoice"){st.gvVoice=el.value;save();return}
  if(el.id==="ggvoice"){st.ggVoice=el.value;GG.off=false;save();return}
  if(el.id==="voicesel"){st.voice=el.value;save();return}
  if(el.id==="ratesel"){st.rate=el.value;save();return}
@@ -2579,23 +2574,25 @@ document.addEventListener("keydown",e=>{if(e.target.id==="q"&&e.key==="Enter"){c
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&st.last&&Date.now()-st.last>3*3600e3&&S.tab==="latest")load()});
 render();load();
 
-// ---------- Gemini voices and two-voice discussions (cpd-voice service) ----------
+// ---------- Google Gemini voices: Listen, summaries, discussions and saved-list playback (cpd-voice service) ----------
 var GV_URL="https://cpd-voice.yerramasuajay.workers.dev",GV_FIELD="radiology";
 var GV_VOICES={Kore:"Kore (female, clear)",Aoede:"Aoede (female, relaxed)",Leda:"Leda (female, light)",Charon:"Charon (male, informative)",Orus:"Orus (male, steady)",Puck:"Puck (male, upbeat)"};
-var GV={el:null,pmid:"",kind:"",busy:"",paused:false,cache:{}};
+var GV={el:null,key:"",kind:"",busy:false,paused:false,parts:[],i:0,gen:0,t0:0,cache:{},list:null,li:-1,title:""};
 var GV_SILENT="data:audio/wav;base64,UklGRgQCAABXQVZFZm10IBAAAAABAAEAwF0AAIC7AAACABAAZGF0YeABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-var GV_WHY={quota:"Google's free allowance for today is used up. It resets tomorrow.",limit:"This phone has reached today's limit for Google voices. It resets tomorrow.",setup:"The Google voice service isn't set up yet.",slow:"Google is taking too long. Try again.",offline:"Google voices need an internet connection.",google:"Google couldn't make the audio. Try again.",noabs:"Open the abstract first."};
+var GV_WHY={quota:"Google's free allowance for today is used up. It resets tomorrow.",limit:"This phone has reached today's limit for Google voices. It resets tomorrow.",setup:"The Google voice service isn't set up yet.",slow:"Google is taking too long. Try again.",offline:"Google voices need an internet connection.",google:"Google couldn't make the audio. Try again.",noabs:"Open the abstract first.",nosum:"Make the summary first, then tap Listen to summary."};
 document.head.insertAdjacentHTML("beforeend",`<style>.gvt{margin-top:8px;font-size:15px}.gvt summary{cursor:pointer;font-weight:600;color:#2E4A86}.gvt p{margin:6px 0}</style>`);
 function gvVoice(){return GV_VOICES[st.gvVoice]?st.gvVoice:"Kore"}
-function gvEl(){if(!GV.el){GV.el=new Audio();GV.el.preload="auto";GV.el.onended=()=>{if(GV.busy)return;GV.pmid="";GV.kind="";GV.paused=false;render()}}return GV.el}
-function gvStop(){if(GV.el)try{GV.el.pause()}catch(e){}GV.pmid="";GV.kind="";GV.busy="";GV.paused=false}
 function gvTitle(pmid){return (findItem(pmid)||st.saved[pmid]||{}).title||""}
-function gvText(pmid){const s=(st.aiSum||{})[pmid];
- if(s)return [gvTitle(pmid),s.bottomline&&"In short. "+s.bottomline,s.question&&"The question. "+s.question,s.design&&"Design. "+s.design,...(s.results||[]).map((r,i)=>(i===0?"Key results. ":"")+r),s.practice&&"For practice. "+s.practice].filter(Boolean).map(speakable).join("\n");
- const ab=S.abs[pmid];if(!Array.isArray(ab))return "";
+function gvAbsText(pmid){const ab=S.abs[pmid];if(!Array.isArray(ab)||!ab.length)return "";
  return [speakable(gvTitle(pmid)),...ab.filter(p=>!/regist|funding/i.test(p.l||"")).map(p=>(p.l?p.l.charAt(0)+p.l.slice(1).toLowerCase()+". ":"")+speakable(p.t))].join("\n")}
+function gvSumText(pmid){const s=(st.aiSum||{})[pmid];if(!s)return "";
+ return [gvTitle(pmid),s.bottomline&&"In short. "+s.bottomline,s.question&&"The question. "+s.question,s.design&&"Design. "+s.design,...(s.results||[]).map((r,i)=>(i===0?"Key results. ":"")+r),s.practice&&"For practice. "+s.practice].filter(Boolean).map(speakable).join("\n")}
 function gvSource(pmid){const ab=S.abs[pmid];if(Array.isArray(ab))return ab.filter(p=>!/regist|funding/i.test(p.l||"")).map(p=>(p.l?p.l+": ":"")+p.t).join("\n");
  const s=(st.aiSum||{})[pmid];return s?[s.bottomline,s.question,s.design,...(s.results||[]),s.practice].filter(Boolean).join("\n"):""}
+// split into parts: a short first part so the voice starts quickly, then longer ones fetched while each plays
+function gvPack(units,first,max){const out=[];let cur="",lim=first;for(const u of units){if(cur&&(cur.length+u.length+1)>lim){out.push(cur);cur=u;lim=max}else cur=cur?cur+(units.sep||" ")+u:u}if(cur)out.push(cur);return out}
+function gvSplit(text){const u=[];text.split("\n").forEach(p=>{p=p.trim();if(p)sentences(p).forEach(s=>u.push(s))});return gvPack(u,420,1100)}
+function gvSplitScript(lines){const u=lines.slice();u.sep="\n";return gvPack(u,450,1100)}
 function gvWav(b64,rate){const pcm=Uint8Array.from(atob(b64),c=>c.charCodeAt(0)),buf=new ArrayBuffer(44+pcm.length),d=new DataView(buf),w=(o,s)=>{for(let i=0;i<s.length;i++)d.setUint8(o+i,s.charCodeAt(i))};
  w(0,"RIFF");d.setUint32(4,36+pcm.length,true);w(8,"WAVE");w(12,"fmt ");d.setUint32(16,16,true);d.setUint16(20,1,true);d.setUint16(22,1,true);d.setUint32(24,rate,true);d.setUint32(28,rate*2,true);d.setUint16(32,2,true);d.setUint16(34,16,true);w(36,"data");d.setUint32(40,pcm.length,true);new Uint8Array(buf,44).set(pcm);
  return URL.createObjectURL(new Blob([buf],{type:"audio/wav"}))}
@@ -2605,46 +2602,80 @@ async function gvPost(path,body){const ctl=new AbortController(),tm=setTimeout((
  const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(GV_WHY[j.error]?j.error:"google");return j}
 function gvTrim(){const k=Object.keys(st.gvPod||{});if(k.length>150)k.sort((a,b)=>st.gvPod[a].at-st.gvPod[b].at).slice(0,k.length-150).forEach(x=>delete st.gvPod[x])}
 function gvLines(sc){return sc.split("\n").map(l=>l.match(/^(Anna|James):\s*(.+)$/)).filter(Boolean)}
-async function gvPlay(pmid,kind){
- const a=gvEl();
- if(GV.pmid===pmid&&GV.kind===kind){if(GV.busy)return;if(a.paused){a.play().catch(()=>{});GV.paused=false}else{a.pause();GV.paused=true}render();return}
- if(GV.busy)return;
- a.src=GV_SILENT;a.play().catch(()=>{}); // unlocks audio on iPhone while still inside the tap
- if(TTS.playing)ttsStop();
- GV.pmid=pmid;GV.kind=kind;GV.paused=false;GV.busy=kind;render();
- const ck=kind+":"+(kind==="pod"?"":gvVoice())+":"+pmid;
- try{
-  let url=GV.cache[ck];
-  if(!url){
-   await ensureAbs(pmid);
-   let body;
-   if(kind==="pod"){
-    st.gvPod=st.gvPod||{};let sc=(st.gvPod[pmid]||{}).script;
-    if(!sc){const src=gvSource(pmid);if(src.length<80)throw new Error("noabs");
-     sc=(await gvPost("/script",{title:gvTitle(pmid),text:src,field:GV_FIELD})).script;
-     st.gvPod[pmid]={script:sc,at:Date.now()};gvTrim();save();if(GV.pmid===pmid)render()}
-    body={script:gvLines(sc).map(m=>`${m[1]}: ${speakable(m[2])}`).join("\n")};
-   }else{const t=gvText(pmid);if(!t)throw new Error("noabs");body={text:t,voice:gvVoice()}}
-   const j=await gvPost("/speak",body);
-   const part=(((j.candidates||[])[0]||{}).content||{parts:[]}).parts.find(p=>p.inlineData);if(!part)throw new Error("google");
-   url=GV.cache[ck]=gvWav(part.inlineData.data,+(((part.inlineData.mimeType||"").match(/rate=(\d+)/)||[0,24000])[1]));
-  }
-  if(GV.pmid!==pmid||GV.kind!==kind)return;
-  GV.busy="";a.src=url;a.defaultPlaybackRate=a.playbackRate=+st.rate||1;
-  if("mediaSession" in navigator)try{navigator.mediaSession.metadata=new MediaMetadata({title:gvTitle(pmid)||"Article",artist:kind==="pod"?"Discussion":"Gemini voice"})}catch(e){}
-  try{await a.play()}catch(e){GV.paused=true;toast("Ready. Tap ▶ Resume to listen.")}
- }catch(e){if(GV.pmid===pmid){GV.busy="";GV.pmid="";GV.kind=""}toast(GV_WHY[e.message]||GV_WHY.google)}
- render();
+// ---- player ----
+function gvEl(){if(!GV.el){const a=GV.el=new Audio();a.preload="auto";a.onended=()=>{if(GV.busy||!GV.key)return;gvAdvance()}}return GV.el}
+function gvUnlock(){const a=gvEl();try{a.src=GV_SILENT;a.play().catch(()=>{})}catch(e){}} // must run inside the tap on iPhone
+function gvStop(){GV.gen++;if(GV.el)try{GV.el.pause()}catch(e){}GV.key="";GV.kind="";GV.busy=false;GV.paused=false;GV.parts=[];GV.list=null;GV.li=-1}
+function gvMeta(){if("mediaSession" in navigator)try{navigator.mediaSession.metadata=new MediaMetadata({title:GV.title||"Article",artist:GV.kind==="pod"?"Discussion":"Cardiology CPD"})}catch(e){}}
+function gvPart(i){const p=GV.parts[i];if(!p)return null;
+ if(!p.p){p.p=GV.cache[p.ck]?Promise.resolve(GV.cache[p.ck]):gvPost("/speak",p.body).then(j=>{const part=(((j.candidates||[])[0]||{}).content||{parts:[]}).parts.find(x=>x.inlineData);if(!part)throw new Error("google");
+  return GV.cache[p.ck]=gvWav(part.inlineData.data,+(((part.inlineData.mimeType||"").match(/rate=(\d+)/)||[0,24000])[1]))});p.p.catch(()=>{})}
+ return p.p}
+async function gvPlayPart(i){const g=GV.gen,a=gvEl();GV.i=i;const pr=gvPart(i);if(!pr){gvAdvance();return}
+ GV.busy=true;GV.t0=Date.now();render();
+ let url;try{url=await pr}catch(e){if(g!==GV.gen)return;gvStop();render();toast(GV_WHY[e.message]||GV_WHY.google);return}
+ if(g!==GV.gen)return;
+ GV.busy=false;GV.paused=false;a.src=url;a.defaultPlaybackRate=a.playbackRate=+st.rate||1;render();
+ a.play().catch(()=>{if(g===GV.gen){GV.paused=true;render();toast("Ready. Tap ▶ Resume to listen.")}});
+ gvPart(i+1);
 }
-function gvBtns(pmid){if(!GV)return "";const on=GV.pmid===pmid,lab=k=>on&&GV.kind===k?(GV.busy===k?(k==="pod"&&!(st.gvPod||{})[pmid]?"Writing discussion…":"Preparing audio…"):GV.paused?"▶ Resume":"⏸ Pause"):"";
- return `<button data-act="gvplay" data-k="one" data-id="${pmid}">${lab("one")||"🎙 Gemini voice"}</button><button data-act="gvplay" data-k="pod" data-id="${pmid}">${lab("pod")||"🎧 Discussion"}</button>${on?`<button data-act="gvstop">■ Stop</button>`:""}`}
+function gvAdvance(){if(GV.i+1<GV.parts.length)gvPlayPart(GV.i+1);else if(GV.list)gvListNext();else{gvStop();render()}}
+function gvToggle(){const a=gvEl();if(GV.busy||!GV.key)return;if(a.paused){a.play().catch(()=>{});GV.paused=false}else{a.pause();GV.paused=true}render()}
+async function gvListen(pmid,kind){
+ if(GV.key===pmid&&GV.kind===kind&&!GV.list){gvToggle();return}
+ gvUnlock();gvStop();if(TTS.playing)ttsStop();
+ GV.key=pmid;GV.kind=kind;GV.busy=true;GV.t0=Date.now();GV.title=gvTitle(pmid);const g=GV.gen;render();
+ try{
+  await ensureAbs(pmid);if(g!==GV.gen)return;
+  let parts;
+  if(kind==="pod"){
+   st.gvPod=st.gvPod||{};let sc=(st.gvPod[pmid]||{}).script;
+   if(!sc){const src=gvSource(pmid);if(src.length<80)throw new Error("noabs");
+    sc=(await gvPost("/script",{title:gvTitle(pmid),text:src,field:GV_FIELD})).script;if(g!==GV.gen)return;
+    st.gvPod[pmid]={script:sc,at:Date.now()};gvTrim();save();GV.t0=Date.now();render()}
+   parts=gvSplitScript(gvLines(sc).map(m=>`${m[1]}: ${speakable(m[2])}`)).map((c,i)=>({body:{script:c},ck:`pod:${pmid}:${i}`}));
+  }else{const t=kind==="sum"?gvSumText(pmid):gvAbsText(pmid)||gvSumText(pmid);if(!t)throw new Error(kind==="sum"?"nosum":"noabs");const v=gvVoice();
+   parts=gvSplit(t).map((c,i)=>({body:{text:c,voice:v},ck:`${kind}:${v}:${pmid}:${i}`}))}
+  GV.parts=parts;gvMeta();gvPlayPart(0);
+ }catch(e){if(g!==GV.gen)return;gvStop();render();toast(GV_WHY[e.message]||GV_WHY.google)}
+}
+function gvSay(text){gvUnlock();gvStop();if(TTS.playing)ttsStop();const v=gvVoice();GV.key="__say";GV.kind="say";GV.title="Voice test";
+ GV.parts=gvSplit(text).map((c,i)=>({body:{text:c,voice:v},ck:`say:${v}:${c}`}));toast("Preparing the voice…");gvPlayPart(0)}
+function gvListAll(){const items=Object.values(st.saved).sort((a,b)=>(b.at||0)-(a.at||0));if(!items.length)return;
+ gvUnlock();gvStop();if(TTS.playing)ttsStop();GV.list=items.map(i=>i.pmid);GV.li=-1;GV.key="list";GV.kind="list";gvListNext()}
+async function gvListNext(){const g=GV.gen;GV.li++;
+ if(GV.li>=GV.list.length){gvStop();render();toast("That's the end of your saved articles.");return}
+ const pmid=GV.list[GV.li];GV.title=gvTitle(pmid);GV.busy=true;GV.t0=Date.now();GV.parts=[];render();
+ await ensureAbs(pmid);if(g!==GV.gen)return;
+ const t=`Article ${GV.li+1} of ${GV.list.length}.\n`+(gvAbsText(pmid)||speakable(GV.title)+"\nThere's no abstract available for this one."),v=gvVoice();
+ GV.parts=gvSplit(t).map((c,i)=>({body:{text:c,voice:v},ck:`list:${v}:${pmid}:${GV.li}:${i}`}));gvMeta();gvPlayPart(0);
+ const nx=GV.list[GV.li+1];if(nx)ensureAbs(nx);
+}
+setInterval(()=>{if(!GV.busy)return;const s=Math.round((Date.now()-GV.t0)/1000);document.querySelectorAll(".gvsec").forEach(x=>x.textContent=s+"s")},1000);
+// ---- buttons ----
+function gvLab(pmid,kind){if(!GV||GV.list||GV.key!==pmid||GV.kind!==kind)return "";
+ return GV.busy?`${kind==="pod"&&!(st.gvPod||{})[pmid]?"Writing discussion…":"Preparing…"} <span class="gvsec"></span>`:GV.paused?"▶ Resume":"⏸ Pause"}
+function gvBtns(pmid){if(!GV)return "";const on=GV.key===pmid&&!GV.list;
+ return `<button data-act="gvplay" data-k="one" data-id="${pmid}">${gvLab(pmid,"one")||"▶ Listen"}</button><button data-act="gvplay" data-k="pod" data-id="${pmid}">${gvLab(pmid,"pod")||"🎧 Discussion"}</button>${on?`<button data-act="gvstop">■ Stop</button>`:""}`}
 function gvTranscript(pmid){if(!GV)return "";const p=(st.gvPod||{})[pmid];if(!p)return "";
  return `<details class="gvt"><summary>Discussion transcript</summary>${gvLines(p.script).map(m=>`<p><b>${m[1]}:</b> ${esc(m[2])}</p>`).join("")}<p class="note">Written by AI from the abstract. Check figures against the paper before quoting them.</p><button class="link" data-act="gvredo" data-id="${pmid}">Write a new discussion</button></details>`}
-document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act;
- if(a==="gvplay"){e.preventDefault();gvPlay(b.dataset.id,b.dataset.k)}
- else if(a==="gvstop"){e.preventDefault();gvStop();render()}
- else if(a==="gvredo"){e.preventDefault();const id=b.dataset.id;if(GV.pmid===id&&GV.kind==="pod")gvStop();if(st.gvPod)delete st.gvPod[id];delete GV.cache["pod::"+id];save();render()}});
+{const _np=renderNP;renderNP=function(){if(!(GV&&GV.list))return _np();const el=document.getElementById("np");if(!el)return;el.className="np";
+ el.innerHTML=`<div class="npt"><small>${GV.li>=0?`Article ${GV.li+1} of ${GV.list.length}`:"Starting"}${GV.busy?" · preparing…":""}</small><span>${esc(GV.title||"Saved articles")}</span></div><button data-act="gvtoggle" aria-label="${GV.paused?"Resume":"Pause"}">${GV.paused?"▶":"⏸"}</button><button data-act="gvnext" aria-label="Next article">⏭</button><button data-act="gvstop" aria-label="Stop">■</button>`}}
 {const _say=ttsSay;ttsSay=function(){gvStop();return _say.apply(this,arguments)}}
+// every voice action goes to the Gemini voice
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act,id=b.dataset.id;
+ const take=()=>{e.preventDefault();e.stopImmediatePropagation()};
+ if(a==="gvplay"||a==="tts"){take();gvListen(id,b.dataset.k||"one")}
+ else if(a==="aisay"){take();gvListen(id,"sum")}
+ else if(a==="listenall"){take();if(GV.list){gvStop();render()}else gvListAll()}
+ else if(a==="gvtoggle"||(a==="nppause"&&GV.list)){take();gvToggle()}
+ else if(a==="gvnext"||(a==="npnext"&&GV.list)){take();if(GV.list){GV.gen++;if(GV.el)try{GV.el.pause()}catch(x){}gvListNext()}}
+ else if(a==="gvstop"||(a==="ttsstop"&&GV.key)){take();gvStop();render()}
+ else if(a==="gvredo"){take();if(GV.key===id&&GV.kind==="pod")gvStop();if(st.gvPod)delete st.gvPod[id];Object.keys(GV.cache).forEach(k=>{if(k.startsWith("pod:"+id+":"))delete GV.cache[k]});save();render()}
+ else if(a==="ttstest"){take();gvSay("This is how articles will sound. In the ARTESIA trial, apixaban reduced stroke, with a hazard ratio of 0.63.")}
+ else if(a==="pronhear"){const r=pronList()[+b.dataset.v];if(r){take();gvSay(speakable(r[0]))}}
+ else if(a==="nvdl"||a==="vset"||a==="vopen"){take()}
+},true);
 </script>
 </body>
 </html>
