@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voice test – Cardiology CPD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#FBF3F1; --grid:#F2D3CE; --ink:#1E2340; --muted:#5B6078;
+  --red:#C2253B; --teal:#2F6F73; --panel:#FFFFFF; --line:#E6C9C4; --field:#FFFDFC;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme: dark;
+    --paper:#1A1D24; --grid:#262B35; --ink:#ECE9E6; --muted:#A3A8B8;
+    --red:#F05A6E; --teal:#6CC1C4; --panel:#21252E; --line:#353B48; --field:#1C2028;
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; color:var(--ink); font:17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif;
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+}
+main{max-width:680px;margin:0 auto;padding:28px 18px 60px}
+h1{font-size:1.9rem;line-height:1.15;margin:0 0 6px}
+.trace{display:block;width:100%;height:42px;margin:4px 0 18px}
+.trace path{fill:none;stroke:var(--red);stroke-width:2.2;stroke-linejoin:round}
+p.lead{color:var(--muted);margin:0 0 22px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:16px}
+h2{font-size:1.15rem;margin:0 0 4px}
+.sub{color:var(--muted);font-size:.92rem;margin:0 0 12px}
+.tabs{display:flex;gap:8px;margin-bottom:10px}
+.tabs button{flex:1}
+textarea{width:100%;min-height:190px;font:inherit;font-size:.95rem;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:6px;padding:10px}
+label{display:block;font-size:.9rem;color:var(--muted);margin:10px 0 4px}
+input,select{width:100%;font:inherit;font-size:.95rem;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:6px;padding:9px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{font:inherit;font-weight:700;border-radius:6px;padding:10px 14px;cursor:pointer;border:1.5px solid var(--ink);background:transparent;color:var(--ink)}
+button.play{background:var(--red);border-color:var(--red);color:#fff;margin-top:14px;width:100%}
+button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+button:disabled{opacity:.55;cursor:wait}
+audio{width:100%;margin-top:12px}
+.status{font-size:.9rem;margin-top:8px;color:var(--teal);min-height:1.2em}
+.status.err{color:var(--red)}
+.note{font-size:.85rem;color:var(--muted);margin-top:8px}
+@media (max-width:480px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Which voice should read your summaries?</h1>
+  <svg class="trace" viewBox="0 0 640 42" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 24 H210 l10 -4 l10 4 H260 l6 6 l8 -28 l8 34 l6 -12 H330 l14 -8 l14 8 H640"/>
+  </svg>
+  <p class="lead">The same text, read three ways. Keys you type are used only while this page is open and are never saved.</p>
+
+  <section>
+    <h2>Text to read</h2>
+    <p class="sub">Edit freely. The two-voice version works with Google only.</p>
+    <div class="tabs">
+      <button id="tabSingle" aria-pressed="true">Summary</button>
+      <button id="tabDuo" aria-pressed="false">Two-voice discussion</button>
+    </div>
+    <textarea id="text" aria-label="Text to read"></textarea>
+  </section>
+
+  <section>
+    <h2>Built-in voice</h2>
+    <p class="sub">Free, already on your phone or laptop. What the app can use today with no setup.</p>
+    <label for="sysVoice">Voice</label>
+    <select id="sysVoice"></select>
+    <button class="play" id="playSys">Read aloud</button>
+    <div class="status" id="sysStatus"></div>
+  </section>
+
+  <section>
+    <h2>Google Gemini voice</h2>
+    <p class="sub">Free key from aistudio.google.com (Get API key). British accent is requested in the instructions.</p>
+    <label for="gKey">Gemini API key</label>
+    <input id="gKey" type="password" autocomplete="off" placeholder="Paste key">
+    <div class="row">
+      <div>
+        <label for="gModel">Model</label>
+        <select id="gModel">
+          <option value="gemini-3.1-flash-tts-preview">3.1 Flash TTS (free tier)</option>
+          <option value="gemini-3.8-flash-tts">3.8 Flash TTS (newest)</option>
+          <option value="gemini-2.5-flash-preview-tts">2.5 Flash TTS</option>
+        </select>
+      </div>
+      <div>
+        <label for="gVoice">Voice (summary)</label>
+        <select id="gVoice">
+          <option>Kore</option><option>Charon</option><option>Aoede</option><option>Puck</option>
+          <option>Leda</option><option>Orus</option><option>Zephyr</option><option>Fenrir</option>
+        </select>
+      </div>
+    </div>
+    <button class="play" id="playG">Generate and play</button>
+    <div class="status" id="gStatus"></div>
+    <audio id="gAudio" controls hidden></audio>
+  </section>
+
+  <section>
+    <h2>Sarvam Bulbul voice</h2>
+    <p class="sub">Key from dashboard.sarvam.ai. Indian English accent only.</p>
+    <label for="sKey">Sarvam API key</label>
+    <input id="sKey" type="password" autocomplete="off" placeholder="Paste key">
+    <label for="sSpeaker">Speaker</label>
+    <input id="sSpeaker" value="shubh">
+    <button class="play" id="playS">Generate and play</button>
+    <div class="status" id="sStatus"></div>
+    <audio id="sAudio" controls hidden></audio>
+    <p class="note">If this fails with a network error, Sarvam may block calls made directly from a web page. Their online playground gives the same voices.</p>
+  </section>
+</main>
+
+<script>
+const SUMMARY = `The 2024 ESC guidelines for atrial fibrillation organise care around a framework called AF-CARE.
+
+C is for comorbidity and risk factor management. Hypertension, obesity, diabetes, alcohol, sleep apnoea and physical inactivity should be addressed in every patient, because they drive both the onset and the progression of AF.
+
+A is for avoiding stroke and thromboembolism. Oral anticoagulation is recommended for patients at elevated thromboembolic risk, and a direct oral anticoagulant is preferred over warfarin for most eligible patients.
+
+R is for reducing symptoms through rate and rhythm control, with rhythm control now considered earlier than in the past, including catheter ablation in selected patients.
+
+E is for evaluation and dynamic reassessment. Risk changes over time, so patients should be reviewed regularly rather than assessed once.
+
+The message for practice: AF management is an ongoing, patient-centred process, not a single prescribing decision.`;
+
+const DUO = `Anna: What's the headline change in the 2024 ESC atrial fibrillation guidelines?
+James: The whole pathway is now built around one framework, AF-CARE.
+Anna: And the C stands for?
+James: Comorbidities and risk factors. Blood pressure, weight, alcohol, sleep apnoea. They drive AF, so they're treated in everyone, not as an afterthought.
+Anna: Then stroke prevention.
+James: Yes, A for avoiding stroke. Anticoagulate patients at elevated risk, and for most, a direct oral anticoagulant rather than warfarin.
+Anna: R is rate and rhythm?
+James: Reducing symptoms, with rhythm control, including ablation, considered earlier than it used to be.
+Anna: And E?
+James: Evaluation and dynamic reassessment. Risk changes, so the review never really ends.`;
+
+const $ = id => document.getElementById(id);
+let mode = 'single';
+$('text').value = SUMMARY;
+
+function setMode(m){
+  mode = m;
+  $('tabSingle').setAttribute('aria-pressed', m==='single');
+  $('tabDuo').setAttribute('aria-pressed', m==='duo');
+  $('text').value = m==='single' ? SUMMARY : DUO;
+}
+$('tabSingle').onclick = () => setMode('single');
+$('tabDuo').onclick = () => setMode('duo');
+
+function status(el, msg, err){ el.textContent = msg; el.classList.toggle('err', !!err); }
+function plain(){ return $('text').value.replace(/^(Anna|James):\s*/gm,''); }
+
+/* Built-in voices */
+function loadVoices(){
+  const vs = speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
+  vs.sort((a,b) => (b.lang==='en-GB') - (a.lang==='en-GB'));
+  $('sysVoice').innerHTML = vs.map((v,i) => `<option value="${i}">${v.name} (${v.lang})</option>`).join('');
+  $('sysVoice')._voices = vs;
+}
+if ('speechSynthesis' in window){
+  loadVoices();
+  speechSynthesis.onvoiceschanged = loadVoices;
+} else {
+  status($('sysStatus'), 'This browser has no built-in voices.', true);
+}
+$('playSys').onclick = () => {
+  if (speechSynthesis.speaking){ speechSynthesis.cancel(); $('playSys').textContent='Read aloud'; return; }
+  const u = new SpeechSynthesisUtterance(plain());
+  const v = ($('sysVoice')._voices||[])[$('sysVoice').value];
+  if (v){ u.voice = v; u.lang = v.lang; }
+  u.rate = 0.95;
+  u.onend = () => { $('playSys').textContent='Read aloud'; status($('sysStatus'),''); };
+  speechSynthesis.speak(u);
+  $('playSys').textContent = 'Stop';
+  status($('sysStatus'), 'Reading…');
+};
+
+/* Gemini: returns raw 16-bit PCM, wrapped here as a WAV file */
+function pcmToWav(b64, rate){
+  const pcm = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+  const buf = new ArrayBuffer(44 + pcm.length), d = new DataView(buf);
+  const w = (o,s) => [...s].forEach((c,i) => d.setUint8(o+i, c.charCodeAt(0)));
+  w(0,'RIFF'); d.setUint32(4, 36+pcm.length, true); w(8,'WAVE'); w(12,'fmt ');
+  d.setUint32(16,16,true); d.setUint16(20,1,true); d.setUint16(22,1,true);
+  d.setUint32(24,rate,true); d.setUint32(28,rate*2,true); d.setUint16(32,2,true); d.setUint16(34,16,true);
+  w(36,'data'); d.setUint32(40,pcm.length,true); new Uint8Array(buf,44).set(pcm);
+  return URL.createObjectURL(new Blob([buf],{type:'audio/wav'}));
+}
+
+$('playG').onclick = async () => {
+  const key = $('gKey').value.trim(), st = $('gStatus');
+  if (!key) return status(st, 'Paste your Gemini API key first.', true);
+  const duo = mode === 'duo';
+  const prompt = duo
+    ? 'Read this conversation as a relaxed medical education podcast. Anna and James both speak with British English accents.\n\n' + $('text').value
+    : 'Read the following in a calm, clear British English accent, at a measured pace suited to a medical education podcast:\n\n' + $('text').value;
+  const speechConfig = duo
+    ? { multiSpeakerVoiceConfig: { speakerVoiceConfigs: [
+        { speaker:'Anna',  voiceConfig:{ prebuiltVoiceConfig:{ voiceName:'Kore' } } },
+        { speaker:'James', voiceConfig:{ prebuiltVoiceConfig:{ voiceName:'Charon' } } } ] } }
+    : { voiceConfig: { prebuiltVoiceConfig: { voiceName: $('gVoice').value } } };
+  $('playG').disabled = true; status(st, 'Generating… this can take 10–30 seconds.');
+  try{
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${$('gModel').value}:generateContent`, {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'x-goog-api-key': key },
+      body: JSON.stringify({ contents:[{ parts:[{ text: prompt }] }],
+        generationConfig:{ responseModalities:['AUDIO'], speechConfig } })
+    });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error?.message || r.status);
+    const part = j.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+    if (!part) throw new Error('No audio came back. Try another model.');
+    const rate = +(part.inlineData.mimeType.match(/rate=(\d+)/)||[,24000])[1];
+    const a = $('gAudio'); a.src = pcmToWav(part.inlineData.data, rate); a.hidden = false; a.play();
+    status(st, 'Done. Use the menu on the player to download.');
+  }catch(e){
+    status(st, 'Google returned an error: ' + e.message, true);
+  }finally{ $('playG').disabled = false; }
+};
+
+/* Sarvam: returns base64 WAV */
+$('playS').onclick = async () => {
+  const key = $('sKey').value.trim(), st = $('sStatus');
+  if (!key) return status(st, 'Paste your Sarvam API key first.', true);
+  const text = plain().slice(0, 2500);
+  $('playS').disabled = true; status(st, 'Generating…');
+  try{
+    const r = await fetch('https://api.sarvam.ai/text-to-speech', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'api-subscription-key': key },
+      body: JSON.stringify({ text, target_language_code:'en-IN', model:'bulbul:v3', speaker: $('sSpeaker').value.trim() || 'shubh' })
+    });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.error?.message || j.message || r.status);
+    const a = $('sAudio'); a.src = 'data:audio/wav;base64,' + j.audios[0]; a.hidden = false; a.play();
+    status(st, 'Done.');
+  }catch(e){
+    status(st, 'Sarvam returned an error: ' + e.message, true);
+  }finally{ $('playS').disabled = false; }
+};
+</script>
+</body>
+</html>
