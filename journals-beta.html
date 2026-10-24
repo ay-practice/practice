@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-y6BKlSuBqLVgld7oGFS37HUDlSsh0RFTk/reOX0WaLA=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-0w8nGkhsaH1JN2LVtrY6mbe+cK/EpM0Sq4p5CCtBYyY=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -413,7 +413,7 @@ header{background:linear-gradient(135deg,rgba(28,37,65,.96),rgba(58,72,132,.92))
 <script>
 "use strict";try{if(!localStorage.getItem("journal-reader-beta")&&localStorage.getItem("journal-reader-v1"))localStorage.setItem("journal-reader-beta",localStorage.getItem("journal-reader-v1"))}catch(e){}
 
-const KEY="journal-reader-beta",APPVER="Beta, 25 Oct 2026";
+const KEY="journal-reader-beta",APPVER="Beta, 24 Oct 2026 (b2)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -665,7 +665,7 @@ function card(it){
    <button class="arch ${sv?"on":""}" data-act="star" data-id="${it.pmid}" aria-pressed="${sv}">${sv?"Saved":"Archive"}</button>
   </div>
   ${S.tab==="saved"&&sv&&!S.open[it.pmid]&&(aiURL()||(st.aiSum||{})[it.pmid])?`<div style="margin-top:8px">${aiBox(it.pmid)||`<button class="link" style="color:#4B3C8F;text-decoration:none;font-weight:700;padding:0" data-act="aisum" data-id="${it.pmid}">✨ Summarise${(st.aiSum||{})[it.pmid]?"":" (uses the full text when it's free)"}</button> ${pdfBtn(it.pmid)}`}${(st.aiSum||{})[it.pmid]&&S.aiOpen[it.pmid]?`<button class="link" style="padding:0;margin-top:4px" data-act="aisum" data-id="${it.pmid}">Hide summary</button>`:""}</div>`:""}
-  ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:aiBox(it.pmid)+ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")+ttsBar(it.pmid)}</div>`:""}
+  ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")+ttsBar(it.pmid)+aiBox(it.pmid)}</div>`:""}
  </article>`;
 }
 // ---------- beta: folding search and "What's new in cardiology" ----------
@@ -673,7 +673,7 @@ const SRCH='<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="
 const NEWSTAG={Trial:"#3E6EA8",Drug:"#4E8F5E",Device:"#8E6C3E",Guideline:"#6D5BA8"};
 function agoTxt(t){if(!t)return"";const m=Math.round((Date.now()-t)/60000);return m<60?`${Math.max(1,m)} min ago`:m<1440?`${Math.round(m/60)} h ago`:`${Math.round(m/1440)} d ago`}
 async function newsLoad(force){
- const c=st.newsCache;if(!force&&c&&Date.now()-c.at<3600e3)return;if(S.newsBusy||!aiURL())return;S.newsBusy=true;
+ const c=st.newsCache;if(!force&&c&&Date.now()-c.at<3600e3)return;if(S.newsBusy||!aiURL())return;if(!force&&S.newsTry&&Date.now()-S.newsTry<300e3)return;S.newsTry=Date.now();S.newsBusy=true;
  try{const r=await fetch(`${aiURL()}/news?app=cardiology`,{credentials:"omit"});const j=await r.json();if(r.ok&&Array.isArray(j.items)){st.newsCache={at:Date.now(),items:plainAI(j.items).filter(x=>x&&x.title&&/^https:\/\//.test(x.link||""))};save()}}catch(e){}
  S.newsBusy=false;if(S.tab==="latest")render();
 }
@@ -789,6 +789,8 @@ function vSettings(){
   <div class="pk" style="margin-top:4px"><a href="#" data-act="aitest">Test connection</a></div>
   ${S.aiTest?`<p class="note">${esc(S.aiTest)}</p>`:""}
   <p class="note">The service has a free daily allowance shared by everyone using the app. If it runs out, AI features pause until the next day, and summaries you've already made stay saved.</p>
+  <label class="au" style="display:block;padding:12px 0 6px">Model comparison phrase (app owner only)<input class="search" id="cmpkey" type="password" value="${esc(st.cmpKey||"")}" placeholder="Leave blank unless you set one up" autocomplete="off" autocapitalize="off"></label>
+  <p class="note">${st.cmpKey?"⚖️ Compare AI now appears on each open abstract.":"With the phrase that matches the AI service's COMPARE_KEY secret, a ⚖️ Compare AI button appears on each abstract, to test free models against Claude on the same paper."}</p>
  </div>
  <h3>Full-text access</h3><div class="card">
   <p class="help" style="margin-top:8px">How the Full text button opens papers. Sign in once through your library and the following papers open without logging in again.</p>
@@ -1354,7 +1356,7 @@ function deckForest(pptx,s,x,T,F){
 }
 
 const LAYOUTS=["bullets","bignumber","comparison","bar","flow","takehome","figure","forest","questions"];
-async function makeDeck(pmid,count,topic){
+async function makeDeck(pmid,count,topic,opt){
  const it=topic?{}:(findItem(pmid)||st.saved[pmid]||{});
  S.slideBusy=topic?"Preparing your topic slides":"Fetching the paper";renderModal();
  const P=topic?{title:topic.title,aus:[st.myName||""].filter(Boolean),journal:"Evidence review",iso:"Evidence review",year:new Date().getFullYear(),parts:[],pmcid:"",oa:false,doi:"",vol:"",iss:"",pages:""}:await paperData(pmid);if(!P.title)P.title=it.title||"Paper";
@@ -1363,16 +1365,17 @@ async function makeDeck(pmid,count,topic){
  if(topic)full={text:topic.text,figs:[]};
  else if(mine)full={text:mine.text,figs:[]};
  else if(P.pmcid&&P.oa){S.slideBusy="Reading the open-access full paper";renderModal();try{full=await oaFull(P.pmcid)}catch(e){}}
- if(!topic&&!P.parts.length&&!full.text)return makeSlides(pmid,count);
+ if(!topic&&!P.parts.length&&!full.text){if(opt)throw Object.assign(new Error("no abstract"),{code:"no abstract"});return makeSlides(pmid,count)}
  const useFigs=!!(S.slideFigs&&full.figs.length),nAI=Math.max(2,count-2);
  S.slideBusy="The AI is designing your slides";renderModal();
- let d;
- try{const j=await aiCall("slides",{mode:topic?"topic":"",title:P.title,abstract:absText(P.parts),fulltext:full.text,redraw:!!mine||!useFigs&&!!full.text,n:nAI,figures:useFigs?full.figs.map(f=>({label:f.label,caption:f.cap.slice(0,300)})):[]});d=j.data}
- catch(e){if(topic){S.slideBusy="";S.modal=null;renderModal();toast(aiErr(e.code));return}toast(aiErr(e.code)+" Using the built-in slide writer instead.");return makeSlides(pmid,count)}
+ let d,cm={};
+ try{const j=await aiCall("slides",{...(opt?{model:opt.model}:{}),mode:topic?"topic":"",title:P.title,abstract:absText(P.parts),fulltext:full.text,redraw:!!mine||!useFigs&&!!full.text,n:nAI,figures:useFigs?full.figs.map(f=>({label:f.label,caption:f.cap.slice(0,300)})):[]},opt?180000:undefined);d=j.data;cm=j}
+ catch(e){if(opt)throw e;if(topic){S.slideBusy="";S.modal=null;renderModal();toast(aiErr(e.code));return}toast(aiErr(e.code)+" Using the built-in slide writer instead.");return makeSlides(pmid,count)}
  let slides=(d.slides||[]).filter(x=>x&&typeof x==="object").map(x=>({...x,layout:LAYOUTS.includes(x.layout)?x.layout:"bullets"}));
  if(!useFigs)slides=slides.filter(x=>x.layout!=="figure");
  if(useFigs&&!slides.some(x=>x.layout==="figure")){const pick=(d.figures||[]).concat(full.figs.map(f=>f.label)).filter((v,i,a)=>a.indexOf(v)===i).slice(0,1);
   const at=Math.max(1,slides.findIndex(x=>x.layout==="takehome"));pick.forEach(l=>slides.splice(at<0?slides.length:at,0,{layout:"figure",figure:l,title:l}))}
+ if(!slides.length&&opt)throw Object.assign(new Error("ai"),{code:"ai",detail:"The model returned no usable slides."});
  if(!slides.length){toast("The AI didn't return slides. Using the built-in slide writer instead.");return makeSlides(pmid,count)}
  S.slideBusy=useFigs?"Adding the paper's figures":"Building slides";renderModal();
  await loadJS(PPTX_SRC);
@@ -1463,6 +1466,7 @@ async function makeDeck(pmid,count,topic){
  }
  const blob=await pptx.write({outputType:"blob"});
  const name=`${short.replace(/[^\w ]+/g,"").replace(/\s+/g,"-").slice(0,60)||"paper"}-slides.pptx`;
+ if(opt)return {file:new File([blob],name.replace(/-slides\.pptx$/,"-"+opt.tag.replace(/[^\w.]+/g,"-")+".pptx"),{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"}),meta:{ms:cm.ms,cost:cm.cost,usage:cm.usage,n:num}};
  S.slideBusy="";S.slideFile=new File([blob],name,{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"});
  S.slideMsg=[`${num} slides ready, designed by AI from ${topic?"your Focus review":mine?"your PDF, with charts redrawn from its numbers":full.text?"the full paper":"the abstract"}. Check them before presenting.`,figNote].filter(Boolean).join(" ");renderModal();
 }
@@ -2033,7 +2037,7 @@ function fNewTotal(){return fList().reduce((a,f)=>a+((f.newIds||[]).length),0)}
 function fBadge(){const el=document.getElementById("focuscount");if(!el)return;const n=fNewTotal();el.textContent=n>99?"99+":String(n);el.style.display=n?"":"none"}
 async function fetchText(url,tries=3){for(let i=0;i<tries;i++){try{const r=await fetch(url);if(r.ok)return await r.text();if(r.status!==429&&r.status<500)throw new Error("http "+r.status)}catch(e){if(i===tries-1)throw e}await new Promise(z=>setTimeout(z,800*(i+1)))}}
 function fProg(step,detail){S.fprog={step,detail};const el=document.getElementById("fprogtxt");if(el)el.innerHTML=fProgHTML();else renderModal()}
-const FSTEPS=["Searching PubMed","Ranking the papers","Reading the abstracts","Writing your review","Saving"];
+const FSTEPS=["Searching PubMed","Reading the abstracts","Ranking the papers by relevance","Writing your review","Saving"];
 const fProgHTML=()=>FSTEPS.map((t,i)=>`<div class="fstep ${i<S.fprog.step?"done":i===S.fprog.step?"now":""}">${i<S.fprog.step?"✓":i===S.fprog.step?'<span class="spin"></span>':"○"} ${t}${i===S.fprog.step&&S.fprog.detail?` <small>${esc(S.fprog.detail)}</small>`:""}</div>`).join("");
 async function focusRun(id,engine){
  const f=fById(id);if(!f)return;engine=engine||f.engine||"qwen";S.fprog={step:0,detail:""};S.frun=id;S.modal={type:"fprog",id};renderModal();
@@ -2047,26 +2051,30 @@ async function focusRun(id,engine){
   let cites={},ptype={};
   try{const eq=ids.map(x=>"EXT_ID:"+x).join(" OR ");const j=await getJSON(`${EPMC}search?query=${encodeURIComponent(`(${eq}) AND SRC:MED`)}&format=json&resultType=lite&pageSize=200`);
    for(const r of (j.resultList&&j.resultList.result)||[]){cites[r.pmid]=+r.citedByCount||0;ptype[r.pmid]=String(r.pubType||"").toLowerCase()}}catch(e){}
-  const yr=now.getFullYear(),N=Math.min(50,ids.length);
+  const N=Math.min(50,ids.length);
   const score=(id,i)=>{const t=ptype[id]||"";return 2*(1-i/ids.length)+1.4*Math.log10(1+(cites[id]||0))+(/meta-analysis|systematic review/.test(t)?2:/randomi[sz]ed controlled trial/.test(t)?1.8:/guideline/.test(t)?2:/review/.test(t)?0.8:0)};
-  const pick=ids.map((id,i)=>({id,s:score(id,i)})).sort((a,b)=>b.s-a.s).slice(0,N).map(x=>x.id);
-  fProg(2,`top ${pick.length} papers`);
-  const xml=await fetchText(`${E}efetch.fcgi?db=pubmed&retmode=xml&tool=cardioreader&id=${pick.join(",")}`);
-  const doc=new DOMParser().parseFromString(xml.replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),papers=[];
+  const pre=ids.map((id,i)=>({id,s:score(id,i)})).sort((a,b)=>b.s-a.s).slice(0,100),base={};pre.forEach(x=>base[x.id]=x.s);
+  const xml=await fetchText(`${E}efetch.fcgi?db=pubmed&retmode=xml&tool=cardioreader&id=${pre.map(x=>x.id).join(",")}`);
+  const doc=new DOMParser().parseFromString(xml.replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),all=[];
   for(const a of doc.getElementsByTagName("PubmedArticle")){
    const g=(n,el=a)=>((el.getElementsByTagName(n)[0]||{}).textContent||"").trim(),pmid=g("PMID");
    const abs=[...a.getElementsByTagName("AbstractText")].map(x=>(x.getAttribute("Label")?x.getAttribute("Label")+": ":"")+x.textContent.trim()).join(" ");
    const types=[...a.getElementsByTagName("PublicationType")].map(x=>x.textContent).filter(t=>/Trial|Meta|Systematic|Guideline|Review|Cohort|Observational/i.test(t));
    const year=g("Year",a.getElementsByTagName("PubDate")[0]||a)||(g("MedlineDate").match(/\d{4}/)||[""])[0];
-   if(abs.length>100)papers.push({pmid,title:g("ArticleTitle").replace(/\.$/,""),journal:g("ISOAbbreviation")||g("Title"),year,type:types.join(", ")||"Study",cites:cites[pmid]||0,abstract:abs.replace(/\s+/g," ").slice(0,1800)});
+   if(abs.length>100&&base[pmid]!==undefined)all.push({pmid,title:g("ArticleTitle").replace(/\.$/,""),journal:g("ISOAbbreviation")||g("Title"),year,type:types.join(", ")||"Study",cites:cites[pmid]||0,abstract:abs.replace(/\s+/g," ").slice(0,1800)});
   }
-  papers.sort((x,y)=>pick.indexOf(x.pmid)-pick.indexOf(y.pmid));
+  fProg(2,`checking ${all.length} papers against your topic`);
+  let rel=null;
+  try{const r=await aiCall("rank",{topic:f.topic,focus:f.focus||"",papers:all.map(p=>({id:p.pmid,title:p.title,abstract:p.abstract.slice(0,700)}))},60000);if(r.scores&&typeof r.scores==="object")rel=r.scores}catch(e){}
+  const rv=p=>rel&&typeof rel[p.pmid]==="number"?rel[p.pmid]:null;
+  let pool=all;if(rel){const keep=all.filter(p=>!(rv(p)!==null&&rv(p)<0.15));if(keep.length>=Math.min(15,all.length))pool=keep}
+  const papers=pool.map(p=>({...p,rel:rv(p)})).sort((a,b)=>(base[b.pmid]+(b.rel!==null?6*b.rel-3:0))-(base[a.pmid]+(a.rel!==null?6*a.rel-3:0))).slice(0,N);
   if(papers.length<3)throw Object.assign(new Error("few"),{code:"few"});
   fProg(3,"this can take a minute or two");
   const prev=f.result&&f.result.review?(f.result.review.overview||""):"",newRefs=prev?papers.map((p,i)=>(f.used||[]).includes(p.pmid)?0:i+1).filter(Boolean):[];
-  const j=await aiCall("focus",{topic:f.topic,focus:f.focus||"",years:f.years,papers,prev,newRefs,engine},180000);
+  const j=await aiCall("focus",{topic:f.topic,focus:f.focus||"",years:f.years,papers:papers.map(({rel,...p})=>p),prev,newRefs,engine},180000);
   fProg(4,"");
-  f.result={at:Date.now(),papers:papers.map((p,i)=>({n:i+1,pmid:p.pmid,title:p.title,journal:p.journal,year:p.year,type:p.type,cites:p.cites,isNew:newRefs.includes(i+1)})),review:j.data,model:j.model||"",asked:engine,total,version:((f.result&&f.result.version)||0)+1};
+  f.result={at:Date.now(),papers:papers.map((p,i)=>({n:i+1,pmid:p.pmid,title:p.title,journal:p.journal,year:p.year,type:p.type,cites:p.cites,rel:p.rel,isNew:newRefs.includes(i+1)})),ranked:!!rel,review:j.data,model:j.model||"",asked:engine,total,version:((f.result&&f.result.version)||0)+1};
   f.results=f.results||{};f.results[engOf(j.model)]=f.result;
   f.used=papers.map(p=>p.pmid);f.lastCheck=Date.now();f.newIds=[];save();fBadge();
   S.modal={type:"fview",id};renderModal();render();
@@ -2110,7 +2118,7 @@ const refLinks=(refs,R)=>{const L=(Array.isArray(refs)?refs:[refs]).map(n=>+n).f
 function fviewSheet(m){
  const f=fById(m.id),R=f&&f.result;if(!R)return "";const V=R.review||{},pts=(L,cls="")=>`<ul class="fpts ${cls}">${(L||[]).map(p=>`<li>${esc(p.text||"")}${refLinks(p.refs,R)}</li>`).join("")}</ul>`;
  return `<div class="sheet big fview" role="dialog" aria-label="${esc(V.title||f.topic)}"><div class="vhead"><h3>${esc(V.title||f.topic)}</h3><div class="vbtns"><button class="more" data-act="mclose">Close</button></div></div><div class="vbody">
- <p class="au">${R.papers.length} key papers from the last ${f.years} years · updated ${fAgo(R.at)} · version ${R.version} · written by <b>${modelName(R.model)}</b>${R.asked&&engOf(R.model)!==R.asked?` (${FENG[R.asked]} wasn't available)`:""}. AI-written from the abstracts: check key facts against the papers.</p>
+ <p class="au">${R.papers.length} key papers from the last ${f.years} years${R.ranked?", chosen for relevance and impact":""} · updated ${fAgo(R.at)} · version ${R.version} · written by <b>${modelName(R.model)}</b>${R.asked&&engOf(R.model)!==R.asked?` (${FENG[R.asked]} wasn't available)`:""}. AI-written from the abstracts: check key facts against the papers.</p>
  <div class="row" style="flex-wrap:wrap;overflow:visible;margin:4px 0 2px">${Object.entries(FENG).map(([k,l])=>(f.results||{})[k]?`<button class="chip ${engOf(R.model)===k?"on":""}" data-act="fshow" data-v="${f.id}:${k}">${l} version</button>`:`<button class="chip" data-act="fcomp" data-v="${f.id}:${k}">+ Compare with ${l}</button>`).join("")}</div>
  ${V.changes?`<div class="msg warn"><b>What's new in this version:</b> ${esc(V.changes)}</div>`:""}
  <div class="tts" style="border-top:0"><button data-act="flisten" data-v="${f.id}">▶ Listen</button><button data-act="fslides" data-v="${f.id}">Make slides</button><button data-act="fshare" data-v="${f.id}">Share</button></div>
@@ -2120,7 +2128,7 @@ function fviewSheet(m){
  ${(V.guidelines||[]).length?`<h4>Guidelines</h4>${pts(V.guidelines)}`:""}${(V.controversies||[]).length?`<h4>Uncertainties and debates</h4>${pts(V.controversies)}`:""}
  ${(V.practice||[]).length?`<h4>For practice</h4>${pts(V.practice)}`:""}${(V.pearls||[]).length?`<h4>Exam pearls</h4>${pts(V.pearls,"pearls")}`:""}
  ${(V.mcqs||[]).length?`<h4>Practice questions</h4>${V.mcqs.map((q,i)=>`<div class="fmcq"><p><b>${i+1}.</b> ${esc(q.q||"")}</p><ul>${(q.options||[]).map(o=>`<li>${esc(o)}</li>`).join("")}</ul><details><summary>Show answer</summary><p><b>${esc(q.answer||"")}</b>. ${esc(q.why||"")}${refLinks(q.refs,R)}</p></details></div>`).join("")}`:""}
- <h4>References</h4><ol class="frefs">${R.papers.map(p=>`<li>${p.isNew?'<b class="fnew">NEW</b> ':""}<a href="https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/" target="_blank" rel="noopener">${esc(p.title)}</a>. <i>${esc(p.journal)}</i> ${esc(p.year)}. <span class="au">${esc(p.type)}${p.cites?` · cited ${p.cites}×`:""}</span></li>`).join("")}</ol>
+ <h4>References</h4><ol class="frefs">${R.papers.map(p=>`<li>${p.isNew?'<b class="fnew">NEW</b> ':""}<a href="https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/" target="_blank" rel="noopener">${esc(p.title)}</a>. <i>${esc(p.journal)}</i> ${esc(p.year)}. <span class="au">${esc(p.type)}${p.cites?` · cited ${p.cites}×`:""}${typeof p.rel==="number"?` · relevance ${Math.round(p.rel*100)}%`:""}</span></li>`).join("")}</ol>
  </div></div>`;
 }
 function focusText(f){const R=f.result,V=R.review||{},L=[];const cite=r=>{const n=(Array.isArray(r)?r:[r]).filter(Boolean);return n.length?` [${n.join(",")}]`:""};
@@ -2253,7 +2261,7 @@ function ttsArticle(pmid){
 }
 function ttsBar(pmid){
  const on=TTS.pmid===pmid&&TTS.playing;
- return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${on&&useNV()&&!TTS.started?`<span class="au" style="font-size:13px">Preparing voice…</span>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"Summarise"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${pdfBtn(pmid)}${!S.nvHave&&!on&&st.engine!=="google"?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#2E4A86" data-act="nvdl">Try the natural voice</button>`:""}${on?vBtn():""}</div>`;
+ return `<div class="tts"><button data-act="tts" data-id="${pmid}">${on?(TTS.paused?"▶ Resume":"⏸ Pause"):"▶ Listen"}</button>${on?`<button data-act="ttsstop">■ Stop</button>`:""}${on&&useNV()&&!TTS.started?`<span class="au" style="font-size:13px">Preparing voice…</span>`:""}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"Summarise"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${st.cmpKey&&aiURL()?`<button data-act="cmpgo" data-id="${pmid}">⚖️ Compare AI</button>`:""}${pdfBtn(pmid)}${!S.nvHave&&!on&&st.engine!=="google"?`<button class="link" style="border:0;background:none;padding:0;font-weight:600;color:#2E4A86" data-act="nvdl">Try the natural voice</button>`:""}${on?vBtn():""}</div>`;
 }
 
 // ---------- share ----------
@@ -2448,10 +2456,11 @@ const absText=parts=>(parts||[]).filter(p=>!/regist|funding/i.test(p.l)).map(p=>
 async function aiCall(task,payload,ms){
  const u=aiURL();if(!u)throw Object.assign(new Error("setup"),{code:"setup"});
  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),ms||45000);
- let r;try{r=await fetch(`${u}/${task}`,{method:"POST",headers:{"Content-Type":"application/json","X-Device-Id":deviceId()},body:JSON.stringify(payload),signal:ctl.signal})}
+ const hd={"Content-Type":"application/json","X-Device-Id":deviceId()};if(payload&&payload.model&&st.cmpKey)hd["X-Compare-Key"]=st.cmpKey;
+ let r;try{r=await fetch(`${u}/${task}`,{method:"POST",headers:hd,body:JSON.stringify(payload),signal:ctl.signal})}
  catch(e){clearTimeout(tm);throw Object.assign(new Error("net"),{code:e.name==="AbortError"?"slow":"net"})}
  clearTimeout(tm);let j={};try{j=await r.json()}catch(e){}
- if(!r.ok||!j.ok){const c=j.error==="ratelimit"?"ratelimit-"+(j.scope==="minute"?"minute":"day"):(j.error||"ai");throw Object.assign(new Error(c),{code:c})}
+ if(!r.ok||!j.ok){const c=j.error==="ratelimit"?"ratelimit-"+(j.scope==="minute"?"minute":"day"):(j.error||"ai");throw Object.assign(new Error(c),{code:c,detail:typeof j.detail==="string"?j.detail.slice(0,200):""})}
  j.data=plainAI(j.data);j.used=j.used==="full"?"full":"abstract";
  return j;
 }
@@ -2467,9 +2476,9 @@ async function fullTextForAI(pmcid){
 }
 async function aiSummary(pmid){
  if(!st.aiSum)st.aiSum={};
- if(st.aiSum[pmid]){S.aiOpen[pmid]=!S.aiOpen[pmid];render();return}
+ if(st.aiSum[pmid]){S.aiOpen[pmid]=!S.aiOpen[pmid];render();if(S.aiOpen[pmid])aiShow(pmid);return}
  const it=findItem(pmid)||st.saved[pmid]||{},archived=!!st.saved[pmid];
- S.aiBusy[pmid]=true;S.aiOpen[pmid]=true;render();
+ S.aiBusy[pmid]=true;S.aiOpen[pmid]=true;render();aiShow(pmid);
  try{
   let parts=Array.isArray(S.abs[pmid])?S.abs[pmid]:null,P=null,full="";
   if(!parts||archived){P=await paperData(pmid);if(!parts&&P.parts.length){parts=P.parts;S.abs[pmid]=parts}}
@@ -2481,15 +2490,19 @@ async function aiSummary(pmid){
   const keys=Object.keys(st.aiSum);if(keys.length>300){keys.sort((a,b)=>st.aiSum[a].at-st.aiSum[b].at).slice(0,keys.length-300).forEach(k=>delete st.aiSum[k])}
   save()}
  catch(e){S.aiOpen[pmid]=false;toast(aiErr(e.code))}
- S.aiBusy[pmid]=false;S.aiBusyMsg="";render();
+ S.aiBusy[pmid]=false;S.aiBusyMsg="";render();if(S.aiOpen[pmid])aiShow(pmid);
 }
+function aiShow(pmid){requestAnimationFrame(()=>{const el=document.getElementById("ai-"+pmid);if(!el)return;
+ const hd=document.querySelector("header"),r=el.getBoundingClientRect(),min=(hd?hd.getBoundingClientRect().bottom:0)+8;
+ let d=0;if(r.top<min)d=r.top-min;else if(r.bottom>innerHeight-12)d=Math.min(r.top-min,r.bottom-innerHeight+12);
+ if(d)window.scrollBy({top:d,behavior:"smooth"})})}
 function aiBox(pmid){
  const has=!!aiURL(),s=(st.aiSum||{})[pmid];
  if(!has&&!s)return "";
- if(S.aiBusy[pmid])return `<div class="aibox"><span class="spin"></span>${esc(S.aiBusyMsg||"Writing an AI summary")}…</div>`;
+ if(S.aiBusy[pmid])return `<div class="aibox" id="ai-${pmid}"><span class="spin"></span>${esc(S.aiBusyMsg||"Writing an AI summary")}…</div>`;
  if(!s||!S.aiOpen[pmid])return "";
  const li=a=>(Array.isArray(a)?a:[]).filter(Boolean).map(x=>`<li>${esc(x)}</li>`).join("");
- return `<div class="aibox"><div class="aih">✨ AI summary${s.src==="pdf"?" of your PDF":s.src==="full"?" of the full text":""} <span>Check against the ${s.src==="abstract"||!s.src?"abstract":"paper"}</span></div>
+ return `<div class="aibox" id="ai-${pmid}"><div class="aih">✨ AI summary${s.src==="pdf"?" of your PDF":s.src==="full"?" of the full text":""} <span>Check against the ${s.src==="abstract"||!s.src?"abstract":"paper"}</span></div>
   ${s.bottomline?`<p class="aibl">${esc(s.bottomline)}</p>`:""}
   ${s.question?`<p><b>Question</b> ${esc(s.question)}</p>`:""}${s.design?`<p><b>Design</b> ${esc(s.design)}</p>`:""}
   ${li(s.results)?`<p><b>Key results</b></p><ul>${li(s.results)}</ul>`:""}${s.practice?`<p><b>For practice</b> ${esc(s.practice)}</p>`:""}
@@ -2781,6 +2794,75 @@ document.addEventListener("keydown",e=>{if(e.target.id==="q"&&e.key==="Enter"){c
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&st.last&&Date.now()-st.last>3*3600e3&&S.tab==="latest")load()});
 render();load();
 
+// ---------- Compare AI models: the owner's testing tool (needs the private phrase set in the AI service) ----------
+var CMP_MODELS=[["qwen","Qwen3.8 27B","Free"],["gptoss","GPT-OSS 120B","Free"],["llama","Llama 3.3 70B","Free"],["haiku","Claude Haiku 5.5","Paid"],["sonnet","Claude Sonnet 5.5","Paid"]];
+var CMP={pmid:"",models:["qwen","gptoss","haiku","sonnet"],tasks:["summary","slides"],n:"8",busy:"",res:{},run:0};
+document.head.insertAdjacentHTML("beforeend",`<style>.cmpc{border:1px solid #E2DAF7;border-radius:14px;padding:10px 12px;margin-top:12px;background:#fff}.cmph{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:16px}.cmptier{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;background:#E3F4EA;color:#1F6B3A}.cmptier.paid{background:#FCEBD9;color:#8A4B0F}.cmpmeta{font-size:13px;color:#5B6078;margin:8px 0 2px}.cmperr{color:#B3261E;font-size:14px;margin:8px 0 2px}.cmpc .aibox{margin:6px 0 4px}.cmprow{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}.cmprow .chip small{opacity:.7;font-size:12px}</style>`);
+function cmpGo(pmid){if(CMP.pmid!==pmid){CMP.res={};CMP.busy=""}CMP.pmid=pmid;S.modal={type:"cmp",pmid};renderModal()}
+function cmpErr(e){return e&&e.code==="compare"?"The comparison phrase in Settings doesn't match the COMPARE_KEY secret in Cloudflare.":(e&&e.detail)||aiErr(e&&e.code)}
+function cmpSum(s){const li=a=>(Array.isArray(a)?a:[]).filter(Boolean).map(x=>`<li>${esc(x)}</li>`).join("");
+ return `<div class="aibox">${s.bottomline?`<p class="aibl">${esc(s.bottomline)}</p>`:""}${s.question?`<p><b>Question</b> ${esc(s.question)}</p>`:""}${s.design?`<p><b>Design</b> ${esc(s.design)}</p>`:""}${li(s.results)?`<p><b>Key results</b></p><ul>${li(s.results)}</ul>`:""}${s.practice?`<p><b>For practice</b> ${esc(s.practice)}</p>`:""}${li(s.limitations)?`<p><b>Limitations</b></p><ul>${li(s.limitations)}</ul>`:""}</div>`}
+function cmpMeta(m){if(!m)return "";const t=m.ms?`${Math.max(1,Math.round(m.ms/1000))} s`:"",c=m.cost;let k="";
+ if(c&&c.free)k=`free (${c.neurons.toLocaleString()} of the 10,000 daily units, ${(c.neurons/100).toFixed(1)}%)`;
+ else if(c){const p=c.usd*76;k=`$${c.usd.toFixed(4)}, about ${p<0.01?"0.01":p<1?p.toFixed(2):p.toFixed(1)}p`}
+ const u=m.usage?`${(m.usage.in||0).toLocaleString()} in / ${(m.usage.out||0).toLocaleString()} out tokens`:"";
+ return [t,k,u].filter(Boolean).join(" · ")}
+function cmpResults(){const rows=CMP_MODELS.filter(m=>CMP.res[m[0]]);if(!rows.length)return "";
+ return `<h4 style="margin:16px 0 0">Results</h4>`+rows.map(([k,l,tier])=>{const R=CMP.res[k];
+  return `<div class="cmpc"><div class="cmph"><b>${l}</b><span class="cmptier ${tier==="Paid"?"paid":""}">${tier}</span></div>
+  ${R.sum?`<p class="cmpmeta">Summary${R.sumMeta&&R.sumMeta.used==="full"?" (full text)":""}: ${cmpMeta(R.sumMeta)}</p>${cmpSum(R.sum)}`:R.sumErr?`<p class="cmperr">Summary failed: ${esc(R.sumErr)}</p>`:""}
+  ${R.file?`<p class="cmpmeta">Slides (${R.deckMeta.n}): ${cmpMeta(R.deckMeta)}</p><div class="pk"><a href="#" data-act="cmpfile" data-v="${k}">Open slides</a><a href="#" class="alt" data-act="cmpsave" data-v="${k}">Save or share</a></div>`:R.deckErr?`<p class="cmperr">Slides failed: ${esc(R.deckErr)}</p>`:R.busy?`<p class="cmpmeta"><span class="spin"></span>${esc(R.busy)}…</p>`:""}</div>`}).join("")}
+function cmpSheet(){const it=findItem(CMP.pmid)||st.saved[CMP.pmid]||{},chip=(on,act,v,l)=>`<button class="chip ${on?"on":""}" data-act="${act}" data-v="${v}" aria-pressed="${on}">${l}</button>`,ran=Object.keys(CMP.res).length;
+ return `<div class="sheet" role="dialog" aria-label="Compare AI models"><h3>⚖️ Compare AI models</h3><p class="au" style="margin-bottom:8px">${esc(it.title||"")}</p>
+ ${CMP.busy?`<div class="aibox"><span class="spin"></span>${esc(CMP.busy)}…</div><div class="pk"><a href="#" class="alt" data-act="cmpstop">Stop</a></div>`:`
+ <p class="help" style="margin:4px 0 0">Models</p><div class="cmprow">${CMP_MODELS.map(m=>chip(CMP.models.includes(m[0]),"cmpm",m[0],`${m[1]} <small>${m[2]}</small>`)).join("")}</div>
+ <p class="help" style="margin:0">Make</p><div class="cmprow">${chip(CMP.tasks.includes("summary"),"cmpt","summary","Summary")}${chip(CMP.tasks.includes("slides"),"cmpt","slides","Slides")}</div>
+ ${CMP.tasks.includes("slides")?`<label class="set"><span>Slides per deck</span><select id="cmpn">${["6","8","10","12"].map(v=>`<option ${CMP.n===v?"selected":""}>${v}</option>`).join("")}</select></label>`:""}
+ <p class="note">Every model gets the same text: the abstract, or the open-access full paper when there is one. Decks use your chosen slide style. Claude is paid from your Anthropic credit, roughly 0.05p (Haiku) to 1p (Sonnet) per summary and a little more per deck. Comparisons don't change your saved summaries.</p>
+ <div class="pk"><a href="#" data-act="cmprun">${ran?"Run again":"Run comparison"}</a><a href="#" class="alt" data-act="mclose">Close</a></div>`}
+ ${cmpResults()}</div>`}
+async function cmpRun(){
+ const pmid=CMP.pmid,g=++CMP.run,todo=CMP_MODELS.filter(m=>CMP.models.includes(m[0]));
+ if(!todo.length||!CMP.tasks.length){toast("Choose at least one model and one thing to make.");return}
+ CMP.res={};CMP.busy="Fetching the paper";renderModal();
+ const it=findItem(pmid)||st.saved[pmid]||{};let P=null,full="";
+ try{P=await paperData(pmid)}catch(e){}
+ const parts=P&&P.parts&&P.parts.length?P.parts:(Array.isArray(S.abs[pmid])?S.abs[pmid]:[]);
+ if(myPdf[pmid])full=myPdf[pmid].text;else if(P&&P.pmcid&&P.oa){CMP.busy="Reading the open-access full paper";renderModal();try{full=await fullTextForAI(P.pmcid)}catch(e){}}
+ if(!parts.length&&!full){CMP.busy="";renderModal();toast("There's no abstract to work from for this paper.");return}
+ for(const [k,l] of todo){
+  if(g!==CMP.run)return;
+  const R=CMP.res[k]={};
+  if(CMP.tasks.includes("summary")){CMP.busy=`${l}: writing the summary`;renderModal();
+   try{const j=await aiCall("summary",{title:it.title||(P&&P.title)||"",abstract:absText(parts),fulltext:full,model:k},150000);R.sum=j.data;R.sumMeta={ms:j.ms,cost:j.cost,usage:j.usage,used:j.used}}catch(e){R.sumErr=cmpErr(e)}}
+  if(g!==CMP.run)return;
+  if(CMP.tasks.includes("slides")){CMP.busy=`${l}: designing the slides`;renderModal();
+   try{const d=await makeDeck(pmid,+CMP.n,null,{model:k,tag:l});R.file=d.file;R.deckMeta=d.meta}catch(e){R.deckErr=cmpErr(e)}}
+ }
+ if(g!==CMP.run)return;
+ CMP.busy="";renderModal();toast("Comparison finished.");
+}
+async function cmpSave(f){if(!f)return;
+ if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:f.name});return}catch(e){if(e&&e.name==="AbortError")return}}
+ const a=document.createElement("a");a.href=URL.createObjectURL(f);a.download=f.name;a.target="_blank";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000)}
+{const _rm=renderModal;renderModal=function(){const m=S.modal;if(!(m&&m.type==="cmp"))return _rm.apply(this,arguments);
+ const el=document.getElementById("modal");if(!el)return;const sh=el.querySelector(".sheet"),y=sh&&el._cmp?sh.scrollTop:0;
+ el.className="ov";el.innerHTML=cmpSheet();el._cmp=1;el._v=null;const nsh=el.querySelector(".sheet");if(nsh&&y)nsh.scrollTop=y}}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act;
+ const take=()=>{e.preventDefault();e.stopImmediatePropagation()};
+ if(a==="cmpgo"){take();cmpGo(b.dataset.id)}
+ else if(a==="cmpm"){take();const v=b.dataset.v;CMP.models=CMP.models.includes(v)?CMP.models.filter(x=>x!==v):CMP.models.concat(v);renderModal()}
+ else if(a==="cmpt"){take();const v=b.dataset.v;CMP.tasks=CMP.tasks.includes(v)?CMP.tasks.filter(x=>x!==v):CMP.tasks.concat(v);renderModal()}
+ else if(a==="cmprun"){take();cmpRun()}
+ else if(a==="cmpstop"){take();CMP.run++;CMP.busy="";renderModal()}
+ else if(a==="cmpfile"){take();const R=CMP.res[b.dataset.v];if(R&&R.file)viewOpen({kind:"slides",title:R.file.name,file:R.file})}
+ else if(a==="cmpsave"){take();const R=CMP.res[b.dataset.v];if(R)cmpSave(R.file)}
+ else if(a==="mclose"&&S.modal&&S.modal.type==="cmp"){CMP.run++;CMP.busy=""}
+},true);
+document.addEventListener("change",e=>{const el=e.target;
+ if(el.id==="cmpn"){CMP.n=el.value}
+ else if(el.id==="cmpkey"){st.cmpKey=el.value.trim();save();render()}
+},true);
 </script>
 </body>
 </html>
