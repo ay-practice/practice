@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-/ZfehFSLoRhvSAjEvxIG9IYJrF82bD4JIqgZ06oXqgM=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://cpd-voice.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-s1dmkYEGvsRPJNFJj5llWYoOnjRrHghc4wnx9u59TAc=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://cpd-voice.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -403,24 +403,28 @@ header .libcount{top:-7px;right:-8px;min-width:15px;height:15px;padding:0 4px;bo
 </style>
 <style id="p1">
 header{background:linear-gradient(135deg,#1C2541,#33427A)!important;box-shadow:0 2px 10px rgba(10,20,40,.25)!important}
-header .hin{padding-bottom:8px!important}
-header .top{gap:8px;align-items:center}header .ttl{min-width:0}header .ttl h1{font-size:19px!important;white-space:nowrap;letter-spacing:0}
-header .hright{gap:4px!important;flex:0 0 auto;display:flex;align-items:center}
-header .hicon{width:26px!important;height:26px!important;border-radius:8px!important}
-header .hicon svg{width:15px;height:15px}
-header .hicon.ic-vid{background:none!important;border:0!important;box-shadow:none!important;width:27px!important}
-header .hicon.ic-vid svg{width:26px;height:18px}
+header .hin{padding-bottom:3px!important}
+header .top{gap:8px;align-items:center}header .ttl{min-width:0}header .ttl h1{font-size:min(21px,5.38vw)!important;white-space:nowrap;letter-spacing:-.1px}
+header .hin{padding-left:13px!important;padding-right:13px!important}
+header .top{gap:6px!important}
+.navband .hin{padding-top:5px!important}
+@media (max-width:370px){header .ttl h1{font-size:18.3px!important}}
+header .hright{gap:5px!important;flex:0 0 auto;display:flex;align-items:center}
+header .hicon{width:27px!important;height:27px!important;border-radius:8.5px!important}
+header .hicon svg{width:16px;height:16px}
+header .hicon.ic-vid{background:none!important;border:0!important;box-shadow:none!important;width:28px!important}
+header .hicon.ic-vid svg{width:27px;height:19px}
 header .hicon.ic-lib svg{color:#FFC25C}header .hicon.ic-prof svg{color:#7FE3D8}header .hicon.ic-set svg{color:#D9DEEC}
 header .hicon.ic-cal{display:flex!important;flex-direction:column;align-items:stretch;justify-content:flex-start;padding:0!important;overflow:hidden;background:#fff!important;border:0!important}
-.ic-cal .calm{background:#E5392F;color:#fff;font:800 6.5px/1 "Avenir Next",system-ui,sans-serif;letter-spacing:.4px;text-align:center;padding:2px 0 1.5px}
-.ic-cal .cald{color:#1C2541;font:700 11.5px/1 "Avenir Next",system-ui,sans-serif;text-align:center;padding-top:1.5px}
-.navband{background:linear-gradient(135deg,#1C2541,#33427A);padding:2px 0 9px;margin-bottom:4px;box-shadow:0 8px 24px rgba(10,20,40,.14)}
+.ic-cal .calm{background:#E5392F;color:#fff;font:800 7px/1 "Avenir Next",system-ui,sans-serif;letter-spacing:.4px;text-align:center;padding:2px 0 1.5px}
+.ic-cal .cald{color:#1C2541;font:700 12px/1 "Avenir Next",system-ui,sans-serif;text-align:center;padding-top:1.5px}
+.navband{background:linear-gradient(135deg,#1C2541,#33427A);padding:0 0 9px;margin-bottom:4px;box-shadow:0 8px 24px rgba(10,20,40,.14)}
 .navband .tabs.tiles{display:grid!important;grid-template-columns:repeat(5,1fr);gap:6px!important;background:none!important;padding:0!important;margin:0!important;border-radius:0!important;border:0!important}
-.navband .tabs.tiles button{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:45px;padding:4px 2px!important;border-radius:12px!important;background:rgba(255,255,255,.10)!important;border:1px solid rgba(255,255,255,.18)!important;color:#E6EAF6!important;font-size:10px!important;font-weight:600!important;line-height:1.1;white-space:normal!important;text-align:center;box-shadow:none!important}
-.navband svg{width:16px;height:16px;flex:0 0 auto}
+.navband .tabs.tiles button{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:47px;padding:4px 2px!important;border-radius:12px!important;background:rgba(255,255,255,.10)!important;border:1px solid rgba(255,255,255,.18)!important;color:#E6EAF6!important;font-size:10.5px!important;font-weight:600!important;line-height:1.1;white-space:normal!important;text-align:center;box-shadow:none!important}
+.navband svg{width:17px;height:17px;flex:0 0 auto}
 .navband .tabs.tiles button.on{background:#fff!important;color:#1C2541!important;border-color:#fff!important;box-shadow:0 4px 14px rgba(0,0,0,.28)!important}
 .navband .tools{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:6px}
-.navband .tools button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:45px;padding:4px 2px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.10);color:#E6EAF6;font-size:10px;font-weight:600;line-height:1.1;font-family:inherit;text-align:center}
+.navband .tools button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:47px;padding:4px 2px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.10);color:#E6EAF6;font-size:10.5px;font-weight:600;line-height:1.1;font-family:inherit;text-align:center}
 .tick{position:relative;margin:-8px -16px 12px;height:44px;display:flex;align-items:center;overflow:hidden;background:linear-gradient(90deg,#7C2A3E 0%,#5B2B70 50%,#283770 100%);border-top:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(0,0,0,.22);box-shadow:inset 0 0 14px rgba(0,0,0,.32)}
 .tick::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) .9px,transparent 1.3px);background-size:4px 4px;pointer-events:none;z-index:2}
 .tlab{position:relative;z-index:4;flex:0 0 auto;display:flex;align-items:center;height:100%;padding:0 8px 0 10px;background:rgba(40,8,24,.35);border-right:1px solid rgba(255,255,255,.16);box-shadow:5px 0 10px rgba(0,0,0,.25)}
@@ -431,7 +435,8 @@ header .hicon.ic-cal{display:flex!important;flex-direction:column;align-items:st
 @media (prefers-reduced-motion:reduce){.ecgr{animation:none}}
 .tvp{position:relative;flex:1;overflow:hidden;height:100%;display:flex;align-items:center}
 .tvp::after{content:"";position:absolute;right:0;top:0;bottom:0;width:22px;background:linear-gradient(90deg,transparent,#283770);pointer-events:none;z-index:3}
-.ttrack{display:flex;white-space:nowrap;animation:tickmove 60s linear infinite;will-change:transform}
+.ttrack{display:flex;flex:0 0 auto;white-space:nowrap;will-change:transform}
+.tvp::before{content:"";position:absolute;left:0;top:0;bottom:0;width:16px;background:linear-gradient(90deg,#7C2A3E,transparent);pointer-events:none;z-index:3}
 .tick.hold .ttrack{animation-play-state:paused}
 .ti{display:inline-flex;align-items:center;gap:8px;padding:0 4px 0 18px;color:#F5F7FF;text-decoration:none;font:600 14.5px/1 "Avenir Next","Segoe UI",system-ui,sans-serif;letter-spacing:.15px;text-shadow:0 0 6px rgba(255,255,255,.22)}
 .ti .tg{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:4px 7px;border-radius:5px;background:var(--c);color:#fff;text-shadow:none}
@@ -443,6 +448,38 @@ header .hicon.ic-cal{display:flex!important;flex-direction:column;align-items:st
 .prepl{font-size:13px;color:#3F4A6B;margin:8px 0 0;line-height:1.45}.prepl small{color:var(--muted)}.prepl .spin{width:12px;height:12px;vertical-align:-1px}.prepl .pdone{color:#2C7A4B}.prepl .link{padding:0;font-size:13px}
 .absend,.aiend{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:10px}.aiend{justify-content:space-between;font-size:12.5px;color:var(--muted)}
 .absend button,.aiend button{white-space:nowrap;flex:0 0 auto;font-size:14px;font-weight:600;padding:7px 14px;border-radius:99px;border:1px solid #D3D8E4;background:#fff;color:#2E4A86}
+.sw-pastel{background:linear-gradient(90deg,#DCE4F5 50%,#F6C9C9 50%)}.sw-blue{background:#0B2E59}.sw-custom{background:conic-gradient(#E5392F,#F2B33D,#3FA36B,#3E6EA8,#8A3C8F,#E5392F)}
+.navband .tools button.tbusy{position:relative}.navband .tools button.tbusy::after{content:"";position:absolute;top:5px;right:6px;width:7px;height:7px;border-radius:50%;background:#FFC25C;box-shadow:0 0 6px #FFC25C;animation:tpulse 1.2s ease-in-out infinite}
+@keyframes tpulse{50%{opacity:.35}}
+.cmpl{padding:0;margin-left:8px;font-size:15px;font-weight:700;color:#4B3C8F;text-decoration:none}
+.tl{display:block;margin-top:12px}.tl .search,.tl select,.tl textarea{display:block;width:100%;margin-top:4px}
+.tl select{font-size:16px;padding:11px 12px;border-radius:14px;border:1px solid #D3D8E4;background:#fff}
+.tl textarea{font:inherit;font-size:16px;resize:vertical;min-height:72px;padding:11px 12px;border-radius:14px;border:1px solid #D3D8E4;background:#fff}
+.pii{font-size:13px;color:#6B4B12;background:#FFF6E3;border:1px solid #F3DDAE;border-radius:12px;padding:8px 11px;margin:14px 0 4px;line-height:1.4}
+.tplbtn{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:8px 13px;border-radius:99px;border:1px dashed #9AA3BD;color:#2E4A86;font-weight:600;font-size:14px;cursor:pointer}.tplbtn small{color:var(--muted);font-weight:400}
+.thead{display:flex;justify-content:space-between;align-items:center;gap:8px;min-height:34px}.thead h3{margin:0;font-size:19px}.tclose{flex:0 0 auto;padding:7px 15px;border-radius:99px;border:1px solid #D3D8E4;background:#fff;color:#2E4A86;font-weight:600;font-size:14px}.thead .link{padding:0;font-size:15px;font-weight:600;text-decoration:none}
+.tcard{padding:12px 14px;margin-top:10px}.tct{font-weight:700;font-size:16px;line-height:1.3}.tst{font-size:13.5px;margin-top:6px;color:#3F4A6B}.tst .spin{width:12px;height:12px;vertical-align:-1px}.tst.ok{color:#2C7A4B}.tst.err{color:#B3261E}.tst .link{padding:0;font-size:13.5px}
+.tby{font-size:12.5px;margin:6px 0 4px}.pnote{font-size:13.5px;color:#3F4A6B;margin:3px 0 2px}.tout li{margin:6px 0}
+.tans{background:linear-gradient(135deg,#F3F6FD,#FBF1F3);border:1px solid #E2E7F3;border-radius:14px;padding:11px 13px;margin:10px 0}.tans p{margin:6px 0;line-height:1.45}.tah{font-weight:800;display:flex;align-items:center;gap:8px}
+.cert{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;padding:3px 8px;border-radius:99px;background:#E3E8F5;color:#2E3A6B}.cert.hi{background:#DDF2E5;color:#1F6B3A}.cert.mod{background:#E3ECFA;color:#1F4E8C}.cert.low{background:#FCEBD9;color:#8A4B0F}.cert.vlow{background:#FBE0E0;color:#9B1C1C}
+.xpgo{display:flex;align-items:center;gap:12px;width:100%;margin:10px 0 4px;padding:12px 14px;border:0;border-radius:16px;background:linear-gradient(120deg,#7C2A3E,#5B2B70 55%,#283770);color:#fff;text-align:left;box-shadow:0 8px 20px rgba(60,30,80,.25)}
+.xpgo span{flex:0 0 auto;width:40px;height:40px;border-radius:50%;background:#fff;color:#7C2A3E;display:flex;align-items:center;justify-content:center;font-size:17px;padding-left:3px}.xpgo b{display:block;font-size:16.5px}.xpgo small{display:block;opacity:.85;font-size:12.5px;margin-top:2px;flex-basis:100%}
+.xpgo{flex-wrap:wrap}.xpgo b{flex:1}
+#modal.xpov{align-items:stretch!important;justify-content:stretch!important;background:#140F24!important}
+.xp{position:fixed;inset:0;display:flex;flex-direction:column;padding:calc(14px + env(safe-area-inset-top)) 20px calc(16px + env(safe-area-inset-bottom));background:radial-gradient(120% 80% at 80% 0%,#5B2B70 0%,transparent 60%),radial-gradient(120% 90% at 0% 100%,#7C2A3E 0%,transparent 55%),linear-gradient(160deg,#1C2541,#140F24);color:#fff;z-index:60}
+.xpbar{display:flex;gap:5px}.xpseg{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.22);overflow:hidden}.xpseg i{display:block;height:100%;width:0;background:#fff}.xpseg.done i{width:100%}
+.xpstage{flex:1;display:flex;flex-direction:column;justify-content:center;animation:xpin .6s ease-out}
+@keyframes xpin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.xpk{font:700 12px/1 "Avenir Next",system-ui,sans-serif;letter-spacing:1.4px;text-transform:uppercase;color:#FFB8C6;margin-bottom:12px}
+.xpt{font:700 30px/1.15 Georgia,"Times New Roman",serif;margin:0 0 16px;color:#fff}
+.xpbig{align-self:flex-start;font:800 40px/1 "Avenir Next",system-ui,sans-serif;padding:12px 18px;border-radius:16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);margin-bottom:16px;animation:xppop .7s .2s both cubic-bezier(.2,1.4,.4,1)}
+@keyframes xppop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+.xpp{list-style:none;padding:0;margin:0}.xpp li{position:relative;padding:8px 0 8px 22px;font-size:19px;line-height:1.35;opacity:0;animation:xpli .55s ease-out forwards}.xpp li::before{content:"";position:absolute;left:2px;top:17px;width:9px;height:9px;border-radius:50%;background:#FF8FA6}
+@keyframes xpli{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+.xpcap{font-size:14px;line-height:1.45;color:rgba(255,255,255,.78);margin:8px 0 14px;max-height:30vh;overflow:auto}.xpcap .spin{width:12px;height:12px;vertical-align:-1px;margin-right:6px}
+.xpc{display:flex;justify-content:center;align-items:center;gap:18px}.xpc button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff;font-size:18px}.xpc .xpmain{width:62px;height:62px;background:#fff;color:#5B2B70;font-size:22px}
+.xpans{font-size:18px;line-height:1.45;color:#fff}.xpbtns{display:flex;flex-direction:column;gap:10px;margin-top:18px}.xpbtns button{padding:13px;border-radius:14px;border:0;background:#fff;color:#2E2450;font-weight:700;font-size:16px}.xpbtns .alt{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3)}
+@media (prefers-reduced-motion:reduce){.xpstage,.xpp li,.xpbig{animation:none;opacity:1}}
 .libhint{font-size:14px;color:var(--muted);margin:10px 0 2px;line-height:1.4}
 .libfull{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(120,120,160,.15);font-size:14.5px}.libfull span{flex:1}
 .fg2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}.fg2 label{display:block}
@@ -463,7 +500,7 @@ header .hicon.ic-cal{display:flex!important;flex-direction:column;align-items:st
 <script>
 "use strict";try{if(!localStorage.getItem("journal-reader-beta")&&localStorage.getItem("journal-reader-v1"))localStorage.setItem("journal-reader-beta",localStorage.getItem("journal-reader-v1"))}catch(e){}
 
-const KEY="journal-reader-beta",APPVER="Beta, 25 Oct 2026 (b7)";
+const KEY="journal-reader-beta",APPVER="Beta, 25 Oct 2026 (b8)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -715,7 +752,7 @@ function card(it){
    <button class="arch ${sv?"on":""}" data-act="star" data-id="${it.pmid}" aria-pressed="${sv}">${sv?"Saved":"Archive"}</button>
   </div>
   ${S.tab==="saved"&&sv?prepLine(it.pmid):""}
-  ${S.tab==="saved"&&sv&&!S.open[it.pmid]&&(aiURL()||(st.aiSum||{})[it.pmid])?`<div style="margin-top:8px">${aiBox(it.pmid)||`<button class="link" style="color:#4B3C8F;text-decoration:none;font-weight:700;padding:0" data-act="aisum" data-id="${it.pmid}">✨ ${(st.aiSum||{})[it.pmid]&&(st.aiSum[it.pmid].detail||!aiURL())?"Show summary":"Summarise"}</button> ${pdfBtn(it.pmid)}`}</div>`:""}
+  ${S.tab==="saved"&&sv&&!S.open[it.pmid]&&(aiURL()||(st.aiSum||{})[it.pmid])?`<div style="margin-top:8px">${aiBox(it.pmid)||`<button class="link" style="color:#4B3C8F;text-decoration:none;font-weight:700;padding:0" data-act="aisum" data-id="${it.pmid}">✨ ${(st.aiSum||{})[it.pmid]&&(st.aiSum[it.pmid].detail||!aiURL())?"Show summary":"Summarise"}</button> ${pdfBtn(it.pmid)}${st.cmpKey&&aiURL()?` <button class="link cmpl" data-act="cmpgo" data-id="${it.pmid}">⚖️ Compare AI</button>`:""}`}</div>`:""}
   ${S.open[it.pmid]?`<div class="abs">${ab==="loading"?`<span class="spin"></span>Loading abstract`:ab==="none"?`<span class="au">No abstract on PubMed. Use Full text.</span>`:ab==="error"?`<span class="au">Couldn't load the abstract. Check your connection.</span>`:ab.map(p=>`<p>${p.l?`<b>${esc(p.l)}</b> `:""}${esc(p.t)}</p>`).join("")+(S.tab==="saved"?ttsBar(it.pmid)+aiBox(it.pmid):libHint(it.pmid))+absEnd(it.pmid)}</div>`:""}
  </article>`;
 }
@@ -1424,7 +1461,7 @@ const LAYOUTS=["bullets","bignumber","comparison","bar","flow","takehome","figur
 async function makeDeck(pmid,count,topic,opt){
  const it=topic?{}:(findItem(pmid)||st.saved[pmid]||{});
  S.slideBusy=topic?"Preparing your topic slides":"Fetching the paper";renderModal();
- const P=topic?{title:topic.title,aus:[st.myName||""].filter(Boolean),journal:"Evidence review",iso:"Evidence review",year:new Date().getFullYear(),parts:[],pmcid:"",oa:false,doi:"",vol:"",iss:"",pages:""}:await paperData(pmid);if(!P.title)P.title=it.title||"Paper";
+ const P=topic?{title:topic.title,aus:topic.aus||[st.myName||""].filter(Boolean),journal:topic.journal||"Evidence review",iso:topic.journal||"Evidence review",year:topic.year!==undefined?topic.year:new Date().getFullYear(),parts:[],pmcid:"",oa:false,doi:"",vol:"",iss:"",pages:""}:await paperData(pmid);if(!P.title)P.title=it.title||"Paper";
  if(!P.aus.length&&it.authors)P.aus=it.authors.replace(/, et al\.$/,"").split(", ");
  let full={text:"",figs:[]};const mine=topic?null:myPdf[pmid];
  if(topic)full={text:topic.text,figs:[]};
@@ -1434,7 +1471,7 @@ async function makeDeck(pmid,count,topic,opt){
  const useFigs=!!(S.slideFigs&&full.figs.length),nAI=Math.max(2,count-2);
  S.slideBusy="The AI is designing your slides";renderModal();
  let d,cm={};
- try{const lib=!opt&&!topic&&!!st.saved[pmid];const j=await aiCall("slides",{...(opt?{model:opt.model}:{}),...(lib?{lib:1,wait:110}:{}),mode:topic?"topic":"",title:P.title,abstract:absText(P.parts),fulltext:full.text,redraw:!!mine||!useFigs&&!!full.text,n:nAI,figures:useFigs?full.figs.map(f=>({label:f.label,caption:f.cap.slice(0,300)})):[]},opt?280000:lib?150000:undefined);d=j.data;cm=j}
+ if(topic&&topic.slides)d={slides:topic.slides};else try{const lib=!(opt&&opt.model)&&(!!topic||!!st.saved[pmid]);const j=await aiCall("slides",{...(opt?{model:opt.model}:{}),...(lib?{lib:1,wait:110}:{}),mode:topic?"topic":"",title:P.title,abstract:absText(P.parts),fulltext:full.text,redraw:!!mine||!useFigs&&!!full.text,n:nAI,figures:useFigs?full.figs.map(f=>({label:f.label,caption:f.cap.slice(0,300)})):[]},opt?280000:lib?150000:undefined);d=j.data;cm=j}
  catch(e){if(opt)throw e;if(topic){S.slideBusy="";S.modal=null;renderModal();toast(aiErr(e.code));return}toast(aiErr(e.code)+" Using the built-in slide writer instead.");return makeSlides(pmid,count)}
  let slides=(d.slides||[]).filter(x=>x&&typeof x==="object").map(x=>({...x,layout:LAYOUTS.includes(x.layout)?x.layout:"bullets"}));
  if(!useFigs)slides=slides.filter(x=>x.layout!=="figure");
@@ -1444,12 +1481,12 @@ async function makeDeck(pmid,count,topic,opt){
  if(!slides.length){toast("The AI didn't return slides. Using the built-in slide writer instead.");return makeSlides(pmid,count)}
  S.slideBusy=useFigs?"Adding the paper's figures":"Building slides";renderModal();
  await loadJS(PPTX_SRC);
- const pptx=deckTrack(new PptxGenJS());pptx.layout="LAYOUT_WIDE";const T=deckStyle(DECK,st.slideStyle||"classic"),F="Calibri",W=13.333;
+ const pptx=deckTrack(new PptxGenJS());pptx.layout="LAYOUT_WIDE";const T=deckStyle(DECK,(topic&&topic.style)||st.slideStyle||"classic"),F=T.font||"Calibri",W=13.333;
  const surname=n=>{n=String(n||"").trim();return /^[A-Za-z'\-]+(?:\s[A-Za-z'\-]+)*\s[A-Z]{1,3}$/.test(n)?n.replace(/\s[A-Z]{1,3}$/,""):n.split(/\s+/).pop()};
  const short=`${surname(P.aus[0])}${P.aus.length>1?" et al":""}, ${P.iso||P.journal} ${P.year}`.replace(/^, /,"");
  const cc=/^CC/.test(P.license||""),lic=cc?P.license.replace(/^CC[ -]?/,"CC ").replace(/-/g," ")+" licence":"";
  let num=1;
- const frame=(title,col)=>{const s=pptx.addSlide();num++;s.background={color:T.bg};const c=col||T.acc,tt=String(title||"").slice(0,90);
+ const frame=(title,col)=>{const s=pptx.addSlide();num++;s.background=T.bgImg?{data:T.bgImg}:{color:T.bg};(T.logos||[]).forEach(l=>s.addImage({data:l.data,x:l.x,y:l.y,w:l.w,h:l.h}));const c=col||T.acc,tt=String(title||"").slice(0,90);
   if(T.sy==="bold"){s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:W,h:1.22,fill:{color:T.mid},line:{color:T.mid}});s.addShape(pptx.ShapeType.rect,{x:0,y:1.22,w:W,h:0.07,fill:{color:c},line:{color:c}});s.addText(tt,{x:0.6,y:0.18,w:12.1,h:0.9,fontFace:F,fontSize:30,bold:true,color:"FFFFFF",fit:"shrink",valign:"middle"})}
   else if(T.sy==="minimal"){s.addText(tt,{x:0.6,y:0.3,w:12.1,h:0.9,fontFace:F,fontSize:32,bold:true,color:T.dark,fit:"shrink"});s.addShape(pptx.ShapeType.line,{x:0.62,y:1.22,w:12.1,h:0,line:{color:"E3E6EE",width:1}});s.addShape(pptx.ShapeType.line,{x:0.62,y:1.22,w:0.9,h:0,line:{color:c,width:3}})}
   else{s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:W,h:0.12,fill:{color:c},line:{color:c}});s.addText(tt,{x:0.6,y:0.32,w:12.1,h:0.85,fontFace:F,fontSize:30,bold:true,color:T.dark,fit:"shrink"});s.addShape(pptx.ShapeType.line,{x:0.62,y:1.2,w:1.2,h:0,line:{color:c,width:3}})}
@@ -1458,7 +1495,7 @@ async function makeDeck(pmid,count,topic,opt){
  const bulletBox=(s,list,o)=>{const L=(list||[]).map(String).filter(Boolean).slice(0,6);if(!L.length)return;const len=L.join(" ").length;
   s.addText(L.map(b=>({text:b,options:{bullet:{indent:20},paraSpaceAfter:12}})),{x:o.x,y:o.y,w:o.w,h:o.h,fontFace:F,fontSize:o.fs||(len>480?17:len>330?19:22),color:T.text,valign:"top",fit:"shrink"})};
  // title slide
- let s=pptx.addSlide();s.background={color:T.titleBg};
+ let s=pptx.addSlide();s.background=T.titleImg?{data:T.titleImg}:{color:T.titleBg};(T.logos||[]).forEach(l=>s.addImage({data:l.data,x:l.x,y:l.y,w:l.w,h:l.h}));
  if(T.sy==="minimal")s.addShape(pptx.ShapeType.rect,{x:0.6,y:1.45,w:0.12,h:3.0,fill:{color:T.acc},line:{color:T.acc}});
  else if(T.sy==="bold"){s.addShape(pptx.ShapeType.ellipse,{x:9.2,y:-2.4,w:6.8,h:6.8,fill:{color:"FFFFFF",transparency:86},line:{color:"FFFFFF",transparency:100}});s.addShape(pptx.ShapeType.ellipse,{x:-1.9,y:5.0,w:4.2,h:4.2,fill:{color:"FFFFFF",transparency:90},line:{color:"FFFFFF",transparency:100}})}
  else{s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:0.28,h:7.5,fill:{color:T.acc},line:{color:T.acc}});s.addShape(pptx.ShapeType.ellipse,{x:10.6,y:-1.4,w:4.2,h:4.2,fill:{color:T.mid,transparency:35},line:{color:T.mid,transparency:100}})}
@@ -1519,7 +1556,7 @@ async function makeDeck(pmid,count,topic,opt){
   // bullets (default)
   s=frame(x.title,T.acc2);bulletBox(s,x.bullets||x.points||[],{x:0.7,y:1.5,w:11.9,h:5.3});notes(s,x);
  }
- for(const ch of (S.charts||[]))addChartSlide(pptx,ch,short,T.dark,T.acc2,T.grey,F);
+ for(const ch of (topic?[]:(S.charts||[])))addChartSlide(pptx,ch,short,T.dark,T.acc2,T.grey,F);
  if(useFigs)figNote=nFig?(cc?`${nFig} key ${nFig===1?"figure":"figures"} included, with credit lines.`:"Figures added as captions with links, because the licence doesn't allow copying the images."):"";
  else if(S.slideFigs&&!mine)figNote=P.pmcid&&P.oa?"No figures found in the full paper.":"Not open access, so the paper's figures can't be included.";
  if(nPdf)figNote=`${nPdf} ${nPdf===1?"figure":"figures"} from your PDF added, with an acknowledgement.`;
@@ -1949,6 +1986,7 @@ const profileLine=()=>profileDone()?`<div class="card prof-ok"><span>Exporting a
 function helpSheet(){return `<div class="sheet big help" role="dialog" aria-label="Help"><h3>How to use ${APPTITLE}</h3>
  <video id="helpvid" src="${HELPVIDEO}" controls playsinline preload="metadata" poster=""></video>
  <div class="tips">
+  <p><b>Clinical topic, Clinical question and Presentations</b> (the second row of tiles): keep up to 3 of each. The app plans a PubMed search, picks the best papers and writes a referenced review, a narrated answer or a whole talk with slides. They carry on in the background while the app is open; a yellow dot on the tile shows one is being built.</p>
   <p><b>Library:</b> up to 10 papers. Each one is prepared in the background: a detailed summary (from the full paper when it's free), Listen and a two-voice Discussion, saved on your phone.</p>
   <p><b>Articles:</b> pick a topic or journal, or search. Tap <b>Abstract</b> to read it, and <b>Archive</b> to keep it in your Library (up to 10 papers), where you can <b>✨ Summarise</b>, <b>▶ Listen</b>, hear a <b>🎧 Discussion</b> or make slides.</p>
   <p><b>Saving and CPD:</b> <b>Archive</b> keeps a paper in the Library (the book icon). <b>CPD</b> logs the time with your reflection; use the microphone to dictate.</p>
@@ -3342,6 +3380,343 @@ cmpResults=function(){const rows=CMP_MODELS.filter(m=>CMP.res[m[0]]);if(!rows.le
   ${R.sum?`<p class="cmpmeta">Summary${R.sumMeta&&R.sumMeta.used==="full"?" (full text)":""}: ${cmpMeta(R.sumMeta)}</p>${cmpSum(R.sum)}`:R.sumErr?`<p class="cmperr">Summary failed: ${esc(R.sumErr)}</p>`:""}
   ${R.file?`<p class="cmpmeta">Slides (${R.deckMeta.n}): ${cmpMeta(R.deckMeta)}</p><div class="pk"><a href="#" data-act="cmpfile" data-v="${k}">Open slides</a><a href="#" class="alt" data-act="cmpsave" data-v="${k}">Save or share</a></div>`:R.deckErr?`<p class="cmperr">Slides failed: ${esc(R.deckErr)}</p>`:""}</div>`}).join("")};
 setInterval(()=>{document.querySelectorAll(".cmpsec").forEach(x=>{x.textContent=Math.round((Date.now()-(+x.dataset.t0||Date.now()))/1000)+" s"})},1000);
+
+// ================= Phase 3: Clinical topic, Clinical question and Presentations =================
+// ---- a form being typed in is never redrawn underneath the keyboard (background updates wait until you finish) ----
+{const _rm=renderModal;let last="";renderModal=function(){const el=document.getElementById("modal"),a=document.activeElement,m=S.modal;
+ const typ=m?[m.type,m.v||"",m.id||"",m.pmid||"",(S.tv&&S.tv.view)||"",(S.tv&&S.tv.id)||""].join(":"):"";
+ const typing=el&&a&&el.contains(a)&&(/^(TEXTAREA|SELECT)$/.test(a.tagName)||(a.tagName==="INPUT"&&!/^(checkbox|radio|file|button|submit|range)$/.test(a.type)));
+ if(typing&&typ===last){S.modalStale=true;return}
+ last=typ;S.modalStale=false;return _rm.apply(this,arguments)}}
+document.addEventListener("focusout",()=>{if(!S.modalStale)return;setTimeout(()=>{const a=document.activeElement,el=document.getElementById("modal");if(S.modalStale&&!(el&&a&&el.contains(a)&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)))renderModal()},450)},true);
+
+// ---- headlines: enter from the right and glide left, at a steady reading speed; touch to pause ----
+var TKA={ct:0,key:"",paused:false};
+vNews=function(){
+ if(st.newsOff)return "";const c=st.newsCache;if(!c||Date.now()-c.at>3600e3)setTimeout(()=>newsLoad(),50);
+ const L=(c&&c.items)||[];
+ if(!L.length)return S.newsBusy||!c?`<div class="tick still" aria-label="Latest cardiology headlines"><div class="tvp"><span class="ti"><span>Loading the latest cardiology headlines…</span></span></div></div>`:"";
+ const one=L.map(x=>`<a class="ti" href="${esc(x.link)}" target="_blank" rel="noopener noreferrer"><b class="tg" style="--c:${NEWSCOL[x.tag]||"#C2253B"}">${esc(x.tag||"News")}</b><span>${esc(x.title)}</span><span class="ts">${esc(x.src)}${x.date?` · ${agoTxt(x.date)}`:""}</span></a>`).join("");
+ return `<div class="tick" role="marquee" aria-label="Latest cardiology headlines"><div class="tvp"><div class="ttrack" data-k="${hh(L.map(x=>x.title).join("|"))}">${one}</div></div></div>`};
+function tkStart(){const tr=document.querySelector(".tick .ttrack");if(!tr||tr._a||!tr.animate)return;
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const vw=tr.parentElement.clientWidth,w=tr.scrollWidth;if(!vw||!w)return;
+ const dur=(vw+w)/50*1000,a=tr.animate([{transform:`translateX(${vw}px)`},{transform:`translateX(${-w}px)`}],{duration:dur,iterations:Infinity});
+ if(TKA.key===tr.dataset.k&&TKA.ct)a.currentTime=TKA.ct%dur;
+ TKA.key=tr.dataset.k;tr._a=a;if(TKA.paused)a.pause()}
+function tkSave(){const tr=document.querySelector(".tick .ttrack");if(tr&&tr._a)TKA.ct=tr._a.currentTime||0}
+{const _r=render;render=function(){tkSave();const x=_r.apply(this,arguments);tkStart();return x}}
+document.addEventListener("touchstart",e=>{const t=e.target.closest&&e.target.closest(".tick");if(!t)return;TKA.paused=true;const tr=t.querySelector(".ttrack");if(tr&&tr._a)tr._a.pause()},{passive:true});
+["touchend","touchcancel"].forEach(ev=>document.addEventListener(ev,()=>{if(!TKA.paused)return;TKA.paused=false;document.querySelectorAll(".tick .ttrack").forEach(tr=>{if(tr._a)tr._a.play()})},{passive:true}));
+setTimeout(tkStart,300);addEventListener("resize",()=>{tkSave();const tr=document.querySelector(".tick .ttrack");if(tr&&tr._a){tr._a.cancel();tr._a=null;tkStart()}});
+
+// ---- saved audio belongs to Library papers; study-tool files belong to their tool ----
+prepGC=async function(){const keys=await idbKeys(),gone=keys.filter(k=>/^(one|pod|sum)\|/.test(k)&&!st.saved[String(k).split("|")[1]]);if(gone.length)idbDel(gone);
+ if(st.prep){let ch=false;Object.keys(st.prep).forEach(k=>{if(!st.saved[k]){delete st.prep[k];ch=true}});if(ch)save()}};
+async function tGC(){const keys=await idbKeys(),ids=new Set(Object.values(st.tools||{}).flat().map(x=>x.id));
+ const gone=keys.filter(k=>{const m=String(k).match(/^(?:cqv\||deck:)([^|]+)/);return m&&!ids.has(m[1])});if(gone.length)idbDel(gone)}
+
+// ---- slide styles: pastel, professional blue, and your own template ----
+var TPL=null;
+SLSTYLES.splice(1,0,["pastel","Pastel"],["blue","Professional blue"]);
+function tplChip(){if(TPL&&!SLSTYLES.some(x=>x[0]==="custom"))SLSTYLES.push(["custom","Your template"]);if(!TPL){const i=SLSTYLES.findIndex(x=>x[0]==="custom");if(i>=0)SLSTYLES.splice(i,1)}}
+idbGet("tpl:custom").then(t=>{if(t){TPL=t;tplChip()}});
+const hx=c=>[0,2,4].map(i=>parseInt(c.slice(i,i+2),16)),toHex=a=>a.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,"0")).join("").toUpperCase();
+const mixC=(a,b,t)=>toHex(hx(a).map((v,i)=>v+(hx(b)[i]-v)*t)),lumC=c=>{const [r,g,b]=hx(c);return (0.299*r+0.587*g+0.114*b)/255};
+{const _ds=deckStyle;deckStyle=function(D,sy){
+ if(sy==="pastel")return {...D,sy:"pastel",dark:"3D3B5C",mid:"8E9AC9",acc:"D9827F",acc2:"5F9E8F",soft:"EEF2FA",soft2:"FBEDEA",light:"A0524E",text:"33334D",grey:"6E6E8A",bg:"FCFBF8",titleBg:"DCE4F5",titleTx:"2F2E4F",titleSub:"5A5A7A",card:"FFFFFF"};
+ if(sy==="blue")return {...D,sy:"bold",dark:"0B2E59",mid:"0B2E59",acc:"2E86C1",acc2:"1F6FB2",soft:"EAF2FB",soft2:"E3EEF9",light:"9CC3E6",text:"1E2A38",grey:"5B6B7D",bg:"FFFFFF",titleBg:"0B2E59",titleTx:"FFFFFF",titleSub:"BFD6EE",card:"FFFFFF"};
+ if(sy==="custom"&&TPL){const bg=TPL.lt1||"FFFFFF",dark=TPL.bgDark?"FFFFFF":(TPL.dk2||TPL.dk1||"1C2541"),acc=TPL.acc1||"C0504D",acc2=TPL.acc2||acc,text=TPL.bgDark?"F2F4F8":(TPL.dk1||"222222");
+  return {...D,sy:"minimal",dark,mid:dark,acc,acc2,text,grey:TPL.bgDark?"C9CED9":"5C6375",soft:TPL.bgDark?"2A3146":mixC(bg,acc,0.08),soft2:TPL.bgDark?"33293F":mixC(bg,acc2,0.12),light:mixC(acc,"FFFFFF",0.5),bg,card:TPL.bgDark?"2A3146":"FFFFFF",
+   titleBg:TPL.bg?bg:dark,titleTx:TPL.bg?dark:"FFFFFF",titleSub:TPL.bg?(TPL.bgDark?"D5DCEB":"5C6375"):"D5DCEB",bgImg:TPL.bg||"",titleImg:TPL.bg||"",logos:TPL.logos||[],font:TPL.font||""}}
+ return _ds(D,sy==="custom"?"classic":sy)}}
+const dataURL=f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)});
+function imgStats(url){return new Promise(res=>{const im=new Image();im.onload=()=>{try{const c=document.createElement("canvas");c.width=c.height=32;const g=c.getContext("2d");g.drawImage(im,0,0,32,32);const d=g.getImageData(0,0,32,32).data;let r=0,gg=0,b=0,n=0,sr=0,sg=0,sb=0,sn=0;
+  for(let i=0;i<d.length;i+=4){r+=d[i];gg+=d[i+1];b+=d[i+2];n++;const mx=Math.max(d[i],d[i+1],d[i+2]),mn=Math.min(d[i],d[i+1],d[i+2]);if(mx-mn>60){sr+=d[i];sg+=d[i+1];sb+=d[i+2];sn++}}
+  const avg=toHex([r/n,gg/n,b/n]);res({avg,accent:sn>20?toHex([sr/sn,sg/sn,sb/sn]):"",dark:lumC(avg)<0.45})}catch(e){res({avg:"FFFFFF",accent:"",dark:false})}};im.onerror=()=>res({avg:"FFFFFF",accent:"",dark:false});im.src=url})}
+async function tplParse(file){
+ if(/^image\//.test(file.type)){const url=await dataURL(file),s=await imgStats(url);return {kind:"image",name:file.name,bg:url.replace(/^data:/,""),bgDark:s.dark,acc1:s.accent||"",lt1:s.avg,logos:[]}}
+ if(!window.JSZip)await loadJS(PPTX_SRC);const z=await window.JSZip.loadAsync(await file.arrayBuffer());
+ const rd=async p=>{const f=z.file(p);return f?f.async("string"):""};
+ const theme=await rd("ppt/theme/theme1.xml");if(!theme)throw new Error("notpptx");
+ const clr=n=>{const m=theme.match(new RegExp(`<a:${n}>[\\s\\S]*?(?:srgbClr val="([0-9A-Fa-f]{6})"|lastClr="([0-9A-Fa-f]{6})")`));return m?(m[1]||m[2]).toUpperCase():""};
+ const font=(theme.match(/<a:minorFont>\s*<a:latin typeface="([^"]+)"/)||[])[1]||"";
+ const pres=await rd("ppt/presentation.xml"),sz=pres.match(/<p:sldSz cx="(\d+)" cy="(\d+)"/),cx=sz?+sz[1]:12192000,cy=sz?+sz[2]:6858000;
+ const master=await rd("ppt/slideMasters/slideMaster1.xml"),rels=await rd("ppt/slideMasters/_rels/slideMaster1.xml.rels");
+ const relT=id=>{const m=rels.match(new RegExp(`<Relationship[^>]*Id="${id}"[^>]*>`));return m?((m[0].match(/Target="([^"]+)"/)||[])[1]||""):""};
+ const img=async t=>{if(!t)return "";const p=("ppt/slideMasters/"+t).replace(/[^/]+\/\.\.\//g,"");const f=z.file(p);if(!f)return "";const ext=(p.split(".").pop()||"").toLowerCase();if(!/^(png|jpe?g|gif)$/.test(ext))return "";return `image/${ext==="jpg"?"jpeg":ext};base64,`+await f.async("base64")};
+ let bg="",bgDark=false;const bm=master.match(/<p:bg[\s>][\s\S]*?r:embed="([^"]+)"/);if(bm)bg=await img(relT(bm[1]));
+ if(bg)bgDark=(await imgStats("data:"+bg)).dark;else{const lt=clr("lt1")||"FFFFFF";bgDark=lumC(lt)<0.45}
+ const logos=[];for(const pm of master.matchAll(/<p:pic[\s>][\s\S]*?<\/p:pic>/g)){const e=pm[0].match(/r:embed="([^"]+)"/),off=pm[0].match(/<a:off x="(\d+)" y="(\d+)"\s*\/>/),ex=pm[0].match(/<a:ext cx="(\d+)" cy="(\d+)"\s*\/>/);if(!e||!off||!ex)continue;
+  const d=await img(relT(e[1]));if(!d)continue;logos.push({data:d,x:+off[1]/cx*13.333,y:+off[2]/cy*7.5,w:+ex[1]/cx*13.333,h:+ex[2]/cy*7.5});if(logos.length>=3)break}
+ return {kind:"pptx",name:file.name,dk1:clr("dk1"),lt1:clr("lt1"),dk2:clr("dk2"),acc1:clr("accent1"),acc2:clr("accent2"),font,bg,bgDark,logos}}
+async function tplLoad(file){S.tplBusy=true;renderModal();
+ try{const t=await tplParse(file);TPL=t;await idbPut("tpl:custom",t);tplChip();if(S.tf)S.tf.style="custom";st.slideStyle=st.slideStyle==="custom"?"custom":st.slideStyle;save();toast(`Template “${t.name}” added. Choose “Your template” as the style.`)}
+ catch(e){toast("Couldn't read that file. Use a PowerPoint (.pptx or .potx) or an image of your slide background.")}
+ S.tplBusy=false;renderModal()}
+
+// ---- the study tools ----
+var TDEF={
+ topic:{t:"Clinical topic",one:"topic",ic:"🔎",max:3,intro:"Enter a topic and what you want to know. The app finds the top 20 papers, writes a referenced evidence review with practice questions, and builds a deck of up to 20 slides with every reference listed."},
+ cq:{t:"Clinical question",one:"question",ic:"❓",max:3,intro:"Ask a clinical question. The app finds the 10 most relevant papers and answers it with a short narrated explainer, then the full answer with the papers, and slides if you want them."},
+ pres:{t:"Presentations",one:"presentation",ic:"🖥️",max:3,intro:"Plan a talk: the topic, audience, date and number of slides (up to 50). The app finds the evidence and builds the whole deck, with speaker notes and references, in your chosen style."}};
+const AUDIENCES=["GPs and primary care","Cardiology trainees","Consultant colleagues","Nurses and allied health professionals","Physiologists","Medical students","Patients and the public","Mixed or multidisciplinary team"];
+const tList=k=>{st.tools=st.tools||{};return st.tools[k]=st.tools[k]||[]};
+const tGet=id=>{for(const k of Object.keys(TDEF)){const x=tList(k).find(i=>i.id===id);if(x)return x}return null};
+const PIIH=[/\b\d{3}[ -]?\d{3}[ -]?\d{4}\b/,/\b(?:DOB|D\.O\.B|date of birth|CHI number|NHS (?:no|number)|hospital (?:no|number)|MRN)\b/i,/\b(?:0?[1-9]|[12]\d|3[01])[\/.](?:0?[1-9]|1[0-2])[\/.](?:19|20)\d{2}\b/,/\b(?:Mr|Mrs|Ms|Miss|Mx)\.?\s+[A-Z][a-z]+/,/\b[A-Z]{1,2}\d[A-Z\d]?\s+\d[A-Z]{2}\b/];
+const PIIS=[/\b(?:my|our|this|a) patient\b/i,/\b\d{1,3}[- ]?(?:year|yr)s?[- ]old\b/i,/\b(?:he|she) (?:is|was|has|had)\b/i,/\b(?:my|our) (?:clinic|ward)\b/i];
+const piiOf=t=>PIIH.some(r=>r.test(t))?"hard":PIIS.some(r=>r.test(t))?"soft":"";
+const NOPII=`<p class="pii">🔒 Don't include patient details: no names, dates of birth, NHS or CHI numbers or addresses. Requests without patient details are kept on the app's service, so the next colleague who asks the same gets the answer at once.</p>`;
+function tErr(e){const c=e&&e.code;return c==="patient"?"This looks like it contains patient details, so it wasn't sent. Remove names, dates of birth, NHS or CHI numbers and addresses, then try again.":c==="few"?"Fewer than 3 papers matched. Try broader wording or a longer time span.":aiErr(c)}
+async function tAI(task,payload,ms){for(let i=0;;i++){try{return await aiCall(task,{field:"cardiology",...payload},ms||170000)}catch(e){if(/^ratelimit-minute/.test(e.code||"")&&i<3){await prepWait(20000);continue}throw e}}}
+function tStep(it,step,detail){it.status="busy";it.step=step;it.detail=detail||"";save();tPaint(it)}
+function tPaint(it){document.querySelectorAll(".navband .tools button[data-v]").forEach(b=>b.classList.toggle("tbusy",tList(b.dataset.v).some(x=>x.status==="busy"||x.status==="queued")));
+ if(S.modal&&S.modal.type==="tool"&&S.tv&&(!it||S.tv.k===it.k))renderModal()}
+var TQ={q:[],run:false};
+function tEnq(id){if(!TQ.q.includes(id))TQ.q.push(id);const it=tGet(id);if(it&&it.status!=="busy"){it.status="queued";it.step="Waiting to start";save();tPaint(it)}tRun()}
+async function tRun(){if(TQ.run)return;TQ.run=true;
+ try{while(TQ.q.length){const id=TQ.q.shift(),it=tGet(id);if(!it)continue;
+  try{it.err="";await TJOB[it.k](it);it.status="ready";it.step="";it.done=Date.now();save();tPaint(it);toast(`“${it.title||TDEF[it.k].t}” is ready.`)}
+  catch(e){it.status="error";it.err=tErr(e);it.step="";save();tPaint(it)}}}
+ finally{TQ.run=false}}
+// ---- finding the evidence: an AI-planned PubMed search, ranked by study type, citations and relevance ----
+async function tPlan(kind,text,refine){try{return (await tAI("plan",{kind,text,refine},60000)).data}catch(e){if(e.code==="patient")throw e;return null}}
+function tRaw(t){const stop=/^(what|which|when|whether|is|are|was|the|a|an|of|in|for|to|and|or|with|does|do|should|could|evidence|there|any|on|how|best|use|using|role|vs|versus|new|latest|recent|developments?|management|update|patients?|people|treat|treatment|about|from|than|into|after|before)$/i;
+ const w=String(t).replace(/[^\w\s-]/g," ").split(/\s+/).filter(x=>x.length>2&&!stop.test(x));return w.slice(0,5).map(x=>x+"[tiab]").join(" AND ")}
+async function tSearch(q,years){const now=new Date(),from=new Date(now);from.setFullYear(now.getFullYear()-years);
+ const sr=await getJSON(`${E}esearch.fcgi?db=pubmed&retmode=json&tool=cardioreader&retmax=150&sort=relevance&datetype=pdat&mindate=${ymd(from)}&maxdate=${ymd(now)}&term=${encodeURIComponent(`(${q}) AND hasabstract AND english[la]`)}`);
+ return {ids:(sr.esearchresult&&sr.esearchresult.idlist)||[],total:+((sr.esearchresult||{}).count||0)}}
+async function findPapers(it,o){
+ let r={ids:[],total:0};
+ for(const q of o.queries.filter(Boolean)){try{const x=await tSearch(q,o.years);if(x.ids.length>r.ids.length)r=x;if(r.ids.length>=Math.max(15,o.n))break}catch(e){}}
+ if(r.ids.length<3)throw Object.assign(new Error("few"),{code:"few"});
+ tStep(it,"Reading the abstracts",`${r.total.toLocaleString()} papers found`);
+ const ids=r.ids;let cites={},ptype={};
+ try{const eq=ids.map(x=>"EXT_ID:"+x).join(" OR ");const j=await getJSON(`${EPMC}search?query=${encodeURIComponent(`(${eq}) AND SRC:MED`)}&format=json&resultType=lite&pageSize=200`);
+  for(const x of (j.resultList&&j.resultList.result)||[]){cites[x.pmid]=+x.citedByCount||0;ptype[x.pmid]=String(x.pubType||"").toLowerCase()}}catch(e){}
+ const score=(id,i)=>{const t=ptype[id]||"";return 2*(1-i/ids.length)+1.4*Math.log10(1+(cites[id]||0))+(/meta-analysis|systematic review/.test(t)?2:/randomi[sz]ed controlled trial/.test(t)?1.8:/guideline/.test(t)?2:/review/.test(t)?0.8:0)};
+ const pre=ids.map((id,i)=>({id,s:score(id,i)})).sort((a,b)=>b.s-a.s).slice(0,80),base={};pre.forEach(x=>base[x.id]=x.s);
+ const xml=await fetchText(`${E}efetch.fcgi?db=pubmed&retmode=xml&tool=cardioreader&id=${pre.map(x=>x.id).join(",")}`);
+ const doc=new DOMParser().parseFromString(xml.replace(/<!DOCTYPE[^>]*>/i,""),"text/xml"),all=[];
+ for(const a of doc.getElementsByTagName("PubmedArticle")){
+  const g=(n,el=a)=>((el.getElementsByTagName(n)[0]||{}).textContent||"").trim(),pmid=g("PMID");
+  const abs=[...a.getElementsByTagName("AbstractText")].map(x=>(x.getAttribute("Label")?x.getAttribute("Label")+": ":"")+x.textContent.trim()).join(" ");
+  const types=[...a.getElementsByTagName("PublicationType")].map(x=>x.textContent).filter(t=>/Trial|Meta|Systematic|Guideline|Review|Cohort|Observational/i.test(t));
+  const year=g("Year",a.getElementsByTagName("PubDate")[0]||a)||(g("MedlineDate").match(/\d{4}/)||[""])[0];
+  if(abs.length>100&&base[pmid]!==undefined)all.push({pmid,title:g("ArticleTitle").replace(/\.$/,""),journal:g("ISOAbbreviation")||g("Title"),year,type:types.join(", ")||"Study",cites:cites[pmid]||0,abstract:abs.replace(/\s+/g," ").slice(0,1800)});
+ }
+ tStep(it,"Ranking the papers by relevance",`checking ${all.length} papers`);
+ let rel=null;try{const x=await tAI("rank",{topic:o.topic,focus:o.focus||"",papers:all.map(p=>({id:p.pmid,title:p.title,abstract:p.abstract.slice(0,700)}))},60000);if(x.scores&&typeof x.scores==="object")rel=x.scores}catch(e){}
+ const rv=p=>rel&&typeof rel[p.pmid]==="number"?rel[p.pmid]:null;
+ let pool=all;if(rel){const keep=all.filter(p=>!(rv(p)!==null&&rv(p)<0.15));if(keep.length>=Math.min(o.n,all.length))pool=keep}
+ const out=pool.map(p=>({...p,rel:rv(p)})).sort((a,b)=>(base[b.pmid]+(b.rel!==null?6*b.rel-3:0))-(base[a.pmid]+(a.rel!==null?6*a.rel-3:0))).slice(0,o.n);
+ if(out.length<3)throw Object.assign(new Error("few"),{code:"few"});
+ return out}
+const slim=p=>({title:p.title,journal:p.journal,year:p.year,type:p.type,abstract:p.abstract});
+const pmeta=(p,i)=>({n:i+1,pmid:p.pmid,title:p.title,journal:p.journal,year:p.year,type:p.type,cites:p.cites,rel:p.rel});
+const refStr=p=>`${p.title}. ${p.journal} ${p.year}. PMID ${p.pmid}`;
+// citations renumbered in the order they first appear, so the reference slides match the numbers on the slides
+const CITE=/\[(\d+(?:\s*[,–-]\s*\d+)*)\]/g;
+const citeNums=s=>s.split(/\s*,\s*/).flatMap(x=>{const m=x.match(/^(\d+)\s*[–-]\s*(\d+)$/);if(m){const a=+m[1],b=+m[2];return b>=a&&b-a<20?Array.from({length:b-a+1},(_,i)=>a+i):[a]}return [+x]});
+function renum(strings,papers){const map=new Map(),refs=[];
+ const see=t=>String(t).replace(CITE,(m,g)=>{const ns=citeNums(g).filter(n=>n>=1&&n<=papers.length);if(!ns.length)return "";
+  return "["+[...new Set(ns.map(n=>{if(!map.has(n)){map.set(n,map.size+1);refs.push(refStr(papers[n-1]))}return map.get(n)}))].sort((a,b)=>a-b).join(",")+"]"});
+ return {out:strings.map(see),refs}}
+function mapStrings(v,fn){if(typeof v==="string")return fn(v);if(Array.isArray(v))return v.map(x=>mapStrings(x,fn));if(v&&typeof v==="object"){const o={};for(const k in v)o[k]=mapStrings(v[k],fn);return o}return v}
+function renumSlides(slides,papers){const all=[];mapStrings(slides,s=>{all.push(s);return s});const r=renum(all,papers);let i=0;return {slides:mapStrings(slides,()=>r.out[i++]),refs:r.refs}}
+function presenter(it,showOrg){const name=(st.myName||"").trim(),org=showOrg&&st.myOrg?st.myOrg.trim():"",role=st.myRole&&st.myRole!=="Other"?st.myRole:"";
+ const dt=it.in.date?new Date(it.in.date+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):"";
+ return {aus:name?[name]:[],journal:[role,org].filter(Boolean).join(", ")||"Teaching session",year:dt}}
+async function tDeckSave(it,d){const f=d&&d.file;if(!f)throw Object.assign(new Error("ai"),{code:"ai"});const name=(String(it.title||TDEF[it.k].t).replace(/[^\w ]+/g,"").trim().replace(/\s+/g,"-").slice(0,60)||"slides")+".pptx";
+ await idbPut("deck:"+it.id,{name,type:f.type,buf:await f.arrayBuffer()});it.deck={name,at:Date.now(),n:d.meta&&d.meta.n};save()}
+async function tDeckFile(it){const d=await idbGet("deck:"+it.id);return d?new File([d.buf],d.name,{type:d.type}):null}
+function reviewText(V){const L=[],cite=r=>{const n=(Array.isArray(r)?r:[r]).filter(Boolean);return n.length?` [${n.join(",")}]`:""};
+ if(V.overview)L.push("Overview: "+V.overview);for(const s of V.sections||[]){L.push(s.heading+":");for(const p of s.points||[])L.push("- "+p.text+cite(p.refs))}
+ for(const k of V.keyTrials||[])L.push(`Key trial: ${k.name} ${k.year}, ${k.design}: ${k.finding}${cite([k.ref])}`);
+ for(const[h,a]of [["Guidelines",V.guidelines],["Uncertainties",V.controversies],["For practice",V.practice],["Exam pearls",V.pearls]])if((a||[]).length){L.push(h+":");for(const p of a)L.push("- "+p.text+cite(p.refs))}
+ return L.join("\n")}
+function answerText(R){const cite=r=>{const n=(Array.isArray(r)?r:[r]).filter(Boolean);return n.length?` [${n.join(",")}]`:""},L=[`Question: ${R.q||""}`,`Answer: ${R.answer}`,`Certainty of evidence: ${R.certainty||""}. ${R.certaintyWhy||""}`];
+ for(const[h,a]of [["Evidence",R.evidence],["Caveats",R.caveats],["For practice",R.practice]])if((a||[]).length){L.push(h+":");for(const p of a)L.push("- "+p.text+cite(p.refs))}
+ for(const p of R.paperNotes||[])L.push(`Paper [${p.ref}]: ${p.finding}`);return L.join("\n")}
+const TJOB={
+ async topic(it){const I=it.in;
+  tStep(it,"Planning the search");const pl=await tPlan("topic",I.topic,I.refine);if(pl&&pl.title&&!it.title)it.title=pl.title;
+  tStep(it,"Searching PubMed");
+  const papers=await findPapers(it,{queries:[pl&&pl.query,pl&&pl.broad,tRaw(I.topic+" "+(I.refine||"")),tRaw(I.topic)],years:+I.years||5,n:20,topic:I.topic,focus:I.refine});
+  tStep(it,"Writing the evidence review","about a minute");
+  const j=await tAI("topic",{text:I.topic,refine:I.refine,years:+I.years||5,papers:papers.map(slim)});
+  it.res={review:j.data,model:j.model,shared:!!j.shared,papers:papers.map(pmeta)};if(j.data&&j.data.title)it.title=j.data.title;save();
+  tStep(it,"Designing the slides");
+  const r=renum([reviewText(j.data)],it.res.papers);
+  await tDeckSave(it,await makeDeck(null,+I.slides||12,{title:it.title||I.topic,text:r.out[0].slice(0,13500),refs:r.refs,style:I.style},{tag:"topic"}));
+ },
+ async cq(it){const I=it.in;
+  tStep(it,"Planning the search");const pl=await tPlan("question",I.q,I.ctx);if(pl&&pl.title&&!it.title)it.title=pl.title;
+  tStep(it,"Searching PubMed");
+  const papers=await findPapers(it,{queries:[pl&&pl.query,pl&&pl.broad,tRaw(I.q)],years:10,n:10,topic:I.q,focus:I.ctx});
+  tStep(it,"Answering your question","about a minute");
+  const j=await tAI("answer",{text:I.q,refine:I.ctx,papers:papers.map(slim)});
+  const D=j.data||{};it.res={...D,paperNotes:D.papers||[],papers:papers.map(pmeta),model:j.model,shared:!!j.shared,q:I.q};if(D.title)it.title=D.title;save();
+  setTimeout(()=>tNarrate(it),300);
+ },
+ async pres(it){const I=it.in,total=Math.max(5,Math.min(50,+I.n||20)),aud=I.audience||AUDIENCES[0];
+  tStep(it,"Planning the search");const pl=await tPlan("talk",I.title,I.points);
+  tStep(it,"Searching PubMed");
+  const papers=await findPapers(it,{queries:[pl&&pl.query,pl&&pl.broad,tRaw(I.title)],years:10,n:25,topic:I.title,focus:I.points});
+  const content=Math.max(3,total-1-(total>=24?2:1)); // the title slide and the reference slides make up the rest
+  tStep(it,"Planning the slides");
+  const ol=await tAI("talk",{part:"outline",text:I.title,audience:aud,points:I.points,n:content,papers:papers.map(slim)});
+  let secs=(ol.data.sections||[]).map(s=>({heading:String(s.heading||"Section"),aim:String(s.aim||""),slides:Math.max(1,Math.round(+s.slides||1))})).slice(0,10);
+  let sum=secs.reduce((a,s)=>a+s.slides,0);while(sum>content){const big=secs.reduce((m,s)=>s.slides>m.slides?s:m,secs[0]);if(big.slides<=1)break;big.slides--;sum--}if(sum<content)secs[secs.length-1].slides+=content-sum;
+  const parts=[];secs.forEach((s,i)=>{let left=s.slides,p=0;while(left>0){const k=Math.min(12,left);parts.push({...s,k,last:i===secs.length-1&&left-k===0,heading:p?`${s.heading} (continued)`:s.heading});left-=k;p++}});
+  const plan=secs.map(s=>`${s.heading} (${s.slides} slides)`).join("; "),out=new Array(parts.length);let done=0,next=0;
+  tStep(it,"Writing the slides",`0 of ${parts.length} sections`);
+  await Promise.all([0,1,2].map(async()=>{while(next<parts.length){const i=next++,s=parts[i];
+   const j=await tAI("talk",{part:"slides",text:I.title,title:ol.data.title||I.title,audience:aud,points:I.points,k:s.k,heading:s.heading,aim:s.aim,plan,last:s.last,papers:papers.map(slim)});
+   out[i]=(j.data.slides||[]).slice(0,s.k+1);done++;tStep(it,"Writing the slides",`${done} of ${parts.length} sections`)}}));
+  const rs=renumSlides(out.flat(),papers);
+  it.res={title:ol.data.title||I.title,subtitle:ol.data.subtitle||"",sections:secs,papers:papers.map(pmeta),model:ol.model,shared:!!ol.shared,refsCited:rs.refs.length};it.title=it.res.title;save();
+  tStep(it,"Building the deck");
+  await tDeckSave(it,await makeDeck(null,total,{title:it.res.title,slides:rs.slides,refs:rs.refs,style:I.style,...presenter(it,I.showOrg)},{tag:"talk"}));
+ }};
+// ---- the narrated explainer for a clinical question ----
+const xpKey=(it,t,v)=>`cqv|${it.id}|${v}|${hh(t)}`;
+async function tNarrate(it){if(typeof GV==="undefined"||!it.res||!Array.isArray(it.res.scenes))return;const v=gvVoice();if(it.voiced===v)return;
+ for(const sc of it.res.scenes){const t=speakable(sc.say||"");if(!t)continue;const ck=xpKey(it,t,v);if(await idbHas(ck))continue;
+  try{await idbPut(ck,await gvFetchWav({text:t,voice:v}))}catch(e){return}if(!tGet(it.id))return}
+ it.voiced=v;save();tPaint(it)}
+var XP={id:"",i:0,a:null,gen:0,playing:false,t:null};
+function xpEl(){if(!XP.a){XP.a=new Audio();XP.a.preload="auto";XP.a.onended=()=>{if(XP.playing&&XP.cur&&XP.a.src===XP.cur)xpGo(XP.i+1)};XP.a.ontimeupdate=()=>{const b=document.querySelector(".xpseg.now i");if(b&&XP.a.duration)b.style.width=Math.min(100,XP.a.currentTime/XP.a.duration*100)+"%"}}return XP.a}
+function xpOpen(id){const it=tGet(id);if(!it||!it.res||!(it.res.scenes||[]).length)return;
+ const a=xpEl();try{a.src=GV_SILENT;a.play().catch(()=>{})}catch(e){} // the first sound must start inside the tap on iPhone
+ if(typeof gvStop==="function"){gvStop()}XP.id=id;XP.playing=true;S.modal={type:"cqplay",id};xpGo(0)}
+async function xpGo(i){const it=tGet(XP.id);if(!it)return;const sc=it.res.scenes,g=++XP.gen;clearTimeout(XP.t);XP.i=Math.max(0,Math.min(i,sc.length));renderModal();
+ if(XP.i>=sc.length){XP.playing=false;try{XP.a.pause()}catch(e){}renderModal();return}
+ if(!XP.playing)return;
+ const t=speakable(sc[XP.i].say||""),v=gvVoice(),ck=xpKey(it,t,v),a=xpEl();XP.cur="";
+ const timed=()=>{const ms=Math.max(4000,t.split(/\s+/).length/2.6*1000);const b=document.querySelector(".xpseg.now i");if(b){b.style.transition=`width ${ms}ms linear`;requestAnimationFrame(()=>b.style.width="100%")}XP.t=setTimeout(()=>{if(g===XP.gen&&XP.playing)xpGo(XP.i+1)},ms)};
+ let url="";try{let buf=await idbGet(ck);if(!buf&&t){S.xpLoad=true;renderModal();buf=await gvFetchWav({text:t,voice:v});idbPut(ck,buf)}if(buf)url=URL.createObjectURL(new Blob([buf],{type:"audio/wav"}))}catch(e){}
+ S.xpLoad=false;if(g!==XP.gen)return;renderModal();
+ if(!url){timed();return}
+ a.src=url;XP.cur=a.src;a.playbackRate=+st.rate||1;a.play().catch(()=>{XP.playing=false;renderModal()})}
+function xpSheet(){const it=tGet(XP.id);if(!it)return "";const sc=it.res.scenes||[],i=XP.i;
+ const bar=`<div class="xpbar">${sc.map((_,k)=>`<span class="xpseg ${k<i?"done":k===i?"now":""}"><i></i></span>`).join("")}</div>`;
+ if(i>=sc.length)return `<div class="xp" role="dialog" aria-label="Explainer">${bar}<div class="xpstage xpend"><div class="xpk">That's the explainer</div><h2 class="xpt">${esc(it.title||"Your question")}</h2><p class="xpans">${esc(String(it.res.answer||"").replace(/\s*\[(\d+(?:\s*[,–-]\s*\d+)*)\]/g,""))}</p>
+  <div class="xpbtns"><button data-act="xpread" data-v="${it.id}">Read the full answer and papers</button><button class="alt" data-act="xpagain">▶ Watch again</button></div></div><div class="xpc"><button data-act="xpclose" aria-label="Close">✕</button></div></div>`;
+ const s=sc[i];
+ return `<div class="xp" role="dialog" aria-label="Explainer">${bar}<div class="xpstage" data-i="${i}"><div class="xpk">${i+1} of ${sc.length}</div><h2 class="xpt">${esc(s.title||"")}</h2>${s.big?`<div class="xpbig">${esc(s.big)}</div>`:""}
+  <ul class="xpp">${(s.points||[]).slice(0,3).map((p,k)=>`<li style="animation-delay:${0.5+k*0.7}s">${esc(p)}</li>`).join("")}</ul></div>
+  <p class="xpcap">${S.xpLoad?'<span class="spin"></span>Preparing the narration… ':""}${esc(s.say||"")}</p>
+  <div class="xpc"><button data-act="xpprev" aria-label="Previous">⏮</button><button class="xpmain" data-act="xptoggle" aria-label="${XP.playing?"Pause":"Play"}">${XP.playing?"⏸":"▶"}</button><button data-act="xpnext" aria-label="Next">⏭</button><button data-act="xpclose" aria-label="Close">✕</button></div></div>`}
+// ---- the tool sheets ----
+const tWhen=t=>t?new Date(t).toLocaleDateString("en-GB",{day:"numeric",month:"short"}):"";
+function tStatus(it){if(it.status==="busy"||it.status==="queued")return `<div class="tst"><span class="spin"></span>${esc(it.step||"Working")}${it.detail?` <small>· ${esc(it.detail)}</small>`:""}</div>`;
+ if(it.status==="error")return `<div class="tst err">${esc(it.err||"Something went wrong.")} <button class="link" data-act="tretry" data-v="${it.id}">Try again</button></div>`;
+ return `<div class="tst ok">✓ Ready ${tWhen(it.done)}${it.deck?` · ${it.deck.n||""} slides`:""}${it.k==="cq"&&it.res&&it.res.certainty?` · ${esc(it.res.certainty)} certainty`:""}</div>`}
+function tCard(it){const I=it.in||{},sub=it.k==="pres"?[I.audience,I.date?new Date(I.date+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}):""].filter(Boolean).join(" · "):it.k==="topic"?[I.refine,`last ${I.years||5} years`].filter(Boolean).join(" · "):(it.title&&it.title!==I.q?I.q:"");
+ return `<div class="card tcard"><div class="tct">${esc(it.title||I.topic||I.q||I.title||"")}</div>${sub?`<div class="au">${esc(sub)}</div>`:""}${tStatus(it)}
+  <div class="fbtns">${it.status==="ready"?`<button data-act="topen" data-v="${it.id}">Open</button>`:""}${it.k==="cq"&&it.status==="ready"?`<button data-act="xpplay" data-v="${it.id}">▶ Explainer</button>`:""}${it.deck?`<button data-act="tdeck" data-v="${it.id}">Slides</button>`:""}${S.confirm==="t:"+it.id?`<button class="red" data-act="tdel" data-v="${it.id}">Confirm delete</button>`:`<button data-act="tdelask" data-v="${it.id}">Delete</button>`}</div></div>`}
+const tfv=(f,d="")=>S.tf&&S.tf[f]!==undefined?S.tf[f]:d;
+const tChip=(f,v,l,on)=>`<button class="chip ${on?"on":""}" data-act="tfset" data-f="${f}" data-v="${esc(String(v))}">${l}</button>`;
+function tStyles(){tplChip();const cur=tfv("style",st.slideStyle||"classic");
+ return `<div class="au" style="margin-top:12px">Slide style</div><div class="row" style="flex-wrap:wrap;overflow:visible">${SLSTYLES.map(([k,l])=>tChip("style",k,`<span class="sw sw-${k}"></span>${l}`,cur===k)).join("")}</div>
+ <label class="tplbtn">${S.tplBusy?'<span class="spin"></span>Reading your template…':TPL?`🎨 Replace your template <small>(${esc(TPL.name)})</small>`:"🎨 Use your own template (.pptx or an image)"}<input type="file" id="tplfile" accept=".pptx,.potx,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.presentationml.template,image/png,image/jpeg" style="display:none"></label>
+ <p class="pii" style="margin-top:4px">🔒 Don't upload a template or slide that contains patient details or images. It stays on this phone and only its colours, fonts, background and logo are used.</p>`}
+function tForm(k){const D=TDEF[k];let f="";
+ if(k==="topic")f=`<label class="au tl">Topic<input class="search" id="tf-topic" value="${esc(tfv("topic"))}" placeholder="For example, cardiac sarcoidosis" autocomplete="off"></label>
+  <label class="au tl">What do you want to know? <small>(optional)</small><input class="search" id="tf-refine" value="${esc(tfv("refine"))}" placeholder="For example, new developments in management" autocomplete="off"></label>
+  <div class="au" style="margin-top:12px">How far back</div><div class="row" style="flex-wrap:wrap;overflow:visible">${[3,5,10].map(y=>tChip("years",y,y+" years",+tfv("years",5)===y)).join("")}</div>
+  <div class="au" style="margin-top:12px">Slides</div><div class="row" style="flex-wrap:wrap;overflow:visible">${[8,10,12,15,20].map(n=>tChip("slides",n,String(n),+tfv("slides",12)===n)).join("")}</div>${tStyles()}`;
+ if(k==="cq")f=`<label class="au tl">Your question<textarea class="search" id="tf-q" rows="3" placeholder="For example, is 3 weeks of anticoagulation needed before cardioversion of AF?">${esc(tfv("q"))}</textarea></label>
+  <label class="au tl">Anything to focus on? <small>(optional)</small><input class="search" id="tf-ctx" value="${esc(tfv("ctx"))}" placeholder="For example, older people, or after ablation" autocomplete="off"></label>`;
+ if(k==="pres")f=`<label class="au tl">Title or topic of the talk<input class="search" id="tf-title" value="${esc(tfv("title"))}" placeholder="For example, AF in primary care: what's new" autocomplete="off"></label>
+  <label class="au tl">Audience<select id="tf-audience">${AUDIENCES.map(a=>`<option ${tfv("audience",AUDIENCES[0])===a?"selected":""}>${a}</option>`).join("")}</select></label>
+  <div class="fg2"><label class="au tl">Date of the talk<input class="search" type="date" id="tf-date" value="${esc(tfv("date"))}"></label><label class="au tl">Number of slides<input class="search" type="number" id="tf-n" min="5" max="50" inputmode="numeric" value="${esc(String(tfv("n",20)))}"></label></div>
+  <label class="au tl">Points to cover <small>(optional)</small><textarea class="search" id="tf-points" rows="3" placeholder="For example, screening, anticoagulation in the elderly, when to refer">${esc(tfv("points"))}</textarea></label>
+  <label class="set"><span>Show my name${st.myOrg?", role and organisation":" and role"} on the title slide</span><input type="checkbox" id="tf-showOrg" ${tfv("showOrg",st.myOrgShow!==false)?"checked":""}></label>
+  ${!st.myName?`<p class="note">Add your name in your profile (the person icon) to have it on the title slide.</p>`:""}${tStyles()}`;
+ return `<div class="sheet big" role="dialog" aria-label="New ${D.one}"><div class="thead"><button class="link" data-act="tback">‹ ${D.t}</button><button class="tclose" data-act="mclose">Close</button></div><div class="vbody">
+  <h3 style="margin-top:4px">New ${D.one}</h3>${f}${NOPII}</div><div class="pk"><a href="#" data-act="tgo" data-v="${k}">${k==="cq"?"Ask":"Build"}</a><a href="#" class="alt" data-act="tback">Cancel</a></div></div>`}
+const tRefs=(R)=>`<h4>Papers</h4><ol class="frefs">${R.papers.map(p=>{const note=(R.paperNotes||[]).find(x=>+x.ref===p.n);return `<li><a href="https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/" target="_blank" rel="noopener">${esc(p.title)}</a>. <i>${esc(p.journal)}</i> ${esc(p.year)}. <span class="au">${esc(p.type)}${p.cites?` · cited ${p.cites}×`:""}</span>${note?`<div class="pnote">${esc(note.finding||"")}</div>`:""}</li>`}).join("")}</ol>`;
+function citeHTML(t,R,refs){const raw=String(t||"");CITE.lastIndex=0;const has=CITE.test(raw);CITE.lastIndex=0;if(has)return esc(raw).replace(/\[(\d+(?:\s*[,–-]\s*\d+)*)\]/g,(m,g)=>refLinks(citeNums(g),R));return esc(raw)+(refs?refLinks(refs,R):"")}
+function tBody(it){const R=it.res||{};const pts=(L,cls="")=>`<ul class="fpts ${cls}">${(L||[]).map(p=>`<li>${citeHTML(p.text,R,p.refs)}</li>`).join("")}</ul>`,by=`<p class="au tby">Written by ${MODELNAME(R.model)} from the abstracts of ${R.papers.length} papers. Check key facts against the papers.${R.shared?" Shared: colleagues asking the same get this answer instantly.":""}</p>`;
+ const deckBtn=it.deck?`<button data-act="tdeck" data-v="${it.id}">📊 Slides (${it.deck.n||""})</button>`:"";
+ if(it.k==="topic"){const V=R.review||{};
+  return `<div class="tts" style="border-top:0">${deckBtn}<button data-act="tshare" data-v="${it.id}">Share</button></div>${by}
+  ${V.overview?`<p class="fov">${citeHTML(V.overview,R)}</p>`:""}${(V.sections||[]).map(s=>`<h4>${esc(s.heading||"")}</h4>${pts(s.points)}`).join("")}
+  ${(V.keyTrials||[]).length?`<h4>Key trials</h4><div class="tw"><table class="ftab"><tr><th>Trial</th><th>Design</th><th>Finding</th></tr>${V.keyTrials.map(k=>`<tr><td><b>${esc(k.name||"")}</b> ${esc(k.year||"")}${refLinks([k.ref],R)}</td><td>${esc(k.design||"")}</td><td>${citeHTML(k.finding,R)}</td></tr>`).join("")}</table></div>`:""}
+  ${(V.guidelines||[]).length?`<h4>Guidelines</h4>${pts(V.guidelines)}`:""}${(V.controversies||[]).length?`<h4>Uncertainties and debates</h4>${pts(V.controversies)}`:""}
+  ${(V.practice||[]).length?`<h4>For practice</h4>${pts(V.practice)}`:""}${(V.pearls||[]).length?`<h4>Exam pearls</h4>${pts(V.pearls,"pearls")}`:""}
+  ${(V.mcqs||[]).length?`<h4>Practice questions</h4>${V.mcqs.map((q,i)=>`<div class="fmcq"><p><b>${i+1}.</b> ${citeHTML(q.q,R)}</p><ul>${(q.options||[]).map(o=>`<li>${esc(o)}</li>`).join("")}</ul><details><summary>Show answer</summary><p><b>${esc(q.answer||"")}</b>. ${esc(q.why||"")}${refLinks(q.refs,R)}</p></details></div>`).join("")}`:""}${tRefs(R)}`}
+ if(it.k==="cq"){const cert=String(R.certainty||"").toLowerCase(),cc=/^high/.test(cert)?"hi":/^moderate/.test(cert)?"mod":/very/.test(cert)?"vlow":"low";
+  const ans=citeHTML(R.answer,R);
+  return `<p class="au" style="margin-top:0">${esc(it.in.q)}</p><button class="xpgo" data-act="xpplay" data-v="${it.id}"><span>▶</span><b>Watch the explainer</b><small>${(R.scenes||[]).length} scenes, about a minute and a half${it.voiced?"":" · narration being prepared"}</small></button>
+  <div class="tans"><div class="tah">Answer ${R.certainty?`<span class="cert ${cc}">${esc(R.certainty)} certainty</span>`:""}</div><p>${ans}</p>${R.certaintyWhy?`<p class="au">${esc(R.certaintyWhy)}</p>`:""}</div>
+  <div class="tts" style="border-top:0">${it.deck?deckBtn:`<button data-act="tmkdeck" data-v="${it.id}">${S.tdeck===it.id?'<span class="spin"></span>Making slides…':"📊 Make slides"}</button>`}<button data-act="tshare" data-v="${it.id}">Share</button></div>${by}
+  ${(R.evidence||[]).length?`<h4>What the evidence shows</h4>${pts(R.evidence)}`:""}${(R.caveats||[]).length?`<h4>Caveats</h4>${pts(R.caveats)}`:""}${(R.practice||[]).length?`<h4>For practice</h4>${pts(R.practice)}`:""}${tRefs(R)}`}
+ if(it.k==="pres"){const I=it.in;
+  return `<p class="au" style="margin-top:0">${esc([I.audience,I.date?new Date(I.date+"T12:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"long",year:"numeric"}):"",`${it.deck&&it.deck.n||I.n} slides`,(SLSTYLES.find(x=>x[0]===I.style)||[0,"Classic"])[1]+" style"].filter(Boolean).join(" · "))}</p>
+  <div class="tts" style="border-top:0">${deckBtn}<button data-act="tretry" data-v="${it.id}">Rebuild</button></div>${by}
+  ${R.subtitle?`<p class="fov">${esc(R.subtitle)}</p>`:""}<h4>Outline</h4><ol class="tout">${(R.sections||[]).map(s=>`<li><b>${esc(s.heading)}</b> <span class="au">(${s.slides} ${s.slides===1?"slide":"slides"})</span><div class="au">${esc(String(s.aim||"").replace(/\s*\[(\d+(?:\s*[,–-]\s*\d+)*)\]/g,""))}</div></li>`).join("")}</ol>${tRefs(R)}`}
+ return ""}
+function tItem(it){const D=TDEF[it.k];return `<div class="sheet big" role="dialog" aria-label="${esc(it.title||D.t)}"><div class="thead"><button class="link" data-act="tback">‹ ${D.t}</button><button class="tclose" data-act="mclose">Close</button></div><div class="vbody">
+ <h3 style="margin-top:4px">${esc(it.title||it.in.topic||it.in.q||it.in.title||"")}</h3>${it.status!=="ready"?tStatus(it):""}${it.res?tBody(it):""}</div></div>`}
+function tSheetK(k){const D=TDEF[k];if(!S.tv||S.tv.k!==k)S.tv={k,view:"list"};const v=S.tv;
+ if(v.view==="form")return tForm(k);
+ if(v.view==="item"){const it=tGet(v.id);if(it)return tItem(it);S.tv={k,view:"list"}}
+ const L=tList(k);
+ return `<div class="sheet big" role="dialog" aria-label="${D.t}"><div class="thead"><h3>${D.ic} ${D.t}</h3><button class="tclose" data-act="mclose">Close</button></div><div class="vbody">
+  <p class="note" style="margin-top:0">${D.intro}</p>${L.map(tCard).join("")||`<div class="msg">Nothing here yet.</div>`}
+  ${L.length<D.max?`<div class="pk" style="margin-top:12px"><a href="#" data-act="tnew" data-v="${k}">+ New ${D.one}</a></div>`:`<p class="note">You can keep ${D.max}. Delete one to start another.</p>`}</div></div>`}
+{const _ts=toolSheet;toolSheet=function(k){return TDEF[k]?tSheetK(k):_ts(k)}}
+{const _rm=renderModal;renderModal=function(){const m=S.modal;if(m&&m.type==="cqplay"){const el=document.getElementById("modal");if(!el)return;el.className="ov xpov";el.innerHTML=xpSheet();el._v=null;return}
+ const el=document.getElementById("modal");if(el)el.classList.remove("xpov");
+ if(m&&m.type==="tool"&&TDEF[m.v]&&el){const sh=el.querySelector(".vbody"),y=sh&&el._tk===m.v+(S.tv&&S.tv.view)+(S.tv&&S.tv.id)?sh.scrollTop:0;const r=_rm.apply(this,arguments);el._tk=m.v+(S.tv&&S.tv.view)+(S.tv&&S.tv.id);const nb=el.querySelector(".vbody");if(nb&&y)nb.scrollTop=y;return r}
+ return _rm.apply(this,arguments)}}
+function tGo(k){const f={...(S.tf||{})};let I,txt;
+ if(k==="topic"){I={topic:String(f.topic||"").trim(),refine:String(f.refine||"").trim(),years:+f.years||5,slides:+f.slides||12,style:f.style||st.slideStyle||"classic"};if(I.topic.length<3){toast("Enter a topic first.");return}txt=I.topic+" "+I.refine}
+ if(k==="cq"){I={q:String(f.q||"").trim(),ctx:String(f.ctx||"").trim()};if(I.q.length<8){toast("Type your question first.");return}txt=I.q+" "+I.ctx}
+ if(k==="pres"){I={title:String(f.title||"").trim(),audience:f.audience||AUDIENCES[0],date:f.date||"",n:Math.max(5,Math.min(50,parseInt(f.n,10)||20)),points:String(f.points||"").trim(),showOrg:f.showOrg!==undefined?!!f.showOrg:st.myOrgShow!==false,style:f.style||st.slideStyle||"classic"};if(I.title.length<3){toast("Enter the title or topic of the talk first.");return}txt=I.title+" "+I.points}
+ const p=piiOf(txt);if(p==="hard"){toast("That looks like it contains patient details. Remove names, dates of birth, NHS or CHI numbers and addresses.");return}
+ if(!aiURL()){toast(aiErr("setup"));return}
+ if(tList(k).length>=TDEF[k].max){toast(`You can keep ${TDEF[k].max}. Delete one first.`);return}
+ const it={id:"t"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),k,at:Date.now(),in:I,title:"",status:"queued",step:"Waiting to start"};
+ tList(k).unshift(it);save();S.tf=null;S.tv={k,view:"item",id:it.id};renderModal();tEnq(it.id);
+ if(p==="soft")toast("This reads like a specific patient, so the answer won't be shared with other users.")}
+async function tShare(it){const R=it.res||{};let txt="";
+ if(it.k==="topic")txt=`${it.title}\n\n${reviewText(R.review||{})}`;else if(it.k==="cq")txt=`${it.title}\n\n${answerText(R)}`;else txt=`${it.title}\n\n${(R.sections||[]).map((s,i)=>`${i+1}. ${s.heading} (${s.slides} slides)`).join("\n")}`;
+ txt+=`\n\nReferences\n${(R.papers||[]).map(p=>`[${p.n}] ${p.title}. ${p.journal} ${p.year}. https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/`).join("\n")}`;
+ if(navigator.share){try{await navigator.share({title:it.title,text:txt});return}catch(e){if(e&&e.name==="AbortError")return}}
+ try{await navigator.clipboard.writeText(txt);toast("Copied")}catch(e){toast("Couldn't share it here.")}}
+async function tMakeCqDeck(it){if(S.tdeck)return;S.tdeck=it.id;renderModal();
+ try{const R=it.res,r=renum([answerText(R)],R.papers);await tDeckSave(it,await makeDeck(null,10,{title:it.title||"Clinical question",text:r.out[0].slice(0,13500),refs:r.refs,style:st.slideStyle||"classic"},{tag:"question"}));const f=await tDeckFile(it);S.tdeck="";renderModal();if(f)cmpSave(f)}
+ catch(e){S.tdeck="";renderModal();toast(aiErr(e&&e.code))}}
+document.addEventListener("input",e=>{const t=e.target;if(t&&t.id&&t.id.startsWith("tf-")){S.tf=S.tf||{};S.tf[t.id.slice(3)]=t.type==="checkbox"?t.checked:t.value}},true);
+document.addEventListener("change",e=>{const t=e.target;if(!t)return;if(t.id&&t.id.startsWith("tf-")){S.tf=S.tf||{};S.tf[t.id.slice(3)]=t.type==="checkbox"?t.checked:t.value}
+ if(t.id==="tplfile"&&t.files&&t.files[0]){const f=t.files[0];t.value="";tplLoad(f)}},true);
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act,v=b.dataset.v;
+ const take=()=>{e.preventDefault();e.stopImmediatePropagation()};
+ if(a==="tool"&&TDEF[v]){take();if(!S.tv||S.tv.k!==v)S.tv={k:v,view:"list"};S.modal={type:"tool",v};renderModal()}
+ else if(a==="tnew"){take();if(tList(v).length>=TDEF[v].max){toast(`You can keep ${TDEF[v].max}. Delete one first.`);return}S.tf={style:st.slideStyle||"classic"};S.tv={k:v,view:"form"};renderModal()}
+ else if(a==="tback"){take();S.tv={k:S.tv.k,view:"list"};S.confirm="";renderModal()}
+ else if(a==="tfset"){take();S.tf=S.tf||{};S.tf[b.dataset.f]=b.dataset.v;renderModal()}
+ else if(a==="tgo"){take();tGo(v)}
+ else if(a==="topen"){take();const it=tGet(v);if(it){S.tv={k:it.k,view:"item",id:v};renderModal()}}
+ else if(a==="tretry"){take();const it=tGet(v);if(it){it.err="";if(it.status!=="busy")tEnq(v);S.tv={k:it.k,view:"item",id:v};renderModal()}}
+ else if(a==="tdelask"){take();S.confirm="t:"+v;renderModal()}
+ else if(a==="tdel"){take();for(const k of Object.keys(TDEF))st.tools[k]=tList(k).filter(x=>x.id!==v);TQ.q=TQ.q.filter(x=>x!==v);S.confirm="";save();tGC();renderModal();tPaint(null)}
+ else if(a==="tdeck"){take();const it=tGet(v);if(it)tDeckFile(it).then(f=>f?cmpSave(f):toast("The slides aren't on this phone any more. Tap Rebuild."))}
+ else if(a==="tmkdeck"){take();const it=tGet(v);if(it)tMakeCqDeck(it)}
+ else if(a==="tshare"){take();const it=tGet(v);if(it)tShare(it)}
+ else if(a==="xpplay"){take();xpOpen(v)}
+ else if(a==="xptoggle"){take();if(XP.playing){XP.playing=false;clearTimeout(XP.t);try{XP.a.pause()}catch(x){}renderModal()}else{XP.playing=true;if(XP.a&&XP.a.src&&XP.a.currentTime>0&&!XP.a.ended){XP.a.play().catch(()=>{});renderModal()}else xpGo(XP.i)}}
+ else if(a==="xpnext"){take();XP.playing=true;try{XP.a.pause()}catch(x){}xpGo(XP.i+1)}
+ else if(a==="xpprev"){take();XP.playing=true;try{XP.a.pause()}catch(x){}xpGo(XP.i-1)}
+ else if(a==="xpagain"){take();XP.playing=true;const a2=xpEl();try{a2.src=GV_SILENT;a2.play().catch(()=>{})}catch(x){}xpGo(0)}
+ else if(a==="xpclose"||a==="xpread"){take();XP.gen++;XP.playing=false;clearTimeout(XP.t);try{XP.a.pause()}catch(x){}const it=tGet(XP.id);S.modal=it?{type:"tool",v:it.k}:null;if(it)S.tv={k:it.k,view:"item",id:it.id};renderModal()}
+},true);
+// jobs that were running when the app was closed carry on next time
+setTimeout(()=>{for(const k of Object.keys(TDEF))for(const it of tList(k)){if(it.status==="busy"||it.status==="queued")tEnq(it.id);else if(it.k==="cq"&&it.status==="ready"&&it.voiced!==gvVoice())setTimeout(()=>tNarrate(it),4000)}tGC();tPaint(null)},2500);
 </script>
 </body>
 </html>
