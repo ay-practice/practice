@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-15",
- "note": "Cardiology CPD conference list. Dates, venues and credits checked on the date above. Optional \"book\" is the registration page; otherwise the website is used.",
+ "updated": "2026-10-26",
+ "note": "Cardiology CPD conference list. Dates, venues and credits checked on the date above. Optional \"book\" is the registration page; otherwise the website is used. Optional \"abs\" is the abstract deadline, \"lbs\" the late-breaking science deadline and \"eb\" the early-registration deadline (\"ebN\" relabels it); \"tg\" is the topic (general, rhythm, imaging, hf, intervention, prevention).",
  "events": [
   {
    "id": "acc26",
@@ -11,7 +11,8 @@
    "s": "2026-03-28",
    "e": "2026-03-30",
    "v": "New Orleans, USA",
-   "url": "https://accscientificsession.acc.org"
+   "url": "https://accscientificsession.acc.org",
+   "tg": "general"
   },
   {
    "id": "ehra26",
@@ -22,7 +23,8 @@
    "s": "2026-04-12",
    "e": "2026-04-14",
    "v": "Paris, France",
-   "url": "https://www.escardio.org/events/congresses/ehra-congress/"
+   "url": "https://www.escardio.org/events/congresses/ehra-congress/",
+   "tg": "rhythm"
   },
   {
    "id": "hf26",
@@ -35,7 +37,8 @@
    "v": "Barcelona, Spain",
    "cr": 22.5,
    "crNote": "European CME credits",
-   "url": "https://www.escardio.org/Congresses-&-Events/Heart-Failure"
+   "url": "https://www.escardio.org/Congresses-&-Events/Heart-Failure",
+   "tg": "hf"
   },
   {
    "id": "pcr26",
@@ -46,7 +49,8 @@
    "s": "2026-05-19",
    "e": "2026-05-22",
    "v": "Palais des Congrès, Paris, France",
-   "url": "https://www.pcronline.com"
+   "url": "https://www.pcronline.com",
+   "tg": "intervention"
   },
   {
    "id": "bcs26",
@@ -59,7 +63,8 @@
    "v": "Manchester Central, UK",
    "cr": 18,
    "crNote": "RCP CPD credits (6 a day in past years)",
-   "url": "https://britishcardiovascularsociety.org.uk/annual-conference-v2/"
+   "url": "https://britishcardiovascularsociety.org.uk/annual-conference-v2/",
+   "tg": "general"
   },
   {
    "id": "onco26",
@@ -72,7 +77,8 @@
    "v": "Vienna, Austria",
    "cr": 13.5,
    "crNote": "European CME credits",
-   "url": "https://www.escardio.org/events/congresses/esc-cardio-oncology/"
+   "url": "https://www.escardio.org/events/congresses/esc-cardio-oncology/",
+   "tg": "general"
   },
   {
    "id": "scct26",
@@ -83,7 +89,8 @@
    "s": "2026-07-09",
    "e": "2026-07-12",
    "v": "Chula Vista, San Diego, USA",
-   "url": "https://scct.org/page/AnnSciMeet"
+   "url": "https://scct.org/page/AnnSciMeet",
+   "tg": "imaging"
   },
   {
    "id": "esc26",
@@ -96,7 +103,8 @@
    "v": "Messe München, Munich, Germany",
    "cr": 29,
    "crNote": "European CME credits (maximum)",
-   "url": "https://www.escardio.org/congresses-events/esc-congress/"
+   "url": "https://www.escardio.org/congresses-events/esc-congress/",
+   "tg": "general"
   },
   {
    "id": "scs26",
@@ -107,7 +115,8 @@
    "s": "2026-10-01",
    "e": "2026-10-02",
    "v": "Scotland",
-   "url": "https://www.rcpe.ac.uk/events/scottish-cardiac-society-35th-annual-general-meeting-2026"
+   "url": "https://www.rcpe.ac.uk/events/scottish-cardiac-society-35th-annual-general-meeting-2026",
+   "tg": "general"
   },
   {
    "id": "bacpr26",
@@ -118,7 +127,8 @@
    "s": "2026-10-08",
    "e": "2026-10-09",
    "v": "The Eastside Rooms, Birmingham, UK",
-   "url": "https://bacpr-conference.org/"
+   "url": "https://bacpr-conference.org/",
+   "tg": "prevention"
   },
   {
    "id": "hrc26",
@@ -129,7 +139,8 @@
    "s": "2026-10-11",
    "e": "2026-10-13",
    "v": "ICC Birmingham, UK",
-   "url": "https://www.heartrhythmcongress.org"
+   "url": "https://www.heartrhythmcongress.org",
+   "tg": "rhythm"
   },
   {
    "id": "bse26",
@@ -140,7 +151,8 @@
    "s": "2026-10-16",
    "e": "2026-10-17",
    "v": "Manchester Central, UK, and on demand",
-   "url": "https://www.bsecho.org/BSEcho2026"
+   "url": "https://www.bsecho.org/BSEcho2026",
+   "tg": "imaging"
   },
   {
    "id": "tct26",
@@ -151,7 +163,8 @@
    "s": "2026-10-31",
    "e": "2026-11-03",
    "v": "San Diego Convention Center, USA",
-   "url": "https://www.crf.org/tct"
+   "url": "https://www.crf.org/tct",
+   "tg": "intervention"
   },
   {
    "id": "aha26",
@@ -163,7 +176,8 @@
    "e": "2026-11-09",
    "v": "McCormick Place, Chicago, USA",
    "url": "https://professional.heart.org/en/meetings/scientific-sessions",
-   "book": "https://professionalmember.heart.org/ConferenceIntegration/ConferenceConfirmation?confId=AHSS1126"
+   "book": "https://professionalmember.heart.org/ConferenceIntegration/ConferenceConfirmation?confId=AHSS1126",
+   "tg": "general"
   },
   {
    "id": "sharp26",
@@ -174,7 +188,8 @@
    "s": "2026-11-12",
    "e": "2026-11-13",
    "v": "Crieff Hydro, Scotland",
-   "url": "https://www.nhsresearchscotland.org.uk/calendar/sharp-and-scottish-lipid-forum-annual-meeting-2026"
+   "url": "https://www.nhsresearchscotland.org.uk/calendar/sharp-and-scottish-lipid-forum-annual-meeting-2026",
+   "tg": "prevention"
   },
   {
    "id": "pcrlv26",
@@ -185,7 +200,8 @@
    "s": "2026-11-22",
    "e": "2026-11-24",
    "v": "ExCeL London, UK",
-   "url": "https://pcronline.com/Courses/PCR-London-Valves"
+   "url": "https://pcronline.com/Courses/PCR-London-Valves",
+   "tg": "intervention"
   },
   {
    "id": "eacvi26",
@@ -197,19 +213,24 @@
    "e": "2026-12-05",
    "v": "Milan, Italy",
    "url": "https://www.escardio.org/events/congresses/eacvi-congress/",
-   "book": "https://www.escardio.org/events/congresses/eacvi-congress/registration/"
+   "book": "https://www.escardio.org/events/congresses/eacvi-congress/registration/",
+   "eb": "2026-11-03",
+   "ebN": "Late registration savings end",
+   "tg": "imaging"
   },
   {
-   "id": "aci27",
-   "n": "BCIS Advanced Cardiovascular Intervention (ACI) 2027",
-   "org": "British Cardiovascular Intervention Society",
+   "id": "eapci27",
+   "n": "EAPCI 2027",
+   "org": "European Association of Percutaneous Cardiovascular Interventions (ESC)",
    "t": "conf",
-   "r": "uk",
-   "s": "",
-   "e": "",
-   "when": "Usually late January",
-   "v": "Hilton London Metropole, UK, and online",
-   "url": "https://www.bcis.org.uk"
+   "r": "eu",
+   "s": "2027-02-18",
+   "e": "2027-02-20",
+   "v": "Milan, Italy",
+   "url": "https://www.escardio.org/events/congresses/eapci-congress/",
+   "lbs": "2026-11-24",
+   "eb": "2026-12-17",
+   "tg": "intervention"
   },
   {
    "id": "acvc27",
@@ -222,7 +243,10 @@
    "v": "Fibes, Seville, Spain",
    "cr": 12,
    "crNote": "European CME credits in 2026",
-   "url": "https://www.escardio.org/events/congresses/acute-cardiovascular-care/"
+   "url": "https://www.escardio.org/events/congresses/acute-cardiovascular-care/",
+   "abs": "2026-10-29",
+   "eb": "2027-01-14",
+   "tg": "general"
   },
   {
    "id": "acc27",
@@ -233,7 +257,9 @@
    "s": "2027-04-10",
    "e": "2027-04-12",
    "v": "George R. Brown Convention Center, Houston, USA",
-   "url": "https://accscientificsession.acc.org"
+   "url": "https://accscientificsession.acc.org",
+   "abs": "2026-10-06",
+   "tg": "general"
   },
   {
    "id": "ehra27",
@@ -244,7 +270,11 @@
    "s": "2027-04-11",
    "e": "2027-04-13",
    "v": "Helsinki, Finland",
-   "url": "https://www.escardio.org/events/congresses/ehra-congress/"
+   "url": "https://www.escardio.org/events/congresses/ehra-congress/",
+   "abs": "2026-11-05",
+   "lbs": "2027-01-19",
+   "eb": "2027-02-11",
+   "tg": "rhythm"
   },
   {
    "id": "prev27",
@@ -257,7 +287,10 @@
    "v": "Lisbon, Portugal",
    "cr": 11,
    "crNote": "European CME credits in 2026",
-   "url": "https://www.escardio.org/events/congresses/esc-preventive-cardiology/"
+   "url": "https://www.escardio.org/events/congresses/esc-preventive-cardiology/",
+   "abs": "2026-11-19",
+   "eb": "2027-02-16",
+   "tg": "prevention"
   },
   {
    "id": "hrs27",
@@ -269,7 +302,9 @@
    "e": "2027-05-16",
    "v": "Moscone Center, San Francisco, USA, and online",
    "url": "https://www.heartrhythm.com",
-   "book": "https://www.heartrhythm.com/attend"
+   "book": "https://www.heartrhythm.com/attend",
+   "abs": "2026-12-16",
+   "tg": "rhythm"
   },
   {
    "id": "pcr27",
@@ -280,7 +315,10 @@
    "s": "2027-05-18",
    "e": "2027-05-21",
    "v": "Palais des Congrès, Paris, France",
-   "url": "https://www.pcronline.com"
+   "url": "https://www.pcronline.com",
+   "abs": "2027-01-11",
+   "lbs": "2027-01-25",
+   "tg": "intervention"
   },
   {
    "id": "hf27",
@@ -293,7 +331,24 @@
    "v": "London, UK, and online",
    "cr": 22.5,
    "crNote": "European CME credits in 2026",
-   "url": "https://www.escardio.org/Congresses-&-Events/Heart-Failure"
+   "url": "https://www.escardio.org/Congresses-&-Events/Heart-Failure",
+   "abs": "2027-01-07",
+   "eb": "2027-03-23",
+   "tg": "hf"
+  },
+  {
+   "id": "onco27",
+   "n": "ESC Cardio-Oncology 2027",
+   "org": "ESC Council of Cardio-Oncology",
+   "t": "conf",
+   "r": "eu",
+   "s": "2027-06-04",
+   "e": "2027-06-05",
+   "v": "Porto, Portugal",
+   "url": "https://www.escardio.org/events/congresses/esc-cardio-oncology/",
+   "abs": "2027-01-21",
+   "eb": "2027-04-06",
+   "tg": "general"
   },
   {
    "id": "bcs27",
@@ -306,7 +361,8 @@
    "v": "Manchester Central, UK",
    "cr": 18,
    "crNote": "RCP CPD credits (6 a day in past years)",
-   "url": "https://britishcardiovascularsociety.org.uk/annual-conference-v2/"
+   "url": "https://britishcardiovascularsociety.org.uk/annual-conference-v2/",
+   "tg": "general"
   },
   {
    "id": "scct27",
@@ -317,7 +373,8 @@
    "s": "2027-07-08",
    "e": "2027-07-11",
    "v": "Washington DC, USA",
-   "url": "https://scct.org/page/SCCT2027"
+   "url": "https://scct.org/page/SCCT2027",
+   "tg": "imaging"
   },
   {
    "id": "esc27",
@@ -330,7 +387,23 @@
    "v": "Milan, Italy",
    "cr": 29,
    "crNote": "European CME credits in 2026",
-   "url": "https://www.escardio.org/events/congresses/esc-congress/future-destinations/"
+   "url": "https://www.escardio.org/events/congresses/esc-congress/future-destinations/",
+   "abs": "2027-03-01",
+   "eb": "2027-05-31",
+   "tg": "general"
+  },
+  {
+   "id": "aci27",
+   "n": "BCIS Advanced Cardiovascular Intervention (ACI) 2027",
+   "org": "British Cardiovascular Intervention Society",
+   "t": "conf",
+   "r": "uk",
+   "s": "",
+   "e": "",
+   "when": "Usually late January",
+   "v": "Hilton London Metropole, UK, and online",
+   "url": "https://www.bcis.org.uk",
+   "tg": "intervention"
   },
   {
    "id": "o-esc",
@@ -340,7 +413,8 @@
    "r": "online",
    "v": "Online",
    "d": "Congress recordings, webinars and e-learning, many with European CME credits.",
-   "url": "https://www.escardio.org/communities/associations/eacvi/events/"
+   "url": "https://www.escardio.org/communities/associations/eacvi/events/",
+   "tg": "general"
   },
   {
    "id": "o-acc",
@@ -350,7 +424,8 @@
    "r": "online",
    "v": "Online",
    "d": "On-demand sessions, journal CME and self-assessment programmes.",
-   "url": "https://www.acc.org"
+   "url": "https://www.acc.org",
+   "tg": "general"
   },
   {
    "id": "o-hrs",
@@ -360,7 +435,8 @@
    "r": "online",
    "v": "Online",
    "d": "Recorded Heart Rhythm sessions and EP education.",
-   "url": "https://www.hrsonline.org/education/meetings"
+   "url": "https://www.hrsonline.org/education/meetings",
+   "tg": "general"
   },
   {
    "id": "o-bcs",
@@ -370,7 +446,8 @@
    "r": "online",
    "v": "Online",
    "d": "Webinar series and Annual Conference recordings for members.",
-   "url": "https://britishcardiovascularsociety.org.uk"
+   "url": "https://britishcardiovascularsociety.org.uk",
+   "tg": "general"
   },
   {
    "id": "o-bse",
@@ -380,7 +457,8 @@
    "r": "online",
    "v": "Online and in person",
    "d": "Echo webinars, accreditation courses and exam preparation.",
-   "url": "https://bsecho.org/iCore/Events/Events_List.aspx"
+   "url": "https://bsecho.org/iCore/Events/Events_List.aspx",
+   "tg": "general"
   },
   {
    "id": "o-pcr",
@@ -390,7 +468,8 @@
    "r": "online",
    "v": "Online",
    "d": "Interventional and structural webinars, live cases and course recordings.",
-   "url": "https://www.pcronline.com"
+   "url": "https://www.pcronline.com",
+   "tg": "general"
   },
   {
    "id": "o-rad",
@@ -400,7 +479,8 @@
    "r": "online",
    "v": "Online",
    "d": "Free videos, congress highlights and accredited online learning.",
-   "url": "https://www.radcliffecardiology.com"
+   "url": "https://www.radcliffecardiology.com",
+   "tg": "general"
   },
   {
    "id": "o-rcpe",
@@ -410,7 +490,8 @@
    "r": "online",
    "v": "Edinburgh and online",
    "d": "Medical symposia and webinars, including cardiology, with CPD.",
-   "url": "https://www.rcpe.ac.uk/events"
+   "url": "https://www.rcpe.ac.uk/events",
+   "tg": "general"
   },
   {
    "id": "o-bmj",
@@ -420,7 +501,8 @@
    "r": "online",
    "v": "Online",
    "d": "Short accredited modules, including cardiology topics.",
-   "url": "https://learning.bmj.com"
+   "url": "https://learning.bmj.com",
+   "tg": "general"
   },
   {
    "id": "o-med",
@@ -430,7 +512,8 @@
    "r": "online",
    "v": "Online",
    "d": "Free short CME activities on recent trials and guidelines.",
-   "url": "https://www.medscape.org/cardiology"
+   "url": "https://www.medscape.org/cardiology",
+   "tg": "general"
   }
  ]
 }

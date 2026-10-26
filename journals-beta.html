@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-s1dmkYEGvsRPJNFJj5llWYoOnjRrHghc4wnx9u59TAc=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://cpd-voice.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-6KCvEcuj2n5RX/TJrjicYcF42YKiDM6iGEwp6nuqx+4=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://cpd-voice.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -486,13 +486,80 @@ header .hicon.ic-cal{display:flex!important;flex-direction:column;align-items:st
 .sheet label.au select{display:block;width:100%;margin-top:4px;font-size:16px;padding:11px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.8);background:var(--glass2,#fff);box-shadow:inset 0 1px 2px rgba(60,60,110,.06)}
 .sheet label.au .search{margin-top:4px}
 .prsub{display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 2px}.prsub .chip{font-size:14px;padding:6px 11px}
+
+/* b9 */
+.tiles button,.navband .tools button{height:49.5px!important;font-size:11px!important;gap:3px!important}
+.tiles button svg,.navband .tools button svg{width:18px!important;height:18px!important}
+.navband .tools button{padding:4px 1px!important}
+.row .chip{font-size:14.25px!important;padding:6.65px 11.4px!important}
+.row .chip.cat::before{width:9.5px!important;height:9.5px!important}
+.row .chip i{width:7.6px!important;height:7.6px!important}
+.row .chip.srch svg{width:18px!important;height:18px!important}
+.tl .tawrap{display:block!important;position:relative;margin-top:4px}
+.tl .tawrap textarea{display:block;width:100%!important;box-sizing:border-box;margin-top:0!important}
+.tl .tawrap .tidy{position:absolute;left:2px;top:100%;margin-top:2px}
+.tl .tawrap:has(.tidy){margin-bottom:30px}
+.tawrap.sm textarea{min-height:64px!important;padding-right:60px!important}
+.navband .tools button span{letter-spacing:-.15px}
+.tawrap.sm .mic{width:42px!important;height:42px!important;bottom:6px!important;right:6px!important}
+.tawrap.sm .mic svg{width:22px;height:22px}
+.au .search.tdate,.au .search.tnum{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;-webkit-appearance:none;appearance:none;min-height:46px;text-align:left}
+.au .search.tdate::-webkit-date-and-time-value{text-align:left}
+
+/* b10 */
+.xcount{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:rgba(255,255,255,.7);border:1px solid #E3E6F0;border-radius:14px;padding:10px 12px;margin:8px 0}
+.xcn{font-size:20px;font-weight:700;color:#2E3A6B}
+.xcount .more{flex:0 0 auto}
+.xquiz{padding:12px 14px;margin:10px 0;background:linear-gradient(135deg,#F3EEFF,#EAF2FF)}
+.xmod{background:rgba(255,255,255,.7);border:1px solid #E3E6F0;border-radius:12px;padding:8px 12px;margin:6px 0}
+.xmod>summary{list-style:none;cursor:pointer}.xmod>summary::-webkit-details-marker{display:none}
+.xmh{display:flex;align-items:center;gap:8px;font-size:15.5px}.xmh small{margin-left:auto;color:var(--muted);font-size:12.5px}
+.xmh .spin{margin:0}
+.xok{color:#1F7A45;font-weight:800}.xerr{color:#B3261E;font-weight:800}.xwait{color:var(--muted)}
+details.xmod[open]>summary{margin-bottom:6px}
+.qzbar{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:#4B3C8F;margin-top:4px}
+.qzq{font-size:17px;line-height:1.45;margin:10px 0 12px;font-weight:600}
+.qopt{display:block;width:100%;text-align:left;font:inherit;font-size:15.5px;line-height:1.35;padding:12px 14px;margin:8px 0;border-radius:14px;border:1px solid #DCE0F0;background:#fff;color:var(--ink)}
+.qopt.right{background:#E3F4EA;border-color:#2E9E5B;color:#14532D;font-weight:600}
+.qopt.wrong{background:#FDE8E7;border-color:#C0504D;color:#7A1C18}
+.qopt.dim{opacity:.6}
+.qzwhy{border-radius:12px;padding:10px 12px;margin-top:10px;background:#F1F3F9;font-size:15px}.qzwhy.ok{background:#E3F4EA}.qzwhy.no{background:#FDF1E7}.qzwhy p{margin:6px 0 0}
+.xscore{text-align:center;padding:18px 0 6px}.xscore .xcn{font-size:34px}
+.xtl{list-style:none;margin:4px 0 8px;padding:0 0 0 14px;border-left:2px solid #D3D8E8}
+.xtl li{position:relative;padding:5px 0 7px 8px;font-size:14.5px;display:flex;flex-direction:column}
+.xtl li::before{content:"";position:absolute;left:-21px;top:9px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid #9AA1B5}
+.xtl li.done::before{background:#9AA1B5}.xtl li.now::before{background:#2E7D6B;border-color:#2E7D6B;box-shadow:0 0 0 4px rgba(46,125,107,.18)}
+.xtl li span{color:var(--muted);font-size:13px}.xtl li.now b{color:#2E7D6B}
+.xol li{margin:4px 0}.xol ul{margin:2px 0 2px 16px}
+.xevr{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #E2E5EC;font-size:14.5px;line-height:1.35}
+.xevn{flex:0 0 22px;color:var(--muted);font-weight:700;font-size:13px;padding-top:1px}
+.xevf{margin-top:4px}
+.xbtn{flex:0 0 auto;white-space:nowrap;border:1px solid #DCE0F0;background:#fff;border-radius:12px;padding:8px 10px;font:inherit;font-size:14px;font-weight:600;color:#2E3A6B}
+.xcn{white-space:nowrap}
+.calnav{display:flex;align-items:center;justify-content:space-between;margin:4px 0 6px}
+.calnav b{font-size:17px}
+.calnav button{width:40px;height:40px;border-radius:50%;border:1px solid #DCE0F0;background:#fff;font-size:22px;line-height:1;color:#2E3A6B}
+.calg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cw{text-align:center;font-size:12px;font-weight:700;color:var(--muted);padding:2px 0}
+.cd{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:44px;padding:5px 0 0;border-radius:10px;border:0;background:rgba(255,255,255,.65);font:inherit;font-size:14.5px;color:var(--ink)}
+.cd.off{background:none}
+.cd.today span{background:#C0504D;color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.cd.sel{outline:2px solid #2E3A6B}
+.cd i{display:flex;gap:3px;margin-top:3px;height:6px}
+.cd i b,.calkey b,.caldot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--c)}
+.calkey{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12.5px;color:var(--muted);margin-top:8px}
+.calkey b{width:8px;height:8px;margin-right:4px;vertical-align:0}
+.calrow{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.7);border:1px solid #E3E6F0;border-radius:12px;padding:9px 10px;margin:6px 0}
+.caldot{width:10px;height:10px;margin-top:5px;flex:0 0 auto}
+.calrb{flex:1;min-width:0}.calrd{font-size:12.5px;color:var(--muted);font-weight:600}.calrt{font-size:15px;font-weight:600;line-height:1.3}.calrt a{color:inherit}
+.calics{flex:0 0 auto;border:1px solid #DCE0F0;background:#fff;border-radius:10px;padding:6px 8px;font-size:13px}
 </style>
 </head>
 <body>
 <header><div class="hin">
  <div class="top"><div class="ttl"><h1>Cardiology Education</h1><span class="beta">BETA TEST VERSION</span><span class="newc" id="newc"></span></div><span class="hright"><button class="hicon ic-vid" data-act="help" aria-label="Watch the explainer video"><svg viewBox="0 0 30 21" aria-hidden="true"><rect x=".5" y=".5" width="29" height="20" rx="6" fill="#E62117"/><path d="M12 6v9l7.6-4.5z" fill="#fff"/></svg></button><button class="hicon ic-lib" data-tab="saved" aria-label="Library"><span class="libcount" id="libcount" style="display:none"></span><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5c3-1.3 6.3-1.3 10 .8v13.2c-3.7-2.1-7-2.1-10-.8z"/><path d="M22 5.5c-3-1.3-6.3-1.3-10 .8v13.2c3.7-2.1 7-2.1 10-.8z"/></svg></button><button class="hicon ic-cal" data-act="calendar" aria-label="Calendar"><span class="calm" id="calm"></span><span class="cald" id="cald"></span></button><button class="hicon ic-prof" id="profbtn" data-act="profile" aria-label="Your profile"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg><span class="dot"></span></button><button class="hicon ic-set" data-tab="settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></span></div>
 </div></header>
-<div class="navband"><div class="hin"><nav class="tabs tiles" aria-label="Sections"><button data-tab="latest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4"/><path d="M8 11h8M8 15h8M8 19h5"/></svg><span>Articles</span></button><button data-tab="guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M4 17a3 3 0 0 1 3-3h11"/><path d="m8.5 8.5 1.8 1.8 3.4-3.4"/></svg><span>Guidelines</span></button><button data-tab="pods"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="1.5"/><rect x="17" y="14" width="4" height="7" rx="1.5"/></svg><span>Podcasts</span></button><button data-tab="scores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 7h8"/><path d="M8.5 12h1M12 12h0M15.5 12h0M8.5 16h1M12 16h0M15.5 16h0" stroke-width="2.4"/></svg><span>Scores</span></button><button data-tab="cpd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"/><path d="m9 13.8-1.6 7.2 4.6-2.6 4.6 2.6-1.6-7.2"/><path d="m10 9 1.4 1.4 2.8-2.8"/></svg><span>CPD</span></button></nav><nav class="tools" aria-label="Study tools"><button data-act="tool" data-v="pres"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v3M8 21h8"/><path d="m7 12 3-3 2.5 2 4.5-4"/></svg><span>Presentations</span></button><button data-act="tool" data-v="cq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.6 2.3c-.8.4-1.2 1-1.2 1.9V14"/><circle cx="12" cy="17.2" r=".6" fill="currentColor"/></svg><span>Clinical question</span></button><button data-act="tool" data-v="topic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.3-4.3"/><path d="M8.5 11h5M11 8.5v5"/></svg><span>Clinical topic</span></button><button data-act="tool" data-v="exam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.5 9 9.5-5 9.5 5-9.5 5z"/><path d="M6.5 11.2V16c1.5 1.6 3.4 2.4 5.5 2.4s4-.8 5.5-2.4v-4.8"/><path d="M21.5 9v5"/></svg><span>Exam prep</span></button><button data-act="tool" data-v="thesis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M9 9h6M9 13h6M9 17h3"/><path d="m14.5 17.5 4-4 1.5 1.5-4 4H14.5z"/></svg><span>Thesis</span></button></nav></div></div>
+<div class="navband"><div class="hin"><nav class="tabs tiles" aria-label="Sections"><button data-tab="latest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5z"/><path d="M15 3v4h4"/><path d="M8 11h8M8 15h8M8 19h5"/></svg><span>Articles</span></button><button data-tab="guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M4 17a3 3 0 0 1 3-3h11"/><path d="m8.5 8.5 1.8 1.8 3.4-3.4"/></svg><span>Guidelines</span></button><button data-tab="pods"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="1.5"/><rect x="17" y="14" width="4" height="7" rx="1.5"/></svg><span>Podcasts</span></button><button data-tab="scores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 7h8"/><path d="M8.5 12h1M12 12h0M15.5 12h0M8.5 16h1M12 16h0M15.5 16h0" stroke-width="2.4"/></svg><span>Scores</span></button><button data-tab="cpd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.5"/><path d="m9 13.8-1.6 7.2 4.6-2.6 4.6 2.6-1.6-7.2"/><path d="m10 9 1.4 1.4 2.8-2.8"/></svg><span>CPD</span></button></nav><nav class="tools" aria-label="Study tools"><button data-act="tool" data-v="pres"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M12 16v3M8 21h8"/><path d="m7 12 3-3 2.5 2 4.5-4"/></svg><span>My Presentations</span></button><button data-act="tool" data-v="cq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.6 2.3c-.8.4-1.2 1-1.2 1.9V14"/><circle cx="12" cy="17.2" r=".6" fill="currentColor"/></svg><span>Explore Evidence</span></button><button data-act="tool" data-v="topic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.3-4.3"/><path d="M8.5 11h5M11 8.5v5"/></svg><span>Focused Learning</span></button><button data-act="tool" data-v="exam"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.5 9 9.5-5 9.5 5-9.5 5z"/><path d="M6.5 11.2V16c1.5 1.6 3.4 2.4 5.5 2.4s4-.8 5.5-2.4v-4.8"/><path d="M21.5 9v5"/></svg><span>Exam prep</span></button><button data-act="tool" data-v="thesis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M9 9h6M9 13h6M9 17h3"/><path d="m14.5 17.5 4-4 1.5 1.5-4 4H14.5z"/></svg><span>Thesis</span></button></nav></div></div>
 <main id="main"></main>
 <div id="modal"></div>
 <div id="np"></div>
@@ -500,7 +567,7 @@ header .hicon.ic-cal{display:flex!important;flex-direction:column;align-items:st
 <script>
 "use strict";try{if(!localStorage.getItem("journal-reader-beta")&&localStorage.getItem("journal-reader-v1"))localStorage.setItem("journal-reader-beta",localStorage.getItem("journal-reader-v1"))}catch(e){}
 
-const KEY="journal-reader-beta",APPVER="Beta, 25 Oct 2026 (b8)";
+const KEY="journal-reader-beta",APPVER="Beta, 26 Oct 2026 (b10)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -1622,47 +1689,48 @@ function cpdSummary(){const L=cpdList(),tot=L.reduce((a,c)=>a+c.minutes,0);retur
 // ---------- conferences, courses and online learning (dates checked 15 Oct 2026) ----------
 // cr: credits awarded (number) with crNote; null means "use the figure on your certificate"
 let EVENTS=[
- {id:"acc26",n:"ACC.26 Annual Scientific Session",org:"American College of Cardiology",t:"conf",r:"usa",s:"2026-03-28",e:"2026-03-30",v:"New Orleans, USA",url:"https://accscientificsession.acc.org"},
- {id:"ehra26",n:"EHRA 2026",org:"European Heart Rhythm Association (ESC)",t:"conf",r:"eu",s:"2026-04-12",e:"2026-04-14",v:"Paris, France",url:"https://www.escardio.org/events/congresses/ehra-congress/"},
- {id:"hf26",n:"Heart Failure 2026",org:"Heart Failure Association (ESC)",t:"conf",r:"eu",s:"2026-05-09",e:"2026-05-12",v:"Barcelona, Spain",cr:22.5,crNote:"European CME credits",url:"https://www.escardio.org/Congresses-&-Events/Heart-Failure"},
- {id:"pcr26",n:"EuroPCR 2026",org:"PCR and EAPCI",t:"conf",r:"eu",s:"2026-05-19",e:"2026-05-22",v:"Palais des Congrès, Paris, France",url:"https://www.pcronline.com"},
- {id:"bcs26",n:"BCS Annual Conference 2026",org:"British Cardiovascular Society",t:"conf",r:"uk",s:"2026-06-01",e:"2026-06-03",v:"Manchester Central, UK",cr:18,crNote:"RCP CPD credits (6 a day in past years)",url:"https://britishcardiovascularsociety.org.uk/annual-conference-v2/"},
- {id:"onco26",n:"ESC Cardio-Oncology 2026",org:"European Society of Cardiology",t:"conf",r:"eu",s:"2026-06-19",e:"2026-06-20",v:"Vienna, Austria",cr:13.5,crNote:"European CME credits",url:"https://www.escardio.org/events/congresses/esc-cardio-oncology/"},
- {id:"scct26",n:"SCCT2026 Annual Scientific Meeting",org:"Society of Cardiovascular Computed Tomography",t:"conf",r:"usa",s:"2026-07-09",e:"2026-07-12",v:"Chula Vista, San Diego, USA",url:"https://scct.org/page/AnnSciMeet"},
- {id:"esc26",n:"ESC Congress 2026",org:"European Society of Cardiology",t:"conf",r:"eu",s:"2026-08-28",e:"2026-08-31",v:"Messe München, Munich, Germany",cr:29,crNote:"European CME credits (maximum)",url:"https://www.escardio.org/congresses-events/esc-congress/"},
- {id:"scs26",n:"Scottish Cardiac Society 35th Annual Meeting",org:"Scottish Cardiac Society",t:"conf",r:"uk",s:"2026-10-01",e:"2026-10-02",v:"Scotland",url:"https://www.rcpe.ac.uk/events/scottish-cardiac-society-35th-annual-general-meeting-2026"},
- {id:"bacpr26",n:"BACPR Annual Conference 2026",org:"British Association for Cardiovascular Prevention and Rehabilitation",t:"conf",r:"uk",s:"2026-10-08",e:"2026-10-09",v:"The Eastside Rooms, Birmingham, UK",url:"https://bacpr-conference.org/"},
- {id:"hrc26",n:"Heart Rhythm Congress 2026",org:"Arrhythmia Alliance with BHRS",t:"conf",r:"uk",s:"2026-10-11",e:"2026-10-13",v:"ICC Birmingham, UK",url:"https://www.heartrhythmcongress.org"},
- {id:"bse26",n:"BSEcho 2026",org:"British Society of Echocardiography",t:"conf",r:"uk",s:"2026-10-16",e:"2026-10-17",v:"Manchester Central, UK, and on demand",url:"https://www.bsecho.org/BSEcho2026"},
- {id:"tct26",n:"TCT 2026",org:"Cardiovascular Research Foundation",t:"conf",r:"usa",s:"2026-10-31",e:"2026-11-03",v:"San Diego Convention Center, USA",url:"https://www.crf.org/tct"},
- {id:"aha26",book:"https://professionalmember.heart.org/ConferenceIntegration/ConferenceConfirmation?confId=AHSS1126",n:"AHA Scientific Sessions 2026",org:"American Heart Association",t:"conf",r:"usa",s:"2026-11-06",e:"2026-11-09",v:"McCormick Place, Chicago, USA",url:"https://professional.heart.org/en/meetings/scientific-sessions"},
- {id:"sharp26",n:"SHARP and Scottish Lipid Forum Annual Meeting",org:"SHARP and Scottish Lipid Forum",t:"conf",r:"uk",s:"2026-11-12",e:"2026-11-13",v:"Crieff Hydro, Scotland",url:"https://www.nhsresearchscotland.org.uk/calendar/sharp-and-scottish-lipid-forum-annual-meeting-2026"},
- {id:"pcrlv26",n:"PCR London Valves 2026",org:"PCR",t:"conf",r:"uk",s:"2026-11-22",e:"2026-11-24",v:"ExCeL London, UK",url:"https://pcronline.com/Courses/PCR-London-Valves"},
- {id:"eacvi26",book:"https://www.escardio.org/events/congresses/eacvi-congress/registration/",n:"EACVI 2026 (EuroEcho, EuroCMR and ICNC-CT)",org:"European Association of Cardiovascular Imaging",t:"conf",r:"eu",s:"2026-12-03",e:"2026-12-05",v:"Milan, Italy",url:"https://www.escardio.org/events/congresses/eacvi-congress/"},
- {id:"aci27",n:"BCIS Advanced Cardiovascular Intervention (ACI) 2027",org:"British Cardiovascular Intervention Society",t:"conf",r:"uk",s:"",e:"",when:"Usually late January",v:"Hilton London Metropole, UK, and online",url:"https://www.bcis.org.uk"},
- {id:"acvc27",n:"ESC Acute CardioVascular Care 2027",org:"ESC Association for Acute CardioVascular Care",t:"conf",r:"eu",s:"2027-03-19",e:"2027-03-20",v:"Fibes, Seville, Spain",cr:12,crNote:"European CME credits in 2026",url:"https://www.escardio.org/events/congresses/acute-cardiovascular-care/"},
- {id:"acc27",n:"ACC.27, with the World Congress of Cardiology",org:"American College of Cardiology",t:"conf",r:"usa",s:"2027-04-10",e:"2027-04-12",v:"George R. Brown Convention Center, Houston, USA",url:"https://accscientificsession.acc.org"},
- {id:"ehra27",n:"EHRA 2027",org:"European Heart Rhythm Association (ESC)",t:"conf",r:"eu",s:"2027-04-11",e:"2027-04-13",v:"Helsinki, Finland",url:"https://www.escardio.org/events/congresses/ehra-congress/"},
- {id:"prev27",n:"ESC Preventive Cardiology 2027",org:"European Association of Preventive Cardiology",t:"conf",r:"eu",s:"2027-04-15",e:"2027-04-17",v:"Lisbon, Portugal",cr:11,crNote:"European CME credits in 2026",url:"https://www.escardio.org/events/congresses/esc-preventive-cardiology/"},
- {id:"hrs27",book:"https://www.heartrhythm.com/attend",n:"Heart Rhythm 2027",org:"Heart Rhythm Society",t:"conf",r:"usa",s:"2027-05-13",e:"2027-05-16",v:"Moscone Center, San Francisco, USA, and online",url:"https://www.heartrhythm.com"},
- {id:"pcr27",n:"EuroPCR 2027",org:"PCR and EAPCI",t:"conf",r:"eu",s:"2027-05-18",e:"2027-05-21",v:"Palais des Congrès, Paris, France",url:"https://www.pcronline.com"},
- {id:"hf27",n:"Heart Failure 2027",org:"Heart Failure Association (ESC)",t:"conf",r:"uk",s:"2027-05-22",e:"2027-05-25",v:"London, UK, and online",cr:22.5,crNote:"European CME credits in 2026",url:"https://www.escardio.org/Congresses-&-Events/Heart-Failure"},
- {id:"bcs27",n:"BCS Annual Conference 2027",org:"British Cardiovascular Society",t:"conf",r:"uk",s:"2027-06-07",e:"2027-06-09",v:"Manchester Central, UK",cr:18,crNote:"RCP CPD credits (6 a day in past years)",url:"https://britishcardiovascularsociety.org.uk/annual-conference-v2/"},
- {id:"scct27",n:"SCCT2027 Annual Scientific Meeting",org:"Society of Cardiovascular Computed Tomography",t:"conf",r:"usa",s:"2027-07-08",e:"2027-07-11",v:"Washington DC, USA",url:"https://scct.org/page/SCCT2027"},
- {id:"esc27",n:"ESC Congress 2027",org:"European Society of Cardiology",t:"conf",r:"eu",s:"2027-08-27",e:"2027-08-30",v:"Milan, Italy",cr:29,crNote:"European CME credits in 2026",url:"https://www.escardio.org/events/congresses/esc-congress/future-destinations/"},
- // online learning and webinars (any time)
- {id:"o-esc",n:"ESC 365 and ESC webinars",org:"European Society of Cardiology, including EACVI, EHRA and HFA",t:"online",r:"online",v:"Online",d:"Congress recordings, webinars and e-learning, many with European CME credits.",url:"https://www.escardio.org/communities/associations/eacvi/events/"},
- {id:"o-acc",n:"ACC Anywhere and ACC education",org:"American College of Cardiology",t:"online",r:"online",v:"Online",d:"On-demand sessions, journal CME and self-assessment programmes.",url:"https://www.acc.org"},
- {id:"o-hrs",n:"Heart Rhythm on demand and HRS webinars",org:"Heart Rhythm Society",t:"online",r:"online",v:"Online",d:"Recorded Heart Rhythm sessions and EP education.",url:"https://www.hrsonline.org/education/meetings"},
- {id:"o-bcs",n:"BCS webinars and conference recordings",org:"British Cardiovascular Society",t:"online",r:"online",v:"Online",d:"Webinar series and Annual Conference recordings for members.",url:"https://britishcardiovascularsociety.org.uk"},
- {id:"o-bse",n:"BSE webinars and courses",org:"British Society of Echocardiography",t:"online",r:"online",v:"Online and in person",d:"Echo webinars, accreditation courses and exam preparation.",url:"https://bsecho.org/iCore/Events/Events_List.aspx"},
- {id:"o-pcr",n:"PCR Online webinars",org:"PCR",t:"online",r:"online",v:"Online",d:"Interventional and structural webinars, live cases and course recordings.",url:"https://www.pcronline.com"},
- {id:"o-rad",n:"Radcliffe Cardiology",org:"Radcliffe Cardiology",t:"online",r:"online",v:"Online",d:"Free videos, congress highlights and accredited online learning.",url:"https://www.radcliffecardiology.com"},
- {id:"o-rcpe",n:"RCPE symposia and webinars",org:"Royal College of Physicians of Edinburgh",t:"online",r:"online",v:"Edinburgh and online",d:"Medical symposia and webinars, including cardiology, with CPD.",url:"https://www.rcpe.ac.uk/events"},
- {id:"o-bmj",n:"BMJ Learning",org:"BMJ",t:"online",r:"online",v:"Online",d:"Short accredited modules, including cardiology topics.",url:"https://learning.bmj.com"},
- {id:"o-med",n:"Medscape Cardiology CME",org:"Medscape",t:"online",r:"online",v:"Online",d:"Free short CME activities on recent trials and guidelines.",url:"https://www.medscape.org/cardiology"}
+{"id": "acc26", "n": "ACC.26 Annual Scientific Session", "org": "American College of Cardiology", "t": "conf", "r": "usa", "s": "2026-03-28", "e": "2026-03-30", "v": "New Orleans, USA", "url": "https://accscientificsession.acc.org", "tg": "general"},
+{"id": "ehra26", "n": "EHRA 2026", "org": "European Heart Rhythm Association (ESC)", "t": "conf", "r": "eu", "s": "2026-04-12", "e": "2026-04-14", "v": "Paris, France", "url": "https://www.escardio.org/events/congresses/ehra-congress/", "tg": "rhythm"},
+{"id": "hf26", "n": "Heart Failure 2026", "org": "Heart Failure Association (ESC)", "t": "conf", "r": "eu", "s": "2026-05-09", "e": "2026-05-12", "v": "Barcelona, Spain", "cr": 22.5, "crNote": "European CME credits", "url": "https://www.escardio.org/Congresses-&-Events/Heart-Failure", "tg": "hf"},
+{"id": "pcr26", "n": "EuroPCR 2026", "org": "PCR and EAPCI", "t": "conf", "r": "eu", "s": "2026-05-19", "e": "2026-05-22", "v": "Palais des Congrès, Paris, France", "url": "https://www.pcronline.com", "tg": "intervention"},
+{"id": "bcs26", "n": "BCS Annual Conference 2026", "org": "British Cardiovascular Society", "t": "conf", "r": "uk", "s": "2026-06-01", "e": "2026-06-03", "v": "Manchester Central, UK", "cr": 18, "crNote": "RCP CPD credits (6 a day in past years)", "url": "https://britishcardiovascularsociety.org.uk/annual-conference-v2/", "tg": "general"},
+{"id": "onco26", "n": "ESC Cardio-Oncology 2026", "org": "European Society of Cardiology", "t": "conf", "r": "eu", "s": "2026-06-19", "e": "2026-06-20", "v": "Vienna, Austria", "cr": 13.5, "crNote": "European CME credits", "url": "https://www.escardio.org/events/congresses/esc-cardio-oncology/", "tg": "general"},
+{"id": "scct26", "n": "SCCT2026 Annual Scientific Meeting", "org": "Society of Cardiovascular Computed Tomography", "t": "conf", "r": "usa", "s": "2026-07-09", "e": "2026-07-12", "v": "Chula Vista, San Diego, USA", "url": "https://scct.org/page/AnnSciMeet", "tg": "imaging"},
+{"id": "esc26", "n": "ESC Congress 2026", "org": "European Society of Cardiology", "t": "conf", "r": "eu", "s": "2026-08-28", "e": "2026-08-31", "v": "Messe München, Munich, Germany", "cr": 29, "crNote": "European CME credits (maximum)", "url": "https://www.escardio.org/congresses-events/esc-congress/", "tg": "general"},
+{"id": "scs26", "n": "Scottish Cardiac Society 35th Annual Meeting", "org": "Scottish Cardiac Society", "t": "conf", "r": "uk", "s": "2026-10-01", "e": "2026-10-02", "v": "Scotland", "url": "https://www.rcpe.ac.uk/events/scottish-cardiac-society-35th-annual-general-meeting-2026", "tg": "general"},
+{"id": "bacpr26", "n": "BACPR Annual Conference 2026", "org": "British Association for Cardiovascular Prevention and Rehabilitation", "t": "conf", "r": "uk", "s": "2026-10-08", "e": "2026-10-09", "v": "The Eastside Rooms, Birmingham, UK", "url": "https://bacpr-conference.org/", "tg": "prevention"},
+{"id": "hrc26", "n": "Heart Rhythm Congress 2026", "org": "Arrhythmia Alliance with BHRS", "t": "conf", "r": "uk", "s": "2026-10-11", "e": "2026-10-13", "v": "ICC Birmingham, UK", "url": "https://www.heartrhythmcongress.org", "tg": "rhythm"},
+{"id": "bse26", "n": "BSEcho 2026", "org": "British Society of Echocardiography", "t": "conf", "r": "uk", "s": "2026-10-16", "e": "2026-10-17", "v": "Manchester Central, UK, and on demand", "url": "https://www.bsecho.org/BSEcho2026", "tg": "imaging"},
+{"id": "tct26", "n": "TCT 2026", "org": "Cardiovascular Research Foundation", "t": "conf", "r": "usa", "s": "2026-10-31", "e": "2026-11-03", "v": "San Diego Convention Center, USA", "url": "https://www.crf.org/tct", "tg": "intervention"},
+{"id": "aha26", "n": "AHA Scientific Sessions 2026", "org": "American Heart Association", "t": "conf", "r": "usa", "s": "2026-11-06", "e": "2026-11-09", "v": "McCormick Place, Chicago, USA", "url": "https://professional.heart.org/en/meetings/scientific-sessions", "book": "https://professionalmember.heart.org/ConferenceIntegration/ConferenceConfirmation?confId=AHSS1126", "tg": "general"},
+{"id": "sharp26", "n": "SHARP and Scottish Lipid Forum Annual Meeting", "org": "SHARP and Scottish Lipid Forum", "t": "conf", "r": "uk", "s": "2026-11-12", "e": "2026-11-13", "v": "Crieff Hydro, Scotland", "url": "https://www.nhsresearchscotland.org.uk/calendar/sharp-and-scottish-lipid-forum-annual-meeting-2026", "tg": "prevention"},
+{"id": "pcrlv26", "n": "PCR London Valves 2026", "org": "PCR", "t": "conf", "r": "uk", "s": "2026-11-22", "e": "2026-11-24", "v": "ExCeL London, UK", "url": "https://pcronline.com/Courses/PCR-London-Valves", "tg": "intervention"},
+{"id": "eacvi26", "n": "EACVI 2026 (EuroEcho, EuroCMR and ICNC-CT)", "org": "European Association of Cardiovascular Imaging", "t": "conf", "r": "eu", "s": "2026-12-03", "e": "2026-12-05", "v": "Milan, Italy", "url": "https://www.escardio.org/events/congresses/eacvi-congress/", "book": "https://www.escardio.org/events/congresses/eacvi-congress/registration/", "eb": "2026-11-03", "ebN": "Late registration savings end", "tg": "imaging"},
+{"id": "eapci27", "n": "EAPCI 2027", "org": "European Association of Percutaneous Cardiovascular Interventions (ESC)", "t": "conf", "r": "eu", "s": "2027-02-18", "e": "2027-02-20", "v": "Milan, Italy", "url": "https://www.escardio.org/events/congresses/eapci-congress/", "lbs": "2026-11-24", "eb": "2026-12-17", "tg": "intervention"},
+{"id": "acvc27", "n": "ESC Acute CardioVascular Care 2027", "org": "ESC Association for Acute CardioVascular Care", "t": "conf", "r": "eu", "s": "2027-03-19", "e": "2027-03-20", "v": "Fibes, Seville, Spain", "cr": 12, "crNote": "European CME credits in 2026", "url": "https://www.escardio.org/events/congresses/acute-cardiovascular-care/", "abs": "2026-10-29", "eb": "2027-01-14", "tg": "general"},
+{"id": "acc27", "n": "ACC.27, with the World Congress of Cardiology", "org": "American College of Cardiology", "t": "conf", "r": "usa", "s": "2027-04-10", "e": "2027-04-12", "v": "George R. Brown Convention Center, Houston, USA", "url": "https://accscientificsession.acc.org", "abs": "2026-10-06", "tg": "general"},
+{"id": "ehra27", "n": "EHRA 2027", "org": "European Heart Rhythm Association (ESC)", "t": "conf", "r": "eu", "s": "2027-04-11", "e": "2027-04-13", "v": "Helsinki, Finland", "url": "https://www.escardio.org/events/congresses/ehra-congress/", "abs": "2026-11-05", "lbs": "2027-01-19", "eb": "2027-02-11", "tg": "rhythm"},
+{"id": "prev27", "n": "ESC Preventive Cardiology 2027", "org": "European Association of Preventive Cardiology", "t": "conf", "r": "eu", "s": "2027-04-15", "e": "2027-04-17", "v": "Lisbon, Portugal", "cr": 11, "crNote": "European CME credits in 2026", "url": "https://www.escardio.org/events/congresses/esc-preventive-cardiology/", "abs": "2026-11-19", "eb": "2027-02-16", "tg": "prevention"},
+{"id": "hrs27", "n": "Heart Rhythm 2027", "org": "Heart Rhythm Society", "t": "conf", "r": "usa", "s": "2027-05-13", "e": "2027-05-16", "v": "Moscone Center, San Francisco, USA, and online", "url": "https://www.heartrhythm.com", "book": "https://www.heartrhythm.com/attend", "abs": "2026-12-16", "tg": "rhythm"},
+{"id": "pcr27", "n": "EuroPCR 2027", "org": "PCR and EAPCI", "t": "conf", "r": "eu", "s": "2027-05-18", "e": "2027-05-21", "v": "Palais des Congrès, Paris, France", "url": "https://www.pcronline.com", "abs": "2027-01-11", "lbs": "2027-01-25", "tg": "intervention"},
+{"id": "hf27", "n": "Heart Failure 2027", "org": "Heart Failure Association (ESC)", "t": "conf", "r": "uk", "s": "2027-05-22", "e": "2027-05-25", "v": "London, UK, and online", "cr": 22.5, "crNote": "European CME credits in 2026", "url": "https://www.escardio.org/Congresses-&-Events/Heart-Failure", "abs": "2027-01-07", "eb": "2027-03-23", "tg": "hf"},
+{"id": "onco27", "n": "ESC Cardio-Oncology 2027", "org": "ESC Council of Cardio-Oncology", "t": "conf", "r": "eu", "s": "2027-06-04", "e": "2027-06-05", "v": "Porto, Portugal", "url": "https://www.escardio.org/events/congresses/esc-cardio-oncology/", "abs": "2027-01-21", "eb": "2027-04-06", "tg": "general"},
+{"id": "bcs27", "n": "BCS Annual Conference 2027", "org": "British Cardiovascular Society", "t": "conf", "r": "uk", "s": "2027-06-07", "e": "2027-06-09", "v": "Manchester Central, UK", "cr": 18, "crNote": "RCP CPD credits (6 a day in past years)", "url": "https://britishcardiovascularsociety.org.uk/annual-conference-v2/", "tg": "general"},
+{"id": "scct27", "n": "SCCT2027 Annual Scientific Meeting", "org": "Society of Cardiovascular Computed Tomography", "t": "conf", "r": "usa", "s": "2027-07-08", "e": "2027-07-11", "v": "Washington DC, USA", "url": "https://scct.org/page/SCCT2027", "tg": "imaging"},
+{"id": "esc27", "n": "ESC Congress 2027", "org": "European Society of Cardiology", "t": "conf", "r": "eu", "s": "2027-08-27", "e": "2027-08-30", "v": "Milan, Italy", "cr": 29, "crNote": "European CME credits in 2026", "url": "https://www.escardio.org/events/congresses/esc-congress/future-destinations/", "abs": "2027-03-01", "eb": "2027-05-31", "tg": "general"},
+{"id": "aci27", "n": "BCIS Advanced Cardiovascular Intervention (ACI) 2027", "org": "British Cardiovascular Intervention Society", "t": "conf", "r": "uk", "s": "", "e": "", "when": "Usually late January", "v": "Hilton London Metropole, UK, and online", "url": "https://www.bcis.org.uk", "tg": "intervention"},
+{"id": "o-esc", "n": "ESC 365 and ESC webinars", "org": "European Society of Cardiology, including EACVI, EHRA and HFA", "t": "online", "r": "online", "v": "Online", "d": "Congress recordings, webinars and e-learning, many with European CME credits.", "url": "https://www.escardio.org/communities/associations/eacvi/events/", "tg": "general"},
+{"id": "o-acc", "n": "ACC Anywhere and ACC education", "org": "American College of Cardiology", "t": "online", "r": "online", "v": "Online", "d": "On-demand sessions, journal CME and self-assessment programmes.", "url": "https://www.acc.org", "tg": "general"},
+{"id": "o-hrs", "n": "Heart Rhythm on demand and HRS webinars", "org": "Heart Rhythm Society", "t": "online", "r": "online", "v": "Online", "d": "Recorded Heart Rhythm sessions and EP education.", "url": "https://www.hrsonline.org/education/meetings", "tg": "general"},
+{"id": "o-bcs", "n": "BCS webinars and conference recordings", "org": "British Cardiovascular Society", "t": "online", "r": "online", "v": "Online", "d": "Webinar series and Annual Conference recordings for members.", "url": "https://britishcardiovascularsociety.org.uk", "tg": "general"},
+{"id": "o-bse", "n": "BSE webinars and courses", "org": "British Society of Echocardiography", "t": "online", "r": "online", "v": "Online and in person", "d": "Echo webinars, accreditation courses and exam preparation.", "url": "https://bsecho.org/iCore/Events/Events_List.aspx", "tg": "general"},
+{"id": "o-pcr", "n": "PCR Online webinars", "org": "PCR", "t": "online", "r": "online", "v": "Online", "d": "Interventional and structural webinars, live cases and course recordings.", "url": "https://www.pcronline.com", "tg": "general"},
+{"id": "o-rad", "n": "Radcliffe Cardiology", "org": "Radcliffe Cardiology", "t": "online", "r": "online", "v": "Online", "d": "Free videos, congress highlights and accredited online learning.", "url": "https://www.radcliffecardiology.com", "tg": "general"},
+{"id": "o-rcpe", "n": "RCPE symposia and webinars", "org": "Royal College of Physicians of Edinburgh", "t": "online", "r": "online", "v": "Edinburgh and online", "d": "Medical symposia and webinars, including cardiology, with CPD.", "url": "https://www.rcpe.ac.uk/events", "tg": "general"},
+{"id": "o-bmj", "n": "BMJ Learning", "org": "BMJ", "t": "online", "r": "online", "v": "Online", "d": "Short accredited modules, including cardiology topics.", "url": "https://learning.bmj.com", "tg": "general"},
+{"id": "o-med", "n": "Medscape Cardiology CME", "org": "Medscape", "t": "online", "r": "online", "v": "Online", "d": "Free short CME activities on recent trials and guidelines.", "url": "https://www.medscape.org/cardiology", "tg": "general"}
 ];
-const EV_BUILTIN="2026-10-15";
+const EV_BUILTIN="2026-10-26";
 const EVBY=Object.fromEntries(EVENTS.map(e=>[e.id,e]));
 function evApply(list){if(!Array.isArray(list)||!list.length)return;EVENTS=list.filter(x=>x&&x.id&&x.n);for(const k of Object.keys(EVBY))delete EVBY[k];for(const x of EVENTS)EVBY[x.id]=x}
 async function evRefresh(force){
@@ -1986,7 +2054,9 @@ const profileLine=()=>profileDone()?`<div class="card prof-ok"><span>Exporting a
 function helpSheet(){return `<div class="sheet big help" role="dialog" aria-label="Help"><h3>How to use ${APPTITLE}</h3>
  <video id="helpvid" src="${HELPVIDEO}" controls playsinline preload="metadata" poster=""></video>
  <div class="tips">
-  <p><b>Clinical topic, Clinical question and Presentations</b> (the second row of tiles): keep up to 3 of each. The app plans a PubMed search, picks the best papers and writes a referenced review, a narrated answer or a whole talk with slides. They carry on in the background while the app is open; a yellow dot on the tile shows one is being built.</p>
+  <p><b>Exam prep:</b> choose your exam, its date and topics. Each topic gets high-yield points, exam pearls and practice questions (tap ✍️ Practise for a scored quiz), with slides if you like. <b>Thesis:</b> 50 key papers with an evidence table, a suggested structure, gaps in the evidence, a timeline to your deadline and references to export.</p>
+  <p><b>Calendar</b> (the date at the top): your appraisal, exams, thesis deadline, talks, courses from your CPD log, and conferences with abstract and early-registration deadlines. Tap 📅+ to add any of them to your phone's calendar.</p>
+  <p><b>My Presentations, Explore Evidence and Focused Learning</b> (the second row of tiles): keep up to 3 of each. The app plans a PubMed search, picks the best papers and writes a referenced review, a narrated answer or a whole talk with slides. They carry on in the background while the app is open; a yellow dot on the tile shows one is being built.</p>
   <p><b>Library:</b> up to 10 papers. Each one is prepared in the background: a detailed summary (from the full paper when it's free), Listen and a two-voice Discussion, saved on your phone.</p>
   <p><b>Articles:</b> pick a topic or journal, or search. Tap <b>Abstract</b> to read it, and <b>Archive</b> to keep it in your Library (up to 10 papers), where you can <b>✨ Summarise</b>, <b>▶ Listen</b>, hear a <b>🎧 Discussion</b> or make slides.</p>
   <p><b>Saving and CPD:</b> <b>Archive</b> keeps a paper in the Library (the book icon). <b>CPD</b> logs the time with your reflection; use the microphone to dictate.</p>
@@ -2001,12 +2071,12 @@ const ICON_HELP='<svg viewBox="0 0 24 24" width="21" height="21" fill="none" str
 // ---------- dictation: rebuilt from scratch on each update, so text can't snowball and freeze the app ----------
 function dictStop(){if(dict){try{clearTimeout(dict._max);dict.stop()}catch(e){}dict=null}document.querySelectorAll(".mic").forEach(b=>b.classList.remove("on"))}
 function dictate(id){
- const ta=document.getElementById(id);if(!ta)return;
+ let ta=document.getElementById(id);if(!ta)return;
  if(dict){const same=dict._id===id;dictStop();if(same)return}
  if(!SRec){ta.focus();toast("Tap the microphone on your keyboard to dictate.");return}
  const r=new SRec();r.lang="en-GB";r.continuous=true;r.interimResults=true;r._id=id;
  const base=ta.value?ta.value.replace(/\s*$/," "):"";let heard="",pend=0;
- const apply=()=>{pend=0;if(!ta.isConnected)return;ta.value=fixDictation((base+heard).replace(/[ \t]+/g," ").trimStart()).slice(0,6000);ta.dispatchEvent(new Event("input",{bubbles:true}))};
+ const apply=()=>{pend=0;if(!ta.isConnected){const n=document.getElementById(id);if(!n)return;ta=n}ta.value=fixDictation((base+heard).replace(/[ \t]+/g," ").trimStart()).slice(0,6000);ta.dispatchEvent(new Event("input",{bubbles:true}))};
  r.onresult=e=>{try{
   // some phones resend everything heard so far with each update, so build the text afresh and drop repeats
   const parts=[];
@@ -2449,7 +2519,7 @@ function topicRowsOrdered(){return byOrder(allTopicRows(),st.topicOrder)}
 const arrows=(kind,id,i,n)=>`<span class="ord"><button data-act="${kind}up" data-v="${id}" aria-label="Move up" ${i===0?"disabled":""}>▲</button><button data-act="${kind}down" data-v="${id}" aria-label="Move down" ${i===n-1?"disabled":""}>▼</button></span>`;
 function topicEditor(){const t=S.tEdit;return `<div style="padding:4px 0;border-left:6px solid ${t.c||"#3F6FB5"};padding-left:10px">
   <label class="au" style="display:block">Topic name<input class="search" id="tname" value="${esc(t.name||"")}" placeholder="For example, Cardio-oncology"></label>
-  <label class="au" style="display:block;margin-top:6px">Search words, separated by commas<textarea class="search" id="twords" rows="4" placeholder="cardio-oncology, cardiotoxicity, anthracycline, trastuzumab">${esc(t.words||"")}</textarea></label>
+  <label class="au" style="display:block;margin-top:6px">Search words, separated by commas<span class="tawrap"><textarea class="search" id="twords" rows="4" placeholder="cardio-oncology, cardiotoxicity, anthracycline, trastuzumab">${esc(t.words||"")}</textarea>${taMic("twords")}</span></label>
   <p class="note" style="margin:4px 0">Articles with any of these words in the title or abstract appear in this topic. Use * for word endings, such as cardiotox*.</p>
   <div class="row" style="flex-wrap:wrap;overflow:visible">${PALETTE.map(c=>`<button class="chip" style="padding:0;width:30px;height:30px;border-radius:50%;background:${c};border:${(t.c||"")===c?"3px solid #1C2541":"1px solid #fff"}" data-act="tcol" data-v="${c}" aria-label="Colour"></button>`).join("")}</div>
   <div class="pk"><a href="#" data-act="tsave">Save topic</a><a href="#" class="alt" data-act="tcancel">Cancel</a></div>
@@ -3090,9 +3160,9 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
  setCal();setInterval(setCal,600000);
 })();
 var TOOLS={
- pres:{t:"Presentations",i:"Up to 3 presentations. Enter the topic, target audience, date and number of slides (up to 50), and pick a style: pastel, professional blue, bold, or copy your own slide. The app finds the relevant papers and builds the deck in the background.",ph:3},
- cq:{t:"Clinical question",i:"Type a clinical question, such as “What is the evidence for 3 weeks of anticoagulation before cardioversion?”. The app finds the 10 most relevant papers and answers it with a short narrated explainer, followed by slides and the references. Keep up to 3.",ph:3},
- topic:{t:"Clinical topic",i:"Enter a topic, such as cardiac sarcoidosis, and what you want to know, such as new developments in management. The app finds the top 20 papers and builds a deck of up to 20 slides with every reference listed. Keep up to 3.",ph:3},
+ pres:{t:"My Presentations",i:"Up to 3 presentations. Enter the topic, target audience, date and number of slides (up to 50), and pick a style: pastel, professional blue, bold, or copy your own slide. The app finds the relevant papers and builds the deck in the background.",ph:3},
+ cq:{t:"Explore Evidence",i:"Type a clinical question, such as “What is the evidence for 3 weeks of anticoagulation before cardioversion?”. The app finds the 10 most relevant papers and answers it with a short narrated explainer, followed by slides and the references. Keep up to 3.",ph:3},
+ topic:{t:"Focused Learning",i:"Enter a topic, such as cardiac sarcoidosis, and what you want to know, such as new developments in management. The app finds the top 20 papers and builds a deck of up to 20 slides with every reference listed. Keep up to 3.",ph:3},
  exam:{t:"Exam preparation",i:"Choose your exam (KBA, BSE, BHRS, EHRA, EACVI and others) and its date. The app gathers key papers, guidelines and free resources into a summary or slide deck with practice questions, and puts the exam in your calendar.",ph:4},
  thesis:{t:"Thesis preparation",i:"Enter your thesis topic and deadline. The app finds and summarises the top 50 papers, with an evidence table, gaps in the literature, a suggested outline, a timeline to your deadline and references you can export.",ph:4}};
 function toolSheet(k){const x=TOOLS[k]||TOOLS.pres;return `<div class="sheet" role="dialog" aria-label="${esc(x.t)}"><h3>${esc(x.t)}</h3><div class="res low"><p>${esc(x.i)}</p></div><p class="note">Coming in beta update ${x.ph}. This button is here now so you can see the new layout.</p><div class="pk"><a href="#" class="alt" data-act="mclose">Close</a></div></div>`}
@@ -3381,7 +3451,7 @@ cmpResults=function(){const rows=CMP_MODELS.filter(m=>CMP.res[m[0]]);if(!rows.le
   ${R.file?`<p class="cmpmeta">Slides (${R.deckMeta.n}): ${cmpMeta(R.deckMeta)}</p><div class="pk"><a href="#" data-act="cmpfile" data-v="${k}">Open slides</a><a href="#" class="alt" data-act="cmpsave" data-v="${k}">Save or share</a></div>`:R.deckErr?`<p class="cmperr">Slides failed: ${esc(R.deckErr)}</p>`:""}</div>`}).join("")};
 setInterval(()=>{document.querySelectorAll(".cmpsec").forEach(x=>{x.textContent=Math.round((Date.now()-(+x.dataset.t0||Date.now()))/1000)+" s"})},1000);
 
-// ================= Phase 3: Clinical topic, Clinical question and Presentations =================
+// ================= Phase 3: Focused Learning, Explore Evidence and My Presentations =================
 // ---- a form being typed in is never redrawn underneath the keyboard (background updates wait until you finish) ----
 {const _rm=renderModal;let last="";renderModal=function(){const el=document.getElementById("modal"),a=document.activeElement,m=S.modal;
  const typ=m?[m.type,m.v||"",m.id||"",m.pmid||"",(S.tv&&S.tv.view)||"",(S.tv&&S.tv.id)||""].join(":"):"";
@@ -3457,9 +3527,9 @@ async function tplLoad(file){S.tplBusy=true;renderModal();
 
 // ---- the study tools ----
 var TDEF={
- topic:{t:"Clinical topic",one:"topic",ic:"🔎",max:3,intro:"Enter a topic and what you want to know. The app finds the top 20 papers, writes a referenced evidence review with practice questions, and builds a deck of up to 20 slides with every reference listed."},
- cq:{t:"Clinical question",one:"question",ic:"❓",max:3,intro:"Ask a clinical question. The app finds the 10 most relevant papers and answers it with a short narrated explainer, then the full answer with the papers, and slides if you want them."},
- pres:{t:"Presentations",one:"presentation",ic:"🖥️",max:3,intro:"Plan a talk: the topic, audience, date and number of slides (up to 50). The app finds the evidence and builds the whole deck, with speaker notes and references, in your chosen style."}};
+ topic:{t:"Focused Learning",one:"topic",ic:"🔎",max:3,intro:"Enter a topic and what you want to know. The app finds the top 20 papers, writes a referenced evidence review with practice questions, and builds a deck of up to 20 slides with every reference listed."},
+ cq:{t:"Explore Evidence",one:"question",ic:"❓",max:3,intro:"Ask a clinical question. The app finds the 10 most relevant papers and answers it with a short narrated explainer, then the full answer with the papers, and slides if you want them."},
+ pres:{t:"My Presentations",one:"presentation",ic:"🖥️",max:3,intro:"Plan a talk: the topic, audience, date and number of slides (up to 50). The app finds the evidence and builds the whole deck, with speaker notes and references, in your chosen style."}};
 const AUDIENCES=["GPs and primary care","Cardiology trainees","Consultant colleagues","Nurses and allied health professionals","Physiologists","Medical students","Patients and the public","Mixed or multidisciplinary team"];
 const tList=k=>{st.tools=st.tools||{};return st.tools[k]=st.tools[k]||[]};
 const tGet=id=>{for(const k of Object.keys(TDEF)){const x=tList(k).find(i=>i.id===id);if(x)return x}return null};
@@ -3623,16 +3693,16 @@ function tStyles(){tplChip();const cur=tfv("style",st.slideStyle||"classic");
  <label class="tplbtn">${S.tplBusy?'<span class="spin"></span>Reading your template…':TPL?`🎨 Replace your template <small>(${esc(TPL.name)})</small>`:"🎨 Use your own template (.pptx or an image)"}<input type="file" id="tplfile" accept=".pptx,.potx,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.presentationml.template,image/png,image/jpeg" style="display:none"></label>
  <p class="pii" style="margin-top:4px">🔒 Don't upload a template or slide that contains patient details or images. It stays on this phone and only its colours, fonts, background and logo are used.</p>`}
 function tForm(k){const D=TDEF[k];let f="";
- if(k==="topic")f=`<label class="au tl">Topic<input class="search" id="tf-topic" value="${esc(tfv("topic"))}" placeholder="For example, cardiac sarcoidosis" autocomplete="off"></label>
-  <label class="au tl">What do you want to know? <small>(optional)</small><input class="search" id="tf-refine" value="${esc(tfv("refine"))}" placeholder="For example, new developments in management" autocomplete="off"></label>
+ if(k==="topic")f=`<label class="au tl">Topic<span class="tawrap sm"><textarea class="search" id="tf-topic" rows="1" placeholder="For example, cardiac sarcoidosis">${esc(tfv("topic"))}</textarea>${taMic("tf-topic")}</span></label>
+  <label class="au tl">What do you want to know? <small>(optional)</small><span class="tawrap"><textarea class="search" id="tf-refine" rows="2" placeholder="For example, new developments in management">${esc(tfv("refine"))}</textarea>${taTools("tf-refine")}</span></label>
   <div class="au" style="margin-top:12px">How far back</div><div class="row" style="flex-wrap:wrap;overflow:visible">${[3,5,10].map(y=>tChip("years",y,y+" years",+tfv("years",5)===y)).join("")}</div>
   <div class="au" style="margin-top:12px">Slides</div><div class="row" style="flex-wrap:wrap;overflow:visible">${[8,10,12,15,20].map(n=>tChip("slides",n,String(n),+tfv("slides",12)===n)).join("")}</div>${tStyles()}`;
- if(k==="cq")f=`<label class="au tl">Your question<textarea class="search" id="tf-q" rows="3" placeholder="For example, is 3 weeks of anticoagulation needed before cardioversion of AF?">${esc(tfv("q"))}</textarea></label>
-  <label class="au tl">Anything to focus on? <small>(optional)</small><input class="search" id="tf-ctx" value="${esc(tfv("ctx"))}" placeholder="For example, older people, or after ablation" autocomplete="off"></label>`;
- if(k==="pres")f=`<label class="au tl">Title or topic of the talk<input class="search" id="tf-title" value="${esc(tfv("title"))}" placeholder="For example, AF in primary care: what's new" autocomplete="off"></label>
+ if(k==="cq")f=`<label class="au tl">Your question<span class="tawrap"><textarea class="search" id="tf-q" rows="3" placeholder="For example, is 3 weeks of anticoagulation needed before cardioversion of AF?">${esc(tfv("q"))}</textarea>${taTools("tf-q")}</span></label>
+  <label class="au tl">Anything to focus on? <small>(optional)</small><span class="tawrap sm"><textarea class="search" id="tf-ctx" rows="1" placeholder="For example, older people, or after ablation">${esc(tfv("ctx"))}</textarea>${taMic("tf-ctx")}</span></label>`;
+ if(k==="pres")f=`<label class="au tl">Title or topic of the talk<span class="tawrap sm"><textarea class="search" id="tf-title" rows="1" placeholder="For example, AF in primary care: what's new">${esc(tfv("title"))}</textarea>${taMic("tf-title")}</span></label>
   <label class="au tl">Audience<select id="tf-audience">${AUDIENCES.map(a=>`<option ${tfv("audience",AUDIENCES[0])===a?"selected":""}>${a}</option>`).join("")}</select></label>
-  <div class="fg2"><label class="au tl">Date of the talk<input class="search" type="date" id="tf-date" value="${esc(tfv("date"))}"></label><label class="au tl">Number of slides<input class="search" type="number" id="tf-n" min="5" max="50" inputmode="numeric" value="${esc(String(tfv("n",20)))}"></label></div>
-  <label class="au tl">Points to cover <small>(optional)</small><textarea class="search" id="tf-points" rows="3" placeholder="For example, screening, anticoagulation in the elderly, when to refer">${esc(tfv("points"))}</textarea></label>
+  <label class="au tl">Date of the talk<input class="search tdate" type="date" id="tf-date" value="${esc(tfv("date"))}"></label><label class="au tl">Number of slides <small>(5 to 50)</small><input class="search tnum" type="number" id="tf-n" min="5" max="50" inputmode="numeric" value="${esc(String(tfv("n",20)))}"></label>
+  <label class="au tl">Points to cover <small>(optional)</small><span class="tawrap"><textarea class="search" id="tf-points" rows="3" placeholder="For example, screening, anticoagulation in the elderly, when to refer">${esc(tfv("points"))}</textarea>${taTools("tf-points")}</span></label>
   <label class="set"><span>Show my name${st.myOrg?", role and organisation":" and role"} on the title slide</span><input type="checkbox" id="tf-showOrg" ${tfv("showOrg",st.myOrgShow!==false)?"checked":""}></label>
   ${!st.myName?`<p class="note">Add your name in your profile (the person icon) to have it on the title slide.</p>`:""}${tStyles()}`;
  return `<div class="sheet big" role="dialog" aria-label="New ${D.one}"><div class="thead"><button class="link" data-act="tback">‹ ${D.t}</button><button class="tclose" data-act="mclose">Close</button></div><div class="vbody">
@@ -3689,7 +3759,7 @@ async function tShare(it){const R=it.res||{};let txt="";
  if(navigator.share){try{await navigator.share({title:it.title,text:txt});return}catch(e){if(e&&e.name==="AbortError")return}}
  try{await navigator.clipboard.writeText(txt);toast("Copied")}catch(e){toast("Couldn't share it here.")}}
 async function tMakeCqDeck(it){if(S.tdeck)return;S.tdeck=it.id;renderModal();
- try{const R=it.res,r=renum([answerText(R)],R.papers);await tDeckSave(it,await makeDeck(null,10,{title:it.title||"Clinical question",text:r.out[0].slice(0,13500),refs:r.refs,style:st.slideStyle||"classic"},{tag:"question"}));const f=await tDeckFile(it);S.tdeck="";renderModal();if(f)cmpSave(f)}
+ try{const R=it.res,r=renum([answerText(R)],R.papers);await tDeckSave(it,await makeDeck(null,10,{title:it.title||"Explore Evidence",text:r.out[0].slice(0,13500),refs:r.refs,style:st.slideStyle||"classic"},{tag:"question"}));const f=await tDeckFile(it);S.tdeck="";renderModal();if(f)cmpSave(f)}
  catch(e){S.tdeck="";renderModal();toast(aiErr(e&&e.code))}}
 document.addEventListener("input",e=>{const t=e.target;if(t&&t.id&&t.id.startsWith("tf-")){S.tf=S.tf||{};S.tf[t.id.slice(3)]=t.type==="checkbox"?t.checked:t.value}},true);
 document.addEventListener("change",e=>{const t=e.target;if(!t)return;if(t.id&&t.id.startsWith("tf-")){S.tf=S.tf||{};S.tf[t.id.slice(3)]=t.type==="checkbox"?t.checked:t.value}
@@ -3717,6 +3787,298 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
 },true);
 // jobs that were running when the app was closed carry on next time
 setTimeout(()=>{for(const k of Object.keys(TDEF))for(const it of tList(k)){if(it.status==="busy"||it.status==="queued")tEnq(it.id);else if(it.k==="cq"&&it.status==="ready"&&it.voiced!==gvVoice())setTimeout(()=>tNarrate(it),4000)}tGC();tPaint(null)},2500);
+
+// ================= b9: microphones on every long text box =================
+const taMic=id=>`<button type="button" class="mic" data-act="mic" data-v="${id}" aria-label="Dictate">${MICSVG}</button>`;
+Object.assign(FIELDS,{"tf-topic":["","Topic"],"tf-refine":["","What do you want to know?"],"tf-q":["","Your question"],"tf-ctx":["","Anything to focus on?"],"tf-title":["","Title or topic of the talk"],"tf-points":["","Points to cover"]});
+{const g=getField,sf=setField;
+ getField=function(id){if(/^tf-/.test(id))return (S.tf&&S.tf[id.slice(3)])||"";return g(id)};
+ setField=function(id,v){if(/^tf-/.test(id)){S.tf=S.tf||{};S.tf[id.slice(3)]=v;return}return sf(id,v)}}
+// keep the microphone lit if the form is redrawn while you're speaking
+{const _rm2=renderModal;renderModal=function(){const x=_rm2.apply(this,arguments);if(dict&&dict._id){const b=document.querySelector(`.mic[data-v="${dict._id}"]`);if(b)b.classList.add("on")}return x}}
+
+// ================= Phase 4: Exam preparation, Thesis preparation and the full calendar =================
+const EXAMS=[
+ {id:"eecc",n:"European Exam in Core Cardiology (UK KBA)",sh:"EECC (KBA)",
+  mods:["Heart failure","Coronary disease and ACS","Atrial fibrillation and arrhythmias","Valve disease and endocarditis","Cardiomyopathies and myocarditis","Adult congenital heart disease","Pericardial disease","Hypertension and prevention","Pulmonary hypertension and PE","Cardiovascular imaging","Cardio-oncology","Heart disease in pregnancy","Cardiovascular pharmacology"],
+  links:[["BCS: European Exam in Core Cardiology","https://britishcardiovascularsociety.org.uk/platform_event/european-exam-in-core-cardiology-2026/"],["ESC certification programmes","https://www.escardio.org/education/career-development/certification-programmes/"]]},
+ {id:"bse",n:"BSE transthoracic (TTE) accreditation",sh:"BSE TTE",
+  mods:["Physics and instrumentation","LV systolic function","Diastolic function","RV function and pulmonary pressures","Aortic valve disease","Mitral valve disease","Right-sided valves","Prosthetic valves","Cardiomyopathies","Pericardial disease","Adult congenital heart disease","Masses and endocarditis","Aortic disease"],
+  links:[["BSE: TTE accreditation","https://bsecho.org/Public/Accreditation/Personal-accred/TTE-accred.aspx"],["BSE: written exam","https://bsecho.org/Public/Accreditation/Personal-accred/Written-examination.aspx"],["TTE accreditation pack 2026 (PDF)","https://bsecho.org/common/Uploaded%20files/Accreditation/Accreditation%20Packs/2026%20packs/TTE%20accreditation%20pack%202026.pdf"],["BSE: video case tips (PDF)","https://bsecho.org/common/Uploaded%20files/Accreditation/Accred%20tips%20and%20tricks.pdf"]]},
+ {id:"bhrs",n:"BHRS exam (devices and arrhythmia)",sh:"BHRS",
+  mods:["Pacing indications and modes","Pacemaker timing cycles","ICD therapy and programming","Cardiac resynchronisation therapy","Device troubleshooting and EGMs","Conduction system and leadless pacing","Remote monitoring","Supraventricular tachycardia","Ventricular tachycardia","Atrial fibrillation management","Inherited arrhythmia syndromes"],
+  links:[["BHRS: examination","https://bhrs.com/examination/"],["Pearson VUE: BHRS exam tutorial (PDF)","https://www.pearsonvue.com/content/dam/VUE/vue/en/documents/clients/bhrs/BHRS-Exam-Tutorial.pdf"],["IBHRE: resources","https://ibhre.org/resources"]]},
+ {id:"ehra",n:"EHRA certification (EP or devices)",sh:"EHRA",
+  mods:["ECG and electrophysiology basics","Supraventricular tachycardia","Atrial fibrillation and ablation","Ventricular arrhythmias","Bradycardia and pacing","ICD and CRT","Device follow-up and troubleshooting","Channelopathies and sudden death","Syncope"],
+  links:[["EHRA certifications","https://www.escardio.org/Education/Career-Development/Certification/EHRA-Certification"]]},
+ {id:"eacvi",n:"EACVI imaging certification (TTE, TOE, CMR, CT, nuclear)",sh:"EACVI",
+  mods:["Echo: LV and RV function","Echo: valve disease","Transoesophageal echo","Stress imaging","CMR: tissue characterisation","CMR: cardiomyopathies","Cardiac CT: coronary CTA","Cardiac CT: structural planning","Nuclear: perfusion imaging","Cardiac amyloidosis imaging"],
+  links:[["EACVI certifications","https://www.escardio.org/education/career-development/certification-programmes/cv-imaging/"]]},
+ {id:"eapci",n:"EAPCI interventional certification",sh:"EAPCI",
+  mods:["Coronary physiology","Intravascular imaging","Left main and bifurcation PCI","Chronic total occlusion","PCI in acute coronary syndromes","Antithrombotic therapy around PCI","PCI complications","TAVI and structural basics","Cardiogenic shock and mechanical support"],
+  links:[["EAPCI certification exam","https://www.escardio.org/education/career-development/certification-programmes/interventional-cardiology/eapci-exam/"]]},
+ {id:"other",n:"Another exam",sh:"",mods:[],links:[]}];
+const EXBY=Object.fromEntries(EXAMS.map(x=>[x.id,x]));
+const EXMAX=12,EXPICK=6;
+const EXREF="Exam revision: prioritise high-yield examinable facts, guideline recommendations with class and level where known, key numbers and cut-offs, landmark trials, common pitfalls and distractors, and write several single-best-answer practice questions with 4 or 5 options and a short explanation.";
+TDEF.exam={t:"Exam preparation",one:"exam",ic:"🎓",max:1,intro:"Choose your exam, its date and the topics to revise. For each topic the app finds the key papers and writes high-yield points, exam pearls and practice questions, with slides if you want them. The exam goes into your calendar."};
+TDEF.thesis={t:"Thesis preparation",one:"thesis",ic:"📝",max:1,intro:"Enter your thesis topic and deadline. The app finds the 50 most relevant papers and gives you a literature overview, a suggested structure, gaps in the evidence, an evidence table, a timeline to your deadline and references to export."};
+Object.assign(FIELDS,{"tf-examname":["","Name of the exam"],"tf-extra":["","Anything else to cover"],"tf-modtext":["","Topics to revise"],"tf-rq":["","Research question or aim"]});
+const dLong=d=>d?new Date(d+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):"";
+const dShort=d=>d?new Date(d+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"}):"";
+const dayDiff=d=>Math.round((new Date(d+"T12:00")-new Date(isoD(new Date())+"T12:00"))/864e5);
+function toGo(d){if(!d)return "";const n=dayDiff(d);if(n<0)return "Passed";if(n===0)return "Today";if(n<14)return `${n} day${n===1?"":"s"} to go`;if(n>=56)return `${Math.round(n/7)} weeks to go`;const w=Math.floor(n/7),r=n%7;return `${w} weeks${r?`, ${r} day${r===1?"":"s"}`:""} to go`}
+function fileOut(name,text,type){return cmpSave(new File([text],name,{type}))}
+function icsOne(o){const d=s=>s.replace(/-/g,""),end=new Date((o.e||o.d)+"T12:00");end.setDate(end.getDate()+1);
+ const clean=s=>String(s||"").replace(/[\r\n]+/g," ").replace(/([,;\\])/g,"\\$1");
+ const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Cardiology Education//EN","BEGIN:VEVENT",`UID:${(o.uid||o.t).replace(/[^\w-]+/g,"")}-${d(o.d)}@cardiology-cpd`,`DTSTAMP:${new Date().toISOString().replace(/[-:]/g,"").slice(0,15)}Z`,`DTSTART;VALUE=DATE:${d(o.d)}`,`DTEND;VALUE=DATE:${isoD(end).replace(/-/g,"")}`,`SUMMARY:${clean(o.t)}`];
+ if(o.v)L.push(`LOCATION:${clean(o.v)}`);if(o.url)L.push(`URL:${o.url}`);if(o.sub||o.url)L.push(`DESCRIPTION:${clean([o.sub,o.url].filter(Boolean).join(". "))}`);
+ if(o.alarm)L.push("BEGIN:VALARM","ACTION:DISPLAY",`DESCRIPTION:${clean(o.t)}`,`TRIGGER:-P${o.alarm}D`,"END:VALARM");
+ L.push("END:VEVENT","END:VCALENDAR");return fileOut(`${String(o.t).replace(/[^\w ]+/g,"").trim().replace(/\s+/g,"-").slice(0,60)||"event"}.ics`,L.join("\r\n"),"text/calendar")}
+
+// ---------- forms ----------
+{const _f=tForm;tForm=function(k){
+ if(k!=="exam"&&k!=="thesis")return _f(k);const D=TDEF[k];let f="";
+ if(k==="exam"){const ex=EXBY[tfv("exam","eecc")]||EXAMS[0],sel=tfv("mods",[]);
+  f=`<label class="au tl">Which exam<select id="tf-exam">${EXAMS.map(x=>`<option value="${x.id}" ${x.id===ex.id?"selected":""}>${esc(x.n)}</option>`).join("")}</select></label>
+  ${ex.id==="other"?`<label class="au tl">Name of the exam<span class="tawrap sm"><textarea class="search" id="tf-examname" rows="1" placeholder="For example, MRCP Part 1, or the CCT CMR exam">${esc(tfv("examname"))}</textarea>${taMic("tf-examname")}</span></label>`:""}
+  <label class="au tl">Date of the exam<input class="search tdate" type="date" id="tf-date" value="${esc(tfv("date"))}"></label>
+  ${ex.mods.length?`<div class="au" style="margin-top:12px">Topics to revise <small>(choose up to ${EXPICK}; you can add more later)</small></div><div class="row" style="flex-wrap:wrap;overflow:visible">${ex.mods.map(m=>`<button class="chip ${sel.includes(m)?"on":""}" data-act="exmod" data-v="${esc(m)}">${esc(m)}</button>`).join("")}</div>`:""}
+  <label class="au tl">${ex.mods.length?"Other topics <small>(optional, separated by commas)</small>":"Topics to revise <small>(separated by commas)</small>"}<span class="tawrap"><textarea class="search" id="tf-modtext" rows="2" placeholder="For example, cardiac amyloidosis, DVLA rules for ICDs">${esc(tfv("modtext"))}</textarea>${taTools("tf-modtext")}</span></label>
+  <label class="au tl">Anything to focus on? <small>(optional)</small><span class="tawrap"><textarea class="search" id="tf-extra" rows="2" placeholder="For example, ESC guideline recommendations and numbers to remember">${esc(tfv("extra"))}</textarea>${taTools("tf-extra")}</span></label>
+  <label class="set"><span>Also make a short slide deck for each topic</span><input type="checkbox" id="tf-slides" ${tfv("slides",false)?"checked":""}></label>
+  ${tfv("slides",false)?tStyles():""}`}
+ if(k==="thesis"){
+  f=`<label class="au tl">Thesis topic<span class="tawrap sm"><textarea class="search" id="tf-topic" rows="1" placeholder="For example, CT-derived FFR in stable chest pain">${esc(tfv("topic"))}</textarea>${taMic("tf-topic")}</span></label>
+  <label class="au tl">Research question or aim <small>(optional)</small><span class="tawrap"><textarea class="search" id="tf-rq" rows="2" placeholder="For example, does CT-FFR reduce invasive angiography without obstructive disease?">${esc(tfv("rq"))}</textarea>${taTools("tf-rq")}</span></label>
+  <label class="au tl">Submission deadline<input class="search tdate" type="date" id="tf-date" value="${esc(tfv("date"))}"></label>
+  <div class="au" style="margin-top:12px">Degree</div><div class="row" style="flex-wrap:wrap;overflow:visible">${["MD","PhD","MSc","MRes","BSc or intercalated","Other"].map(x=>tChip("degree",x,x,tfv("degree","MD")===x)).join("")}</div>
+  <div class="au" style="margin-top:12px">How far back</div><div class="row" style="flex-wrap:wrap;overflow:visible">${[5,10,15].map(y=>tChip("years",y,y+" years",+tfv("years",10)===y)).join("")}</div>`}
+ return `<div class="sheet big" role="dialog" aria-label="New ${D.one}"><div class="thead"><button class="link" data-act="tback">‹ ${D.t}</button><button class="tclose" data-act="mclose">Close</button></div><div class="vbody">
+  <h3 style="margin-top:4px">New ${D.one}</h3>${f}${NOPII}</div><div class="pk"><a href="#" data-act="tgo" data-v="${k}">Build</a><a href="#" class="alt" data-act="tback">Cancel</a></div></div>`}}
+const modsFrom=t=>String(t||"").split(/[,;\n]+/).map(x=>x.trim()).filter(x=>x.length>2).slice(0,EXMAX);
+{const _g=tGo;tGo=function(k){if(k!=="exam"&&k!=="thesis")return _g(k);const f={...(S.tf||{})};let I,txt,title;
+ if(k==="exam"){const ex=EXBY[f.exam||"eecc"]||EXAMS[0],name=ex.id==="other"?String(f.examname||"").trim():ex.n;
+  const mods=[...new Set([...(f.mods||[]),...modsFrom(f.modtext)])].slice(0,EXMAX);
+  if(!name){toast("Enter the name of the exam first.");return}if(!mods.length){toast("Choose at least one topic to revise.");return}
+  I={exam:ex.id,name,sh:ex.sh||name,date:f.date||"",extra:String(f.extra||"").trim(),slides:!!f.slides,style:f.style||st.slideStyle||"classic"};txt=name+" "+mods.join(" ")+" "+I.extra;title=name}
+ if(k==="thesis"){I={topic:String(f.topic||"").trim(),rq:String(f.rq||"").trim(),date:f.date||"",degree:f.degree||"MD",years:+f.years||10};if(I.topic.length<3){toast("Enter your thesis topic first.");return}txt=I.topic+" "+I.rq;title=I.topic}
+ const p=piiOf(txt);if(p==="hard"){toast("That looks like it contains patient details. Remove names, dates of birth, NHS or CHI numbers and addresses.");return}
+ if(!aiURL()){toast(aiErr("setup"));return}
+ if(tList(k).length>=TDEF[k].max){toast(`You can keep ${TDEF[k].max}. Delete one first.`);return}
+ const it={id:"t"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),k,at:Date.now(),in:I,title,status:"queued",step:"Waiting to start"};
+ if(k==="exam")it.mods=[...new Set([...(f.mods||[]),...modsFrom(f.modtext)])].slice(0,EXMAX).map(n=>({n,status:"queued"}));
+ tList(k).unshift(it);save();S.tf=null;S.tv={k,view:"item",id:it.id};renderModal();tEnq(it.id)}}
+
+// ---------- the jobs ----------
+TJOB.exam=async function(it){const I=it.in;it.res=it.res||{exam:true};let ok=0,last=null;const todo=it.mods.filter(m=>m.status!=="ready");
+ for(let i=0;i<it.mods.length;i++){const m=it.mods[i];if(m.status==="ready"){ok++;continue}
+  const pos=`${todo.indexOf(m)+1} of ${todo.length}`;m.status="busy";m.err="";
+  try{tStep(it,`Revising ${m.n}`,`topic ${pos}`);
+   const pl=await tPlan("topic",m.n,`${I.sh} exam revision${I.extra?`; ${I.extra}`:""}`);
+   const papers=await findPapers(it,{queries:[pl&&pl.query,pl&&pl.broad,tRaw(m.n),tRaw(m.n.split(/[:,]/)[0])],years:5,n:15,topic:m.n,focus:`exam revision ${I.extra}`});
+   tStep(it,`Writing ${m.n}`,`topic ${pos} · about a minute`);
+   const j=await tAI("topic",{text:`${m.n}: ${I.sh} exam revision`,refine:EXREF+(I.extra?` Also cover: ${I.extra}.`:""),years:5,papers:papers.map(slim)});
+   m.res={review:j.data||{},model:j.model,shared:!!j.shared,papers:papers.map(pmeta)};m.status="ready";ok++;save();tPaint(it);
+   if(I.slides){tStep(it,`Slides for ${m.n}`,`topic ${pos}`);const r=renum([reviewText(m.res.review)],m.res.papers);
+    try{const d=await makeDeck(null,10,{title:`${m.n}: ${I.sh} revision`,text:r.out[0].slice(0,13500),refs:r.refs,style:I.style},{tag:"topic"});
+     if(d&&d.file){const name=(m.n.replace(/[^\w ]+/g,"").trim().replace(/\s+/g,"-").slice(0,50)||"topic")+"-revision.pptx";await idbPut(`deck:${it.id}|m${i}`,{name,type:d.file.type,buf:await d.file.arrayBuffer()});m.deck={name,n:d.meta&&d.meta.n};save()}}catch(e){}}
+  }catch(e){if(e&&e.code==="patient")throw e;m.status="error";m.err=tErr(e);last=e;save();tPaint(it)}}
+ if(!ok)throw last||Object.assign(new Error("ai"),{code:"ai"})};
+TJOB.thesis=async function(it){const I=it.in;
+ tStep(it,"Planning the search");const pl=await tPlan("topic",I.topic,I.rq);
+ tStep(it,"Searching PubMed");
+ const papers=await findPapers(it,{queries:[pl&&pl.query,pl&&pl.broad,tRaw(I.topic+" "+I.rq),tRaw(I.topic)],years:I.years||10,n:50,topic:I.topic,focus:I.rq});
+ it.in.query=(pl&&(pl.broad||pl.query))||tRaw(I.topic);it.checked=Date.now();
+ it.res={papers:papers.map(pmeta),notes:(it.res&&it.res.notes)||{}};save();tPaint(it);
+ tStep(it,"Writing the literature overview","about a minute");
+ const j=await tAI("topic",{text:I.topic,refine:`Thesis literature review (${I.degree})${I.rq?`; research question: ${I.rq}`:""}. Show how the evidence is organised, how strong it is, where studies disagree, and the gaps and unanswered questions that further research could address.`,years:I.years||10,papers:papers.slice(0,20).map(slim)});
+ it.res.review=j.data||{};it.res.model=j.model;it.res.shared=!!j.shared;if(j.data&&j.data.title)it.title=j.data.title;save();tPaint(it);
+ const B=[];for(let i=0;i<papers.length;i+=10)B.push(i);let done=0,next=0;
+ tStep(it,"Summarising each paper",`0 of ${papers.length}`);
+ await Promise.all([0,1].map(async()=>{while(next<B.length){const s=B[next++],batch=papers.slice(s,s+10);
+  try{const x=await tAI("answer",{text:I.rq||`What does each study add to the evidence on ${I.topic}?`,refine:"For each paper give its single most important finding in one sentence, with numbers where available.",papers:batch.map(slim)});
+   for(const p of (x.data&&x.data.papers)||[]){const n=+p.ref;if(n>=1&&n<=batch.length&&p.finding)it.res.notes[s+n]=String(p.finding)}}catch(e){if(e&&e.code==="patient")throw e}
+  done+=batch.length;tStep(it,"Summarising each paper",`${Math.min(done,papers.length)} of ${papers.length}`)}}));
+ save()};
+
+// ---------- exam: results, adding topics and practice questions ----------
+function mcqKey(q){const o=q.options||[],a=String(q.answer||"").trim(),strip=s=>String(s).replace(/^\(?[A-Ea-e][\).:]\s*/,"").trim().toLowerCase();
+ const m=a.match(/^\(?([A-Ea-e])(?:[\).:\s]|$)/);if(m){const i=m[1].toUpperCase().charCodeAt(0)-65;if(i<o.length)return i}
+ const A=strip(a);let i=o.findIndex(x=>strip(x)===A);if(i<0&&A)i=o.findIndex(x=>{const t=strip(x);return t&&(t.includes(A)||A.includes(t))});return i}
+const optTxt=(o,i)=>/^\(?[A-Ea-e][\).:]\s/.test(o)?o:`${String.fromCharCode(65+i)}. ${o}`;
+function exQs(it){const L=[];(it.mods||[]).forEach((m,mi)=>{if(m.status==="ready")((m.res.review||{}).mcqs||[]).forEach((q,qi)=>{if(q&&q.q&&(q.options||[]).length>1)L.push({mi,qi})})});return L}
+function exPlan(it){const ms=(it.mods||[]).filter(m=>m.status==="ready").map(m=>m.n),d=it.in.date;if(!ms.length||!d)return "";const days=dayDiff(d);if(days<1)return "";
+ const weeks=Math.max(1,Math.floor((days-3)/7)),per=Math.ceil(ms.length/weeks),rows=[];const start=new Date();
+ for(let w=0;w*per<ms.length&&w<weeks;w++){const a=new Date(start);a.setDate(a.getDate()+w*7);rows.push(`<li><b>Week of ${a.toLocaleDateString("en-GB",{day:"numeric",month:"short"})}:</b> ${esc(ms.slice(w*per,w*per+per).join(", "))}</li>`)}
+ return `<h4>Revision plan</h4><ul class="fpts">${rows.join("")}<li><b>Last few days:</b> practice questions and your weakest topics.</li></ul>`}
+function exBody(it){const I=it.in,ex=EXBY[I.exam]||{links:[],mods:[]},qs=exQs(it),best=it.qbest;
+ const head=`<div class="xcount"><div><div class="xcn">${I.date?esc(toGo(I.date)):"No date set"}</div><div class="au">${I.date?esc(dLong(I.date)):"Add the date when you know it"}</div></div>${I.date?`<button class="xbtn" data-act="exics" data-v="${it.id}">📅 Add to calendar</button>`:""}</div>`;
+ const quiz=qs.length?`<div class="card xquiz"><b>✍️ Practice questions</b><div class="au">${qs.length} questions from ${it.mods.filter(m=>m.status==="ready").length} topics${best?` · best score ${best.s} of ${best.n}`:""}</div><div class="fbtns"><button data-act="qzstart" data-v="${it.id}">▶ Start</button><button data-act="qzstart" data-v="${it.id}" data-n="10">10 at random</button></div></div>`:"";
+ const mods=(it.mods||[]).map((m,i)=>{const R=m.res||{},V=R.review||{},pts=(L,cls="")=>`<ul class="fpts ${cls}">${(L||[]).map(p=>`<li>${citeHTML(p.text,R,p.refs)}</li>`).join("")}</ul>`;
+  const st2=m.status==="ready"?`<span class="xok">✓</span>`:m.status==="error"?`<span class="xerr">!</span>`:m.status==="busy"?`<span class="spin"></span>`:`<span class="xwait">…</span>`;
+  if(m.status!=="ready")return `<div class="xmod"><div class="xmh">${st2}<b>${esc(m.n)}</b></div>${m.status==="error"?`<div class="au">${esc(m.err||"Couldn't prepare this topic.")} <button class="link" data-act="tretry" data-v="${it.id}">Try again</button></div>`:""}</div>`;
+  return `<details class="xmod"><summary class="xmh">${st2}<b>${esc(m.n)}</b><small>${(V.mcqs||[]).length} questions</small></summary>
+   ${m.deck?`<div class="fbtns" style="margin-top:6px"><button data-act="exdeck" data-v="${it.id}" data-i="${i}">📊 Slides (${m.deck.n||""})</button></div>`:""}
+   ${V.overview?`<p class="fov">${citeHTML(V.overview,R)}</p>`:""}${(V.pearls||[]).length?`<h4>Exam pearls</h4>${pts(V.pearls,"pearls")}`:""}
+   ${(V.sections||[]).map(s=>`<h4>${esc(s.heading||"")}</h4>${pts(s.points)}`).join("")}
+   ${(V.guidelines||[]).length?`<h4>Guidelines</h4>${pts(V.guidelines)}`:""}
+   ${(V.keyTrials||[]).length?`<h4>Key trials</h4><div class="tw"><table class="ftab"><tr><th>Trial</th><th>Design</th><th>Finding</th></tr>${V.keyTrials.map(k=>`<tr><td><b>${esc(k.name||"")}</b> ${esc(k.year||"")}${refLinks([k.ref],R)}</td><td>${esc(k.design||"")}</td><td>${citeHTML(k.finding,R)}</td></tr>`).join("")}</table></div>`:""}
+   ${(V.practice||[]).length?`<h4>For practice</h4>${pts(V.practice)}`:""}${tRefs(R)}</details>`}).join("");
+ const left=ex.mods.filter(m=>!(it.mods||[]).some(x=>x.n===m)),sel=S.exAdd||[];
+ const add=(it.mods||[]).length<EXMAX&&it.status!=="busy"&&it.status!=="queued"?`<h4>Add topics</h4>${left.length?`<div class="row" style="flex-wrap:wrap;overflow:visible">${left.map(m=>`<button class="chip ${sel.includes(m)?"on":""}" data-act="exaddpick" data-v="${esc(m)}">${esc(m)}</button>`).join("")}</div>`:""}
+  <label class="au tl">Other topics <small>(separated by commas)</small><span class="tawrap"><textarea class="search" id="tf-modtext" rows="2" placeholder="For example, DVLA rules for ICDs">${esc((S.tf&&S.tf.modtext)||"")}</textarea>${taMic("tf-modtext")}</span></label>
+  <div class="fbtns"><button data-act="exaddgo" data-v="${it.id}">+ Add and prepare</button></div>`:"";
+ const by=it.mods.some(m=>m.res)?`<p class="au tby">Written by ${MODELNAME((it.mods.find(m=>m.res)||{}).res.model)} from PubMed abstracts. Check key facts against the guidelines and papers.</p>`:"";
+ return `${head}${quiz}${exPlan(it)}<h4>Topics</h4>${by}${mods}${add}
+  ${ex.links.length?`<h4>Official information</h4><ul class="fpts">${ex.links.map(([t,u])=>`<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a></li>`).join("")}</ul>`:""}
+  <p class="note">The Guidelines tile has the ESC, NICE and other guidelines these questions draw on.</p>
+  <div class="tts">${qs.length?`<button data-act="tshare" data-v="${it.id}">Share notes</button>`:""}</div>`}
+function qzSheet(){const Q=S.qz,it=tGet(Q&&Q.id);if(!it){S.tv={k:"exam",view:"list"};return tSheetK("exam")}
+ const back=`<div class="thead"><button class="link" data-act="qzend">‹ ${esc(TDEF.exam.t)}</button><button class="tclose" data-act="mclose">Close</button></div>`;
+ if(Q.i>=Q.list.length){const wrong=Q.wrong.map(w=>{const m=it.mods[w.mi],q=m.res.review.mcqs[w.qi],k=mcqKey(q);return `<div class="fmcq"><p>${esc(q.q)}</p><p><b>Answer:</b> ${esc(k>=0?optTxt(q.options[k],k):q.answer||"")}</p>${q.why?`<p class="au">${esc(q.why)}</p>`:""}<p class="au">Topic: ${esc(m.n)}</p></div>`}).join("");
+  return `<div class="sheet big" role="dialog" aria-label="Practice questions">${back}<div class="vbody"><div class="xscore"><div class="xcn">${Q.score} of ${Q.marked}</div><div class="au">${Q.marked?Math.round(Q.score/Q.marked*100):0}% correct${Q.marked<Q.list.length?` · ${Q.list.length-Q.marked} without a clear answer key`:""}</div></div>
+   ${Q.wrong.length?`<h4>To review</h4>${wrong}`:`<p class="note">No mistakes. Well done.</p>`}</div><div class="pk"><a href="#" data-act="qzstart" data-v="${it.id}" data-n="${Q.n||""}">▶ Go again</a><a href="#" class="alt" data-act="qzend">Done</a></div></div>`}
+ const ref=Q.list[Q.i],m=it.mods[ref.mi],q=m.res.review.mcqs[ref.qi],k=mcqKey(q),p=Q.picked;
+ const opts=(q.options||[]).map((o,i)=>{const cls=p===null?"":i===k?"right":i===p?"wrong":"dim";return `<button class="qopt ${cls}" data-act="qzpick" data-v="${i}" ${p!==null?"disabled":""}>${esc(optTxt(o,i))}</button>`}).join("");
+ return `<div class="sheet big" role="dialog" aria-label="Practice questions">${back}<div class="vbody">
+  <div class="qzbar"><span>Question ${Q.i+1} of ${Q.list.length}</span><span>Score ${Q.score}</span></div><div class="au">${esc(m.n)}</div>
+  <p class="qzq">${esc(q.q)}</p>${opts}
+  ${p!==null?`<div class="qzwhy ${k<0?"":p===k?"ok":"no"}"><b>${k<0?"Answer":p===k?"Correct":"Not quite"}</b>${k<0?`: ${esc(q.answer||"")}`:p!==k?`. The answer is ${esc(optTxt(q.options[k],k))}`:""}${q.why?`<p>${esc(q.why)}</p>`:""}</div>`:""}</div>
+  <div class="pk">${p!==null?`<a href="#" data-act="qznext">${Q.i+1<Q.list.length?"Next question":"See my score"}</a>`:`<a href="#" class="alt" data-act="qzskip">Skip</a>`}</div></div>`}
+function qzStart(id,n){const it=tGet(id);if(!it)return;let L=exQs(it);for(let i=L.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[L[i],L[j]]=[L[j],L[i]]}if(n)L=L.slice(0,n);
+ S.qz={id,list:L,i:0,picked:null,score:0,marked:0,wrong:[],n};S.tv={k:"exam",view:"quiz",id}}
+function qzPick(i){const Q=S.qz,it=tGet(Q.id);if(!it||Q.picked!==null)return;const r=Q.list[Q.i],q=it.mods[r.mi].res.review.mcqs[r.qi],k=mcqKey(q);Q.picked=i;
+ if(k>=0){Q.marked++;if(i===k)Q.score++;else Q.wrong.push(r)}}
+function qzNext(){const Q=S.qz;Q.i++;Q.picked=null;if(Q.i>=Q.list.length){const it=tGet(Q.id);if(it&&Q.marked&&(!it.qbest||Q.score/Q.marked>it.qbest.s/it.qbest.n)){it.qbest={s:Q.score,n:Q.marked};save()}}}
+
+// ---------- thesis: results ----------
+const TPHASE=[["Literature review",0,.25],["Plan the methods and approvals",.25,.4],["Collect and analyse data",.4,.7],["Write the chapters",.7,.9],["Final edits and submission",.9,1]];
+function thPhases(it){const d=it.in.date;if(!d)return [];const a=new Date(it.at),b=new Date(d+"T12:00"),span=b-a;if(span<=0)return [];
+ return TPHASE.map(([n,f,t])=>{const s=new Date(+a+span*f),e=new Date(+a+span*t);return {n,s:isoD(s),e:isoD(e)}})}
+function thBody(it){const I=it.in,R=it.res||{},V=R.review||{},P=R.papers||[],N=R.notes||{},today=isoD(new Date());
+ const pts=(L,cls="")=>`<ul class="fpts ${cls}">${(L||[]).map(p=>`<li>${citeHTML(p.text,R,p.refs)}</li>`).join("")}</ul>`;
+ const ph=thPhases(it),tl=ph.length?`<h4>Timeline to your deadline</h4><ol class="xtl">${ph.map(p=>`<li class="${p.e<today?"done":p.s<=today?"now":""}"><b>${esc(p.n)}</b><span>${esc(dShort(p.s))} – ${esc(dShort(p.e))}</span></li>`).join("")}</ol>`:"";
+ const head=`<div class="xcount"><div><div class="xcn">${I.date?esc(toGo(I.date)):"No deadline set"}</div><div class="au">${esc(I.degree||"")}${I.date?` · deadline ${esc(dLong(I.date))}`:""}</div></div>${I.date?`<button class="xbtn" data-act="thics" data-v="${it.id}">📅 Add to calendar</button>`:""}</div>`;
+ const outline=(V.sections||[]).length?`<h4>Suggested structure</h4><ol class="fpts xol"><li><b>Introduction and background</b>${V.overview?`<div class="au">${citeHTML(V.overview,R)}</div>`:""}</li><li><b>Literature review</b><ul>${V.sections.map(s=>`<li>${esc(s.heading||"")}</li>`).join("")}</ul></li><li><b>Gaps in the evidence${I.rq?" and your research question":""}</b>${I.rq?`<div class="au">${esc(I.rq)}</div>`:""}</li><li><b>Methods</b></li><li><b>Results</b></li><li><b>Discussion</b>: your findings against the key studies below</li><li><b>Conclusions and future work</b></li></ol>`:"";
+ const lit=(V.sections||[]).map(s=>`<details class="xmod"><summary class="xmh"><b>${esc(s.heading||"")}</b></summary>${pts(s.points)}</details>`).join("");
+ const table=P.length?`<h4>Evidence table (${P.length} papers)</h4><div class="xev">${P.map(p=>`<div class="xevr"><div class="xevn">${p.n}</div><div><a href="https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/" target="_blank" rel="noopener">${esc(p.title)}</a><div class="au">${esc(p.journal)} ${esc(p.year)}${p.type?` · ${esc(p.type)}`:""}${p.cites?` · cited ${p.cites}×`:""}</div>${N[p.n]?`<div class="xevf">${esc(N[p.n])}</div>`:it.status==="busy"?`<div class="au">Summarising…</div>`:""}</div></div>`).join("")}</div>`:"";
+ const nw=S.thNew&&S.thNew.id===it.id?S.thNew:null;
+ const fresh=`<h4>New papers</h4><p class="au">Last checked ${esc(new Date(it.checked||it.at).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}))}.</p>${nw&&nw.busy?`<div class="msg"><span class="spin"></span>Checking PubMed…</div>`:nw&&nw.list?(nw.list.length?`<ul class="fpts">${nw.list.map(x=>`<li><a href="https://pubmed.ncbi.nlm.nih.gov/${x.pmid}/" target="_blank" rel="noopener">${esc(x.title)}</a> <span class="au">${esc(x.journal)} ${esc(x.date)}</span></li>`).join("")}</ul>`:`<p class="note">Nothing new since then.</p>`):""}<div class="fbtns"><button data-act="thnew" data-v="${it.id}">🔄 Check for new papers</button></div>`;
+ const by=V.overview||lit?`<p class="au tby">Written by ${MODELNAME(R.model)} from the abstracts. Check key facts against the papers.</p>`:"";
+ return `${head}${tl}${by}${outline}
+  ${(V.controversies||[]).length?`<h4>Gaps and uncertainties</h4>${pts(V.controversies)}`:""}
+  ${lit?`<h4>What the literature says</h4>${lit}`:""}
+  ${(V.keyTrials||[]).length?`<h4>Key studies</h4><div class="tw"><table class="ftab"><tr><th>Study</th><th>Design</th><th>Finding</th></tr>${V.keyTrials.map(k=>`<tr><td><b>${esc(k.name||"")}</b> ${esc(k.year||"")}${refLinks([k.ref],R)}</td><td>${esc(k.design||"")}</td><td>${citeHTML(k.finding,R)}</td></tr>`).join("")}</table></div>`:""}
+  ${(V.guidelines||[]).length?`<h4>Guidelines</h4>${pts(V.guidelines)}`:""}${table}
+  ${P.length?`<h4>Export the references</h4><p class="au">For EndNote, Zotero, Mendeley or RefWorks.</p><div class="fbtns"><button data-act="thexp" data-v="${it.id}" data-f="ris">RIS file</button><button data-act="thexp" data-v="${it.id}" data-f="bib">BibTeX</button><button data-act="tshare" data-v="${it.id}">Share summary</button></div>`:""}
+  ${P.length&&it.in.query?fresh:""}`}
+async function thExport(id,fmt){const it=tGet(id);if(!it||!it.res)return;const P=it.res.papers||[];toast("Preparing the references…");
+ let sum={};try{const j=await getJSON(`${E}esummary.fcgi?db=pubmed&retmode=json&tool=cardioreader&id=${P.map(p=>p.pmid).join(",")}`);sum=j.result||{}}catch(e){}
+ const recs=P.map(p=>{const s=sum[p.pmid]||{},aus=(s.authors||[]).filter(a=>a.authtype!=="CollectiveName"||a.name).map(a=>a.name),doi=((s.articleids||[]).find(x=>x.idtype==="doi")||{}).value||"";
+  return {p,aus,vol:s.volume||"",iss:s.issue||"",pg:s.pages||"",jfull:s.fulljournalname||p.journal,doi}});
+ const base=(it.title||it.in.topic).replace(/[^\w ]+/g,"").trim().replace(/\s+/g,"-").slice(0,50)||"thesis";
+ if(fmt==="ris"){const t=recs.map(r=>["TY  - JOUR",...r.aus.map(a=>`AU  - ${a}`),`TI  - ${r.p.title}`,`JO  - ${r.jfull}`,`JA  - ${r.p.journal}`,`PY  - ${r.p.year}`,r.vol&&`VL  - ${r.vol}`,r.iss&&`IS  - ${r.iss}`,r.pg&&`SP  - ${r.pg.split("-")[0]}`,r.pg.includes("-")&&`EP  - ${r.pg.split("-")[1]}`,r.doi&&`DO  - ${r.doi}`,`AN  - ${r.p.pmid}`,`UR  - https://pubmed.ncbi.nlm.nih.gov/${r.p.pmid}/`,"ER  - "].filter(Boolean).join("\r\n")).join("\r\n\r\n");
+  return fileOut(base+".ris",t,"application/x-research-info-systems")}
+ const bt=recs.map(r=>{const key=((r.aus[0]||"ref").split(" ")[0]+r.p.year+r.p.pmid.slice(-3)).replace(/[^\w]/g,"");const b=s=>String(s).replace(/[{}]/g,"");
+  return `@article{${key},\n  author = {${b(r.aus.join(" and "))}},\n  title = {${b(r.p.title)}},\n  journal = {${b(r.jfull)}},\n  year = {${r.p.year}},${r.vol?`\n  volume = {${r.vol}},`:""}${r.iss?`\n  number = {${r.iss}},`:""}${r.pg?`\n  pages = {${r.pg.replace("-","--")}},`:""}${r.doi?`\n  doi = {${r.doi}},`:""}\n  pmid = {${r.p.pmid}}\n}`}).join("\n\n");
+ return fileOut(base+".bib",bt,"application/x-bibtex")}
+async function thCheck(id){const it=tGet(id);if(!it||!it.in.query)return;S.thNew={id,busy:true};renderModal();
+ try{const from=new Date(it.checked||it.at);from.setDate(from.getDate()-1);const have=new Set((it.res.papers||[]).map(p=>p.pmid));
+  const sr=await getJSON(`${E}esearch.fcgi?db=pubmed&retmode=json&tool=cardioreader&retmax=30&sort=pub_date&datetype=edat&mindate=${ymd(from)}&maxdate=${ymd(new Date())}&term=${encodeURIComponent(`(${it.in.query}) AND hasabstract`)}`);
+  const ids=((sr.esearchresult||{}).idlist||[]).filter(x=>!have.has(x)).slice(0,15);let list=[];
+  if(ids.length){const j=await getJSON(`${E}esummary.fcgi?db=pubmed&retmode=json&tool=cardioreader&id=${ids.join(",")}`);list=ids.map(x=>j.result&&j.result[x]).filter(Boolean).map(s=>({pmid:s.uid,title:String(s.title||"").replace(/\.$/,""),journal:s.source||"",date:s.pubdate||""}))}
+  it.checked=Date.now();save();S.thNew={id,list}}catch(e){S.thNew=null;toast("PubMed didn't respond. Try again in a moment.")}
+ renderModal()}
+
+// ---------- hooks into the study-tool screens ----------
+{const _b=tBody;tBody=function(it){return it.k==="exam"?exBody(it):it.k==="thesis"?thBody(it):_b(it)}}
+{const _c=tCard;tCard=function(it){if(it.k!=="exam"&&it.k!=="thesis")return _c(it);const I=it.in,ready=(it.mods||[]).filter(m=>m.status==="ready").length;
+ const sub=it.k==="exam"?[I.date?`${dShort(I.date)} · ${toGo(I.date)}`:"",`${ready} of ${(it.mods||[]).length} topics ready`].filter(Boolean).join(" · "):[I.degree,I.date?`deadline ${dShort(I.date)} · ${toGo(I.date)}`:"",it.res&&it.res.papers?`${it.res.papers.length} papers`:""].filter(Boolean).join(" · ");
+ return `<div class="card tcard"><div class="tct">${esc(it.title||"")}</div><div class="au">${esc(sub)}</div>${tStatus(it)}
+  <div class="fbtns">${it.res?`<button data-act="topen" data-v="${it.id}">Open</button>`:""}${it.k==="exam"&&exQs(it).length?`<button data-act="qzstart" data-v="${it.id}">✍️ Practise</button>`:""}${S.confirm==="t:"+it.id?`<button class="red" data-act="tdel" data-v="${it.id}">Confirm delete</button>`:`<button data-act="tdelask" data-v="${it.id}">Delete</button>`}</div></div>`}}
+{const _s=tShare;tShare=async function(it){if(it.k!=="exam"&&it.k!=="thesis")return _s(it);let txt=it.title+"\n";
+ if(it.k==="exam")for(const m of it.mods||[]){if(m.status!=="ready")continue;txt+=`\n${m.n}\n${reviewText(m.res.review||{})}\n`}
+ else{txt+=`\n${reviewText(it.res.review||{})}\n\nReferences\n${(it.res.papers||[]).map(p=>`[${p.n}] ${p.title}. ${p.journal} ${p.year}. https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/`).join("\n")}`}
+ if(navigator.share){try{await navigator.share({title:it.title,text:txt});return}catch(e){if(e&&e.name==="AbortError")return}}
+ try{await navigator.clipboard.writeText(txt);toast("Copied")}catch(e){toast("Couldn't share it here.")}}}
+{const _k=tSheetK;tSheetK=function(k){if(k==="exam"&&S.tv&&S.tv.view==="quiz"&&S.qz)return qzSheet();return _k(k)}}
+{const _t=tItem;tItem=function(it){if(it.k!=="exam"&&it.k!=="thesis")return _t(it);const D=TDEF[it.k];
+ return `<div class="sheet big" role="dialog" aria-label="${esc(it.title||D.t)}"><div class="thead"><button class="link" data-act="tback">‹ ${D.t}</button><button class="tclose" data-act="mclose">Close</button></div><div class="vbody">
+ <h3 style="margin-top:4px">${esc(it.title||"")}</h3>${it.status!=="ready"?tStatus(it):""}${it.res?tBody(it):""}</div></div>`}}
+// exam slide files belong to their exam
+{const _gc=tGC;tGC=async function(){await _gc();const keys=await idbKeys(),ids=new Set(Object.values(st.tools||{}).flat().map(x=>x.id));const gone=keys.filter(k=>{const m=String(k).match(/^deck:([^|]+)\|m\d+$/);return m&&!ids.has(m[1])});if(gone.length)idbDel(gone)}}
+document.addEventListener("change",e=>{const t=e.target;if(!t)return;
+ if(t.id==="tf-exam"){S.tf=S.tf||{};S.tf.exam=t.value;S.tf.mods=[];renderModal()}
+ else if(t.id==="tf-slides"){renderModal()}},true);
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act,v=b.dataset.v;
+ const take=()=>{e.preventDefault();e.stopImmediatePropagation()};
+ if(a==="exmod"){take();S.tf=S.tf||{};const L=S.tf.mods=S.tf.mods||[];const i=L.indexOf(v);if(i>=0)L.splice(i,1);else if(L.length>=EXPICK){toast(`Choose up to ${EXPICK} now. You can add more later.`);return}else L.push(v);renderModal()}
+ else if(a==="exaddpick"){take();const L=S.exAdd=S.exAdd||[];const i=L.indexOf(v);if(i>=0)L.splice(i,1);else L.push(v);renderModal()}
+ else if(a==="exaddgo"){take();const it=tGet(v);if(!it)return;const add=[...(S.exAdd||[]),...modsFrom(S.tf&&S.tf.modtext)].filter(n=>!it.mods.some(m=>m.n===n));
+  if(!add.length){toast("Choose or type at least one topic.");return}if(piiOf(add.join(" "))==="hard"){toast("That looks like it contains patient details.");return}
+  it.mods.push(...add.slice(0,EXMAX-it.mods.length).map(n=>({n,status:"queued"})));S.exAdd=[];if(S.tf)S.tf.modtext="";save();tEnq(it.id);renderModal()}
+ else if(a==="exdeck"){take();idbGet(`deck:${v}|m${b.dataset.i}`).then(d=>d?cmpSave(new File([d.buf],d.name,{type:d.type})):toast("The slides aren't on this phone any more."))}
+ else if(a==="exics"){take();const it=tGet(v);if(it&&it.in.date)icsOne({t:`${it.in.name} exam`,d:it.in.date,uid:it.id,alarm:7})}
+ else if(a==="thics"){take();const it=tGet(v);if(it&&it.in.date)icsOne({t:`Thesis deadline: ${it.title||it.in.topic}`,d:it.in.date,uid:it.id,alarm:14})}
+ else if(a==="thexp"){take();thExport(v,b.dataset.f)}
+ else if(a==="thnew"){take();thCheck(v)}
+ else if(a==="qzstart"){take();qzStart(v,+b.dataset.n||0);S.modal={type:"tool",v:"exam"};renderModal()}
+ else if(a==="qzpick"){take();qzPick(+v);renderModal()}
+ else if(a==="qznext"||a==="qzskip"){take();qzNext();renderModal();const sh=document.querySelector("#modal .vbody");if(sh)sh.scrollTop=0}
+ else if(a==="qzend"){take();const id=S.qz&&S.qz.id;S.qz=null;S.tv=id?{k:"exam",view:"item",id}:{k:"exam",view:"list"};renderModal()}
+},true);
+
+// ---------- the full calendar ----------
+const CALC={appraisal:"#C0504D",exam:"#7A4BC2",thesis:"#2E7D6B",talk:"#D98A1C",cpd:"#2E86C1",conf:"#2E3A6B",dl:"#E0662E",rem:"#9AA1B5"};
+const CALTG=[["all","All topics"],["general","General"],["rhythm","Rhythm"],["imaging","Imaging"],["hf","Heart failure"],["intervention","Intervention"],["prevention","Prevention"]];
+function calItems(){const L=[],add=o=>{if(o.d)L.push(o)};
+ if(st.appraisal){add({d:st.appraisal,t:"Appraisal",k:"appraisal",mine:1,uid:"appraisal",alarm:28});const r=new Date(st.appraisal+"T12:00");r.setDate(r.getDate()-28);add({d:isoD(r),t:"Export your CPD log for appraisal",sub:"Appraisal in 4 weeks. Use CPD › Export.",k:"rem",mine:1,uid:"appraisal-rem"})}
+ for(const it of tList("exam"))if(it.in.date)add({d:it.in.date,t:`${it.in.sh||it.in.name} exam`,sub:it.in.name,k:"exam",mine:1,uid:it.id,tool:it.id,alarm:7});
+ for(const it of tList("thesis"))if(it.in.date){add({d:it.in.date,t:"Thesis deadline",sub:it.title||it.in.topic,k:"thesis",mine:1,uid:it.id,tool:it.id,alarm:14});thPhases(it).forEach((p,i)=>{if(i)add({d:p.s,t:`Thesis: ${p.n}`,sub:"Suggested start",k:"rem",mine:1,uid:it.id+"p"+i})})}
+ for(const it of tList("pres"))if(it.in.date)add({d:it.in.date,t:`Talk: ${it.title||it.in.title}`,sub:it.in.audience||"",k:"talk",mine:1,uid:it.id,tool:it.id,alarm:7});
+ for(const c of st.cpd||[])if(c.kind==="event"||c.kind==="online")add({d:c.date,e:c.end&&c.end!==c.date?c.end:"",t:c.title,sub:[c.src,c.venue].filter(Boolean).join(" · "),k:"cpd",mine:1,uid:c.id,v:c.venue,url:c.url});
+ for(const x of EVENTS){const tg=x.tg||"general";
+  if(x.s)add({d:x.s,e:x.e&&x.e!==x.s?x.e:"",t:x.n,sub:[x.v,x.org].filter(Boolean).join(" · "),k:"conf",r:x.r,tg,url:x.url,v:x.v,uid:x.id,ev:x.id});
+  if(x.abs)add({d:x.abs,t:`Abstract deadline: ${x.n}`,k:"dl",r:x.r,tg,url:x.url,uid:x.id+"abs",alarm:7});
+  if(x.lbs)add({d:x.lbs,t:`Late-breaking science deadline: ${x.n}`,k:"dl",r:x.r,tg,url:x.url,uid:x.id+"lbs",alarm:7});
+  if(x.eb)add({d:x.eb,t:`${x.ebN||"Early registration ends"}: ${x.n}`,k:"dl",r:x.r,tg,url:x.url,uid:x.id+"eb",alarm:7})}
+ const F=S.calF||"all",R=S.calR||"all",T=S.calT||"all";
+ return L.filter(o=>(F==="all"||(F==="mine"&&o.mine)||(F==="conf"&&o.k==="conf")||(F==="dl"&&o.k==="dl"))&&(o.mine||((R==="all"||o.r===R)&&(T==="all"||o.tg===T)))).sort((a,b)=>a.d<b.d?-1:a.d>b.d?1:0)}
+const onDay=(o,d)=>o.d===d||(o.e&&o.d<=d&&d<=o.e);
+function calRow(o,i){return `<div class="calrow"><span class="caldot" style="--c:${CALC[o.k]}"></span><div class="calrb"><div class="calrd">${esc(o.e?fmtRange(o.d,o.e):new Date(o.d+"T12:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric"}))}${o.d>=isoD(new Date())?` · ${esc(toGo(o.d))}`:""}</div>
+ <div class="calrt">${o.url?`<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.t)}</a>`:o.tool?`<a href="#" data-act="calopen" data-v="${o.tool}">${esc(o.t)}</a>`:esc(o.t)}</div>${o.sub?`<div class="au">${esc(o.sub)}</div>`:""}</div>
+ <button class="calics" data-act="calics" data-v="${i}" aria-label="Add to my calendar">📅+</button></div>`}
+calSheet=function(){const today=isoD(new Date()),ym=S.calM||today.slice(0,7),[y,mo]=ym.split("-").map(Number),first=new Date(y,mo-1,1),lead=(first.getDay()+6)%7,days=new Date(y,mo,0).getDate();
+ const L=calItems();S.calL=L;const cells=[];for(let i=0;i<lead;i++)cells.push(`<span class="cd off"></span>`);
+ for(let d=1;d<=days;d++){const ds=`${ym}-${String(d).padStart(2,"0")}`,its=L.filter(o=>onDay(o,ds)),cols=[...new Set(its.map(o=>CALC[o.k]))].slice(0,3);
+  cells.push(`<button class="cd ${ds===today?"today":""} ${ds===S.calDay?"sel":""}" data-act="calday" data-v="${ds}"><span>${d}</span><i>${cols.map(c=>`<b style="--c:${c}"></b>`).join("")}</i></button>`)}
+ const day=S.calDay&&S.calDay.startsWith(ym)?S.calDay:"",list=day?L.map((o,i)=>[o,i]).filter(([o])=>onDay(o,day)):L.map((o,i)=>[o,i]).filter(([o])=>(o.e||o.d)>=today).slice(0,30);
+ const ap=st.appraisal||"",F=S.calF||"all";
+ return `<div class="sheet big" role="dialog" aria-label="Calendar"><div class="thead"><h3>📅 Calendar</h3><button class="tclose" data-act="mclose">Close</button></div><div class="vbody">
+  <div class="calnav"><button data-act="calm" data-v="-1" aria-label="Previous month">‹</button><b>${first.toLocaleDateString("en-GB",{month:"long",year:"numeric"})}</b><button data-act="calm" data-v="1" aria-label="Next month">›</button></div>
+  <div class="calg"><span class="cw">M</span><span class="cw">T</span><span class="cw">W</span><span class="cw">T</span><span class="cw">F</span><span class="cw">S</span><span class="cw">S</span>${cells.join("")}</div>
+  <div class="calkey">${[["appraisal","Appraisal"],["exam","Exam"],["thesis","Thesis"],["talk","Talk"],["cpd","CPD log"],["conf","Conference"],["dl","Deadline"]].map(([k,l])=>`<span><b style="--c:${CALC[k]}"></b>${l}</span>`).join("")}</div>
+  <div class="row" style="margin-top:8px">${[["all","Everything"],["mine","My dates"],["conf","Conferences"],["dl","Deadlines"]].map(([k,l])=>`<button class="chip ${F===k?"on":""}" data-act="calf" data-v="${k}">${l}</button>`).join("")}</div>
+  ${F!=="mine"?`<div class="row">${[["all","All regions"],["uk","UK"],["eu","Europe"],["usa","USA"]].map(([k,l])=>`<button class="chip ${(S.calR||"all")===k?"on":""}" data-act="calr" data-v="${k}">${l}</button>`).join("")}</div>
+  <div class="row">${CALTG.map(([k,l])=>`<button class="chip ${(S.calT||"all")===k?"on":""}" data-act="calt" data-v="${k}">${l}</button>`).join("")}</div>`:""}
+  <h4 style="margin-top:12px">${day?`${new Date(day+"T12:00").toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"})} <button class="link" data-act="calday" data-v="">Show upcoming</button>`:"Upcoming"}</h4>
+  ${list.length?list.map(([o,i])=>calRow(o,i)).join(""):`<div class="msg">Nothing ${day?"on this day":"coming up"}${F!=="all"?" with these filters":""}.</div>`}
+  <div class="card" style="margin-top:14px;padding:10px 14px"><label class="au" style="display:block">Your next appraisal<input class="search tdate" type="date" id="calappr" value="${esc(ap)}"></label>
+  <p class="note" style="margin:6px 0 0">${ap?`A reminder to export your CPD log appears 4 weeks before.`:"Add the date and the app reminds you to export your CPD log 4 weeks before."}</p></div>
+  <p class="note">Exam and thesis dates come from Exam prep and Thesis, talks from My Presentations, and courses from your CPD log. Conference dates and deadlines are checked monthly; confirm them on the organiser's website.</p></div></div>`};
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act,v=b.dataset.v;
+ const take=()=>{e.preventDefault();e.stopImmediatePropagation()},keep=()=>{const sh=document.querySelector("#modal .vbody"),y=sh?sh.scrollTop:0;renderModal();const n=document.querySelector("#modal .vbody");if(n)n.scrollTop=y};
+ if(a==="calm"){take();const [y,m]=(S.calM||isoD(new Date()).slice(0,7)).split("-").map(Number),d=new Date(y,m-1+(+v),1);S.calM=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;S.calDay="";keep()}
+ else if(a==="calday"){take();S.calDay=S.calDay===v?"":v;keep()}
+ else if(a==="calf"){take();S.calF=v;keep()}
+ else if(a==="calr"){take();S.calR=v;keep()}
+ else if(a==="calt"){take();S.calT=v;keep()}
+ else if(a==="calics"){take();const o=(S.calL||[])[+v];if(o)icsOne(o)}
+ else if(a==="calopen"){take();const it=tGet(v);if(it){S.tv={k:it.k,view:"item",id:it.id};S.modal={type:"tool",v:it.k};renderModal()}}
+},true);
+// an older saved conference list has no deadlines yet, so fetch the new one now
+setTimeout(()=>{const c=st.evCache;if(c&&c.list&&!c.list.some(x=>x.tg||x.abs)){c.at=0;evRefresh(false)}},3000);
 </script>
 </body>
 </html>
