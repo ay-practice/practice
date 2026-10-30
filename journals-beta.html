@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-6KCvEcuj2n5RX/TJrjicYcF42YKiDM6iGEwp6nuqx+4=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://cpd-voice.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-G3yAXPoSkA8Rvy8H+7i+6uMP/4+IPMI5AWCpij9x1II=' https://cdn.jsdelivr.net blob: 'wasm-unsafe-eval'; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cardio-ai.yerramasuajay.workers.dev https://cpd-voice.yerramasuajay.workers.dev https://eutils.ncbi.nlm.nih.gov https://www.ncbi.nlm.nih.gov https://www.ebi.ac.uk https://europepmc.org https://api.unpaywall.org https://www.gov.uk https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co blob: data:; worker-src 'self' blob:; media-src 'self' blob: data:; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -553,6 +553,140 @@ details.xmod[open]>summary{margin-bottom:6px}
 .caldot{width:10px;height:10px;margin-top:5px;flex:0 0 auto}
 .calrb{flex:1;min-width:0}.calrd{font-size:12.5px;color:var(--muted);font-weight:600}.calrt{font-size:15px;font-weight:600;line-height:1.3}.calrt a{color:inherit}
 .calics{flex:0 0 auto;border:1px solid #DCE0F0;background:#fff;border-radius:10px;padding:6px 8px;font-size:13px}
+
+/* ===== b11: tiles for Guidelines, Podcasts and Scores; Settings menu; getting around; research; slide viewer ===== */
+.gtiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:8px 0 6px}
+.gtiles.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.gtile{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;min-height:92px;padding:9px 8px 12px;border-radius:13px;border:1px solid #E1E4EE;background:#fff;color:#1D2433;text-align:left;font-family:inherit;text-decoration:none;box-shadow:0 1px 3px rgba(30,40,80,.06);overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.gtile::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--c,#5F7A99)}
+.gtile:active{transform:scale(.97)}
+.gtile .gtl{font-size:12px;font-weight:700;line-height:1.18;hyphens:manual;-webkit-hyphens:manual;overflow-wrap:normal;word-break:normal;max-width:100%;letter-spacing:-.01em}
+.gtile .gic{position:absolute;right:6px;bottom:9px;color:var(--c,#5F7A99);opacity:.9;line-height:0}
+.gtile .gsrc,.gtile .gyr{margin-top:auto;padding-top:4px;font-size:10px;font-weight:600;color:#6A7086;letter-spacing:.01em;max-width:calc(100% - 30px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gtile .gsrc{white-space:normal}
+.gtile .gyr{font-size:11.5px;color:#2B3247}
+.gtile .gnew{position:absolute;top:6px;right:6px;font-size:8.5px;font-weight:800;letter-spacing:.06em;color:#fff;background:#C0392B;border-radius:6px;padding:2px 4px}
+.gtile .gnew~.gtl{padding-right:26px}
+.gtile .gfav{position:absolute;top:5px;right:7px;color:#D9A93F;font-size:12px}
+.gtile.solid{background:var(--bg);border-color:transparent;color:#fff}
+.gtile.solid::after{display:none}
+.gtile.solid .gic{color:rgba(255,255,255,.9)}
+.gtile.solid .gsrc,.gsrc.lite{color:rgba(255,255,255,.8)}
+.gtile.mini{min-height:74px}
+.gtile.mini .gtl{font-size:11.6px;font-weight:650}
+b.gst{color:#D9A93F}
+.gnew2{color:#C0392B;font-weight:800;font-size:.85em}
+.gtabs{margin-top:2px}
+.gsub{margin:4px 0 2px}
+.gh4{margin:16px 0 2px;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#5C6375}
+.gmore{display:block;margin:10px 0;color:#2E4A86;font-weight:600}
+.gdh{margin:2px 0 10px}
+.gdh .gbk{color:#2E4A86;font-weight:650;font-size:15px;padding:4px 0;text-decoration:none}
+.gdt{display:flex;align-items:center;gap:10px;margin-top:6px;padding:10px 12px;border-radius:14px;background:#fff;border:1px solid #E1E4EE;border-left:6px solid var(--c)}
+.gdt h2{flex:1;margin:0;font-size:19px;line-height:1.2}
+.gdi{color:var(--c);line-height:0}
+.gstar{border:0;background:none;color:#B9BECC;padding:4px;line-height:0}
+.gstar.on{color:#D9A93F}
+.gstar.on svg{fill:#D9A93F}
+.gcard{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 8px;padding:11px 12px;border-radius:13px;background:#fff;border:1px solid #E1E4EE;color:#1D2433;text-decoration:none;text-align:left;font-family:inherit;font-size:15px}
+.gcard.plain{display:block}
+.gbody{flex:0 0 auto;min-width:46px;text-align:center;font-size:11px;font-weight:800;color:#fff;background:var(--b);border-radius:8px;padding:5px 6px}
+.gct{flex:1;display:flex;flex-direction:column;gap:2px}
+.gcn{font-weight:650;line-height:1.25}
+.gopen{color:#2E4A86;font-weight:650;font-size:13.5px;white-space:nowrap}
+.pdesc{display:block;margin-top:6px;font-size:15px;color:#2B3247}
+.gkey{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 2px;font-size:12px;color:#5C6375}
+.gkey b{display:inline-block;width:12px;height:5px;border-radius:2px;background:var(--c);margin-right:5px;vertical-align:middle}
+.dvdoc{background:#fff;border:1px solid #E1E4EE;border-radius:13px;padding:4px 14px}
+@media (max-width:350px){.gtiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:700px){.gtiles{grid-template-columns:repeat(5,minmax(0,1fr))}.gtile .gtl{font-size:13.5px}}
+/* page bar and Menu button */
+.pagebar{display:flex;align-items:center;gap:10px;margin:0 0 8px}
+.pagebar button{border:0;background:rgba(255,255,255,.75);border:1px solid #DDE1EC;border-radius:16px;padding:5px 12px;color:#2E4A86;font-weight:650;font-size:14px;font-family:inherit}
+.pagebar b{font-size:16px;color:#1C2541}
+.fabmenu{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:40;display:flex;align-items:center;gap:5px;padding:9px 14px;border-radius:22px;border:0;background:#1C2541;color:#fff;font:700 14px/1 inherit;font-family:inherit;box-shadow:0 6px 18px rgba(20,30,60,.3);opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .2s,transform .2s}
+.fabmenu.on{opacity:.94;transform:none;pointer-events:auto}
+header .ttl h1{cursor:pointer}
+/* Settings menu */
+.setme{display:flex;align-items:center;gap:12px;width:100%;padding:12px;border-radius:15px;border:1px solid #E1E4EE;background:#fff;font-family:inherit;text-align:left;color:#1D2433;margin-bottom:6px}
+.setav{flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1C2541,#5A63B8);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px}
+.seth{margin:16px 4px 6px;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:#5C6375}
+.setg{background:#fff;border:1px solid #E1E4EE;border-radius:15px;overflow:hidden}
+.setr{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border:0;border-bottom:1px solid #EEF0F5;background:none;font-family:inherit;text-align:left;color:#1D2433}
+.setr:last-child{border-bottom:0}
+.seti{flex:0 0 auto;width:32px;height:32px;border-radius:9px;background:var(--c);color:#fff;display:flex;align-items:center;justify-content:center}
+.setmt{flex:1;display:flex;flex-direction:column;min-width:0}
+.setmt b{font-size:15.5px;font-weight:650}
+.setmt small{font-size:12.5px;color:#6A7086;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.setch{color:#A0A6B8;font-size:20px}
+.sheet .setr{border-radius:0}
+.legal h4{margin:14px 0 4px}
+.legal p{margin:6px 0;font-size:15px}
+.legal .draft{background:#FFF4D9;border:1px solid #F0D68A;border-radius:9px;padding:6px 10px;font-size:13.5px}
+/* feedback */
+.fbf .tl{display:block;margin-top:12px}
+.stars{display:flex;gap:4px;margin-top:4px}
+.star{border:0;background:none;font-size:30px;line-height:1;color:#D3D7E2;padding:0 2px}
+.star.on{color:#E9A93A}
+.fbi p{margin:6px 0;font-size:15px}
+.fbh{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin-top:6px}
+.link.red{color:#B03A3A}
+/* study-tool tiles: ready dot and overnight moon */
+.tools button.tdone{position:relative}
+.tools button.tdone::after{content:"";position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:#FF5A5F;box-shadow:0 0 0 2px rgba(28,37,65,.9);animation:none}
+.tools button.tsent{position:relative}
+.tools button.tsent::before{content:"🌙";position:absolute;top:2px;left:4px;font-size:9px}
+/* research */
+.rbox{margin-top:14px;padding:10px 12px;border-radius:13px;background:rgba(90,99,184,.07);border:1px solid rgba(90,99,184,.22)}
+.rest{margin:8px 0 0;font-size:14.5px}
+.tst.sent{background:#EEF0FB;border-radius:9px;padding:7px 10px;color:#2E3A6B}
+.rfix .link{font-weight:650}
+.thumbs{display:flex;align-items:center;gap:8px;margin:10px 0}
+.thumbs button{border:1px solid #DDE1EC;background:#fff;border-radius:16px;padding:4px 12px;font-size:17px}
+.thumbs button.on{background:#E7ECFB;border-color:#7F8BD6}
+.fbtns button.pri{background:#2E3A6B;color:#fff;border-color:#2E3A6B}
+.edl{display:flex;flex-direction:column;gap:5px;margin:10px 0}
+.edr{display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;border-radius:10px;border:1px solid #E1E4EE;background:#fff;font-family:inherit;font-size:14.5px;text-align:left;color:#1D2433}
+.edr.on{border-color:#5A63B8;background:#EEF0FB}
+.edc{flex:0 0 auto;width:20px;height:20px;border-radius:6px;border:1.5px solid #B9BECC;color:transparent;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+.edr.on .edc{background:#5A63B8;border-color:#5A63B8;color:#fff}
+.edn{flex:0 0 auto;min-width:20px;color:#6A7086;font-weight:700;font-size:12.5px}
+/* slide viewer */
+.dvb{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.dvb button{border:1px solid #CDD3E1;background:#fff;border-radius:16px;padding:6px 12px;font-family:inherit;font-size:14px;font-weight:600;color:#2E3A6B}
+.dvb button.on{background:#2E3A6B;color:#fff}
+.dvlist{display:flex;flex-direction:column;gap:12px;padding-bottom:20px}
+.dvs{position:relative;border-radius:6px;overflow:hidden;box-shadow:0 2px 10px rgba(20,30,60,.16);cursor:zoom-in}
+.dvn{position:absolute;left:6px;top:6px;background:rgba(20,25,45,.55);color:#fff;font-size:11px;font-weight:700;border-radius:8px;padding:1px 7px}
+.dvnote{margin:-4px 2px 4px;padding:8px 10px;border-left:3px solid #5A63B8;background:rgba(90,99,184,.07);border-radius:0 8px 8px 0;font-size:14px;color:#2B3247}
+.rs{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;--pt:0.4px;color:#333;font-family:Calibri,"Segoe UI",Arial,sans-serif;line-height:1.2;contain:layout paint}
+.rs .rt{position:absolute;display:flex;flex-direction:column;box-sizing:border-box;padding:calc(var(--pt)*3.6) calc(var(--pt)*7.2);overflow:hidden;font-size:calc(var(--pt)*var(--fs)*var(--k,1));overflow-wrap:break-word}
+.rs .rtc p{margin:0}
+.rs .rtc p.rb{position:relative}
+.rs .rtc p.rb::before{content:"•";position:absolute;left:.25em}
+.rs .rt a{color:inherit;text-decoration:underline}
+.rs .rsh{position:absolute;box-sizing:border-box}
+.rs .rsh.tr{opacity:var(--o,1)}
+.rs .rsv{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.rs .rim{position:absolute;object-fit:fill}
+.rs .rch{position:absolute;overflow:visible}
+#modal.dvov{align-items:stretch!important;justify-content:stretch!important;background:#0B0E18!important;backdrop-filter:none!important}
+.dvfs{position:relative;display:flex;flex-direction:column;width:100%;height:100%;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);box-sizing:border-box}
+.dvstage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:6px}
+.dvstage .rs{width:100%;flex:0 0 auto;box-shadow:0 4px 30px rgba(0,0,0,.5)}
+.dvfn{max-height:28vh;overflow:auto;margin:0 10px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,.1);color:#E6EAF6;font-size:15px}
+.dvctl{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 8px 10px;color:#E6EAF6}
+.dvctl span{min-width:62px;text-align:center;font-weight:700;font-size:14px}
+.dvctl button{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;border-radius:18px;min-width:40px;height:36px;padding:0 12px;font-size:18px;font-family:inherit}
+.dvctl button:disabled{opacity:.3}
+.dvctl button.on{background:#5A63B8;border-color:#5A63B8}
+.dvctl button[data-act="dvnotes"]{font-size:14px;font-weight:650}
+.dvhint{position:absolute;left:50%;top:calc(10px + env(safe-area-inset-top));transform:translateX(-50%);background:rgba(255,255,255,.12);color:#E6EAF6;font-size:12.5px;border-radius:12px;padding:4px 10px;white-space:nowrap;animation:dvh 4s forwards}
+@keyframes dvh{0%,75%{opacity:1}100%{opacity:0}}
+.help .thead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.help .thead h3{margin:0}
+.help video{max-height:52vh;margin-top:8px}
+.hvb{margin-top:8px}
 </style>
 </head>
 <body>
@@ -567,7 +701,7 @@ details.xmod[open]>summary{margin-bottom:6px}
 <script>
 "use strict";try{if(!localStorage.getItem("journal-reader-beta")&&localStorage.getItem("journal-reader-v1"))localStorage.setItem("journal-reader-beta",localStorage.getItem("journal-reader-v1"))}catch(e){}
 
-const KEY="journal-reader-beta",APPVER="Beta, 26 Oct 2026 (b10)";
+const KEY="journal-reader-beta",APPVER="Beta, 30 Oct 2026 (b11)";
 const E="https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 const J=[
  {id:"nejm",name:"NEJM",ta:"N Engl J Med",gen:1,c:"#8A93A8"},
@@ -628,7 +762,7 @@ const CAA_PAGE="https://www.caa.co.uk/aeromedical/medical-standards/pilots/medic
 const DVLA_PAGE="https://www.gov.uk/guidance/cardiovascular-disorders-assessing-fitness-to-drive";
 const DVLA_API="https://www.gov.uk/api/content/guidance/cardiovascular-disorders-assessing-fitness-to-drive";
 
-const DEF={days:60,research:true,off:{},saved:{},seen:[],last:null,dvla:null,cpd:[],ft:{mode:"direct",ezp:"",oa:"",unpay:false,email:""}};
+const DEF={days:60,research:true,off:{},saved:{},seen:[],last:null,dvla:null,cpd:[],ft:{mode:"oa",ezp:"",oa:"",unpay:false,email:""}};
 let st;try{st=Object.assign({},DEF,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){st={...DEF}}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
 if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
@@ -1538,7 +1672,7 @@ async function makeDeck(pmid,count,topic,opt){
  const useFigs=!!(S.slideFigs&&full.figs.length),nAI=Math.max(2,count-2);
  S.slideBusy="The AI is designing your slides";renderModal();
  let d,cm={};
- if(topic&&topic.slides)d={slides:topic.slides};else try{const lib=!(opt&&opt.model)&&(!!topic||!!st.saved[pmid]);const j=await aiCall("slides",{...(opt?{model:opt.model}:{}),...(lib?{lib:1,wait:110}:{}),mode:topic?"topic":"",title:P.title,abstract:absText(P.parts),fulltext:full.text,redraw:!!mine||!useFigs&&!!full.text,n:nAI,figures:useFigs?full.figs.map(f=>({label:f.label,caption:f.cap.slice(0,300)})):[]},opt?280000:lib?150000:undefined);d=j.data;cm=j}
+ if(topic&&topic.slides)d={slides:topic.slides};else try{const lib=!(opt&&opt.model)&&(!!topic||!!st.saved[pmid]);const j=await aiCall("slides",{...(opt?(opt.model?{model:opt.model}:{tool:1,claude:opt.claude||""}):{}),...(lib?{lib:1,wait:110}:{}),mode:topic?"topic":"",title:P.title,abstract:absText(P.parts),fulltext:full.text,redraw:!!mine||!useFigs&&!!full.text,n:nAI,figures:useFigs?full.figs.map(f=>({label:f.label,caption:f.cap.slice(0,300)})):[]},opt?280000:lib?150000:undefined);d=j.data;cm=j}
  catch(e){if(opt)throw e;if(topic){S.slideBusy="";S.modal=null;renderModal();toast(aiErr(e.code));return}toast(aiErr(e.code)+" Using the built-in slide writer instead.");return makeSlides(pmid,count)}
  let slides=(d.slides||[]).filter(x=>x&&typeof x==="object").map(x=>({...x,layout:LAYOUTS.includes(x.layout)?x.layout:"bullets"}));
  if(!useFigs)slides=slides.filter(x=>x.layout!=="figure");
@@ -1569,6 +1703,7 @@ async function makeDeck(pmid,count,topic,opt){
  s.addText(P.title,{x:T.sy==="minimal"?1.05:0.9,y:1.4,w:11.2,h:2.9,fontFace:F,fontSize:P.title.length>140?28:36,bold:true,color:T.titleTx,valign:"top",fit:"shrink"});
  s.addText(P.aus.slice(0,8).join(", ")+(P.aus.length>8?", et al":""),{x:T.sy==="minimal"?1.05:0.9,y:4.55,w:11.2,h:0.7,fontFace:F,fontSize:16,color:T.titleSub,fit:"shrink"});
  s.addText(`${P.iso||P.journal}${P.year?", "+P.year:""}`,{x:T.sy==="minimal"?1.05:0.9,y:5.25,w:11.2,h:0.5,fontFace:F,fontSize:16,italic:true,color:T.sy==="minimal"?T.acc:T.sy==="bold"?"FFFFFF":T.light});
+ {const mdl=cm.model||(topic&&topic.model)||"";if(opt&&mdl)s.addNotes(`Slides written by ${MODELNAME(mdl)}${topic&&topic.web?" after researching the topic on the web":""}. Check the facts against the ${topic&&topic.web?"sources":"references"} before presenting.`)}
  // figures chosen from the reader's own PDF
  let pdfFig=[],nPdf=0;
  if(mine&&S.pdfPick&&S.pdfPick.pmid===pmid&&S.pdfPick.pages.length){S.slideBusy="Adding figures from your PDF";renderModal();for(const n of S.pdfPick.pages.slice(0,4)){try{pdfFig.push({n,img:await pdfPageImage(mine.file,n)})}catch(e){}}}
@@ -1628,14 +1763,14 @@ async function makeDeck(pmid,count,topic,opt){
  else if(S.slideFigs&&!mine)figNote=P.pmcid&&P.oa?"No figures found in the full paper.":"Not open access, so the paper's figures can't be included.";
  if(nPdf)figNote=`${nPdf} ${nPdf===1?"figure":"figures"} from your PDF added, with an acknowledgement.`;
  // reference slide
- if(topic){for(let k=0;k<Math.max(1,topic.refs.length);k+=8){s=frame(k?"References (continued)":"References",T.grey);s.addText(topic.refs.slice(k,k+8).map((r,q)=>`[${k+q+1}] ${r}`).join("\n")||"See the summary in the app.",{x:0.6,y:1.45,w:12.1,h:5.3,fontFace:F,fontSize:12,color:T.text,valign:"top",fit:"shrink",paraSpaceAfter:4})}}
+ if(topic){for(let k=0;k<Math.max(1,topic.refs.length);k+=8){s=frame(k?`${topic.refTitle||"References"} (continued)`:(topic.refTitle||"References"),T.grey);s.addText(topic.refs.slice(k,k+8).map((r,q)=>`[${k+q+1}] ${r}`).join("\n")||"See the summary in the app.",{x:0.6,y:1.45,w:12.1,h:5.3,fontFace:F,fontSize:12,color:T.text,valign:"top",fit:"shrink",paraSpaceAfter:4})}}
  else{s=frame("Reference",T.grey);
  s.addText(`${P.aus.slice(0,6).join(", ")}${P.aus.length>6?", et al":""}. ${P.title} ${P.iso||P.journal}. ${P.year}${P.vol?";"+P.vol:""}${P.iss?"("+P.iss+")":""}${P.pages?":"+P.pages:""}.${P.doi?" doi:"+P.doi:""}`,{x:0.7,y:1.5,w:11.9,h:2.2,fontFace:F,fontSize:18,color:T.text,valign:"top",fit:"shrink"});
  s.addText(`PubMed ${pmid}${P.pmcid?", "+P.pmcid:""}. ${nPdf?"Figures from the paper are reproduced for teaching, with acknowledgement. ":""}Slides written by AI from ${mine?"the reader's own copy of the paper; charts redrawn from the reported numbers":full.text?"the open-access full paper":"the abstract"}${nFig?"; figures reproduced under the paper's open-access licence":""}. Check against the paper before presenting.`,{x:0.7,y:4.1,w:11.9,h:1,fontFace:F,fontSize:13,color:T.grey});
  }
  const blob=await pptx.write({outputType:"blob"});
  const name=`${short.replace(/[^\w ]+/g,"").replace(/\s+/g,"-").slice(0,60)||"paper"}-slides.pptx`;
- if(opt)return {file:new File([blob],name.replace(/-slides\.pptx$/,"-"+opt.tag.replace(/[^\w.]+/g,"-")+".pptx"),{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"}),meta:{ms:cm.ms,cost:cm.cost,usage:cm.usage,n:num}};
+ if(opt)return {file:new File([blob],name.replace(/-slides\.pptx$/,"-"+opt.tag.replace(/[^\w.]+/g,"-")+".pptx"),{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"}),meta:{ms:cm.ms,cost:cm.cost,usage:cm.usage,n:num,model:cm.model||(topic&&topic.model)||""}};
  S.slideBusy="";S.slideFile=new File([blob],name,{type:"application/vnd.openxmlformats-officedocument.presentationml.presentation"});
  S.slideMsg=[`${num} slides ready, designed by AI from ${topic?"your Focus review":mine?"your PDF, with charts redrawn from its numbers":full.text?"the full paper":"the abstract"}. Check them before presenting.`,figNote].filter(Boolean).join(" ");renderModal();
 }
@@ -2058,7 +2193,7 @@ function helpSheet(){return `<div class="sheet big help" role="dialog" aria-labe
   <p><b>Calendar</b> (the date at the top): your appraisal, exams, thesis deadline, talks, courses from your CPD log, and conferences with abstract and early-registration deadlines. Tap 📅+ to add any of them to your phone's calendar.</p>
   <p><b>My Presentations, Explore Evidence and Focused Learning</b> (the second row of tiles): keep up to 3 of each. The app plans a PubMed search, picks the best papers and writes a referenced review, a narrated answer or a whole talk with slides. They carry on in the background while the app is open; a yellow dot on the tile shows one is being built.</p>
   <p><b>Library:</b> up to 10 papers. Each one is prepared in the background: a detailed summary (from the full paper when it's free), Listen and a two-voice Discussion, saved on your phone.</p>
-  <p><b>Articles:</b> pick a topic or journal, or search. Tap <b>Abstract</b> to read it, and <b>Archive</b> to keep it in your Library (up to 10 papers), where you can <b>✨ Summarise</b>, <b>▶ Listen</b>, hear a <b>🎧 Discussion</b> or make slides.</p>
+  <p><b>Articles:</b> pick a topic or journal, or search. Tap <b>Abstract</b> to read it, and <b>Archive</b> to keep it in your Library (up to 10 papers), where you can <b>✨ Summarise</b>, <b>▶ Listen</b> or hear a <b>🎧 Discussion</b>.</p>
   <p><b>Saving and CPD:</b> <b>Archive</b> keeps a paper in the Library (the book icon). <b>CPD</b> logs the time with your reflection; use the microphone to dictate.</p>
   <p><b>CPD tab:</b> your CPD log, conferences and courses, certificates and <b>Export for SOAR</b>.</p>
   <p><b>Paywalled papers:</b> tap <b>📄 Add full paper (PDF)</b> to use the PDF you've downloaded for a summary or slides.</p>
@@ -2161,7 +2296,7 @@ function renderFtBar(){let el=document.getElementById("ftbar");if(!el){el=docume
  const id=S.ftBar;if(!id){el.innerHTML="";el.className="";return}
  const it=findItem(id)||st.saved[id]||{};el.className="ftbar";
  el.innerHTML=`<div class="fth"><span>Back from the full paper</span><button class="ftx" data-act="ftclose" aria-label="Close">✕</button></div><div class="ftt">${esc(it.title||"This paper")}</div>
- <div class="ftb"><button data-act="ftsum">✨ Summarise</button><button data-act="ftslides">Make slides</button>${pdfBtn(id)}${st.cmpKey&&aiURL()?`<button data-act="ftcmp">⚖️ Compare AI</button>`:""}</div>`}
+ <div class="ftb"><button data-act="ftsum">✨ Summarise</button>${pdfBtn(id)}${st.cmpKey&&aiURL()?`<button data-act="ftcmp">⚖️ Compare AI</button>`:""}</div>`}
 function ftShowCard(id){
  if(!S.items.some(x=>x.pmid===id)&&!st.saved[id]&&libN()<LIBMAX){const it=findItem(id);if(it)st.saved[id]={...it,at:Date.now()};save()}
  if(!S.items.some(x=>x.pmid===id)){S.tab="saved"}if(!S.open[id])loadAbs(id);else render();
@@ -2298,14 +2433,14 @@ function feSheet(){const F=S.fe;return `<div class="sheet big" role="dialog" ari
  <label class="au" style="display:block;margin-top:10px">Keep updating until (optional)<input class="search" type="date" id="fetarget" value="${esc(F.target||"")}"></label>
  <label class="set"><span>Slides</span><select id="feslides">${[6,8,10,12,15,20].map(n=>`<option ${+F.slides===n?"selected":""}>${n}</option>`).join("")}</select></label>
  </div><div class="pk"><a href="#" data-act="fesave">${F.id?"Save":"Save and build"}</a><a href="#" class="alt" data-act="mclose">Cancel</a></div></div>`}
-const refLinks=(refs,R)=>{const L=(Array.isArray(refs)?refs:[refs]).map(n=>+n).filter(n=>n>=1&&n<=R.papers.length);return L.length?` <span class="fref">${L.map(n=>`<a href="https://pubmed.ncbi.nlm.nih.gov/${R.papers[n-1].pmid}/" target="_blank" rel="noopener">${n}</a>`).join("")}</span>`:""};
+const refLinks=(refs,R)=>{const P=R.papers||[],W=P.length?[]:(R.sources||[]),N=P.length||W.length;const L=(Array.isArray(refs)?refs:[refs]).map(n=>+n).filter(n=>n>=1&&n<=N);return L.length?` <span class="fref">${L.map(n=>`<a href="${P.length?`https://pubmed.ncbi.nlm.nih.gov/${P[n-1].pmid}/`:esc(W[n-1].url||"#")}" target="_blank" rel="noopener">${n}</a>`).join("")}</span>`:""};
 function fviewSheet(m){
  const f=fById(m.id),R=f&&f.result;if(!R)return "";const V=R.review||{},pts=(L,cls="")=>`<ul class="fpts ${cls}">${(L||[]).map(p=>`<li>${esc(p.text||"")}${refLinks(p.refs,R)}</li>`).join("")}</ul>`;
  return `<div class="sheet big fview" role="dialog" aria-label="${esc(V.title||f.topic)}"><div class="vhead"><h3>${esc(V.title||f.topic)}</h3><div class="vbtns"><button class="more" data-act="mclose">Close</button></div></div><div class="vbody">
  <p class="au">${R.papers.length} key papers from the last ${f.years} years${R.ranked?", chosen for relevance and impact":""} · updated ${fAgo(R.at)} · version ${R.version} · written by <b>${modelName(R.model)}</b>${R.asked&&engOf(R.model)!==R.asked?` (${FENG[R.asked]} wasn't available)`:""}. AI-written from the abstracts: check key facts against the papers.</p>
  <div class="row" style="flex-wrap:wrap;overflow:visible;margin:4px 0 2px">${Object.entries(FENG).map(([k,l])=>(f.results||{})[k]?`<button class="chip ${engOf(R.model)===k?"on":""}" data-act="fshow" data-v="${f.id}:${k}">${l} version</button>`:`<button class="chip" data-act="fcomp" data-v="${f.id}:${k}">+ Compare with ${l}</button>`).join("")}</div>
  ${V.changes?`<div class="msg warn"><b>What's new in this version:</b> ${esc(V.changes)}</div>`:""}
- <div class="tts" style="border-top:0"><button data-act="flisten" data-v="${f.id}">▶ Listen</button><button data-act="fslides" data-v="${f.id}">Make slides</button><button data-act="fshare" data-v="${f.id}">Share</button></div>
+ <div class="tts" style="border-top:0"><button data-act="flisten" data-v="${f.id}">▶ Listen</button><button data-act="fshare" data-v="${f.id}">Share</button></div>
  ${V.overview?`<p class="fov">${esc(V.overview)}</p>`:""}
  ${(V.sections||[]).map(s=>`<h4>${esc(s.heading||"")}</h4>${pts(s.points)}`).join("")}
  ${(V.keyTrials||[]).length?`<h4>Key trials</h4><div class="tw"><table class="ftab"><tr><th>Trial</th><th>Design</th><th>Finding</th></tr>${V.keyTrials.map(k=>`<tr><td><b>${esc(k.name||"")}</b> ${esc(k.year||"")}${refLinks([k.ref],R)}</td><td>${esc(k.design||"")}</td><td>${esc(k.finding||"")}</td></tr>`).join("")}</table></div>`:""}
@@ -2444,7 +2579,7 @@ function ttsArticle(pmid){
  ttsSay(out.filter(Boolean),pmid);
 }
 function ttsBar(pmid){
- return `<div class="tts">${gvBtns(pmid)}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"Summarise"}</button>`:""}<button data-act="slides" data-id="${pmid}">Make slides</button>${st.cmpKey&&aiURL()?`<button data-act="cmpgo" data-id="${pmid}">⚖️ Compare AI</button>`:""}${pdfBtn(pmid)}</div>${gvTranscript(pmid)}`;
+ return `<div class="tts">${gvBtns(pmid)}${aiURL()||(st.aiSum||{})[pmid]?`<button data-act="aisum" data-id="${pmid}">✨ ${(st.aiSum||{})[pmid]&&S.aiOpen[pmid]?"Hide summary":"Summarise"}</button>`:""}${st.cmpKey&&aiURL()?`<button data-act="cmpgo" data-id="${pmid}">⚖️ Compare AI</button>`:""}${pdfBtn(pmid)}</div>${gvTranscript(pmid)}`;
 }
 
 // ---------- share ----------
@@ -2639,7 +2774,7 @@ const absText=parts=>(parts||[]).filter(p=>!/regist|funding/i.test(p.l)).map(p=>
 async function aiCall(task,payload,ms){
  const u=aiURL();if(!u)throw Object.assign(new Error("setup"),{code:"setup"});
  const ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),ms||45000);
- const hd={"Content-Type":"application/json","X-Device-Id":deviceId()};if(payload&&payload.model&&st.cmpKey)hd["X-Compare-Key"]=st.cmpKey;
+ const hd={"Content-Type":"application/json","X-Device-Id":deviceId()};if(payload&&(payload.model||payload.claude||payload.owner)&&st.cmpKey)hd["X-Compare-Key"]=st.cmpKey;
  let r;try{r=await fetch(`${u}/${task}`,{method:"POST",headers:hd,body:JSON.stringify({...payload,keepalive:1}),signal:ctl.signal})}
  catch(e){clearTimeout(tm);throw Object.assign(new Error("net"),{code:e.name==="AbortError"?"slow":"net"})}
  clearTimeout(tm);let j={};try{j=await r.json()}catch(e){}
@@ -2968,7 +3103,7 @@ document.addEventListener("change",e=>{
  if(el.id==="ggvoice"){st.ggVoice=el.value;GG.off=false;save();return}
  if(el.id==="voicesel"){st.voice=el.value;save();return}
  if(el.id==="ratesel"){st.rate=el.value;save();return}
- if(el.id==="ftmode"){st.ft={...(st.ft||{}),mode:el.value};save();render();return}
+ if(el.id==="ftmode"){st.ft={...(st.ft||{}),mode:el.value};st.ftChosen=1;save();render();return}
  if(el.id==="ftunpay"){st.ft={...(st.ft||{}),unpay:el.checked};save();render();return}
  if(el.id==="days"){st.days=+el.value;save();load()}
  else if(el.id==="research"){st.research=el.checked;save();load()}
@@ -3707,7 +3842,7 @@ function tForm(k){const D=TDEF[k];let f="";
   ${!st.myName?`<p class="note">Add your name in your profile (the person icon) to have it on the title slide.</p>`:""}${tStyles()}`;
  return `<div class="sheet big" role="dialog" aria-label="New ${D.one}"><div class="thead"><button class="link" data-act="tback">‹ ${D.t}</button><button class="tclose" data-act="mclose">Close</button></div><div class="vbody">
   <h3 style="margin-top:4px">New ${D.one}</h3>${f}${NOPII}</div><div class="pk"><a href="#" data-act="tgo" data-v="${k}">${k==="cq"?"Ask":"Build"}</a><a href="#" class="alt" data-act="tback">Cancel</a></div></div>`}
-const tRefs=(R)=>`<h4>Papers</h4><ol class="frefs">${R.papers.map(p=>{const note=(R.paperNotes||[]).find(x=>+x.ref===p.n);return `<li><a href="https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/" target="_blank" rel="noopener">${esc(p.title)}</a>. <i>${esc(p.journal)}</i> ${esc(p.year)}. <span class="au">${esc(p.type)}${p.cites?` · cited ${p.cites}×`:""}</span>${note?`<div class="pnote">${esc(note.finding||"")}</div>`:""}</li>`}).join("")}</ol>`;
+const tRefs=(R)=>!(R.papers||[]).length?"":`<h4>Papers</h4><ol class="frefs">${R.papers.map(p=>{const note=(R.paperNotes||[]).find(x=>+x.ref===p.n);return `<li><a href="https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/" target="_blank" rel="noopener">${esc(p.title)}</a>. <i>${esc(p.journal)}</i> ${esc(p.year)}. <span class="au">${esc(p.type)}${p.cites?` · cited ${p.cites}×`:""}</span>${note?`<div class="pnote">${esc(note.finding||"")}</div>`:""}</li>`}).join("")}</ol>`;
 function citeHTML(t,R,refs){const raw=String(t||"");CITE.lastIndex=0;const has=CITE.test(raw);CITE.lastIndex=0;if(has)return esc(raw).replace(/\[(\d+(?:\s*[,–-]\s*\d+)*)\]/g,(m,g)=>refLinks(citeNums(g),R));return esc(raw)+(refs?refLinks(refs,R):"")}
 function tBody(it){const R=it.res||{};const pts=(L,cls="")=>`<ul class="fpts ${cls}">${(L||[]).map(p=>`<li>${citeHTML(p.text,R,p.refs)}</li>`).join("")}</ul>`,by=`<p class="au tby">Written by ${MODELNAME(R.model)} from the abstracts of ${R.papers.length} papers. Check key facts against the papers.${R.shared?" Shared: colleagues asking the same get this answer instantly.":""}</p>`;
  const deckBtn=it.deck?`<button data-act="tdeck" data-v="${it.id}">📊 Slides (${it.deck.n||""})</button>`:"";
@@ -3882,7 +4017,7 @@ TJOB.exam=async function(it){const I=it.in;it.res=it.res||{exam:true};let ok=0,l
    m.res={review:j.data||{},model:j.model,shared:!!j.shared,papers:papers.map(pmeta)};m.status="ready";ok++;save();tPaint(it);
    if(I.slides){tStep(it,`Slides for ${m.n}`,`topic ${pos}`);const r=renum([reviewText(m.res.review)],m.res.papers);
     try{const d=await makeDeck(null,10,{title:`${m.n}: ${I.sh} revision`,text:r.out[0].slice(0,13500),refs:r.refs,style:I.style},{tag:"topic"});
-     if(d&&d.file){const name=(m.n.replace(/[^\w ]+/g,"").trim().replace(/\s+/g,"-").slice(0,50)||"topic")+"-revision.pptx";await idbPut(`deck:${it.id}|m${i}`,{name,type:d.file.type,buf:await d.file.arrayBuffer()});m.deck={name,n:d.meta&&d.meta.n};save()}}catch(e){}}
+     if(d&&d.file){const name=(m.n.replace(/[^\w ]+/g,"").trim().replace(/\s+/g,"-").slice(0,50)||"topic")+"-revision.pptx";await idbPut(`deck:${it.id}|m${i}`,{name,type:d.file.type,buf:await d.file.arrayBuffer()});if(d.view)await idbPut(`deckv:${it.id}|m${i}`,d.view);m.deck={name,n:d.meta&&d.meta.n,model:d.meta&&d.meta.model};save()}}catch(e){}}
   }catch(e){if(e&&e.code==="patient")throw e;m.status="error";m.err=tErr(e);last=e;save();tPaint(it)}}
  if(!ok)throw last||Object.assign(new Error("ai"),{code:"ai"})};
 TJOB.thesis=async function(it){const I=it.in;
@@ -3918,7 +4053,7 @@ function exBody(it){const I=it.in,ex=EXBY[I.exam]||{links:[],mods:[]},qs=exQs(it
  const mods=(it.mods||[]).map((m,i)=>{const R=m.res||{},V=R.review||{},pts=(L,cls="")=>`<ul class="fpts ${cls}">${(L||[]).map(p=>`<li>${citeHTML(p.text,R,p.refs)}</li>`).join("")}</ul>`;
   const st2=m.status==="ready"?`<span class="xok">✓</span>`:m.status==="error"?`<span class="xerr">!</span>`:m.status==="busy"?`<span class="spin"></span>`:`<span class="xwait">…</span>`;
   if(m.status!=="ready")return `<div class="xmod"><div class="xmh">${st2}<b>${esc(m.n)}</b></div>${m.status==="error"?`<div class="au">${esc(m.err||"Couldn't prepare this topic.")} <button class="link" data-act="tretry" data-v="${it.id}">Try again</button></div>`:""}</div>`;
-  return `<details class="xmod"><summary class="xmh">${st2}<b>${esc(m.n)}</b><small>${(V.mcqs||[]).length} questions</small></summary>
+  return `<details class="xmod"><summary class="xmh">${st2}<b>${esc(m.n)}</b><small>${(V.mcqs||[]).length} question${(V.mcqs||[]).length===1?"":"s"}</small></summary>
    ${m.deck?`<div class="fbtns" style="margin-top:6px"><button data-act="exdeck" data-v="${it.id}" data-i="${i}">📊 Slides (${m.deck.n||""})</button></div>`:""}
    ${V.overview?`<p class="fov">${citeHTML(V.overview,R)}</p>`:""}${(V.pearls||[]).length?`<h4>Exam pearls</h4>${pts(V.pearls,"pearls")}`:""}
    ${(V.sections||[]).map(s=>`<h4>${esc(s.heading||"")}</h4>${pts(s.points)}`).join("")}
@@ -4079,6 +4214,666 @@ document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest
 },true);
 // an older saved conference list has no deadlines yet, so fetch the new one now
 setTimeout(()=>{const c=st.evCache;if(c&&c.list&&!c.list.some(x=>x.tg||x.abs)){c.at=0;evRefresh(false)}},3000);
+
+
+// ================= b11: Guidelines, Podcasts and Scores as tiles; Settings as a menu; feedback; easier navigation =================
+const GI={
+ heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',ecg:'<path d="M2 12h4l2-6 3 12 2.5-8 1.5 2h7"/>',brady:'<path d="M2 13h7l1.5-4 1.5 8 1.5-4H22"/>',
+ valve:'<circle cx="12" cy="12" r="8"/><path d="M12 12V4M12 12l6.9 4M12 12l-6.9 4"/>',drop:'<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/>',gauge:'<path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5"/>',
+ shield:'<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',lungs:'<path d="M12 4v8M12 10c-2 0-3 1-3 1M12 10c2 0 3 1 3 1"/><path d="M9 7C6 7 4 12 4 16c0 2 1 3 3 3s2-2 2-4V7zM15 7c3 0 5 5 5 9 0 2-1 3-3 3s-2-2-2-4V7z"/>',
+ kidney:'<path d="M15 4c-4 0-7 3-7 8s3 8 7 8c3 0 4-2 4-4s-2-3-2-4 2-2 2-4-1-4-4-4z"/><path d="M8 12H4"/>',run:'<circle cx="14" cy="4.5" r="1.8"/><path d="M8 21l3-6 3 2v4M6 12l3-3h5l3 4M11 15l2-6"/>',
+ device:'<rect x="4" y="9" width="9" height="11" rx="3"/><path d="M13 13c4 0 7-3 7-9"/>',bolt:'<path d="M13 2L5 14h6l-1 8 8-12h-6z"/>',bug:'<circle cx="12" cy="12" r="5"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.9 2.9M15.5 15.5l2.9 2.9M5.6 18.4l2.9-2.9M15.5 8.5l2.9-2.9"/>',
+ baby:'<circle cx="12" cy="5" r="2.2"/><path d="M12 8c-3 0-4 3-4 6h3l-1 7M12 8c3.5 0 5 3 5 6s-2 4-5 4"/>',knife:'<path d="M4 20L16 8l3-3 1 1-3 3-1 4-8 7z"/>',ribbon:'<path d="M12 3c-2 0-3 2-3 3.5S10 10 12 13c2-3 3-5 3-6.5S14 3 12 3zM12 13l-4 8M12 13l4 8"/>',
+ brain:'<path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 3 3h1V4zM15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-3 3h-1V4z"/>',pill:'<rect x="3" y="8.5" width="18" height="7" rx="3.5" transform="rotate(-35 12 12)"/><path d="M10 9.5l4 5"/>',
+ vessel:'<path d="M5 3c0 6 3 7 3 11s-2 5-2 7M19 3c0 6-3 7-3 11s2 5 2 7"/><path d="M8 14h8"/>',rehab:'<path d="M3 12h3l2-3 3 6 2-3h8"/><circle cx="18" cy="6" r="2"/>',target:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/>',
+ car:'<path d="M3 15l2-6h14l2 6v4h-3v-2H6v2H3z"/><circle cx="7.5" cy="15" r="1.2"/><circle cx="16.5" cy="15" r="1.2"/>',plane:'<path d="M21 15l-8-4V5a1.5 1.5 0 0 0-3 0v6l-8 4v2l8-2v4l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-4l8 2z"/>',
+ star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h7"/>',cube:'<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>',
+ phones:'<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',news:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h10M7 13h6"/>',
+ globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',grad:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',scale:'<path d="M12 3v18M5 7h14M5 7l-3 7h6zM19 7l-3 7h6zM8 21h8"/>',
+ ruler:'<path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',list:'<path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/>',
+ speaker:'<path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/>',abc:'<path d="M3 17l3-9 3 9M4 14h4M12 8v9h3a2.2 2.2 0 0 0 0-4.5H12M12 8h2.5a2 2 0 0 1 0 4.5M21 9.5a3 3 0 1 0 0 5.5"/>',
+ spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/>',key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/>',lib:'<path d="M5 3v18M9 3v18M13 4l5 16"/>',megaphone:'<path d="M3 10v4h4l8 5V5L7 10z"/><path d="M18 9a3 3 0 0 1 0 6"/>',
+ cert:'<circle cx="12" cy="9" r="5"/><path d="M9 13l-2 8 5-3 5 3-2-8"/>',cloud:'<path d="M7 18a4 4 0 0 1-.6-8A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/><path d="M12 11v5M10 14l2 2 2-2"/>',lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+ play:'<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',share:'<circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/>',
+ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h0"/>',refresh:'<path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/>',bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>',inbox:'<path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 2h6l1-2h5"/>',
+ search:'<circle cx="11" cy="11" r="7"/><path d="M16 16l5 5"/>'};
+// long words break with a hyphen at a sensible place, so full names fit four tiles to a row
+const SHY={Fibrillation:"Fibril-lation",Syndromes:"Syn-dromes",Syndrome:"Syn-drome",Cardiomyopathies:"Cardio-myo-pathies",Cardiomyopathy:"Cardio-myo-pathy",Dyslipidaemias:"Dys-lipid-aemias",Hypertension:"Hyper-tension",Resynchronisation:"Resyn-chron-isation",Arrhythmias:"Arrhyth-mias",Arrhythmia:"Arrhyth-mia",Supraventricular:"Supra-ven-tricular",Tachycardia:"Tachy-cardia",Endocarditis:"Endo-carditis",Pericarditis:"Peri-carditis",Myocarditis:"Myo-carditis",Cardiovascular:"Cardio-vascular",Pulmonary:"Pulmo-nary",Congenital:"Con-genital",Rehabilitation:"Rehabili-tation",Antithrombotics:"Anti-throm-botics",Myocardial:"Myo-cardial",Infarction:"Infarc-tion",Definition:"Defini-tion",Peripheral:"Peri-pheral",Ventricular:"Ven-tricular",Circulation:"Circu-lation",Cardiology:"Cardi-ology",Harrington:"Harring-ton",CardioNerds:"Cardio-Nerds",Prevention:"Preven-tion",Embolism:"Embo-lism",Oncology:"Onco-logy",Pregnancy:"Preg-nancy",Coronary:"Coro-nary",Guidelines:"Guide-lines",Management:"Manage-ment",Defibrillators:"Defib-ril-lators",Defibrillator:"Defib-ril-lator",Implantable:"Implant-able",Transplantation:"Trans-plant-ation",Cardioverter:"Cardio-verter",Pacemakers:"Pace-makers",Pacemaker:"Pace-maker",Measurements:"Measure-ments",Interventional:"Inter-ventional",Echocardiography:"Echo-cardio-graphy",Teaching:"Teach-ing",Physiologists:"Physi-ologists",Assessment:"Assess-ment",Aneurysm:"Aneu-rysm",Aneurysms:"Aneu-rysms",Disorders:"Dis-orders",Hypertrophic:"Hyper-trophic",Dissection:"Dissec-tion",Valvular:"Val-vular",Insufficiency:"Insuf-ficiency",Revascularisation:"Revascu-lar-isation",Channelopathies:"Channel-opathies"};
+const shy=t=>String(t).replace(/[A-Za-z]{8,}/g,w=>SHY[w]?SHY[w].replace(/-/g,"\u00AD"):w.length>=11?w.replace(/(.{6})(?=.{4})/g,"$1\u00AD"):w);
+const gic=(k,s=26)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${GI[k]||GI.heart}</svg>`;
+// ---- Guidelines: 30 topics, each with every body's guideline, and links to driving, flying and scores ----
+const GTOP=[
+ {id:"hf",l:"Heart Failure",c:"#E3B23C",i:"heart",nw:1,g:[["ESC","2026","Guidelines for the management of heart failure"],["NICE","NG106","Chronic heart failure in adults"],["NICE","CG187","Acute heart failure"],["SIGN","147","Management of chronic heart failure"],["ACC/AHA","2022","AHA/ACC/HFSA guideline for heart failure"]],dv:/heart failure|resynchronisation|heart transplant/i,caa:4},
+ {id:"af",l:"Atrial Fibrillation",c:"#8BB94A",i:"ecg",g:[["ESC","2024","Guidelines for the management of atrial fibrillation"],["NICE","NG196","Atrial fibrillation: diagnosis and management"],["ACC/AHA","2023","ACC/AHA/ACCP/HRS guideline for atrial fibrillation"]],dv:/^arrhythmi|catheter ablation/i,caa:6,sc:["cha","hasbled"]},
+ {id:"acs",l:"Acute Coronary Syndromes",c:"#D9534F",i:"heart",g:[["ESC","2023","Guidelines for acute coronary syndromes"],["NICE","NG185","Acute coronary syndromes"],["SIGN","148","Acute coronary syndrome"],["ACC/AHA","2025","Guideline for acute coronary syndromes"]],dv:/acute coronary|percutaneous|bypass|dissection \(scad|spontaneous coronary/i,caa:2,sc:["grace","timi","heart"]},
+ {id:"ccs",l:"Chronic Coronary Syndromes",c:"#4A6FA5",i:"vessel",g:[["ESC","2024","Guidelines for chronic coronary syndromes"],["NICE","CG95","Recent-onset chest pain"],["NICE","CG126","Stable angina"],["SIGN","151","Management of stable angina"],["ACC/AHA","2023","Chronic coronary disease"]],dv:/angina|coronary artery disease/i,caa:2,sc:["heart","qrisk"]},
+ {id:"udmi",l:"Myocardial Infarction Definition",c:"#B23A48",i:"target",nw:1,g:[["ESC","2026","Fifth Universal Definition of Myocardial Infarction"]],sc:["grace"]},
+ {id:"vhd",l:"Valvular Heart Disease",c:"#6C8EC9",i:"valve",g:[["ESC","2025","Guidelines for valvular heart disease"],["NICE","NG208","Heart valve disease in adults"],["ACC/AHA","2020","Valvular heart disease"]],dv:/valve|aortic stenosis/i,caa:3},
+ {id:"cmp",l:"Cardiomyopathies",c:"#E0A526",i:"heart",g:[["ESC","2023","Guidelines for cardiomyopathies"],["ACC/AHA","2024","Hypertrophic cardiomyopathy"]],dv:/^cardiomyopath/i,caa:4,sc:["hcm"]},
+ {id:"htn",l:"Hypertension",c:"#E08A3C",i:"gauge",g:[["ESC","2024","Elevated blood pressure and hypertension"],["NICE","NG136","Hypertension in adults"],["ACC/AHA","2025","High blood pressure in adults"]],dv:/^hypertension/i,caa:1,sc:["qrisk","assign"]},
+ {id:"lip",l:"Dyslipidaemias",c:"#E5A15A",i:"drop",g:[["ESC","2025","Dyslipidaemias (focused update)"],["NICE","NG238","CVD risk assessment and lipid modification"],["NICE","CG71","Familial hypercholesterolaemia"]],sc:["ldl","qrisk","assign"]},
+ {id:"prev",l:"Cardiovascular Prevention",c:"#D97A8C",i:"shield",g:[["ESC","2021","Cardiovascular disease prevention"],["SIGN","149","Risk estimation and prevention of CVD"],["NICE","NG238","CVD risk assessment and lipid modification"]],caa:0,sc:["qrisk","assign","ldl"]},
+ {id:"pace",l:"Pacing and Resynchronisation",c:"#7FB069",i:"device",g:[["ESC","2021","Cardiac pacing and cardiac resynchronisation therapy"],["ACC/AHA","2018","Bradycardia and conduction delay"]],dv:/pacemaker|resynchronisation|heart block/i,caa:6},
+ {id:"va",l:"Ventricular Arrhythmias",c:"#C0504D",i:"bolt",g:[["ESC","2022","Ventricular arrhythmias and prevention of sudden cardiac death"],["SIGN","152","Cardiac arrhythmias in coronary heart disease"]],dv:/defibrillator|long qt|brugada/i,caa:6,sc:["qtc","hcm"]},
+ {id:"svt",l:"Supraventricular Tachycardia",c:"#9CC55A",i:"ecg",g:[["ESC","2019","Supraventricular tachycardia"]],dv:/^arrhythmi|catheter ablation|pre-excitation/i,caa:6,sc:["qtc"]},
+ {id:"sync",l:"Syncope",c:"#5BC0DE",i:"brady",g:[["ESC","2018","Diagnosis and management of syncope"],["NICE","CG109","Transient loss of consciousness"]],dvs:1,caa:5},
+ {id:"endo",l:"Endocarditis",c:"#A05195",i:"bug",g:[["ESC","2023","Management of endocarditis"]],caa:3},
+ {id:"peri",l:"Myocarditis and Pericarditis",c:"#8E6CC0",i:"heart",g:[["ESC","2025","Myocarditis and pericarditis"]],caa:4},
+ {id:"preg",l:"Pregnancy",c:"#E58FB0",i:"baby",g:[["ESC","2025","Cardiovascular disease and pregnancy"]]},
+ {id:"pad",l:"Peripheral and Aortic Disease",c:"#7A4EA3",i:"vessel",g:[["ESC","2024","Peripheral arterial and aortic diseases"],["NICE","CG147","Peripheral arterial disease"]],dv:/peripheral arterial|aortic aneurysm|aortic dissection/i,caa:7},
+ {id:"pe",l:"Pulmonary Embolism",c:"#3E8E9E",i:"lungs",g:[["ESC","2019","Acute pulmonary embolism"],["NICE","NG158","Venous thromboembolic diseases"],["SIGN","122","Prevention and management of VTE"]],caa:7},
+ {id:"ph",l:"Pulmonary Hypertension",c:"#4F9FB0",i:"lungs",g:[["ESC","2022","ESC/ERS pulmonary hypertension"]],dv:/pulmonary arterial/i},
+ {id:"dm",l:"Diabetes",c:"#5E9C76",i:"drop",g:[["ESC","2023","Cardiovascular disease in diabetes"]],sc:["qrisk","renal"]},
+ {id:"ckd",l:"Chronic Kidney Disease",c:"#9E6B4A",i:"kidney",nw:1,g:[["ESC","2026","Cardiovascular disease and chronic kidney disease"]],sc:["renal"]},
+ {id:"onc",l:"Cardio-Oncology",c:"#C77DB5",i:"ribbon",g:[["ESC","2022","Cardio-oncology"]]},
+ {id:"sport",l:"Sports Cardiology",c:"#4DB6AC",i:"run",g:[["ESC","2020","Sports cardiology and exercise"]]},
+ {id:"achd",l:"Adult Congenital Heart Disease",c:"#6A8CAF",i:"heart",g:[["ESC","2020","Adult congenital heart disease"]],dv:/congenital heart|congenital complete/i,caa:4},
+ {id:"surg",l:"Non-cardiac Surgery",c:"#7D8597",i:"knife",g:[["ESC","2022","Cardiovascular assessment for non-cardiac surgery"],["ACC/AHA","2024","Perioperative cardiovascular management"]]},
+ {id:"rehab",l:"Cardiac Rehabilitation",c:"#D46A6A",i:"rehab",nw:1,g:[["ESC","2026","Cardiac rehabilitation"],["SIGN","150","Cardiac rehabilitation"]]},
+ {id:"mh",l:"Mental Health",c:"#8C7AB8",i:"brain",g:[["ESC","2025","Mental health and cardiovascular disease"]]},
+ {id:"anti",l:"Antithrombotics",c:"#B5654F",i:"pill",g:[["SIGN","129","Antithrombotics: indications and management"]],sc:["hasbled"]},
+ {id:"stroke",l:"Stroke",c:"#7E5A9B",i:"brain",g:[["SIGN","166","Stroke guideline for the UK and Ireland"]],sc:["cha"]}];
+const GSPECIAL=[{id:"my",l:"My Guides",bg:"#2E3A6B",i:"star"},{id:"dvla",l:"Driving (DVLA)",bg:"#1F7A6B",i:"car"},{id:"caa",l:"Flying (CAA)",bg:"#2E86C1",i:"plane"},{id:"pocket",l:"ESC Pocket Guides",bg:"#B8862B",i:"book"}];
+const BODYC={ESC:"#C0392B",NICE:"#5B2C83","ACC/AHA":"#1F4E8C",SIGN:"#00727A"};
+const YEARC={"2026":"#C0392B","2025":"#E67E22","2024":"#D4AC0D","2023":"#27AE60","2022":"#2E86C1","2021":"#7D3C98","2020":"#5D6D7E"};
+const gTop=id=>GTOP.find(x=>x.id===id);
+const myG=()=>st.myGuides=st.myGuides||[];
+function gLink(b,y,n){
+ if(b==="NICE")return `https://www.nice.org.uk/guidance/${y.toLowerCase()}`;
+ if(b==="SIGN"){const s=SIGNL.find(x=>x[0]==="SIGN "+y);return s?`https://www.sign.ac.uk/guidelines/${s[3]}/`:"https://www.sign.ac.uk/guidelines/"}
+ const k=b==="ESC"?"esc":"acc",L=(S.gl&&S.gl[k])||[],words=n.toLowerCase().replace(/[^a-z ]/g," ").split(/\s+/).filter(w=>w.length>4&&!/guideline|management|disease|cardiovascular/.test(w));
+ const hit=L.find(it=>String(it.date||"").includes(y)&&words.filter(w=>String(it.title||"").toLowerCase().includes(w)).length>=Math.min(2,words.length));
+ if(hit)return `https://pubmed.ncbi.nlm.nih.gov/${hit.pmid}/`;
+ return `https://pubmed.ncbi.nlm.nih.gov/?term=${encodeURIComponent(`${y} ${b==="ESC"?"ESC":"ACC AHA"} guideline ${n.replace(/^Guidelines? for (the )?/i,"")}`)}`}
+const bodyTag=b=>b==="ACC/AHA"?"AHA":b;
+function gTile(t,extra=""){const fav=myG().includes(t.id);return `<button class="gtile" style="--c:${t.c}" data-act="gtopic" data-v="${t.id}">${t.nw?'<span class="gnew">NEW</span>':""}<span class="gtl">${shy(esc(t.l))}</span>${extra}${fav?'<span class="gfav">★</span>':""}<span class="gic">${gic(t.i)}</span></button>`}
+function gBack(lbl,act,c,ic,title,starAct,starOn){return `<div class="gdh" style="--c:${c}"><button class="link gbk" data-act="${act}">‹ ${lbl}</button><div class="gdt"><span class="gdi">${gic(ic,28)}</span><h2>${esc(title)}</h2>${starAct?`<button class="gstar ${starOn?"on":""}" data-act="${starAct}" aria-label="${starOn?"Remove from":"Add to"} favourites">${gic("star",22)}</button>`:""}</div></div>`}
+function dvlaTiles(){if(!st.dvla){if(!S.dvlaLoading&&!S.dvlaErr)setTimeout(()=>loadDVLA());return null}
+ if(dvlaSrc!==st.dvla.html){dvlaSecs=cleanDoc(st.dvla.html);dvlaSrc=st.dvla.html}
+ const out=[];let cur=null;dvlaSecs.forEach(s=>{if(s.lvl==="H2"){cur={h:s.h,s:s.h.split(/\s[-–—]\s|\s\(/)[0].trim(),html:s.html};out.push(cur)}else if(cur)cur.html+=s.html});return out.filter(x=>x.h&&!/^(contents|introduction|overview|updates to this page)$/i.test(x.h))}
+const DVIC=h=>/acute coronary|angina|pci|bypass|cabg|coronary/i.test(h)?["vessel","#D9534F"]:/arrhythm|tachy|brady/i.test(h)?["ecg","#8BB94A"]:/pacemaker|pacing/i.test(h)?["device","#7FB069"]:/defibrillator|icd/i.test(h)?["bolt","#C0504D"]:/heart failure|ventricular assist|transplant/i.test(h)?["heart","#E3B23C"]:/cardiomyopath/i.test(h)?["heart","#E0A526"]:/valv/i.test(h)?["valve","#6C8EC9"]:/aort|aneurysm|vessel|arter/i.test(h)?["vessel","#7A4EA3"]:/congenital/i.test(h)?["heart","#6A8CAF"]:/hypertension/i.test(h)?["gauge","#E08A3C"]:/syncope|blackout/i.test(h)?["brady","#5BC0DE"]:/channel|qt|brugada/i.test(h)?["ecg","#5BC0DE"]:["heart","#5F7A99"];
+const vGuideOld=vGuide;
+function oldGuide(g){const keep=S.g;S.g=g;let h=vGuideOld();S.g=keep;return h.replace(/^<div class="row">[\s\S]*?<\/div>/,"")}
+vGuide=function(){const V=S.gv=S.gv||"topics";
+ setTimeout(()=>{["esc","acc"].forEach(k=>{if(!S.gl[k]&&!S.gload[k]&&!S.gerr[k])loadGuide(k)})},400);
+ if(S.gtopic){const t=gTop(S.gtopic);if(t){const fav=myG().includes(t.id),rel=[];
+  if(t.dv){const D=dvlaTiles()||[];D.map((x,i)=>[x,i]).filter(([x])=>t.dv.test(x.s)).slice(0,3).forEach(([x,i])=>rel.push(["car",`Driving: ${x.s}`,"dvlasec",String(i),"#1F7A6B"]))}
+  if(t.dvs)rel.push(["car","Driving: syncope and blackouts","gview","dvsync","#1F7A6B"]);
+  if(t.caa!=null&&CAA[t.caa])rel.push(["plane",`Flying: ${CAA[t.caa].t}`,"caasec",String(t.caa),"#2E86C1"]);
+  (t.sc||[]).forEach(id=>{const c=CALCS.find(x=>x.id===id);if(c)rel.push(["calc2",`Score: ${c.name}`,"sopen",id,"#3F6FB5"])});
+  return gBack("All topics","gback",t.c,t.i,t.l,"gfav",fav)+t.g.map(([b,y,n])=>`<a class="gcard" href="${esc(gLink(b,y,n))}" target="_blank" rel="noopener"><span class="gbody" style="--b:${BODYC[b]}">${b}</span><span class="gct"><span class="gcn">${esc(n)}</span><span class="au">${b==="SIGN"?"SIGN "+y:b==="NICE"?y:y}${b==="ESC"&&y==="2026"?' · <b class="gnew2">NEW</b>':""}</span></span><span class="gopen">Open ›</span></a>`).join("")
+   +(rel.length?`<h4 class="gh4">Also in this app</h4><div class="gtiles g3">${rel.map(([i,l,a,v,c])=>`<button class="gtile mini" style="--c:${c}" data-act="${a}" data-v="${esc(v)}"><span class="gtl">${shy(esc(l))}</span><span class="gic">${gic(i==="calc2"?"target":i,22)}</span></button>`).join("")}</div>`:"")
+   +`<p class="note">Each guideline opens on the publisher's website. The ⭐ adds this topic to My Guides.</p>`}S.gtopic=""}
+ const tabs=`<div class="row gtabs">${[["topics","By topic"],["esc","ESC"],["nice","NICE"],["sign","SIGN"],["acc","ACC/AHA"]].map(([k,l])=>`<button class="chip ${V===k?"on":""}" data-act="gview" data-v="${k}">${l}</button>`).join("")}</div>`;
+ if(V==="topics")return tabs+`<div class="gtiles">${GSPECIAL.map(s=>`<button class="gtile solid" style="--bg:${s.bg}" data-act="gview" data-v="${s.id}"><span class="gtl">${shy(s.l)}</span>${s.id==="my"&&myG().length?`<span class="gsrc lite">${myG().length} starred</span>`:""}<span class="gic">${gic(s.i)}</span></button>`).join("")}${GTOP.map(t=>gTile(t,t.nw?"":`<span class="gsrc">${[...new Set(t.g.map(x=>bodyTag(x[0])))].join(" · ")}</span>`)).join("")}</div>`;
+ if(V==="my"){const L=myG().map(gTop).filter(Boolean);return gBack("All topics","gback","#2E3A6B","star","My Guides")+(L.length?`<div class="gtiles">${L.map(t=>gTile(t)).join("")}</div>`:`<div class="msg">Open a topic and tap ⭐ to keep it here.</div>`)}
+ if(V==="esc"||V==="acc"){const B=V==="esc"?"ESC":"ACC/AHA",L=[];GTOP.forEach(t=>t.g.filter(x=>x[0]===B).forEach(x=>L.push({t,y:x[1],n:x[2]})));L.sort((a,b)=>b.y-a.y);
+  return tabs+`<p class="note gsub">${B==="ESC"?"ESC Clinical Practice Guidelines":"ACC/AHA guidelines"}, newest first. The colour bar shows the year.</p><div class="gtiles">${L.map(({t,y,n})=>`<a class="gtile" style="--c:${YEARC[y]||"#95A5A6"}" href="${esc(gLink(B,y,n))}" target="_blank" rel="noopener">${y==="2026"&&B==="ESC"?'<span class="gnew">NEW</span>':""}<span class="gtl">${shy(esc(t.l))}</span><span class="gyr">${y}</span><span class="gic" style="color:${t.c}">${gic(t.i)}</span></a>`).join("")}</div>
+  <button class="link gmore" data-act="gview" data-v="pm${V}">Show the full list from PubMed, with the newest papers ›</button>`}
+ if(V==="pmesc"||V==="pmacc"){S.gsub=V.slice(2);return gBack(V==="pmesc"?"ESC":"ACC/AHA","gview",V==="pmesc"?BODYC.ESC:BODYC["ACC/AHA"],"news",V==="pmesc"?"ESC guidelines on PubMed":"ACC/AHA guidelines on PubMed").replace('data-act="gview"',`data-act="gview" data-v="${V.slice(2)}"`)+oldGuide(V.slice(2)).replace(/<div class="sub">[\s\S]*?<\/div>/,"")}
+ if(V==="nice"||V==="sign"){const B=V.toUpperCase(),L=[];GTOP.forEach(t=>t.g.filter(x=>x[0]===B).forEach(x=>{if(!L.some(z=>z.y===x[1]))L.push({t,y:x[1],n:x[2]})}));
+  if(B==="NICE")NICE.forEach(([c,n])=>{if(!L.some(z=>z.y===c))L.push({t:{l:n,c:"#5B2C83",i:"book"},y:c,n})});
+  return tabs+`<p class="note gsub">${B==="NICE"?"NICE cardiovascular guidelines":"SIGN cardiovascular guidelines (Scotland)"}. The code is on each tile.</p><div class="gtiles">${L.map(({t,y,n})=>`<a class="gtile" style="--c:${t.c}" href="${esc(gLink(B,y,n))}" target="_blank" rel="noopener"><span class="gtl">${shy(esc(n.length<34?n:t.l))}</span><span class="gyr">${B==="SIGN"?"SIGN "+y:y}</span><span class="gic">${gic(t.i)}</span></a>`).join("")}</div>`}
+ if(V==="dvla"){const D=dvlaTiles();
+  if(S.gsec!=null&&D&&D[+S.gsec]){const x=D[+S.gsec],[ic,c]=DVIC(x.h);return gBack("Driving (DVLA)","gview",c,ic,x.s).replace('data-act="gview"','data-act="gview" data-v="dvla"')+`<div class="doc dvdoc">${x.html}</div><p class="note">From DVLA's Assessing fitness to drive, loaded from GOV.UK. <a href="${DVLA_PAGE}" target="_blank" rel="noopener">Open on GOV.UK</a></p>`}
+  return gBack("All topics","gback","#1F7A6B","car","Driving (DVLA)")+`<p class="note gsub">Group 1 (car, motorcycle) and Group 2 (bus, lorry) rules for each condition, loaded from GOV.UK.</p>`
+   +(D?`<div class="gtiles">${D.map((x,i)=>{const [ic,c]=DVIC(x.h);return `<button class="gtile" style="--c:${c}" data-act="dvlasec" data-v="${i}"><span class="gtl">${shy(esc(x.s))}</span><span class="gic">${gic(ic)}</span></button>`}).join("")}<button class="gtile" style="--c:#5BC0DE" data-act="gview" data-v="dvsync"><span class="gtl">Syncope and blackouts</span><span class="gyr">App. D</span><span class="gic">${gic("brady")}</span></button><button class="gtile" style="--c:#7D8597" data-act="gview" data-v="dvdoc"><span class="gtl">Search all of chapter 2</span><span class="gic">${gic("search")}</span></button></div>`
+   :S.dvlaErr?`<div class="msg err">Couldn't load the DVLA guidance. <a href="${DVLA_PAGE}" target="_blank" rel="noopener">Open it on GOV.UK</a> or <button class="link" data-act="dvla">try again</button>.</div>`:`<div class="msg"><span class="spin"></span>Loading from GOV.UK</div>`)}
+ if(V==="dvsync"||V==="dvdoc")return gBack("Driving (DVLA)","gview","#1F7A6B","car",V==="dvsync"?"Syncope and blackouts":"Chapter 2: cardiovascular").replace('data-act="gview"','data-act="gview" data-v="dvla"')+oldGuide(V==="dvsync"?"dvsync":"dvla").replace(/<div class="sub">[\s\S]*?<\/div>/,"");
+ if(V==="caa"){if(S.gsec!=null&&CAA[+S.gsec]){const s=CAA[+S.gsec];return gBack("Flying (CAA)","gview","#2E86C1","plane",s.t).replace('data-act="gview"','data-act="gview" data-v="caa"')+`<div class="kp"><ul>${s.p.map(p=>`<li>${esc(p)}</li>`).join("")}</ul><div class="lk">${s.l.map(([t,u])=>`<a href="${CAAB}${u}" target="_blank" rel="noopener">${esc(t)}</a>`).join("")}${(s.x||[]).map(([t,u])=>`<a href="${u}" target="_blank" rel="noopener">${esc(t)}</a>`).join("")}</div></div><p class="note">OML: operational multi-pilot limitation. ORL/OSL: operational restriction or safety pilot limitation. <a href="${CAA_PAGE}" target="_blank" rel="noopener">Open CAA cardiology guidance</a></p>`}
+  const C=[["heart","#5F7A99"],["gauge","#E08A3C"],["vessel","#D9534F"],["valve","#6C8EC9"],["heart","#E0A526"],["brady","#5BC0DE"],["ecg","#8BB94A"],["vessel","#7A4EA3"]];
+  return gBack("All topics","gback","#2E86C1","plane","Flying (CAA)")+`<p class="note gsub">Key points for pilot medicals (Class 1 and Class 2), summarised from UK CAA guidance for aeromedical examiners. Always check the full text before advising.</p><div class="gtiles">${CAA.map((s,i)=>`<button class="gtile" style="--c:${(C[i]||C[0])[1]}" data-act="caasec" data-v="${i}"><span class="gtl">${shy(esc(s.t))}</span><span class="gic">${gic((C[i]||C[0])[0])}</span></button>`).join("")}</div>`}
+ if(V==="pocket")return gBack("All topics","gback","#B8862B","book","ESC Pocket Guides")+oldGuide("pocket").replace(/<div class="sub">[\s\S]*?<\/div>/,"");
+ S.gv="topics";return vGuide()};
+// ---- Podcasts ----
+const PODG={"Journal summaries":["#C0392B","news","Journal"],"News, trials and opinion":["#2E86C1","megaphone","News"],"European and UK":["#1F7A6B","globe","European and UK"],"Teaching and case-based":["#8E44AD","grad","Teaching"]};
+const PODSHORT={cotr:"AHA",jacc:"ACC",jamac:"JAMA",heart:"BMJ",twic:"Medscape",eagle:"ACC",bob:"Medscape",parallax:"Radcliffe",esc:"ESC",ehra:"EHRA",hfa:"HFA",radcliffe:"Radcliffe",cnerds:"CardioNerds",apc:"AP Cardiology"};
+const myP=()=>st.myPods=st.myPods||[];
+function podBy(id){for(const s of PODS)for(const p of s.items)if(p.id===id)return {p,g:s.g};return null}
+vPods=function(){const F=S.pg||"all";
+ if(S.pod){const x=podBy(S.pod);if(x){const {p,g}=x,[c,ic]=PODG[g],fav=myP().includes(p.id);
+  return gBack("All podcasts","pback",c,ic,p.n,"pfav",fav)+`<div class="gcard plain"><span class="gct"><span class="au">${esc(p.by)} · ${esc(g)}</span><span class="pdesc">${esc(p.d)}</span></span></div>
+   <div class="gtiles g3" style="margin-top:10px"><a class="gtile" style="--c:#9B59B6" href="${p.apple||aps(p.q||p.n)}" target="_blank" rel="noopener"><span class="gtl">Apple Podcasts</span><span class="gic">${gic("phones")}</span></a><a class="gtile" style="--c:#1DB954" href="${sps(p.q||p.n)}" target="_blank" rel="noopener"><span class="gtl">Spotify</span><span class="gic">${gic("play")}</span></a>${p.web?`<a class="gtile" style="--c:#2E86C1" href="${p.web}" target="_blank" rel="noopener"><span class="gtl">Website</span><span class="gic">${gic("globe")}</span></a>`:""}</div>
+   <button class="gcard" data-act="podcpd" data-id="pod:${p.id}" data-n="${esc(p.n)}"><span class="gbody" style="--b:#2E3A6B">CPD</span><span class="gct"><span class="gcn">${cpdFor("pod:"+p.id)?"Listening time logged ✓":"Log listening time"}</span><span class="au">Adds it to your CPD log with a reflection</span></span><span class="gopen">${cpdFor("pod:"+p.id)?"Edit ›":"Log ›"}</span></button>`}S.pod=""}
+ if(F==="mine"){const L=myP().map(podBy).filter(Boolean);return gBack("All podcasts","pgrp","#2E3A6B","star","My Podcasts").replace('data-act="pgrp"','data-act="pgrp" data-v="all"')+(L.length?`<div class="gtiles">${L.map(({p,g})=>podTile(p,g)).join("")}</div>`:`<div class="msg">Open a podcast and tap ⭐ to keep it here.</div>`)}
+ const tiles=[];PODS.forEach(s=>{if(F!=="all"&&F!==s.g)return;s.items.forEach(p=>tiles.push(podTile(p,s.g)))});
+ return `<div class="row gtabs">${[["all","All"],...Object.entries(PODG).map(([g,v])=>[g,v[2]])].map(([k,l])=>`<button class="chip ${F===k?"on":""}" data-act="pgrp" data-v="${esc(k)}">${l}</button>`).join("")}</div>
+  ${F==="all"?`<div class="gtiles" style="margin-bottom:7px"><button class="gtile solid" style="--bg:#2E3A6B" data-act="pgrp" data-v="mine"><span class="gtl">My Podcasts</span><span class="gsrc lite">${myP().length} starred</span><span class="gic">${gic("star")}</span></button><button class="gtile solid" style="--bg:#B8862B" data-act="podlog"><span class="gtl">Log CPD</span><span class="gic">${gic("cert")}</span></button></div>`:""}
+  <div class="gtiles">${tiles.join("")}</div><div class="gkey">${Object.entries(PODG).map(([g,[c]])=>`<span><b style="--c:${c}"></b>${g}</span>`).join("")}</div>`};
+function podTile(p,g){const [c,ic]=PODG[g];return `<button class="gtile" style="--c:${c}" data-act="popen" data-v="${p.id}"><span class="gtl">${shy(esc(p.n.replace(" Author Interviews","")))}</span><span class="gsrc">${myP().includes(p.id)?'<b class="gst">★</b> ':""}${PODSHORT[p.id]||""}${cpdFor("pod:"+p.id)?" · CPD ✓":""}</span><span class="gic">${gic(ic)}</span></button>`}
+function podLogSheet(){return `<div class="sheet" role="dialog" aria-label="Log podcast CPD"><div class="thead"><h3>Log listening time</h3><button class="tclose" data-act="mclose">Close</button></div><p class="note" style="margin-top:0">Which podcast did you listen to?</p>${PODS.map(s=>s.items.map(p=>`<button class="setr" data-act="podcpd" data-id="pod:${p.id}" data-n="${esc(p.n)}"><span class="seti" style="--c:${PODG[s.g][0]}">${gic(PODG[s.g][1],18)}</span><span class="setmt"><b>${esc(p.n)}</b><small>${esc(p.by)}</small></span><span class="setch">›</span></button>`).join("")).join("")}</div>`}
+// ---- Scores ----
+const SCG=[["Risk and prevention","#3F6FB5",[["qrisk","shield"],["assign","shield"],["ldl","drop"]]],["Atrial fibrillation","#6D5BA8",[["cha","ecg"],["hasbled","drop"]]],["Chest pain and ACS","#C0504D",[["heart","heart"],["grace","heart"],["timi","heart"]]],["Rhythm and cardiomyopathy","#C9822B",[["qtc","ecg"],["hcm","heart"]]],["Measurements","#2E8B88",[["renal","kidney"],["bmi","scale"],["bsa","ruler"]]]];
+const SCSUB={qrisk:"10-year CVD risk",assign:"Scottish CVD risk",ldl:"Lipid targets",cha:"Stroke risk in AF",hasbled:"Bleeding risk",heart:"Chest pain",grace:"ACS mortality",timi:"NSTE-ACS risk",qtc:"Corrected QT",hcm:"5-year SCD risk",renal:"Kidney function",bmi:"Body mass index",bsa:"Body surface area"};
+const myS=()=>st.myScores=st.myScores||[];
+const scG=id=>SCG.find(x=>x[2].some(y=>y[0]===id))||SCG[0];
+function scTile(id){const c=CALCS.find(x=>x.id===id),g=scG(id),ic=g[2].find(y=>y[0]===id)[1];return c?`<button class="gtile" style="--c:${g[1]}" data-act="sopen" data-v="${id}"><span class="gtl">${shy(esc(c.name.replace("TIMI (NSTE-ACS)","TIMI")))}</span><span class="gsrc">${myS().includes(id)?'<b class="gst">★</b> ':""}${SCSUB[id]||""}</span><span class="gic">${gic(ic)}</span></button>`:""}
+vScores=function(){
+ if(S.calcOpen){const c=CALCS.find(x=>x.id===S.calcOpen);if(c){const g=scG(c.id),ic=g[2].find(y=>y[0]===c.id)[1];S.calc=c.id;
+  return gBack("All scores","sback",g[1],ic,c.name,"sfav",myS().includes(c.id))+`<div class="calc" style="--cc:${g[1]}">${calcForm(c.id)}<div id="cres">${calcResult(c.id)}</div><button class="link" style="color:var(--muted);margin-top:8px" data-act="creset">Clear</button></div>
+   <p class="note">Calculated on your phone; nothing is sent anywhere. For clinical decisions, check results against the source guideline.</p>`}S.calcOpen=""}
+ return `<p class="note gsub">Tap a score to open it. Everything is calculated on your phone.</p>${myS().length?`<h4 class="gh4">My scores</h4><div class="gtiles">${myS().map(scTile).join("")}</div>`:""}
+  ${SCG.map(([g,c,L])=>`<h4 class="gh4">${g}</h4><div class="gtiles">${L.map(([id])=>scTile(id)).join("")}</div>`).join("")}`};
+// ---- Settings as a menu ----
+const SETM=[
+ ["You",[["user","My profile","Name, registration, role, specialty","#2E3A6B","prof"],["list","Topics and journals","What appears in Articles","#2E86C1","What to show"],["cert","CPD and appraisal","Appraisal date, CPD log and export","#B8862B","cpd"]]],
+ ["Listening",[["speaker","Voice and speed","Google voices and reading speed","#8E44AD","Reading aloud"],["abc","Pronunciation","How terms are read aloud","#9B59B6","Pronunciation"]]],
+ ["Papers and AI",[["key","Full-text access","OpenAthens, NHS Scotland","#1F7A6B","Full-text access"],["lib","Library","Prepare papers ahead, saved audio","#16A085","Library"],["spark","AI features","Summaries, slides, study tools","#5A63B8","AI features"],["bell","What's new strip","Headlines on the front page","#C0504D","What's new"]]],
+ ["Your data",[["cloud","Backup and restore","Save or move everything to a new phone","#2E86C1","Backup"],["lock","Privacy","What stays on your phone","#7D8597","Privacy"]]],
+ ["Help and feedback",[["play","How to use","Video guide and tips","#E67E22","help"],["chat","Send feedback","Tell Ajay what to improve","#D35400","feedback"],["share","Tell a colleague","Share the app's link","#27AE60","tell"]]],
+ ["About",[["info","About this app","Version, contact and credits","#2E3A6B","About"],["scale","Legal information","Disclaimer, copyright, sources","#7D8597","legal"],["refresh","Check for updates","Load the newest version","#2E86C1","update"]]]];
+const vSettingsOld=vSettings;
+function setSections(){const h=vSettingsOld(),out={},re=/<h3>([^<]*)<\/h3>/g;let m,last=null,pos=0;const marks=[];while((m=re.exec(h)))marks.push([m[1],m.index,re.lastIndex]);
+ marks.forEach((x,i)=>{out[x[0]]=h.slice(x[2],i+1<marks.length?marks[i+1][1]:h.length)});return out}
+const setHead=(t,ic,c)=>`<div class="gdh" style="--c:${c}"><button class="link gbk" data-act="setback">‹ Settings</button><div class="gdt"><span class="gdi">${gic(ic,26)}</span><h2>${esc(t)}</h2></div></div>`;
+const OWNER=()=>!!st.cmpKey;
+vSettings=function(){const sec=S.setSec;
+ if(sec){const row=SETM.flatMap(x=>x[1]).find(r=>r[1]===sec)||(sec==="Feedback inbox"?["inbox","Feedback inbox","","#D35400","inbox"]:null);
+  if(row){const [ic,l,,c,key]=row,head=setHead(l,ic,c);
+   if(key==="cpd")return head+`<div class="card"><label class="au" style="display:block">Your next appraisal<input class="search tdate" type="date" id="calappr" value="${esc(st.appraisal||"")}"></label><p class="note" style="margin:6px 0 0">A reminder to export your CPD log appears in the calendar 4 weeks before.</p></div><div class="pk"><a href="#" data-tab="cpd">Open the CPD log</a><a href="#" class="alt" data-act="calendar">Open the calendar</a></div>`;
+   if(key==="feedback")return head+fbForm();
+   if(key==="inbox")return head+fbInbox();
+   if(key==="legal")return head+LEGAL;
+   const S2=setSections(),body=S2[key];if(body!=null)return head+body+(key==="About"?`<p class="note" style="text-align:center;margin-top:14px">${APPTITLE} · ${esc(APPVER)}<br>© ${new Date().getFullYear()} Heartdoc Ltd</p>`:"")}
+  S.setSec=""}
+ const ini=((st.myName||"").replace(/^(Dr|Mr|Mrs|Ms|Miss|Prof)\.?\s+/i,"").match(/\b\w/g)||["+"]).slice(0,2).join("").toUpperCase();
+ const groups=SETM.map(([h,L])=>[h,h==="Help and feedback"&&OWNER()?L.concat([["inbox","Feedback inbox","What colleagues have sent you","#D35400","inbox"]]):L]);
+ return `<button class="setme" data-act="setopen" data-v="My profile"><span class="setav">${esc(ini)}</span><span class="setmt"><b>${esc(st.myName||"Add your name")}</b><small>${esc([st.myRole,st.myOrg].filter(Boolean).join(" · ")||"Tap to set up your profile")}</small></span><span class="setch">›</span></button>
+  ${groups.map(([h,L])=>`<h4 class="seth">${h}</h4><div class="setg">${L.map(([i,l,sub,c])=>`<button class="setr" data-act="setopen" data-v="${esc(l)}"><span class="seti" style="--c:${c}">${gic(i,19)}</span><span class="setmt"><b>${l}</b><small>${sub}</small></span><span class="setch">›</span></button>`).join("")}</div>`).join("")}
+  <p class="note" style="text-align:center;margin-top:16px">${APPTITLE} · ${esc(APPVER)}<br>© ${new Date().getFullYear()} Heartdoc Ltd</p>`};
+const LEGAL=`<div class="card legal"><p class="draft">Draft wording for the beta: to be confirmed before the app goes live.</p>
+ <h4>Disclaimer</h4><p>${APPTITLE} is for the education and continuing professional development of healthcare professionals. It is not a medical device and does not give medical advice. It does not replace clinical judgement, local protocols or the full text of a guideline.</p>
+ <p>Summaries, slides, discussions, answers and exam material written by AI can contain errors or omissions. Check anything important against the original paper or guideline before you rely on it.</p>
+ <p>Don't enter patient-identifiable information anywhere in the app.</p>
+ <h4>Copyright</h4><p>App design and text © ${new Date().getFullYear()} Heartdoc Ltd. Guidelines, papers, podcasts and news belong to their publishers (including ESC, NICE, SIGN, ACC/AHA, DVLA, the UK CAA, PubMed and Europe PMC), and the app links to them rather than copying them. Figures from papers are only shown where the licence allows, with a credit line.</p>
+ <h4>Sources and services</h4><p>Paper details come from PubMed and Europe PMC; driving rules from GOV.UK; flying guidance from the UK Civil Aviation Authority. AI features use Anthropic's Claude and Cloudflare Workers AI; voices use Google Gemini.</p>
+ <h4>Your data</h4><p>Your Library, CPD log, profile and settings stay on your phone. Text sent to the AI service to make a summary, answer or slides isn't kept, except shared results written from public sources without patient details, which are kept so colleagues asking the same thing get them instantly. Feedback you send is kept so it can be read and acted on.</p></div>`;
+// ---- feedback ----
+function fbForm(){const F=S.fb=S.fb||{rating:0,kind:"Suggestion"};
+ return `<div class="card fbf"><p class="note" style="margin-top:0">Tell Ajay what works, what doesn't and what you'd like added. It goes straight to him${S.fbSent?"":""}.</p>
+  <div class="au">How useful is the app so far?</div><div class="stars">${[1,2,3,4,5].map(n=>`<button class="star ${F.rating>=n?"on":""}" data-act="fbstar" data-v="${n}" aria-label="${n} star${n>1?"s":""}">★</button>`).join("")}</div>
+  <div class="au" style="margin-top:10px">About</div><div class="row" style="flex-wrap:wrap;overflow:visible">${["Suggestion","Problem","Praise","Content error"].map(k=>`<button class="chip ${F.kind===k?"on":""}" data-act="fbkind" data-v="${k}">${k}</button>`).join("")}</div>
+  <label class="au tl">Your feedback<span class="tawrap"><textarea class="search" id="fb-msg" rows="5" placeholder="For example, the podcast tiles are great, but I'd like the calculator to remember my last answers">${esc(F.msg||"")}</textarea>${taMic("fb-msg")}</span></label>
+  <label class="au tl">Your name <small>(optional)</small><input class="search" id="fb-name" value="${esc(F.name||st.myName||"")}" autocomplete="name"></label>
+  <label class="au tl">Email or phone, if you'd like a reply <small>(optional)</small><input class="search" id="fb-contact" value="${esc(F.contact||"")}" autocomplete="email"></label>
+  <p class="pii">🔒 Please don't include patient details.</p>
+  <div class="pk"><a href="#" data-act="fbsend">${S.fbBusy?'<span class="spin"></span>Sending…':"Send feedback"}</a></div></div>`}
+async function fbSend(){const F=S.fb||{};F.msg=String((document.getElementById("fb-msg")||{}).value||F.msg||"").trim();F.name=(document.getElementById("fb-name")||{}).value||F.name||"";F.contact=(document.getElementById("fb-contact")||{}).value||F.contact||"";
+ if(F.msg.length<3){toast("Write your feedback first.");return}if(piiOf(F.msg)==="hard"){toast("That looks like it contains patient details. Please remove them.");return}
+ if(!aiURL()){toast(aiErr("setup"));return}S.fbBusy=true;render();
+ try{await aiCall("feedback",{msg:F.msg,name:F.name,contact:F.contact,rating:F.rating||0,kind:F.kind||"",app:"cardiology",ver:APPVER},30000);S.fb=null;S.setSec="";toast("Thank you. Your feedback has been sent.")}
+ catch(e){toast(e.code==="setup"?"Feedback isn't set up on the AI service yet.":aiErr(e.code))}
+ S.fbBusy=false;render()}
+function fbInbox(){const L=S.fbList;if(!L&&!S.fbLoad)setTimeout(fbLoad,30);
+ return `<p class="note" style="margin-top:0">Feedback from colleagues, newest first. It's kept on your Cloudflare service (D1 › cpd-cache › feedback) and only your comparison phrase can open it here.</p>
+  ${S.fbLoad?`<div class="msg"><span class="spin"></span>Loading</div>`:S.fbErr?`<div class="msg err">${esc(S.fbErr)} <button class="link" data-act="fbreload">Try again</button></div>`:!L?"":L.length?L.map(f=>`<div class="card fbi"><div class="fbh"><b>${esc(f.name||"Anonymous")}</b><span class="au">${new Date(f.at).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</span></div>
+   <div class="au">${f.rating?"★".repeat(f.rating)+"☆".repeat(5-f.rating)+" · ":""}${esc(f.kind||"")}${f.ver?" · "+esc(f.ver):""}</div><p>${esc(f.msg).replace(/\n/g,"<br>")}</p>${f.contact?`<div class="au">Reply to: ${/@/.test(f.contact)?`<a href="mailto:${esc(f.contact)}">${esc(f.contact)}</a>`:esc(f.contact)}</div>`:""}
+   <button class="link red" data-act="fbdel" data-v="${f.id}">${S.confirm==="fb:"+f.id?"Tap again to delete":"Delete"}</button></div>`).join(""):`<div class="msg">No feedback yet.</div>`}
+  <div class="pk"><a href="#" class="alt" data-act="fbreload">Refresh</a></div>`}
+async function fbLoad(){S.fbLoad=true;S.fbErr="";render();
+ try{const r=await fetch(`${aiURL()}/feedback`,{headers:{"X-Compare-Key":st.cmpKey||"","X-Device-Id":deviceId()}});const j=await r.json();if(!r.ok)throw new Error(j.error==="owner"?"The comparison phrase in Settings doesn't match the service.":j.detail||"Couldn't load the feedback.");S.fbList=j.items||[]}
+ catch(e){S.fbErr=String(e.message||e)}S.fbLoad=false;render()}
+async function tellColleague(){const url=location.origin+location.pathname,text=`${APPTITLE}: free journal summaries, guidelines, podcasts, risk scores, a CPD log and study tools for cardiology, on your phone. Open the link, then Share › Add to Home Screen.`;
+ if(navigator.share){try{await navigator.share({title:APPTITLE,text,url});return}catch(e){if(e&&e.name==="AbortError")return}}
+ try{await navigator.clipboard.writeText(`${text} ${url}`);toast("Link copied. Paste it into a message.")}catch(e){toast(url)}}
+async function checkUpdate(){toast("Loading the newest version…");try{if("caches" in window){for(const k of await caches.keys())if(!/share-inbox/.test(k))await caches.delete(k)}}catch(e){}
+ setTimeout(()=>location.replace(location.pathname+"?v="+Date.now()),400)}
+// ---- getting around: the title goes home, a Menu button appears when the tiles have scrolled away, and Back works ----
+function goHome(){S.modal=null;S.gtopic="";S.pod="";S.calcOpen="";S.setSec="";S.tab="latest";renderModal();render();window.scrollTo({top:0,behavior:"smooth"})}
+const PAGEN={guide:"Guidelines",pods:"Podcasts",scores:"Risk scores",cpd:"CPD",saved:"Library",settings:"Settings"};
+{const _r=render;render=function(){
+  // keep what's being typed, and the cursor, when the page redraws
+  const ae=document.activeElement,keep=ae&&ae.id&&$m.contains(ae)&&/^(TEXTAREA|INPUT)$/.test(ae.tagName)&&!/^(checkbox|radio|file|date|range)$/.test(ae.type)?{id:ae.id,v:ae.value,a:ae.selectionStart,b:ae.selectionEnd}:null;
+  const x=_r.apply(this,arguments);try{
+  if(S.tab!=="latest"&&PAGEN[S.tab]&&!$m.querySelector(".pagebar"))$m.insertAdjacentHTML("afterbegin",`<div class="pagebar"><button data-act="home" aria-label="Back to Articles">‹ Articles</button><b>${PAGEN[S.tab]}</b></div>`);
+  if(keep){const el=document.getElementById(keep.id);if(el&&el!==document.activeElement){if(el.value!==keep.v)el.value=keep.v;el.focus({preventScroll:true});try{el.setSelectionRange(keep.a,keep.b)}catch(e){}}}
+  navSync();fabSync()}catch(e){}return x}}
+let fab=null;function fabSync(){if(!fab){fab=document.createElement("button");fab.className="fabmenu";fab.dataset.act="tomenu";fab.setAttribute("aria-label","Back to the menu");fab.innerHTML=`<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 14l6-6 6 6"/></svg>Menu`;document.body.appendChild(fab)}
+ const nb=document.querySelector(".navband"),hidden=!nb||nb.getBoundingClientRect().bottom>40||!!S.modal;fab.classList.toggle("on",!hidden)}
+addEventListener("scroll",fabSync,{passive:true});setInterval(fabSync,1500);
+// Back (Android back button, browser back): closes a sheet, then a sub-screen, then returns to Articles.
+// One spare history entry is kept while anywhere other than Articles, so Back never leaves the app by mistake.
+let navGuard=false,navIgnore=false;
+const navSub=()=>!!(S.gtopic||S.pod||S.calcOpen||S.setSec||(S.tab==="guide"&&S.gv&&S.gv!=="topics")||(S.tab==="pods"&&S.pg&&S.pg!=="all"));
+const navLevel=()=>(S.modal?1:0)+(navSub()?1:0)+(S.tab!=="latest"?1:0);
+function navSync(){try{const lv=navLevel();if(lv>0&&!navGuard){history.pushState({cpdnav:1},"");navGuard=true}else if(lv===0&&navGuard&&history.state&&history.state.cpdnav){navGuard=false;navIgnore=true;history.back()}}catch(e){}}
+function navBack(){
+ if(S.modal){if(S.modal.type==="cqplay"){const c=document.querySelector('#modal [data-act="xpclose"]');if(c){c.click();return}}S.modal=null;renderModal();return}
+ if(S.gtopic)S.gtopic="";else if(S.pod)S.pod="";else if(S.calcOpen)S.calcOpen="";else if(S.setSec)S.setSec="";
+ else if(S.tab==="guide"&&S.gv&&S.gv!=="topics"){if(S.gsec!=null)S.gsec=null;else S.gv=/^(dvsync|dvdoc)$/.test(S.gv)?"dvla":/^pm/.test(S.gv)?S.gv.slice(2):"topics"}
+ else if(S.tab==="pods"&&S.pg&&S.pg!=="all")S.pg="all";else if(S.tab!=="latest")S.tab="latest";
+ render()}
+addEventListener("popstate",()=>{if(navIgnore){navIgnore=false;return}navGuard=false;navBack();navSync()});
+{const _rm=renderModal;renderModal=function(){const r=_rm.apply(this,arguments);try{navSync();fabSync()}catch(e){}return r}}
+// links written as href="#" are buttons, so they mustn't change the address (that would upset Back)
+document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest('a[href="#"]');if(a)e.preventDefault()},true);
+// a tap on the dimmed background or the Esc key closes a sheet
+document.addEventListener("click",e=>{const m=document.getElementById("modal");if(m&&e.target===m&&S.modal&&S.modal.type!=="cqplay"&&!S.tbusySheet){S.modal=null;renderModal()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&S.modal){const c=document.querySelector('#modal [data-act="mclose"],#modal [data-act="xpclose"]');if(c)c.click();else{S.modal=null;renderModal()}}});
+document.addEventListener("click",e=>{const h=e.target.closest&&e.target.closest("header .ttl h1");if(h){e.preventDefault();goHome()}});
+{const _rm2=renderModal;renderModal=function(){const m=S.modal;if(m&&m.type==="podlog"){const el=document.getElementById("modal");if(!el)return;el.className="ov";el.innerHTML=podLogSheet();el._v=null;return}return _rm2.apply(this,arguments)}}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act,v=b.dataset.v,take=()=>{e.preventDefault();e.stopImmediatePropagation()};
+ if(a==="home"){take();goHome()}
+ else if(a==="tomenu"){take();window.scrollTo({top:0,behavior:"smooth"})}
+ else if(a==="gview"){take();S.gv=v;S.gtopic="";S.gsec=null;if(S.tab!=="guide")S.tab="guide";render();window.scrollTo(0,0)}
+ else if(a==="gtopic"){take();S.gtopic=v;S.tab="guide";render();window.scrollTo(0,0)}
+ else if(a==="gback"){take();S.gtopic="";S.gv="topics";S.gsec=null;render()}
+ else if(a==="gfav"){take();const t=S.gtopic,L=myG();const i=L.indexOf(t);if(i>=0)L.splice(i,1);else L.push(t);save();render();toast(i>=0?"Removed from My Guides.":"Added to My Guides.")}
+ else if(a==="dvlasec"){take();S.tab="guide";S.gv="dvla";S.gsec=+v;S.gtopic="";render();window.scrollTo(0,0)}
+ else if(a==="caasec"){take();S.tab="guide";S.gv="caa";S.gsec=+v;S.gtopic="";render();window.scrollTo(0,0)}
+ else if(a==="pgrp"){take();S.pg=v||"all";S.pod="";render()}
+ else if(a==="popen"){take();S.pod=v;render();window.scrollTo(0,0)}
+ else if(a==="pback"){take();S.pod="";render()}
+ else if(a==="pfav"){take();const L=myP(),i=L.indexOf(S.pod);if(i>=0)L.splice(i,1);else L.push(S.pod);save();render();toast(i>=0?"Removed from My Podcasts.":"Added to My Podcasts.")}
+ else if(a==="podlog"){take();S.modal={type:"podlog"};renderModal()}
+ else if(a==="sopen"){take();S.calcOpen=v;S.calc=v;S.tab="scores";S.gtopic="";render();window.scrollTo(0,0)}
+ else if(a==="sback"){take();S.calcOpen="";render()}
+ else if(a==="sfav"){take();const L=myS(),i=L.indexOf(S.calcOpen);if(i>=0)L.splice(i,1);else L.push(S.calcOpen);save();render();toast(i>=0?"Removed from My scores.":"Added to My scores.")}
+ else if(a==="setopen"){take();if(v==="My profile"){profileOpen(null);return}if(v==="How to use"){S.modal={type:"help"};renderModal();return}if(v==="Tell a colleague"){tellColleague();return}if(v==="Check for updates"){checkUpdate();return}if(v==="Feedback inbox")S.fbList=null;S.setSec=v;S.tab="settings";render();window.scrollTo(0,0)}
+ else if(a==="setback"){take();S.setSec="";render()}
+ else if(a==="fbstar"){take();S.fb=S.fb||{};S.fb.rating=+v;fbKeep();render()}
+ else if(a==="fbkind"){take();S.fb=S.fb||{};S.fb.kind=v;fbKeep();render()}
+ else if(a==="fbsend"){take();fbSend()}
+ else if(a==="fbreload"){take();S.fbList=null;fbLoad()}
+ else if(a==="fbdel"){take();if(S.confirm!=="fb:"+v){S.confirm="fb:"+v;render();return}S.confirm="";fetch(`${aiURL()}/feedback/delete`,{method:"POST",headers:{"Content-Type":"application/json","X-Compare-Key":st.cmpKey||"","X-Device-Id":deviceId()},body:JSON.stringify({id:+v})}).then(()=>{S.fbList=(S.fbList||[]).filter(f=>f.id!==+v);render()}).catch(()=>toast("Couldn't delete it just now."))}
+},true);
+function fbKeep(){S.fb=S.fb||{};["msg","name","contact"].forEach(k=>{const el=document.getElementById("fb-"+k);if(el)S.fb[k]=el.value})}
+document.addEventListener("input",e=>{const t=e.target;if(t&&t.id&&/^fb-(msg|name|contact)$/.test(t.id)){S.fb=S.fb||{};S.fb[t.id.slice(3)]=t.value}},true);
+// the old Focus screen kept re-drawing itself; it's no longer reachable, so its background check is switched off
+if(typeof focusCheck==="function")focusCheck=async function(){};
+// full text opens through NHS Scotland OpenAthens unless you've chosen another route
+try{if(!st.ftChosen&&(!st.ft||st.ft.mode==="direct")){st.ft={...(st.ft||{}),mode:"oa"};st.ftChosen=1;save()}}catch(e){}
+// ---- How to use: the new video (full screen on any phone) and tips for this version ----
+const HELPVID11="help-cardiology-b11.mp4";
+helpSheet=function(){return `<div class="sheet big help" role="dialog" aria-label="Help"><div class="thead"><h3>How to use ${APPTITLE}</h3><button class="tclose" data-act="mclose">Close</button></div>
+ <video id="helpvid" src="${HELPVID11}" controls playsinline preload="metadata"></video>
+ <div class="row hvb"><button class="chip on" data-act="helpfull">⛶ Watch full screen</button></div>
+ <div class="tips">
+  <p><b>Getting around:</b> tap the title to come back to Articles from anywhere. Each screen has a ‹ back link, the phone's Back button works, and tapping outside a panel closes it. When the tiles have scrolled away, the <b>Menu</b> button brings them back.</p>
+  <p><b>Guidelines:</b> one tile per topic. Open one to see the ESC, NICE, SIGN and ACC/AHA guidelines side by side, with links to the driving and flying rules and the scores for that topic. ⭐ keeps a topic in My Guides. Driving (DVLA) and Flying (CAA) have a tile per condition.</p>
+  <p><b>Podcasts:</b> tiles coloured by type; filter them, open one for Apple Podcasts, Spotify or its website, and log your listening time as CPD. <b>Scores:</b> 13 calculators in 5 groups; ⭐ keeps your favourites at the top.</p>
+  <p><b>Library:</b> up to 10 papers, each prepared in the background with a summary, Listen and a two-voice Discussion. Summarise, Compare and Add PDF are there too.</p>
+  <p><b>My Presentations and Exam prep:</b> the app finds the evidence and writes a whole talk, or notes and practice questions for each exam topic. If a colleague has asked for something very similar, you're offered theirs straight away, redrawn in your style with your name. Slides open in the app exactly as designed: tap one for full screen, swipe between slides and show your speaker notes; Save or share gives the PowerPoint file.</p>
+  <p><b>Calendar</b> (the date at the top): appraisal, exams, thesis deadline, talks, courses and conference deadlines; 📅+ adds any of them to your phone's calendar.</p>
+  <p><b>Settings</b> (the gear): your profile, voices, full-text access through NHS Scotland OpenAthens, backup, and <b>Send feedback</b>, which goes straight to Ajay.</p>
+  <p>🔒 Never enter patient details anywhere in the app.</p>
+ </div></div>`};
+addEventListener("click",e=>{const b=e.target.closest&&e.target.closest('[data-act="helpfull"]');if(!b)return;e.preventDefault();e.stopImmediatePropagation();const v=document.getElementById("helpvid");if(!v)return;
+ try{v.play().catch(()=>{})}catch(x){}
+ try{if(v.webkitEnterFullscreen)v.webkitEnterFullscreen();else if(v.requestFullscreen)v.requestFullscreen().catch(()=>{});else if(v.webkitRequestFullscreen)v.webkitRequestFullscreen()}catch(x){}},true);
+
+// ================= b11: slide decks: choice of Claude model, the model on the deck, and a faithful in-app viewer =================
+const CLM=[["haiku","Haiku"],["sonnet","Sonnet"],["opus","Opus"]];
+var TCUR=null;
+// record everything drawn on each slide, so the app can show the deck exactly as designed
+const DV={last:[]};
+const pickO=(o,keys)=>{const r={};if(o)keys.forEach(k=>{if(o[k]!==undefined)r[k]=o[k]});try{return JSON.parse(JSON.stringify(r))}catch(e){return r}};
+const TXK=["x","y","w","h","fontFace","fontSize","bold","italic","underline","color","align","valign","fit","paraSpaceAfter","bullet","hyperlink","margin","inset","lineSpacing","fill","rotate"];
+deckTrack=function(pptx){S.slidePrev=[];const recs=[],imgs=[],add=pptx.addSlide.bind(pptx);
+ const im=d=>{let i=imgs.indexOf(d);if(i<0){imgs.push(d);i=imgs.length-1}return i};
+ pptx.addSlide=(...a)=>{const s=add(...a),rec={t:[],img:[],chart:null,s,ops:[],notes:""};S.slidePrev.push(rec);recs.push(rec);
+  const at=s.addText.bind(s);s.addText=(txt,o={})=>{try{const str=Array.isArray(txt)?txt.map(r=>r&&typeof r==="object"?((r.options&&r.options.bullet?"• ":"")+(r.text||"")):String(r)).join("\n"):String(txt);if(str.trim())rec.t.push({s:str,fs:o.fontSize||14});
+   const runs=Array.isArray(txt)?txt.map(r=>r&&typeof r==="object"?{text:String(r.text==null?"":r.text),o:pickO(r.options,["bullet","bold","italic","color","fontSize","hyperlink","breakLine","paraSpaceAfter","underline"])}:{text:String(r),o:{}}):[{text:String(txt==null?"":txt),o:{}}];
+   rec.ops.push({k:"t",runs,o:pickO(o,TXK)})}catch(e){}return at(txt,o)};
+  const as=s.addShape.bind(s);s.addShape=(ty,o={})=>{try{rec.ops.push({k:"s",ty:String(ty),o:pickO(o,["x","y","w","h","fill","line","rectRadius","rotate"])})}catch(e){}return as(ty,o)};
+  const ai=s.addImage.bind(s);s.addImage=o=>{try{if(o&&o.data){rec.img.push(o.data);rec.ops.push({k:"i",d:im(o.data),o:pickO(o,["x","y","w","h","transparency"])})}}catch(e){}return ai(o)};
+  const ac=s.addChart.bind(s);s.addChart=(ty,d,o={})=>{try{rec.chart=d;rec.ops.push({k:"c",ty:String(ty),d:JSON.parse(JSON.stringify(d)),o:pickO(o,["x","y","w","h","barDir","chartColors","showLegend","showValue","valAxisTitle","showValAxisTitle","catAxisLabelFontSize","valAxisLabelFontSize","dataLabelFontSize","legendFontSize","catAxisLabelColor","dataLabelColor"])})}catch(e){}return ac(ty,d,o)};
+  const an=s.addNotes.bind(s);s.addNotes=t=>{try{rec.notes+=(rec.notes?"\n":"")+String(t)}catch(e){}return an(t)};
+  return s};
+ const wr=pptx.write.bind(pptx);
+ pptx.write=async(...a)=>{const r=await wr(...a);try{const bg=s=>{const b=s.background||s.bkgd||{};if(typeof b==="string")return {c:b};if(b.data)return {i:im(b.data)};return {c:b.color||"FFFFFF"}};
+  const v={v:1,imgs,slides:recs.map(x=>({bg:bg(x.s),ops:x.ops,notes:x.notes}))};S.deckView=v;DV.last.push({size:r&&r.size,v});DV.last=DV.last.slice(-4)}catch(e){}return r};
+ return pptx};
+{const _mk=makeDeck;makeDeck=async function(pmid,count,topic,opt){
+ if(opt&&!opt.model&&opt.claude===undefined){const c=(topic&&topic.claude)||(TCUR&&TCUR.in&&TCUR.in.claude)||"";opt={...opt,claude:OWNER()&&CLM.some(x=>x[0]===c)?c:""}}
+ if(topic&&topic.slides&&!topic.model&&TCUR&&TCUR.res&&TCUR.res.model)topic={...topic,model:TCUR.res.model};
+ const r=await _mk.call(this,pmid,count,topic,opt);
+ if(r&&r.file){const h=DV.last.slice().reverse().find(x=>x.size===r.file.size);if(h){r.view=h.v;h.v.model=(r.meta&&r.meta.model)||"";h.v.title=topic&&topic.title||""}}
+ return r}}
+{const _ds=tDeckSave;tDeckSave=async function(it,d){await _ds(it,d);try{if(d&&d.view){await idbPut("deckv:"+it.id,d.view);it.deck.view=1}if(d&&d.meta&&d.meta.model)it.deck.model=d.meta.model;if(d&&d.meta&&d.meta.cost)it.deck.cost=d.meta.cost.usd;save()}catch(e){}}}
+{const _gc=tGC;tGC=async function(){await _gc();try{const keys=await idbKeys(),ids=new Set(Object.values(st.tools||{}).flat().map(x=>x.id));const gone=keys.filter(k=>{const m=String(k).match(/^deckv:([^|]+)/);return m&&!ids.has(m[1])});if(gone.length)idbDel(gone)}catch(e){}}}
+// ---- drawing a recorded deck in the app ----
+const hxc=c=>"#"+String(c||"000000").replace(/^#/,"").slice(0,6);
+const pcs=(v,t)=>(v/t*100).toFixed(3)+"%";
+const imgSrc=d=>/^data:/.test(d)?d:"data:"+d;
+function rText(op){const o=op.o||{},fs=+o.fontSize||18,ps=[];let cur=null;
+ const para=b=>{cur={b,sp:b&&typeof b==="object"&&b.indent?b.indent:20,after:0,h:""};ps.push(cur)};
+ for(const r of op.runs){const ro=r.o||{};if(ro.bullet||!cur)para(ro.bullet);if(ro.paraSpaceAfter)cur.after=ro.paraSpaceAfter;
+  const lines=String(r.text).split("\n");lines.forEach((ln,i)=>{if(i){para(cur.b?cur.b:null)}
+   let h=esc(ln);const st2=[];if(ro.bold)st2.push("font-weight:700");if(ro.italic)st2.push("font-style:italic");if(ro.underline)st2.push("text-decoration:underline");if(ro.color)st2.push("color:"+hxc(ro.color));if(ro.fontSize&&+ro.fontSize!==fs)st2.push(`font-size:${(ro.fontSize/fs).toFixed(3)}em`);
+   if(ro.hyperlink&&ro.hyperlink.url)h=`<a href="${esc(ro.hyperlink.url)}" target="_blank" rel="noopener">${h}</a>`;
+   cur.h+=st2.length?`<span style="${st2.join(";")}">${h}</span>`:h});
+  if(ro.breakLine)cur=null}
+ const after=+o.paraSpaceAfter||0;
+ const body=ps.map(p=>{const s=[];if(p.b)s.push(`padding-left:${(p.sp/fs).toFixed(3)}em`);if(p.after||after)s.push(`margin-bottom:${((p.after||after)/fs).toFixed(3)}em`);return `<p${p.b?' class="rb"':""}${s.length?` style="${s.join(";")}"`:""}>${p.h||"&nbsp;"}</p>`}).join("");
+ const va=o.valign==="top"?"flex-start":o.valign==="bottom"?"flex-end":"center";
+ const s=[`left:${pcs(o.x||0,13.333)}`,`top:${pcs(o.y||0,7.5)}`,`width:${pcs(o.w||13.333,13.333)}`,`height:${pcs(o.h||1,7.5)}`,`--fs:${fs}`,`justify-content:${va}`,`text-align:${o.align||"left"}`,`color:${hxc(o.color||"333333")}`];
+ if(o.fontFace)s.push(`font-family:'${String(o.fontFace).replace(/'/g,"")}',Calibri,'Segoe UI',Arial,sans-serif`);if(o.bold)s.push("font-weight:700");if(o.italic)s.push("font-style:italic");
+ if(o.fill&&o.fill.color)s.push(`background:${hxc(o.fill.color)}`);
+ return `<div class="rt" style="${s.join(";")}"><div class="rtc">${body}</div></div>`}
+function rShape(op){const o=op.o||{},ty=op.ty,x=+o.x||0,y=+o.y||0,w=+o.w||0,h=+o.h||0,ln=o.line||{};
+ const lnOn=ln.color&&!(ln.transparency>=100),lw=+ln.width||0.75;
+ if(ty==="line"){if(!lnOn)return "";const id="ar"+Math.random().toString(36).slice(2,7),arr=ln.endArrowType;
+  return `<svg class="rsv" viewBox="0 0 13.333 7.5" preserveAspectRatio="none" aria-hidden="true">${arr?`<defs><marker id="${id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${hxc(ln.color)}"/></marker></defs>`:""}<line x1="${x}" y1="${y}" x2="${x+w}" y2="${y+h}" stroke="${hxc(ln.color)}" stroke-width="${(lw/72).toFixed(4)}" ${ln.dashType&&ln.dashType!=="solid"?`stroke-dasharray="${(lw*4/72).toFixed(3)} ${(lw*3/72).toFixed(3)}"`:""} ${arr?`marker-end="url(#${id})"`:""}/></svg>`}
+ const f=o.fill||{},s=[`left:${pcs(x,13.333)}`,`top:${pcs(y,7.5)}`,`width:${pcs(w,13.333)}`,`height:${pcs(h,7.5)}`];
+ if(f.color&&!(f.transparency>=100))s.push(`background:${hxc(f.color)}`);if(f.transparency&&f.transparency<100)s.push(`--o:${(1-f.transparency/100).toFixed(2)}`);
+ if(lnOn)s.push(`border:calc(var(--pt)*${lw}) solid ${hxc(ln.color)}`);
+ if(ty==="ellipse")s.push("border-radius:50%");else if(ty==="roundRect")s.push(`border-radius:calc(var(--pt)*${((+o.rectRadius||0.1)*72).toFixed(1)})`);
+ return `<div class="rsh${f.transparency?" tr":""}" style="${s.join(";")}"></div>`}
+function rChart(op){const o=op.o||{},D=(op.d||[]).filter(s=>s&&Array.isArray(s.values));if(!D.length)return "";
+ const W=+o.w||10,H=+o.h||5,cols=(o.chartColors||["2E3A6B","C0504D","7F8C8D"]).map(hxc),pt=v=>(v/72),lfs=pt(+o.catAxisLabelFontSize||13),vfs=pt(+o.valAxisLabelFontSize||12),dfs=pt(+o.dataLabelFontSize||12),tc=hxc(o.catAxisLabelColor||"333333");
+ const labels=D[0].labels||[],all=D.flatMap(s=>s.values.map(Number).filter(isFinite)),mx=Math.max(0,...all),mn=Math.min(0,...all);
+ const nice=v=>{if(v<=0)return 0;const p=Math.pow(10,Math.floor(Math.log10(v))),m=v/p;return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*p};
+ const step=nice(((mx-mn)||1)/8),top=Math.ceil(mx/step)*step||step,bot=mn<0?-Math.ceil(-mn/step)*step:0,nt=Math.round((top-bot)/step),leg=o.showLegend&&D.length>1?0.45:0,L=0.75+(o.showValAxisTitle&&o.valAxisTitle?0.35:0),B=0.6+leg,T=0.25,pw=W-L-0.15,ph=H-T-B;
+ const Y=v=>T+(top-v)/(top-bot)*ph;let g="";
+ for(let k=0;k<=nt;k++){const v=bot+step*k,y=Y(v);g+=`<line x1="${L}" y1="${y}" x2="${L+pw}" y2="${y}" stroke="#E2E5EC" stroke-width="0.012"/><text x="${L-0.08}" y="${y+vfs*0.35}" font-size="${vfs}" text-anchor="end" fill="${tc}">${+v.toFixed(3)}</text>`}
+ const n=labels.length||1,gw=pw/n,bw=gw*0.72/D.length;
+ labels.forEach((lb,j)=>{D.forEach((s,i)=>{const v=Number(s.values[j])||0,x=L+j*gw+gw*0.14+i*bw,y1=Y(Math.max(v,0)),y2=Y(Math.min(v,0));
+   g+=`<rect x="${x}" y="${y1}" width="${bw*0.94}" height="${Math.max(0.005,y2-y1)}" fill="${cols[i%cols.length]}"/>`;if(o.showValue!==false)g+=`<text x="${x+bw*0.47}" y="${y1-0.06}" font-size="${dfs}" text-anchor="middle" fill="${tc}">${esc(String(s.values[j]))}</text>`});
+  g+=`<text x="${L+j*gw+gw/2}" y="${T+ph+lfs*1.3}" font-size="${lfs}" text-anchor="middle" fill="${tc}">${esc(String(lb).slice(0,40))}</text>`});
+ g+=`<line x1="${L}" y1="${Y(0)}" x2="${L+pw}" y2="${Y(0)}" stroke="#9AA1B5" stroke-width="0.015"/>`;
+ if(o.showValAxisTitle&&o.valAxisTitle)g+=`<text transform="translate(${0.22} ${T+ph/2}) rotate(-90)" font-size="${vfs}" text-anchor="middle" fill="${tc}">${esc(o.valAxisTitle)}</text>`;
+ if(leg){let lx=L;D.forEach((s,i)=>{g+=`<rect x="${lx}" y="${H-0.32}" width="0.18" height="0.18" fill="${cols[i%cols.length]}"/><text x="${lx+0.25}" y="${H-0.17}" font-size="${pt(+o.legendFontSize||13)}" fill="${tc}">${esc(s.name||"")}</text>`;lx+=0.5+String(s.name||"").length*pt(+o.legendFontSize||13)*0.55})}
+ return `<svg class="rch" style="left:${pcs(+o.x||0,13.333)};top:${pcs(+o.y||0,7.5)};width:${pcs(W,13.333)};height:${pcs(H,7.5)}" viewBox="0 0 ${W} ${H}" font-family="Calibri,'Segoe UI',Arial,sans-serif" aria-hidden="true">${g}</svg>`}
+function rSlide(V,i){const sl=V.slides[i];if(!sl)return "";const bg=sl.bg||{};
+ const bgs=bg.i!=null&&V.imgs[bg.i]?`background:#fff url('${imgSrc(V.imgs[bg.i])}') center/100% 100% no-repeat`:`background:${hxc(bg.c||"FFFFFF")}`;
+ const body=sl.ops.map(op=>op.k==="t"?rText(op):op.k==="s"?rShape(op):op.k==="i"&&V.imgs[op.d]?`<img class="rim" src="${imgSrc(V.imgs[op.d])}" alt="" style="left:${pcs(+op.o.x||0,13.333)};top:${pcs(+op.o.y||0,7.5)};width:${pcs(+op.o.w||1,13.333)};height:${pcs(+op.o.h||1,7.5)}">`:op.k==="c"?rChart(op):"").join("");
+ return `<div class="rs" style="${bgs}" data-i="${i}">${body}</div>`}
+// shrink text that doesn't fit its box, as PowerPoint does
+function rFit(root){const L=[...root.querySelectorAll(".rs")];let i=0;
+ const setPt=s=>{const w=s.getBoundingClientRect().width;if(w)s.style.setProperty("--pt",(w/960)+"px")};L.forEach(setPt);
+ const step=()=>{const end=Math.min(L.length,i+3);for(;i<end;i++){const s=L[i];if(!s.isConnected)return;s.querySelectorAll(".rt").forEach(t=>{t.style.setProperty("--k",1);if(t.scrollHeight<=t.clientHeight+1)return;let lo=0.35,hi=1;for(let n=0;n<7;n++){const m=(lo+hi)/2;t.style.setProperty("--k",m);if(t.scrollHeight<=t.clientHeight+1)lo=m;else hi=m}t.style.setProperty("--k",lo)})}if(i<L.length)requestAnimationFrame(step)};
+ requestAnimationFrame(step)}
+addEventListener("resize",()=>{document.querySelectorAll(".rs").forEach(s=>{const w=s.getBoundingClientRect().width;if(w)s.style.setProperty("--pt",(w/960)+"px")})});
+// ---- the viewer: all slides one under another, or one at a time full screen ----
+async function dvOpen(key,title,back){S.dv={key,title,back,busy:true,notes:false};S.modal={type:"deckview"};renderModal();
+ try{const [v,f]=await Promise.all([idbGet("deckv:"+key),idbGet("deck:"+key)]);if(!S.dv||S.dv.key!==key)return;S.dv.v=v||null;S.dv.file=f?new File([f.buf],f.name,{type:f.type}):null}catch(e){}
+ S.dv.busy=false;renderModal()}
+function dvSheet(){const D=S.dv||{},V=D.v;
+ const head=`<div class="thead"><button class="link" data-act="dvback">‹ ${esc(D.back&&D.back.label||"Back")}</button><button class="tclose" data-act="dvclose">Close</button></div>`;
+ const btns=`<div class="dvb">${V?`<button data-act="dvfull" data-v="0">⛶ Full screen</button><button class="${D.notes?"on":""}" data-act="dvnotes">${D.notes?"Hide notes":"Speaker notes"}</button>`:""}${D.file?`<button data-act="dvsave">Save or share</button>`:""}</div>`;
+ const by=V&&V.model?`<p class="au" style="margin:2px 0 8px">${V.slides.length} slides · written by ${esc(MODELNAME(V.model))}</p>`:V?`<p class="au" style="margin:2px 0 8px">${V.slides.length} slides</p>`:"";
+ const body=D.busy?`<div class="msg"><span class="spin"></span>Opening the slides</div>`:V?V.slides.map((s,i)=>`<div class="dvs" data-act="dvfull" data-v="${i}">${rSlide(V,i)}<div class="dvn">${i+1}</div></div>${D.notes&&s.notes?`<div class="dvnote">${esc(s.notes).replace(/\n/g,"<br>")}</div>`:""}`).join(""):`<div class="msg">These slides were made before the in-app viewer, so they can't be shown here. Use Save or share to open them in PowerPoint or Keynote${D.back&&D.back.rebuild?", or rebuild them":""}.</div>`;
+ return `<div class="sheet big dvsheet" role="dialog" aria-label="Slides">${head}<div class="vbody"><h3 style="margin:2px 0 0">${esc(D.title||"Slides")}</h3>${by}${btns}<div class="dvlist">${body}</div></div></div>`}
+function dvFull(){const D=S.dv||{},V=D.v,i=Math.max(0,Math.min(D.i||0,(V&&V.slides.length||1)-1));if(!V)return "";const sl=V.slides[i];
+ return `<div class="dvfs" role="dialog" aria-label="Slide ${i+1} of ${V.slides.length}"><div class="dvstage">${rSlide(V,i)}</div>
+  ${D.notes&&sl.notes?`<div class="dvfn">${esc(sl.notes).replace(/\n/g,"<br>")}</div>`:""}
+  <div class="dvctl"><button data-act="dvprev" aria-label="Previous slide" ${i?"":"disabled"}>‹</button><span>${i+1} / ${V.slides.length}</span><button data-act="dvnext" aria-label="Next slide" ${i<V.slides.length-1?"":"disabled"}>›</button><button class="${D.notes?"on":""}" data-act="dvnotes">Notes</button><button data-act="dvexit" aria-label="Close full screen">✕</button></div>
+  ${innerHeight>innerWidth&&!D.hint?(D.hint=1,`<div class="dvhint">Turn your phone sideways for a bigger slide</div>`):""}</div>`}
+function dvFitStage(){const st2=document.querySelector(".dvstage"),s=st2&&st2.querySelector(".rs");if(!s)return;const W=st2.clientWidth,H=st2.clientHeight,w=Math.min(W,H*16/9);s.style.width=w+"px";s.style.height=(w*9/16)+"px";rFit(st2)}
+addEventListener("resize",()=>{if(S.modal&&S.modal.type==="deckfs"){if(innerWidth>innerHeight){const h=document.querySelector(".dvhint");if(h)h.remove()}dvFitStage()}});
+{const _rm=renderModal;renderModal=function(){const m=S.modal,el=document.getElementById("modal");
+ if(m&&(m.type==="deckview"||m.type==="deckfs")&&el){
+  if(m.type==="deckview"){if(el._dvk===S.dv.key+"|"+S.dv.notes+"|"+!!S.dv.busy+"|"+!!S.dv.v&&el.querySelector(".dvsheet"))return;const sh=el.querySelector(".dvsheet .vbody"),y=sh&&el._dvk&&el._dvk.split("|")[0]===S.dv.key?sh.scrollTop:0;
+   el.className="ov";el.innerHTML=dvSheet();el._v=null;el._dvk=S.dv.key+"|"+S.dv.notes+"|"+!!S.dv.busy+"|"+!!S.dv.v;const nb=el.querySelector(".vbody");if(nb&&y)nb.scrollTop=y;const L=el.querySelector(".dvlist");if(L)requestAnimationFrame(()=>rFit(L))}
+  else{el.className="ov dvov";el.innerHTML=dvFull();el._v=null;el._dvk="";requestAnimationFrame(dvFitStage)}
+  return}
+ if(el)el._dvk="";return _rm.apply(this,arguments)}}
+function dvGo(d){const V=S.dv&&S.dv.v;if(!V)return;const n=Math.max(0,Math.min(V.slides.length-1,(S.dv.i||0)+d));if(n===S.dv.i)return;S.dv.i=n;renderModal()}
+function dvExit(){try{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen()}catch(e){}S.modal={type:"deckview"};renderModal();setTimeout(()=>{const s=document.querySelector(`.dvlist .rs[data-i="${S.dv&&S.dv.i||0}"]`);if(s)s.scrollIntoView({block:"center"})},120)}
+// swipe between slides
+{let sx=0,sy=0,t0=0;document.addEventListener("touchstart",e=>{if(!(S.modal&&S.modal.type==="deckfs"))return;const t=e.touches[0];sx=t.clientX;sy=t.clientY;t0=Date.now()},{passive:true});
+ document.addEventListener("touchend",e=>{if(!(S.modal&&S.modal.type==="deckfs"))return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.3&&Date.now()-t0<900)dvGo(dx<0?1:-1)},{passive:true})}
+document.addEventListener("keydown",e=>{if(!(S.modal&&S.modal.type==="deckfs"))return;if(e.key==="ArrowRight"||e.key===" "){e.preventDefault();dvGo(1)}else if(e.key==="ArrowLeft"){e.preventDefault();dvGo(-1)}else if(e.key==="Escape"){e.preventDefault();e.stopImmediatePropagation();dvExit()}},true);
+// the deck buttons open the viewer (window listeners run before the older ones on the page)
+addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act,v=b.dataset.v,take=()=>{e.preventDefault();e.stopImmediatePropagation()};
+ if(a==="tdeck"){take();const it=tGet(v);if(it)dvOpen(it.id,it.title||TDEF[it.k].t,{type:"tool",v:it.k,tv:{k:it.k,view:"item",id:it.id},label:"Back",rebuild:it.k==="pres"})}
+ else if(a==="exdeck"){take();const it=tGet(v),m=it&&it.mods[+b.dataset.i];if(m)dvOpen(`${it.id}|m${b.dataset.i}`,`${m.n}: revision slides`,{type:"tool",v:"exam",tv:{k:"exam",view:"item",id:it.id},label:"Back"})}
+ else if(a==="dvback"||a==="dvclose"){take();const B=S.dv&&S.dv.back;S.dv=null;if(a==="dvback"&&B){S.modal={type:B.type,v:B.v};if(B.tv)S.tv=B.tv}else S.modal=null;renderModal()}
+ else if(a==="dvnotes"){take();S.dv.notes=!S.dv.notes;renderModal()}
+ else if(a==="dvsave"){take();if(S.dv&&S.dv.file)cmpSave(S.dv.file)}
+ else if(a==="dvfull"){take();if(!S.dv||!S.dv.v)return;S.dv.i=+v||0;S.modal={type:"deckfs"};try{const el=document.documentElement;if(el.requestFullscreen&&!document.fullscreenElement)el.requestFullscreen().catch(()=>{})}catch(x){}renderModal()}
+ else if(a==="dvprev"){take();dvGo(-1)}else if(a==="dvnext"){take();dvGo(1)}
+ else if(a==="dvexit"){take();dvExit()}
+},true);
+// tap the left or right of a full-screen slide to move back or on
+addEventListener("click",e=>{if(!(S.modal&&S.modal.type==="deckfs"))return;const st2=e.target.closest&&e.target.closest(".dvstage");if(!st2||e.target.closest("a"))return;const r=st2.getBoundingClientRect();dvGo(e.clientX<r.left+r.width*0.3?-1:e.clientX>r.left+r.width*0.7?1:0)},true);
+// ---- the model on deck cards ----
+{const _st=tStatus;tStatus=function(it){const h=_st(it);if(it.status==="ready"&&it.deck&&it.deck.model)return h.replace(/<\/div>$/,` · ${esc(MODELNAME(it.deck.model).replace("Claude ",""))}</div>`);return h}}
+// ---- choosing the Claude model for study-tool slides (unlocked by your comparison phrase) ----
+function tModel(lbl){if(!OWNER())return "";const cur=tfv("claude","haiku");
+ return `<div class="au" style="margin-top:12px">${lbl||"AI for the slides"} <small>(your comparison phrase)</small></div><div class="row" style="flex-wrap:wrap;overflow:visible">${CLM.map(([k,l])=>tChip("claude",k,"Claude "+l,cur===k)).join("")}</div>`}
+
+// ================= b11: web research by Claude for My Presentations and Exam preparation =================
+// Your comparison phrase unlocks it. "Overnight" uses Claude's batch queue at half price; "Make it now" runs while you wait.
+// Results without patient details are kept on the service and offered to the next colleague who asks for something similar.
+const RPRICE={haiku:[0.1,0.5],sonnet:[2,10],opus:[4,20]};
+const CLN=m=>MODELNAME(CLAUDE_ID(m)).replace("Claude ","");
+const CLAUDE_ID=m=>/^(haiku|sonnet|opus)$/.test(m||"")?"claude-"+m:String(m||"");
+function rEst(kind,model,n){const [pi,po]=RPRICE[model]||RPRICE.haiku;let tin,tout,srch;
+ if(kind==="talk"){tin=80000;tout=9000+n*450;srch=8}else if(kind==="edit"){tin=40000;tout=6000+n*600;srch=3}else{tin=50000*n;tout=8000*n;srch=5*n}
+ const tok=(tin*pi+tout*po)/1e6,s=srch*0.01;return {now:tok+s,batch:tok/2+s}}
+const usd=v=>"$"+(v<0.095?(+v).toFixed(3):(+v).toFixed(2));
+const rTopicsInForm=()=>{const f=S.tf||{};return [...new Set([...(f.mods||[]),...modsFrom(f.modtext)])].slice(0,EXMAX)};
+function rForm(k){if(!OWNER())return "";
+ if(k!=="pres"&&k!=="exam")return tModel();
+ const src=tfv("src","web"),cl=tfv("claude",k==="pres"?"sonnet":"haiku"),when=tfv("when","batch");
+ let h=`<div class="rbox"><div class="au">How to find the evidence <small>(your comparison phrase)</small></div><div class="row" style="flex-wrap:wrap;overflow:visible">${tChip("src","web","🌐 Web research by Claude",src==="web")}${tChip("src","pubmed","PubMed papers (free)",src==="pubmed")}</div>`;
+ if(src!=="web")return h+`<p class="note" style="margin:6px 0 0">The app searches PubMed and writes from the abstracts, as before.</p>${k==="exam"?tModel():""}</div>`;
+ const n=k==="pres"?Math.max(3,(parseInt(tfv("n",20),10)||20)-2):Math.max(1,rTopicsInForm().length),e=rEst(k==="pres"?"talk":"exam",cl,n);
+ return h+`<p class="note" style="margin:6px 0 0">Claude searches current guidelines, trials and reviews on the web, reads the key pages and writes ${k==="pres"?"the whole talk":"notes and practice questions for each topic"}, with a list of sources.</p>
+  <div class="au" style="margin-top:10px">Claude model</div><div class="row" style="flex-wrap:wrap;overflow:visible">${CLM.map(([m,l])=>tChip("claude",m,l,cl===m)).join("")}</div>
+  <div class="au" style="margin-top:10px">When</div><div class="row" style="flex-wrap:wrap;overflow:visible">${tChip("when","batch","🌙 Overnight · half price",when==="batch")}${tChip("when","now","⚡ Make it now",when==="now")}</div>
+  <p class="rest">Estimated cost: <b>${usd(when==="now"?e.now:e.batch)}</b> ${when==="now"?`(${usd(e.batch)} overnight)`:`(${usd(e.now)} if made now)`}${k==="exam"?` for ${n} topic${n===1?"":"s"}`:""}. The actual cost is shown when it's ready.</p>
+  <p class="note" style="margin:4px 0 0">${when==="now"?"Keep the app open with the screen on while Claude works: usually 2 to 6 minutes.":"Sent to Claude's overnight queue at half price. It's usually ready within a few hours, often sooner, and always within a day. You can close the app; it collects the result when you next open it."}</p>
+  <label class="set"><span>Keep private<br><small class="au">Don't offer this to colleagues who ask for something similar</small></span><input type="checkbox" id="tf-priv" ${tfv("priv",false)?"checked":""}></label></div>`}
+{const _f=tForm;tForm=function(k){const h=_f(k),add=rForm(k);return add?h.replace('<p class="pii">',add+'<p class="pii">'):h}}
+// ---- requests carry the choices made on the form ----
+{const _e=tEnq;tEnq=function(id){const it=tGet(id);if(it&&S.tfExtra&&!it.in._x){Object.assign(it.in,S.tfExtra);it.in._x=1;S.tfExtra=null}return _e(id)}}
+function rExtras(k){const f=S.tf||{},ex={};if(!OWNER())return ex;if(f.claude)ex.claude=f.claude;
+ if(k==="pres"||k==="exam"){ex.src=f.src||"web";if(ex.src==="web"){ex.claude=f.claude||(k==="pres"?"sonnet":"haiku");ex.when=f.when||"batch";ex.priv=!!f.priv}}return ex}
+{const _g=tGo;tGo=function(k){const f=S.tf||{};
+ if((k==="pres"||k==="exam")&&!S.noMatch&&aiURL()&&tList(k).length<TDEF[k].max){
+  const txt=k==="pres"?String(f.title||"").trim():rTopicsInForm().join(" ");
+  if((k==="pres"?txt.length>=3:rTopicsInForm().length>0)&&piiOf(txt+" "+(f.points||"")+" "+(f.extra||""))!=="hard"){rMatch(k);return}}
+ S.noMatch=false;const ex=rExtras(k);if(S.sharedPick&&k==="exam"){ex.shared=S.sharedPick;S.sharedPick=null}S.tfExtra=ex;try{_g(k)}finally{S.tfExtra=null}}}
+async function rMatch(k){const f=S.tf||{};S.tmatch=true;renderModal();
+ try{if(k==="pres"){const j=await aiCall("shared/match",{kind:"talk",text:`${String(f.title||"").trim()}. ${String(f.points||"").trim()}`,audience:f.audience||AUDIENCES[0]},9000);
+   if(j.items&&j.items.length){S.tmatch=false;S.offer={k,items:j.items};S.tv={k,view:"offer"};renderModal();return}}
+  else{const ex=EXBY[f.exam||"eecc"]||EXAMS[0],mods=rTopicsInForm(),j=await aiCall("shared/match",{kind:"exam",texts:mods,exam:ex.id,examName:ex.n},9000);
+   const hits=mods.map((n,i)=>({n,item:((j.results||[])[i]||[])[0]})).filter(x=>x.item);
+   if(hits.length){S.tmatch=false;S.offer={k,hits,use:Object.fromEntries(hits.map(h=>[h.n,true]))};S.tv={k,view:"offer"};renderModal();return}}}
+ catch(e){}
+ S.tmatch=false;S.noMatch=true;tGo(k)}
+const ago=t=>{const d=Math.round((Date.now()-t)/864e5);return d<1?"today":d===1?"yesterday":d<30?`${d} days ago`:d<60?"last month":`${Math.round(d/30)} months ago`};
+function rOffer(k){const O=S.offer||{},D=TDEF[k];
+ const head=`<div class="thead"><button class="link" data-act="roffback">‹ Back</button><button class="tclose" data-act="mclose">Close</button></div>`;
+ if(k==="pres")return `<div class="sheet big" role="dialog" aria-label="A similar talk is ready">${head}<div class="vbody"><h3 style="margin-top:4px">A similar talk is ready now</h3>
+  <p class="note" style="margin-top:0">A colleague asked for a talk like this for the same kind of audience. You can use it straight away, free: it's redrawn in your chosen style, with your name and date.</p>
+  ${(O.items||[]).map(x=>`<div class="card tcard"><div class="tct">${esc(x.title)}</div><div class="au">Written by ${esc(MODELNAME(x.model))} with web research · ${ago(x.created)}${x.up?` · 👍 ${x.up}`:""}</div><div class="fbtns"><button class="pri" data-act="ruse" data-v="${esc(x.id)}">Use this talk</button></div></div>`).join("")}
+  </div><div class="pk"><a href="#" class="alt" data-act="rownnew">No thanks, make my own</a></div></div>`;
+ const use=O.use||{};
+ return `<div class="sheet big" role="dialog" aria-label="Topics ready now">${head}<div class="vbody"><h3 style="margin-top:4px">Some topics are ready now</h3>
+  <p class="note" style="margin-top:0">Colleagues preparing for the same exam have already had notes written on these topics. Use them straight away, free, with a fresh set of practice questions from the shared question bank, or have new ones made.</p>
+  ${(O.hits||[]).map(h=>`<div class="card tcard"><div class="tct">${esc(h.n)}</div><div class="au">Ready: “${esc(h.item.title)}”, by ${esc(MODELNAME(h.item.model))} · ${ago(h.item.created)}${h.item.up?` · 👍 ${h.item.up}`:""}</div>
+   <div class="row" style="flex-wrap:wrap;overflow:visible;margin-top:6px"><button class="chip ${use[h.n]?"on":""}" data-act="ruseT" data-v="${esc(h.n)}" data-u="1">Use the ready notes</button><button class="chip ${use[h.n]?"":"on"}" data-act="ruseT" data-v="${esc(h.n)}" data-u="0">Make new ones</button></div></div>`).join("")}
+  </div><div class="pk"><a href="#" data-act="ruseGo">Continue</a><a href="#" class="alt" data-act="roffback">Back</a></div></div>`}
+{const _k=tSheetK;tSheetK=function(k){if(S.tv&&S.tv.view==="item"){const it=tGet(S.tv.id);if(it&&it.unseen){it.unseen=0;save();setTimeout(()=>tPaint(null),30)}}if(S.tv&&S.tv.view==="offer"&&S.offer&&S.offer.k===k)return rOffer(k);if(S.tv&&S.tv.view==="edit"){const it=tGet(S.tv.id);if(it)return rEditSheet(it)}return _k(k)}}
+function rUseTalk(sid){const f=S.tf||{};
+ const I={title:String(f.title||"").trim(),audience:f.audience||AUDIENCES[0],date:f.date||"",n:Math.max(5,Math.min(50,parseInt(f.n,10)||20)),points:String(f.points||"").trim(),showOrg:f.showOrg!==undefined?!!f.showOrg:st.myOrgShow!==false,style:f.style||st.slideStyle||"classic",useShared:sid,_x:1};
+ const it={id:"t"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),k:"pres",at:Date.now(),in:I,title:"",status:"queued",step:"Waiting to start"};
+ tList("pres").unshift(it);save();S.tf=null;S.offer=null;S.tv={k:"pres",view:"item",id:it.id};renderModal();tEnq(it.id)}
+// ---- talking to the research service ----
+async function rShared(id,n){const r=await fetch(`${aiURL()}/shared?id=${encodeURIComponent(id)}${n?`&n=${n}`:""}`,{headers:{"X-Device-Id":deviceId()}});const j=await r.json().catch(()=>({}));if(!r.ok||!j.item)throw Object.assign(new Error("gone"),{code:"gone"});return j.item}
+async function rSubmit(it,kind,input){const I=it.in,now=I.when==="now";
+ tStep(it,now?`Claude ${CLN(I.claude)} is researching on the web`:"Sending to Claude's overnight queue",now?"usually 2 to 6 minutes · keep the app open":"");
+ it.rnow=now?1:0;save();
+ try{const j=await aiCall("research",{kind,mode:now?"now":"batch",claude:I.claude||"haiku",priv:!!I.priv,input,field:"cardiology"},now?900000:90000);
+  if(j.status==="ready")return {res:j.result,cost:j.cost,model:j.model,id:j.id};
+  it.rj={id:j.id,t:j.token,kind,model:j.model,sent:Date.now()};save();return null}
+ finally{it.rnow=0}}
+function rCollect(it){const J=it.rj;if(J&&J.id&&J.t)aiCall("research/collected",{id:J.id,t:J.t},20000).catch(()=>{});delete it.rj;delete it.rjRes;delete it.rjCost}
+const srcStr=s=>`${s.title||s.url||"Source"}${s.url?`. ${s.url}`:""}`;
+// citations renumbered in the order they first appear; sources never cited are listed after them
+function srcRenum(v,sources){const L=sources||[],map=new Map(),refs=[];
+ const see=t=>String(t).replace(CITE,(m,g)=>{const ns=citeNums(g).filter(n=>n>=1&&n<=L.length);if(!ns.length)return "";return "["+[...new Set(ns.map(n=>{if(!map.has(n)){map.set(n,map.size+1);refs.push(srcStr(L[n-1]))}return map.get(n)}))].sort((a,b)=>a-b).join(",")+"]"});
+ const out=mapStrings(v,see);L.forEach((s,i)=>{if(!map.has(i+1))refs.push(srcStr(s))});return {out,refs}}
+async function rTalkDeck(it){const I=it.in,R=it.res;tStep(it,"Building the deck");const rs=srcRenum(R.slides,R.sources);
+ await tDeckSave(it,await makeDeck(null,R.slides.length+2,{title:R.title,slides:rs.out,refs:rs.refs,refTitle:R.web?"Sources":"References",style:I.style,model:R.model,web:!!R.web,claude:I.claude,...presenter(it,I.showOrg)},{tag:"talk"}))}
+// ---- My Presentations ----
+{const _p=TJOB.pres;TJOB.pres=async function(it){const I=it.in;
+ if(it.rebuild&&it.res&&it.res.slides){it.rebuild=0;return rTalkDeck(it)}
+ if(I.useShared&&!(it.res&&it.res.slides)){tStep(it,"Fetching the shared talk");const x=await rShared(I.useShared);const d=x.data||{};if(!(d.slides||[]).length)throw Object.assign(new Error("gone"),{code:"gone"});
+  it.res={title:d.title||I.title,subtitle:d.subtitle||"",slides:d.slides,sources:d.sources||[],model:x.model,web:true,reused:true,sid:I.useShared,created:x.created};it.title=it.res.title;save();return rTalkDeck(it)}
+ if(it.res&&it.res.slides&&it.res.web)return rTalkDeck(it);
+ if(I.src!=="web")return _p(it);
+ if(it.rj&&!it.rjRes)return "sent";
+ let r=it.rjRes?{res:it.rjRes,cost:it.rjCost,model:it.rj&&it.rj.model,id:it.rj&&it.rj.id}:null;
+ if(!r){const total=Math.max(5,Math.min(50,+I.n||20));r=await rSubmit(it,"talk",{title:I.title,audience:I.audience,n:Math.max(3,total-1-(total>=24?2:1)),points:I.points});if(!r)return "sent"}
+ const T=(r.res&&r.res.talk)||{};if(!(T.slides||[]).length)throw Object.assign(new Error("ai"),{code:"ai",detail:"No slides came back."});
+ it.res={title:T.title||I.title,subtitle:T.subtitle||"",slides:T.slides,sources:T.sources||[],model:r.model||CLAUDE_ID(I.claude),web:true,cost:r.cost,mode:I.when,sid:I.priv?"":(r.id||"")};it.title=it.res.title;
+ rCollect(it);save();return rTalkDeck(it)}}
+// ---- Exam preparation ----
+async function rExamDeck(it,m){const I=it.in;if(!I.slides)return;const i=it.mods.indexOf(m);if(i<0)return;
+ try{tStep(it,`Slides for ${m.n}`,"");const R=m.res,rs=srcRenum([reviewText(R.review||{})],R.sources||[]);
+  const d=await makeDeck(null,10,{title:`${m.n}: ${I.sh} revision`,text:rs.out[0].slice(0,13500),refs:rs.refs,refTitle:"Sources",style:I.style,claude:I.claude},{tag:"topic"});
+  if(d&&d.file){const name=(m.n.replace(/[^\w ]+/g,"").trim().replace(/\s+/g,"-").slice(0,50)||"topic")+"-revision.pptx";await idbPut(`deck:${it.id}|m${i}`,{name,type:d.file.type,buf:await d.file.arrayBuffer()});if(d.view)await idbPut(`deckv:${it.id}|m${i}`,d.view);m.deck={name,n:d.meta&&d.meta.n,model:d.meta&&d.meta.model};save()}}catch(e){}}
+{const _x=TJOB.exam;TJOB.exam=async function(it){const I=it.in;
+ if(I.shared)for(const m of it.mods){const sid=I.shared[m.n];if(!sid||m.status==="ready"||m.noShare)continue;
+  try{tStep(it,`Fetching ${m.n}`,"ready-made notes");const x=await rShared(sid,15),N=(x.data&&x.data.notes)||{};if(!(N.sections||[]).length&&!(N.mcqs||[]).length)throw new Error("empty");
+   m.res={review:N,model:x.model,shared:true,reused:true,sid,sources:N.sources||[],papers:[],web:true};m.status="ready";m.err="";save();tPaint(it);await rExamDeck(it,m)}catch(e){m.noShare=1}}
+ if(I.src!=="web")return _x(it);
+ if(it.rj&&!it.rjRes)return "sent";
+ let r=it.rjRes?{res:it.rjRes,cost:it.rjCost,model:it.rj&&it.rj.model,id:it.rj&&it.rj.id,names:it.rj&&it.rj.topics}:null;
+ const todo=it.mods.filter(m=>m.status!=="ready");if(!todo.length&&!r)return;
+ if(!r){todo.forEach(m=>{m.status="busy";m.err=""});tPaint(it);
+  try{r=await rSubmit(it,"exam",{exam:I.name,examId:I.exam,topics:todo.map(m=>m.n),nq:15,extra:I.extra})}catch(e){todo.forEach(m=>{m.status="error";m.err=tErr(e)});throw e}
+  if(!r){todo.forEach(m=>m.status="sent");it.rj.topics=todo.map(m=>m.n);save();return "sent"}
+  r.names=todo.map(m=>m.n)}
+ const T=(r.res&&r.res.topics)||[],names=r.names||T.map(t=>t.name);let last="";
+ T.forEach((t,i)=>{const m=it.mods.find(x=>x.n===names[i])||it.mods.find(x=>x.n===t.name);if(!m)return;
+  if(t.notes){m.res={review:t.notes,model:r.model||CLAUDE_ID(I.claude),sources:t.notes.sources||[],papers:[],web:true,sid:I.priv||!r.id?"":`${r.id}-${i}`};m.status="ready";m.err=""}
+  else{m.status="error";m.err="Claude couldn't prepare this topic"+(t.err?`: ${t.err}`:".");last=m.err}});
+ it.mods.forEach(m=>{if(m.status==="busy"||m.status==="sent"){m.status="error";m.err=m.err||"No notes came back for this topic. Tap Try again."}});
+ it.res=it.res||{exam:true};it.res.webCost=Math.round(((it.res.webCost||0)+(+r.cost||0))*1e4)/1e4;it.res.webModel=r.model||CLAUDE_ID(I.claude);
+ rCollect(it);save();tPaint(it);
+ for(const m of it.mods)if(m.status==="ready"&&m.res&&m.res.web&&!m.res.reused&&!m.deck)await rExamDeck(it,m);
+ if(!it.mods.some(m=>m.status==="ready"))throw Object.assign(new Error("ai"),{code:"ai",detail:last})}}
+// ---- the queue: an overnight request leaves the item "sent" until its result is collected ----
+tRun=async function(){if(TQ.run)return;TQ.run=true;
+ try{while(TQ.q.length){const id=TQ.q.shift(),it=tGet(id);if(!it)continue;
+  try{it.err="";TCUR=it;const r=await TJOB[it.k](it);
+   if(r==="sent"){it.status="sent";it.step="";save();tPaint(it);toast(`“${it.title||it.in.title||TDEF[it.k].t}” has gone to Claude's overnight queue.`);continue}
+   it.status="ready";it.step="";it.done=Date.now();it.unseen=S.modal&&S.modal.type==="tool"&&S.tv&&S.tv.view==="item"&&S.tv.id===it.id&&!document.hidden?0:1;save();tPaint(it);toast(`“${it.title||TDEF[it.k].t}” is ready.`)}
+  catch(e){it.status="error";it.err=tErr(e);it.step="";save();tPaint(it)}
+  finally{TCUR=null}}}
+ finally{TQ.run=false}};
+{const _t=tErr;tErr=function(e){const c=e&&e.code;
+ if(c==="owner")return "Web research needs your comparison phrase. Check it in Settings › AI features.";
+ if(c==="gone")return "That shared result is no longer available. Tap Try again to make your own.";
+ if((c==="net"||c==="slow")&&TCUR&&TCUR.in&&TCUR.in.src==="web"&&TCUR.in.when==="now")return "The connection dropped while Claude was working, which happens if the phone locks. Send it overnight instead, or try again with the app open.";
+ if(c==="ratelimit-day"&&e.detail)return e.detail;
+ if(c==="ai"&&e.detail)return "Claude couldn't finish this. "+e.detail;
+ return _t(e)}}
+// a request that was being made while you waited, and was cut off when the app closed, isn't sent again by itself
+for(const k of ["pres","exam"])for(const it of tList(k)){if(it.rnow&&(it.status==="busy"||it.status==="queued")){it.rnow=0;it.status="error";it.err="The app closed while Claude was working. Send it overnight, or make it now with the app open.";(it.mods||[]).forEach(m=>{if(m.status==="busy"){m.status="error";m.err=it.err}})}if(it.edNow){it.edNow=0;it.editErr="The app closed while your changes were being made. Nothing was changed."}}
+// ---- collecting overnight results: on opening the app, every 2 minutes while it's open, and when a tool is opened ----
+async function rPoll(){if(!aiURL()||rPoll.busy||document.hidden)return;const L=["pres","exam"].flatMap(k=>tList(k)).filter(it=>(it.rj&&it.status==="sent"&&!it.rjRes)||it.rjEdit);if(!L.length)return;rPoll.busy=true;
+ try{for(const it of L){for(const which of ["rj","rjEdit"]){const J=it[which];if(!J||(which==="rj"&&it.status!=="sent"))continue;
+   let j={};try{const r=await fetch(`${aiURL()}/research?id=${encodeURIComponent(J.id)}&t=${encodeURIComponent(J.t)}`,{headers:{"X-Device-Id":deviceId()}});j=await r.json().catch(()=>({}));if(r.status===404)j={status:"gone"}}catch(e){continue}
+   J.checked=Date.now();
+   if(j.status==="ready"&&j.result){if(which==="rj"){it.rjRes=j.result;it.rjCost=j.cost;it.status="queued";it.step="Collecting the result";save();tEnq(it.id)}
+    else{try{rApplyEdit(it,j.result.edit,j.cost);toast(`Your changes to “${it.title}” are ready.`)}catch(e){it.editErr="The changes couldn't be applied."}const J2=it.rjEdit;delete it.rjEdit;aiCall("research/collected",{id:J2.id,t:J2.t},20000).catch(()=>{});save()}}
+   else if(j.status==="failed"||j.status==="gone"){const msg=j.status==="gone"?"The result is no longer on the service (results are kept for 3 weeks).":(j.err||"Claude couldn't finish this.");
+    if(which==="rj"){it.status="error";it.err=msg;(it.mods||[]).forEach(m=>{if(m.status==="sent"){m.status="error";m.err=msg}});rCollect(it)}else{it.editErr=msg;delete it.rjEdit}save()}}
+  tPaint(it)}}
+ finally{rPoll.busy=false}}
+setTimeout(rPoll,3500);setInterval(rPoll,120000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)setTimeout(rPoll,800)});addEventListener("online",()=>setTimeout(rPoll,800));
+// ---- the tool tiles show a dot when something is ready to look at, and a moon while Claude works overnight ----
+{const _tp=tPaint;tPaint=function(it){_tp(it);try{document.querySelectorAll(".navband .tools button[data-v]").forEach(b=>{const L=tList(b.dataset.v);b.classList.toggle("tdone",L.some(x=>x.unseen));b.classList.toggle("tsent",L.some(x=>x.status==="sent"||x.rjEdit))})}catch(e){}}}
+setTimeout(()=>tPaint(null),3000);
+// ---- status lines ----
+{const _st=tStatus;tStatus=function(it){
+ if(it.status==="sent"){const J=it.rj||{};return `<div class="tst sent">🌙 With Claude ${esc(CLN(J.model))} in the overnight queue, sent ${esc(new Date(J.sent||it.at).toLocaleString("en-GB",{weekday:"short",hour:"2-digit",minute:"2-digit"}))}. You can close the app. <button class="link" data-act="rcheck">Check now</button></div>`}
+ let h=_st(it);
+ if(it.status==="error"&&it.in&&it.in.src==="web"&&!it.in.useShared)h=h.replace(/<button class="link" data-act="tretry"[^>]*>Try again<\/button>/,`<span class="rfix"><button class="link" data-act="rresend" data-v="${it.id}" data-w="batch">Send overnight</button> · <button class="link" data-act="rresend" data-v="${it.id}" data-w="now">Make it now</button></span>`);
+ if(it.rjEdit)h=h.replace(/<\/div>$/,` · ✏️ your changes are with Claude</div>`);
+ return h}}
+// ---- what you see for a web-researched talk ----
+const rVote=id=>(st.rvotes||{})[id]||0;
+const thumbs=sid=>sid?`<div class="thumbs"><span class="au">Was this useful?</span><button class="${rVote(sid)===1?"on":""}" data-act="rrate" data-v="${esc(sid)}" data-r="1" aria-label="Useful">👍</button><button class="${rVote(sid)===-1?"on":""}" data-act="rrate" data-v="${esc(sid)}" data-r="-1" aria-label="Not useful">👎</button></div>`:"";
+const srcList=L=>(L||[]).length?`<h4>Sources</h4><ol class="frefs">${L.map(s=>`<li>${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title||s.url)}</a>`:esc(s.title||"")}</li>`).join("")}</ol>`:"";
+function rTalkBody(it){const I=it.in,R=it.res,sty=(SLSTYLES.find(x=>x[0]===I.style)||[0,I.style==="custom"?"Your template":"Classic"])[1];
+ const how=R.reused?`Shared from a colleague's earlier request${R.created?` (${ago(R.created)})`:""}. Written by ${esc(MODELNAME(R.model))} with web research, and redrawn in your style with your name.`
+  :`Researched on the web and written by ${esc(MODELNAME(R.model))}${R.mode==="now"?", made straight away":R.mode==="batch"?", overnight at half price":""}${R.cost!=null?` · cost ${usd(+R.cost+(+R.editCost||0))}`:""}.${R.sid?" Colleagues asking for something similar can use it.":I.priv?" Kept private.":""}`;
+ return `<p class="au" style="margin-top:0">${esc([I.audience,I.date?new Date(I.date+"T12:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"long",year:"numeric"}):"",`${it.deck&&it.deck.n||R.slides.length+2} slides`,sty+" style"].filter(Boolean).join(" · "))}</p>
+  <div class="tts" style="border-top:0">${it.deck?`<button data-act="tdeck" data-v="${it.id}">📊 View slides</button><button data-act="rfile" data-v="${it.id}">Save or share</button>`:""}${OWNER()&&!it.rjEdit?`<button data-act="redit" data-v="${it.id}">✏️ Change slides</button>`:""}</div>
+  ${it.editErr?`<div class="tst err">${esc(it.editErr)}</div>`:""}<p class="au tby">${how} Check facts against the sources before presenting.</p>
+  ${R.reused?thumbs(R.sid):""}
+  <div class="au" style="margin-top:10px">Style</div><div class="row" style="flex-wrap:wrap;overflow:visible">${SLSTYLES.concat(TPL?[["custom","Your template"]]:[]).map(([k,l])=>`<button class="chip ${(I.style||"classic")===k?"on":""}" data-act="rstyle" data-v="${it.id}" data-s="${k}"><span class="sw sw-${k}"></span>${l}</button>`).join("")}</div>
+  ${R.subtitle?`<p class="fov">${esc(R.subtitle)}</p>`:""}<h4>Slides</h4><ol class="tout" start="2">${R.slides.map(s=>`<li><b>${esc(String(s.title||"").replace(/\s*\[(\d+(?:\s*[,–-]\s*\d+)*)\]/g,""))}</b></li>`).join("")}</ol>${srcList(R.sources)}`}
+{const _b=tBody;tBody=function(it){if(it.k==="pres"&&it.res&&it.res.slides)return rTalkBody(it);
+ const h=_b(it);if(it.k!=="exam")return h;
+ // exam topics: More questions, ratings for shared notes, and the right credit line
+ const ready=(it.mods||[]).map((m,i)=>[m,i]).filter(([m])=>m.status==="ready");let n=0;
+ let out=h.replace(/<\/details>/g,()=>{const x=ready[n++];if(!x)return "</details>";const [m,i]=x,R=m.res||{};
+  const more=OWNER()||(R.sid&&R.reused)?`<div class="fbtns" style="margin-top:8px"><button data-act="rmore" data-v="${it.id}" data-i="${i}">${m.moreBusy?'<span class="spin"></span>Writing more questions…':`✍️ 15 more questions${OWNER()?"":" from the shared bank"}`}</button></div>`:"";
+  return `${R.web?srcList(R.sources):""}${more}${R.reused?thumbs(R.sid):""}</details>`});
+ const rm=(it.mods||[]).filter(m=>m.status==="ready"&&m.res),web=rm.filter(m=>m.res.web),pm=rm.filter(m=>!m.res.web);
+ if(web.length){const names=[...new Set(rm.map(m=>MODELNAME(m.res.model)))].join(" and ");
+  out=out.replace(/<p class="au tby">[\s\S]*?<\/p>/,`<p class="au tby">Written by ${esc(names)} ${pm.length?"from web research and PubMed abstracts":"with web research"}${web.some(m=>m.res.reused)?"; some topics were prepared earlier for colleagues":""}${it.res&&it.res.webCost?` · cost ${usd(it.res.webCost)}`:""}. Check key facts against the guidelines and sources.</p>`)}
+ return out}}
+// ---- changing selected slides of a talk ----
+FIELDS["tf-edask"]=["","What to change"];
+function rEditSheet(it){const R=it.res,E=S.ed&&S.ed.id===it.id?S.ed:(S.ed={id:it.id,sel:[],whole:false,claude:it.in.claude||"sonnet",when:"now"}),idx=E.whole?R.slides.map((_,i)=>i):E.sel,e=rEst("edit",E.claude,Math.max(1,idx.length));
+ return `<div class="sheet big" role="dialog" aria-label="Change slides"><div class="thead"><button class="link" data-act="redback">‹ ${esc(TDEF.pres.t)}</button><button class="tclose" data-act="mclose">Close</button></div><div class="vbody">
+  <h3 style="margin-top:4px">Change slides</h3><p class="note" style="margin-top:0">Tick the slides to change, or the whole talk, and say what you'd like. Claude rewrites only those slides, searching the web if it needs new information, and the deck is rebuilt.</p>
+  <div class="row" style="flex-wrap:wrap;overflow:visible"><button class="chip ${E.whole?"on":""}" data-act="redwhole">Whole talk</button>${E.sel.length&&!E.whole?`<span class="au" style="align-self:center">${E.sel.length} slide${E.sel.length===1?"":"s"} ticked</span>`:""}</div>
+  <div class="edl">${R.slides.map((s,i)=>`<button class="edr ${E.whole||E.sel.includes(i)?"on":""}" data-act="redsel" data-v="${i}"><span class="edc">✓</span><span class="edn">${i+2}</span><span>${esc(String(s.title||s.layout||"").replace(/\s*\[(\d+(?:\s*[,–-]\s*\d+)*)\]/g,""))}</span></button>`).join("")}</div>
+  <label class="au tl">What should change?<span class="tawrap"><textarea class="search" id="tf-edask" rows="3" placeholder="For example, add the 2026 ESC heart failure recommendations, and make slide 5 a chart">${esc((S.tf&&S.tf.edask)||"")}</textarea>${taMic("tf-edask")}</span></label>
+  <div class="au" style="margin-top:10px">Claude model</div><div class="row" style="flex-wrap:wrap;overflow:visible">${CLM.map(([m,l])=>`<button class="chip ${E.claude===m?"on":""}" data-act="redset" data-f="claude" data-v="${m}">${l}</button>`).join("")}</div>
+  <div class="au" style="margin-top:10px">When</div><div class="row" style="flex-wrap:wrap;overflow:visible"><button class="chip ${E.when==="now"?"on":""}" data-act="redset" data-f="when" data-v="now">⚡ Make it now</button><button class="chip ${E.when==="batch"?"on":""}" data-act="redset" data-f="when" data-v="batch">🌙 Overnight · half price</button></div>
+  <p class="rest">Estimated cost: <b>${usd(E.when==="now"?e.now:e.batch)}</b>.${it.in.priv?"":" Your changed talk is also kept for colleagues (untick by keeping the talk private)."}</p>${NOPII}</div>
+  <div class="pk"><a href="#" data-act="redgo" data-v="${it.id}">${S.edBusy?'<span class="spin"></span>Claude is changing the slides…':"Make the changes"}</a></div></div>`}
+function rApplyEdit(it,E,cost){const R=it.res,L=(E&&E.sources)||[],map={};if(!E||!(E.slides||[]).length)throw new Error("empty");
+ const key=s=>String((s&&s.url)||"").replace(/^https?:\/\/(www\.)?/i,"").replace(/[#?].*$/,"").replace(/\/+$/,"").toLowerCase()||String((s&&s.title)||"").toLowerCase().trim();
+ L.forEach((s,i)=>{let j=R.sources.findIndex(x=>key(x)===key(s));if(j<0){R.sources.push({title:String(s.title||s.url||""),url:String(s.url||"")});j=R.sources.length-1}map[i+1]=j+1});
+ const fix=t=>String(t).replace(CITE,(m,g)=>{const ns=citeNums(g).map(n=>map[n]||(L.length?0:n)).filter(Boolean);return ns.length?`[${[...new Set(ns)].sort((a,b)=>a-b).join(",")}]`:""});
+ let n=0;for(const x of E.slides){const i=+x.i;if(i>=0&&i<R.slides.length&&x.slide&&typeof x.slide==="object"){R.slides[i]=mapStrings(x.slide,fix);n++}}
+ if(!n)throw new Error("empty");
+ R.edits=(R.edits||0)+1;R.editCost=Math.round(((R.editCost||0)+(+cost||0))*1e4)/1e4;it.editErr="";it.rebuild=1;it.status="queued";it.step="Rebuilding the deck";save();tEnq(it.id);
+ if(!it.in.priv)aiCall("shared/add",{owner:1,audience:it.in.audience,points:it.in.points,by:R.model,data:{title:R.title,subtitle:R.subtitle,slides:R.slides,sources:R.sources}},30000).then(j=>{if(j&&j.id){R.sid=j.id;R.reused=false;save()}}).catch(()=>{})}
+async function rEditGo(id){const it=tGet(id),E=S.ed,R=it&&it.res;if(!it||!E||S.edBusy)return;const ask=String((S.tf&&S.tf.edask)||"").trim();
+ if(ask.length<4){toast("Say what you'd like changed.");return}if(piiOf(ask)==="hard"){toast("That looks like it contains patient details. Please remove them.");return}
+ const idx=(E.whole?R.slides.map((_,i)=>i):E.sel.slice()).sort((a,b)=>a-b);if(!idx.length){toast("Tick at least one slide, or Whole talk.");return}
+ const input={title:R.title,audience:it.in.audience,ask,outline:R.slides.map((s,i)=>`${i+1}. ${String(s.title||s.layout||"")}`).join("; "),slides:idx.map(i=>({i,slide:R.slides[i]})),sources:R.sources};
+ S.edBusy=true;renderModal();
+ try{if(E.when==="now"){it.edNow=1;save();const j=await aiCall("research",{kind:"edit",mode:"now",claude:E.claude,priv:true,input,field:"cardiology"},900000);it.edNow=0;rApplyEdit(it,j.result&&j.result.edit,j.cost);toast("Slides changed. Rebuilding the deck…")}
+  else{const j=await aiCall("research",{kind:"edit",mode:"batch",claude:E.claude,priv:true,input,field:"cardiology"},90000);it.rjEdit={id:j.id,t:j.token,model:j.model,sent:Date.now()};it.editErr="";save();tPaint(it);toast("Your changes have gone to Claude's overnight queue.")}
+  if(S.tf)S.tf.edask="";S.ed=null;S.tv={k:"pres",view:"item",id:it.id}}
+ catch(e){it.edNow=0;save();toast(e.code==="owner"?tErr(e):e.detail?`Claude couldn't make the changes. ${e.detail}`:aiErr(e.code))}
+ S.edBusy=false;renderModal()}
+// ---- buttons ----
+addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-act]");if(!b)return;const a=b.dataset.act,v=b.dataset.v,take=()=>{e.preventDefault();e.stopImmediatePropagation()};
+ if(a==="topen"){const it=tGet(v);if(it&&it.unseen){it.unseen=0;save();setTimeout(()=>tPaint(null),50)}}
+ else if(a==="tool"&&TDEF[v]){setTimeout(rPoll,300)}
+ else if(a==="tgo"&&S.tmatch){take()}
+ else if(a==="roffback"){take();S.offer=null;S.tv={k:S.tv.k,view:"form"};renderModal()}
+ else if(a==="rownnew"){take();S.offer=null;S.noMatch=true;S.tv={k:"pres",view:"form"};tGo("pres")}
+ else if(a==="ruse"){take();rUseTalk(v)}
+ else if(a==="ruseT"){take();if(S.offer&&S.offer.use)S.offer.use[v]=b.dataset.u==="1";renderModal()}
+ else if(a==="ruseGo"){take();const O=S.offer||{},map={};(O.hits||[]).forEach(h=>{if((O.use||{})[h.n])map[h.n]=h.item.id});S.offer=null;S.noMatch=true;S.sharedPick=Object.keys(map).length?map:null;S.tv={k:"exam",view:"form"};tGo("exam")}
+ else if(a==="rcheck"){take();toast("Checking…");rPoll()}
+ else if(a==="rresend"){take();const it=tGet(v);if(!it)return;it.in.when=b.dataset.w==="now"?"now":"batch";it.err="";delete it.rj;delete it.rjRes;(it.mods||[]).forEach(m=>{if(m.status==="error"){m.status="queued";m.err=""}});tEnq(it.id);S.tv={k:it.k,view:"item",id:it.id};renderModal()}
+ else if(a==="rrate"){take();const r=+b.dataset.r;st.rvotes=st.rvotes||{};if(st.rvotes[v]===r)return;st.rvotes[v]=r;save();aiCall("shared/rate",{id:v,v:r},15000).catch(()=>{});renderModal();toast(r>0?"Thanks. Rated useful.":"Thanks. Others will be offered it less often.")}
+ else if(a==="rmore"){take();rMore(v,+b.dataset.i)}
+ else if(a==="rfile"){take();const it=tGet(v);if(it)tDeckFile(it).then(f=>f?cmpSave(f):toast("The slides aren't on this phone any more."))}
+ else if(a==="rstyle"){take();const it=tGet(v);if(!it||it.status==="busy"||it.status==="queued")return;it.in.style=b.dataset.s;it.rebuild=1;tEnq(it.id);renderModal()}
+ else if(a==="redit"){take();const it=tGet(v);if(!it)return;S.ed=null;if(S.tf)S.tf.edask="";S.tv={k:"pres",view:"edit",id:v};renderModal()}
+ else if(a==="redback"){take();const id=S.tv&&S.tv.id;S.ed=null;S.tv={k:"pres",view:"item",id};renderModal()}
+ else if(a==="redwhole"){take();S.ed.whole=!S.ed.whole;renderModal()}
+ else if(a==="redsel"){take();const E=S.ed,i=+v;if(E.whole){E.whole=false;E.sel=tGet(E.id).res.slides.map((_,k)=>k)}const j=E.sel.indexOf(i);if(j>=0)E.sel.splice(j,1);else E.sel.push(i);renderModal()}
+ else if(a==="redset"){take();S.ed[b.dataset.f]=v;renderModal()}
+ else if(a==="redgo"){take();rEditGo(v)}
+},true);
+async function rMore(id,i){const it=tGet(id),m=it&&it.mods[i];if(!m||m.moreBusy||!m.res)return;m.moreBusy=1;renderModal();
+ try{const V=m.res.review=m.res.review||{},have=(V.mcqs||[]).map(q=>q.q);let add=[];
+  if(OWNER()){const j=await aiCall("research/more",{claude:it.in.claude||"haiku",exam:it.in.exam,examName:it.in.name,topic:m.n,notes:reviewText(V).slice(0,30000),have,n:15,share:!it.in.priv},120000);add=(j.data&&j.data.mcqs)||[];if(j.cost)m.res.moreCost=Math.round(((m.res.moreCost||0)+j.cost)*1e4)/1e4}
+  else if(m.res.sid){const x=await rShared(m.res.sid,30);add=(((x.data||{}).notes||{}).mcqs||[]).filter(q=>q&&q.q&&!have.includes(q.q)).slice(0,15)}
+  if(add.length){V.mcqs=[...(V.mcqs||[]),...add];toast(`${add.length} more questions added to ${m.n}. Practise them with ✍️ Start.`)}else toast("No new questions this time. Try again later.");save()}
+ catch(e){toast(e.code==="gone"?"The shared question bank isn't available just now.":aiErr(e.code))}
+ m.moreBusy=0;renderModal()}
+
 </script>
 </body>
 </html>
